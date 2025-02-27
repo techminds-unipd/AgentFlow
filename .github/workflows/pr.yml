@@ -3,24 +3,30 @@ name: Unit Tests
 on:
     pull_request:
         types: [opened, reopened, synchronize]
+    push:
+      branches:
+        - main
 
 jobs:
     Backend:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout
+              uses: actions/checkout@v4
               with:
                 path: 'backend'
             - name: Upload artifacts
               uses: actions/upload-artifact@v4
-            - run: cd backend
-            - uses: actions/setup-node@v4
               with:
-                node-version: 22
-            - name: Installazione dipendenze
-              run: npm ci
-            - name: Unit testing
-              run: npm test
+                path: ./
+            #- run: cd backend
+            #- uses: actions/setup-node@v4
+            #  with:
+            #    node-version: 22
+            #- name: Installazione dipendenze
+            #  run: npm ci
+            #- name: Unit testing
+            #  run: npm test
     #Frontend:
     #   runs-on: ubuntu-latest
         
