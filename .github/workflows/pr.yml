@@ -18,8 +18,8 @@ jobs:
               run: npm ci
             - name: Unit testing
               run: npm test
-    Frontend:
-        runs-on: ubuntu-latest
+    #Frontend:
+    #   runs-on: ubuntu-latest
         
     #Worker:
     #    runs-on: ubuntu-latest
