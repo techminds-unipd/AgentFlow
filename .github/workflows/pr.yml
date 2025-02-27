@@ -7,6 +7,9 @@ on:
       branches:
         - main
 
+env:
+  CI: y
+
 jobs:
     Backend:
         runs-on: ubuntu-latest
@@ -17,12 +20,27 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version: 22.x
+                cache: 'npm'
             - name: Installazione dipendenze
               run: npm ci --prefix ./backend
             - name: Unit testing
               run: npm test --prefix ./backend
+            - name: e2e testing
+              run: npm run test:e2e --prefix ./backend
     #Frontend:
     #   runs-on: ubuntu-latest
         
-    #Worker:
-    #    runs-on: ubuntu-latest
+    Worker:
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout
+            uses: actions/checkout@v4
+          - name: Setup Python
+            uses: actions/setup-python@v5
+            with:
+              python-version: '3.13'
+              cache: 'pip'
+          - name: Installazione dipendenze
+            run: pip install -r ./worker/requirements.txt
+          - name: Unit testing
+            run: pytest ./worker
