@@ -1,0 +1,25 @@
+name: Unit Tests
+
+on:
+    pull_request:
+        types: [opened, reopened, synchronize]
+
+jobs:
+    Backend:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                path: /backend
+            - uses: actions/setup-node
+              with:
+                node-version: 22
+            - name: Installazione dipendenze
+              run: npm ci
+            - name: Unit testing
+              run: npm test
+    Frontend:
+        runs-on: ubuntu-latest
+        
+    Worker:
+        runs-on: ubuntu-latest
