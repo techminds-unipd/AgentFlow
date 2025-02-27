@@ -1,0 +1,53 @@
+#!Questo file serve solo per avviare tutti i servizi contemporaneamente (dev).
+services:
+  mongo:
+    image: docker.io/mongo:8.0.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongo-data:/etc/mongo:rw
+
+  mongo-express:
+    image: docker.io/mongo-express:1.0.2-20-alpine3.19
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://root:password@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+  
+  backend:
+    image: docker.io/node:22.14.0-alpine3.21
+    ports:
+      - "3000:3000"
+    working_dir: /home/node/app
+    volumes:
+      - ./backend:/home/node/app
+    command: "npm run start:dev"
+
+  frontend:
+    image: docker.io/node:22.14.0-alpine3.21
+    ports:
+      - "80:80"
+    working_dir: /home/node/app
+    volumes:
+      - ./frontend:/home/node/app
+    command: "npm run dev --host"
+
+  worker:
+    build: ./worker
+    ports:
+      - "5000:5000"
+    develop:
+      watch:
+        - action: sync
+          path: ./worker
+          target: /usr/src/app
+        - action: rebuild
+          path: ./worker/.venv
+        - action: rebuild
+          path: ./worker/requirements.txt
+volumes:
+  mongo-data:
