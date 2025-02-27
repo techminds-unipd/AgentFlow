@@ -19,27 +19,44 @@ services:
       ME_CONFIG_BASICAUTH: false
   
   backend:
-    image: docker.io/node:22.14.0-alpine3.21
+    image: mvp-backend
+    build: ./backend
+    #--DEBUG-- da tenere per swagger
     ports:
       - "3000:3000"
-    working_dir: /home/node/app
-    volumes:
-      - ./backend:/home/node/app
-    command: "npm run start:dev"
+    #-------
+    develop:
+      watch:
+        - action: sync
+          path: ./backend
+          target: /app
+        - action: rebuild
+          path: ./backend/package.json
+        - action: rebuild
+          path: ./backend/package-logck.json
 
   frontend:
-    image: docker.io/node:22.14.0-alpine3.21
+    image: mvp-frontend
+    build: ./frontend
     ports:
-      - "80:80"
-    working_dir: /home/node/app
-    volumes:
-      - ./frontend:/home/node/app
-    command: "npm run dev --host"
+      - "80:5173"
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend
+          target: /app
+        - action: rebuild
+          path: ./frontend/package.json
+        - action: rebuild
+          path: ./frontend/package-logck.json
 
   worker:
+    image: mvp-worker
     build: ./worker
+    #--DEBUG--
     ports:
       - "5000:5000"
+    #---------
     develop:
       watch:
         - action: sync
