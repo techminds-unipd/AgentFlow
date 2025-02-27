@@ -14,13 +14,17 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v4
               with:
-                path: 'backend'
-            - name: Upload artifacts
-              uses: actions/upload-artifact@v4
-              with:
-                path: ./
-            #- run: cd backend
-            #- uses: actions/setup-node@v4
+                path: './backend'
+            #- name: Upload artifacts
+            #  uses: actions/upload-artifact@v4
+            #  with:
+            #    path: ./
+            - name: Cd backend
+              run: cd backend
+            - name: ls
+              run: ls -lag
+            #- name: Setup Node 22
+            #  uses: actions/setup-node@v4
             #  with:
             #    node-version: 22
             #- name: Installazione dipendenze
