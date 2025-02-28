@@ -39,7 +39,7 @@ services:
     image: mvp-frontend
     build: ./frontend
     ports:
-      - "80:5173"
+      - "8080:5173"
     develop:
       watch:
         - action: sync
