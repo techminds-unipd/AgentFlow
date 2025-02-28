@@ -3,7 +3,7 @@ Monorepo dell'MVP del progetto di SWE del gruppo <span style="color:#f16610">**T
 La documentazione del progetto è in [techminds-unipd.github.io/docs](https://techminds-unipd.github.io/docs).
 
 Il progetto si compone di tre parti:
-- `/frontend`: React+Vite
+- `/frontend`: React + Vite
 - `/backend`: NestJS
 - `/worker`: Python + Flask
 
