@@ -50,9 +50,9 @@ services:
         - action: rebuild
           path: ./frontend/package-logck.json
 
-  worker:
-    image: mvp-worker
-    build: ./worker
+  agente:
+    image: mvp-agente
+    build: ./agente
     #--DEBUG--
     ports:
       - "5000:5000"
@@ -60,11 +60,11 @@ services:
     develop:
       watch:
         - action: sync
-          path: ./worker
+          path: ./agente
           target: /usr/src/app
         - action: rebuild
-          path: ./worker/.venv
+          path: ./agente/.venv
         - action: rebuild
-          path: ./worker/requirements.txt
+          path: ./agente/requirements.txt
 volumes:
   mongo-data:

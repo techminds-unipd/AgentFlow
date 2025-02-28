@@ -31,7 +31,7 @@ jobs:
     #Frontend:
     #   runs-on: ubuntu-latest
         
-    Worker:
+    Agente:
         runs-on: ubuntu-latest
         steps:
           - name: Checkout
@@ -42,6 +42,6 @@ jobs:
               python-version: '3.13'
               cache: 'pip'
           - name: Installazione dipendenze
-            run: pip install -r ./worker/requirements.txt
+            run: pip install -r ./agente/requirements.txt
           - name: Unit testing
-            run: pytest ./worker
+            run: pytest ./agente

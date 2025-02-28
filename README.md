@@ -5,7 +5,7 @@ La documentazione del progetto è in [techminds-unipd.github.io/docs](https://te
 Il progetto si compone di tre parti:
 - `/frontend`: React + Vite
 - `/backend`: NestJS
-- `/worker`: Python + Flask
+- `/agente`: Python + Flask
 
 È possibile avviare tutta l'infrastruttura col comando
 ```
