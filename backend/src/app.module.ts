@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from './user/UserModule';
+import { RegisterUserModule } from './user/RegisterUserModule';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [UserModule,
+  imports: [RegisterUserModule,
     MongooseModule.forRoot('mongodb://root:password@mongo:27017/')
   ],
   controllers: [AppController],
