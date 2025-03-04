@@ -6,6 +6,8 @@ import {
     Controller,
     Delete,
     Get,
+    HttpException,
+    HttpStatus,
     Inject,
     Param,
     Post,
@@ -28,13 +30,13 @@ class RegisterUserController {
     @Post("/register")
     async registerUser(@Body() req: UserDTO): Promise<UserDTO> {
         const user = this.toDomain(req);
-        //try{
-        const response = await this.registerUserUseCase.registerUser(user);
-        return this.toDTO(response);
-        //}
-        //catch(err){
-        //    throw new Error(err);
-        //}
+        try{
+            const response = await this.registerUserUseCase.registerUser(user);
+            return this.toDTO(response);
+        }
+        catch(err){
+            throw new HttpException("TODO: qua arrivano errori di business e db", HttpStatus.BAD_REQUEST);
+        }
     }
   
 }
