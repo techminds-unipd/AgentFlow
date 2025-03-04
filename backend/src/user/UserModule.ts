@@ -27,4 +27,4 @@ import LoginService from './service/LoginService';
     UserRepository
   ]
 })
-export class RegisterUserModule {}
+export class UserModule {}
