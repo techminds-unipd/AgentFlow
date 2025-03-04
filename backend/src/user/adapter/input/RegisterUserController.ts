@@ -10,7 +10,7 @@ import {
     Param,
     Post,
     Put,
-  } from '@nestjs/common';
+} from '@nestjs/common';
 
 
 @Controller("user")

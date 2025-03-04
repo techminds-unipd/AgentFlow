@@ -25,13 +25,10 @@ class UserPortAdapter implements GetUserPort, RegisterUserPort {
         };
     }
 
-    async getUserByUsername(username: string): Promise<User> {
+    async getUserByUsername(username: string): Promise<User | null> {
         const user = await this.userRepository.getUserByUsername(username);
+        if (!user) return null;
         return this.toDomain(user);
-    }
-
-    async checkUserExists(username: string): Promise<boolean> {
-        return await this.userRepository.checkUserExists(username);
     }
 
     async registerUser(user: User): Promise<User> {
@@ -40,6 +37,5 @@ class UserPortAdapter implements GetUserPort, RegisterUserPort {
         return this.toDomain(registeredUser);
     }
 }
-
 
 export default UserPortAdapter;

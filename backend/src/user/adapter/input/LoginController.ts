@@ -3,6 +3,8 @@ import {
     Controller,
     Delete,
     Get,
+    HttpException,
+    HttpStatus,
     Inject,
     Param,
     Post,
@@ -11,11 +13,16 @@ import {
 import { LOGIN_USE_CASE, LoginUseCase } from 'src/user/service/port/input/LoginUseCase';
 import User from 'src/user/domain/User';
 import UserDTO from './UserDTO';
+import { JwtService } from '@nestjs/jwt';
 
+type JWT = { readonly accessToken: string };
 
 @Controller("user")
 class LoginController {
-    constructor(@Inject(LOGIN_USE_CASE) private readonly loginUseCase: LoginUseCase) {}
+    constructor(
+        @Inject(LOGIN_USE_CASE) private readonly loginUseCase: LoginUseCase, 
+        private jwtService: JwtService
+    ) {}
 
     private toDomain(userDTO: UserDTO): User {
         return new User(userDTO.username, userDTO.password);
@@ -27,14 +34,17 @@ class LoginController {
 
 
     @Post("/login")
-    async login(@Body() req: UserDTO): Promise<boolean> {
+    async login(@Body() req: UserDTO): Promise<JWT> {
         const user = this.toDomain(req);
-        //try{
-        return await this.loginUseCase.login(user);
-        //}
-        //catch(err){
-        //    throw new Error(err);
-        //}
+        try{
+            const loggedUser = await this.loginUseCase.login(user);
+            const payload = { username: loggedUser.username };
+            return { accessToken: await this.jwtService.signAsync(payload) };
+        }
+        catch(err){
+            throw new HttpException("TODO: qua arrivano errori di business e db", HttpStatus.BAD_REQUEST);
+        }
+        
     }
 }
 

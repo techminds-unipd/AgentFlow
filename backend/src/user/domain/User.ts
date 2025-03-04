@@ -1,14 +1,18 @@
+import * as bcrypt from 'bcrypt';
+
 class User {
-    private _username: string;
-    private _password: string;
+    readonly username: string;
+    readonly password: string;
 
     constructor(username: string, password: string) {
-        this._username = username;
-        this._password = password;
+        this.username = username;
+        this.password = password;
     }
 
-    get username() { return this._username; }
-    get password() { return this._password; }
+    async hashPassword(): Promise<User> {
+        const salt = 10;
+        return new User(this.username, await bcrypt.hash(this.password, salt));
+    }
 }
 
 export default User;
