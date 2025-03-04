@@ -1,7 +1,7 @@
 import User from '../domain/User';
-import RegisterUserPort from './port/out/RegisterUserPort';
-import GetUserPort from './port/out/GetUserPort';   
-import RegisterUserUseCase from './port/in/RegisterUserUseCase';
+import RegisterUserPort from './port/output/RegisterUserPort';
+import GetUserPort from './port/output/GetUserPort';   
+import RegisterUserUseCase from './port/input/RegisterUserUseCase';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

@@ -1,10 +1,10 @@
 import { Get, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import RegisterUserController from './adapter/in/RegisterUserController';
+import RegisterUserController from './adapter/input/RegisterUserController';
 import RegisterUserService from './service/RegisterUserService';
-import { UserEntity, UserEntitySchema } from './adapter/out/UserEntity';
-import { UserRepository } from './adapter/out/UserRepository';
-import UserPortAdapter from './adapter/out/UserPortAdapter';
+import { UserEntity, UserEntitySchema } from './adapter/output/UserEntity';
+import { UserRepository } from './adapter/output/UserRepository';
+import UserPortAdapter from './adapter/output/UserPortAdapter';
 
 
 @Module({
