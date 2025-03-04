@@ -1,7 +1,7 @@
 import User from '../../../domain/User';
 
-interface LoginUseCase {
-    login(user: User): boolean;
+export interface LoginUseCase {
+    login(user: User): Promise<boolean>;
 }
 
-export default LoginUseCase;
+export const LOGIN_USE_CASE = 'LOGIN_USE_CASE';

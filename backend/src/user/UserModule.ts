@@ -8,14 +8,23 @@ import UserPortAdapter from './adapter/output/UserPortAdapter';
 import { GET_USER_PORT } from './service/port/output/GetUserPort';
 import { REGISTER_USER_PORT } from './service/port/output/RegisterUserPort';
 import { REGISTER_USER_USE_CASE } from './service/port/input/RegisterUserUseCase';
+import LoginController from './adapter/input/LoginController';
+import { LOGIN_USE_CASE } from './service/port/input/LoginUseCase';
+import LoginService from './service/LoginService';
 
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: UserEntity.name, schema: UserEntitySchema }]),
-
   ],
-  controllers: [RegisterUserController],
-  providers: [{provide: REGISTER_USER_USE_CASE, useClass: RegisterUserService}, UserRepository, {provide: REGISTER_USER_PORT, useClass: UserPortAdapter}, {provide: GET_USER_PORT, useClass: UserPortAdapter}],
+  controllers: [RegisterUserController, LoginController],
+
+  providers: [
+    {provide: REGISTER_USER_USE_CASE, useClass: RegisterUserService},
+    {provide: LOGIN_USE_CASE, useClass: LoginService},
+    {provide: REGISTER_USER_PORT, useClass: UserPortAdapter},
+    {provide: GET_USER_PORT, useClass: UserPortAdapter},
+    UserRepository
+  ]
 })
-export class RegisterUserModule {}
+export class UserModule {}
