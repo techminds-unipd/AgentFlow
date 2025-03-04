@@ -1,5 +1,10 @@
+import { ApiProperty } from "@nestjs/swagger";
+
+
 class UserDTO {
+    @ApiProperty()
     private _username: string;
+    @ApiProperty()
     private _password: string;
 
     constructor(username: string, password: string) {
