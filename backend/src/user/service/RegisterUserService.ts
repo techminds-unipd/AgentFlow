@@ -1,17 +1,20 @@
 import User from '../domain/User';
-import RegisterUserPort from './port/output/RegisterUserPort';
-import GetUserPort from './port/output/GetUserPort';   
-import RegisterUserUseCase from './port/input/RegisterUserUseCase';
-import { Injectable } from '@nestjs/common';
+import { REGISTER_USER_PORT, RegisterUserPort } from './port/output/RegisterUserPort';
+import { GET_USER_PORT, GetUserPort } from './port/output/GetUserPort';   
+import { RegisterUserUseCase } from './port/input/RegisterUserUseCase';
+import { Inject, Injectable } from '@nestjs/common';
+
 
 @Injectable()
 class RegisterUserService implements RegisterUserUseCase {
 
-    constructor(private readonly registerUserPort: RegisterUserPort,
-                private readonly getUserPort: GetUserPort) {}
+    constructor(@Inject(REGISTER_USER_PORT) private readonly registerUserPort: RegisterUserPort) {}
 
     async registerUser(user: User): Promise<User> {
-        const newUser = await this.getUserPort.getUserByUsername(user.username);
+        const foundUser = await this.registerUserPort.checkUserExists(user.username);
+        if (foundUser) {
+            throw new Error('User already exists');
+        }
         return await this.registerUserPort.registerUser(user);
     }
 }

@@ -1,7 +1,7 @@
 import User from "src/user/domain/User";
 import { UserRepository } from "./UserRepository";
-import GetUserPort from "src/user/service/port/output/GetUserPort";
-import RegisterUserPort from "src/user/service/port/output/RegisterUserPort";
+import { GetUserPort } from "src/user/service/port/output/GetUserPort";
+import { RegisterUserPort } from "src/user/service/port/output/RegisterUserPort";
 import { Injectable } from "@nestjs/common";
 import { UserEntity } from "./UserEntity";
 
@@ -11,6 +11,9 @@ class UserPortAdapter implements GetUserPort, RegisterUserPort {
     constructor(private readonly userRepository: UserRepository) {}
 
     private toDomain(userEntity: UserEntity): User {
+        if(!userEntity) {
+            
+        }
         return new User(userEntity.username, userEntity.password);
     }
 
@@ -25,6 +28,10 @@ class UserPortAdapter implements GetUserPort, RegisterUserPort {
     async getUserByUsername(username: string): Promise<User> {
         const user = await this.userRepository.getUserByUsername(username);
         return this.toDomain(user);
+    }
+
+    async checkUserExists(username: string): Promise<boolean> {
+        return await this.userRepository.checkUserExists(username);
     }
 
     async registerUser(user: User): Promise<User> {

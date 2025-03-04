@@ -14,7 +14,15 @@ export class UserRepository {
         if (!user) {
             throw new Error('User not found');
         }
-        return user;
+        return user as UserEntity;
+    }
+
+    async checkUserExists(username: string): Promise<boolean> {
+        const user = await this.userEntityModel.findOne({ username: username }).exec();
+        if (user) {
+            return true;
+        }
+        return false;
     }
 
     async registerUser(user: UserEntity): Promise<UserEntity> {

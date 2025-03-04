@@ -1,19 +1,21 @@
-import RegisterUserService from "src/user/service/RegisterUserService";
 import UserDTO from "./UserDTO";
 import User from "src/user/domain/User";
+import { REGISTER_USER_USE_CASE, RegisterUserUseCase } from "src/user/service/port/input/RegisterUserUseCase";
 import {
     Body,
     Controller,
     Delete,
     Get,
+    Inject,
     Param,
     Post,
     Put,
   } from '@nestjs/common';
 
+
 @Controller("user")
 class RegisterUserController {
-    constructor(private readonly registerUserService: RegisterUserService) {}
+    constructor(@Inject(REGISTER_USER_USE_CASE) private readonly registerUserUseCase: RegisterUserUseCase) {}
 
     private toDomain(userDTO: UserDTO): User {
         return new User(userDTO.username, userDTO.password);
@@ -26,13 +28,13 @@ class RegisterUserController {
     @Post("/register")
     async registerUser(@Body() req: UserDTO): Promise<UserDTO> {
         const user = this.toDomain(req);
-        try{
-            const response = await this.registerUserService.registerUser(user);
-            return this.toDTO(response);
-        }
-        catch(err){
-            throw new Error(err);
-        }
+        //try{
+        const response = await this.registerUserUseCase.registerUser(user);
+        return this.toDTO(response);
+        //}
+        //catch(err){
+        //    throw new Error(err);
+        //}
     }
   
 }

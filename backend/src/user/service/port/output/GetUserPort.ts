@@ -1,7 +1,7 @@
 import User from '../../../domain/User';
 
-interface GetUserPort {
+export interface GetUserPort {
     getUserByUsername(username:string): Promise<User>;
 }
 
-export default GetUserPort;
+export const GET_USER_PORT = 'GET_USER_PORT';

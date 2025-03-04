@@ -1,7 +1,7 @@
 import User from '../../../domain/User';
 
-interface RegisterUserUseCase {
+export interface RegisterUserUseCase {
     registerUser(user: User): Promise<User>;
 }
 
-export default RegisterUserUseCase;
+export const REGISTER_USER_USE_CASE = 'REGISTER_USER_USE_CASE';

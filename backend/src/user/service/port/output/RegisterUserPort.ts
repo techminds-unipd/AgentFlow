@@ -1,7 +1,8 @@
 import User from '../../../domain/User';
 
-interface RegisterUserPort {
+export interface RegisterUserPort {
+    checkUserExists(username: string): Promise<boolean>;
     registerUser(user: User): Promise<User>;
 }
 
-export default RegisterUserPort;
+export const REGISTER_USER_PORT = 'REGISTER_USER_PORT';
