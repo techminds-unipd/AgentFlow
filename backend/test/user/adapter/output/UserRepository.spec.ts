@@ -46,14 +46,14 @@ describe('UserRepository', () => {
         });
     });
 
-    /*
+    
     describe('registerUser', () => {
         it('should return the registered user', async () => {
-            jest.spyOn(userEntityModelMock, 'create').mockResolvedValue(userEntityMock);
+            jest.spyOn(userEntityModelMock, 'create').mockResolvedValue(userEntityMock as any);
             const result = await userRepository.registerUser({username: 'test', password: 'test', workflows: []} as UserEntity);
-            expect(result).toEqual(userEntityMock);
+            expect(result).toEqual(userEntityMock as UserEntity);
         });
     });
-    */ 
+    
 
 });
