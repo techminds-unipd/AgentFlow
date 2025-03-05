@@ -4,15 +4,13 @@ import { REGISTER_USER_USE_CASE, RegisterUserUseCase } from "src/user/service/po
 import {
     Body,
     Controller,
-    Delete,
-    Get,
     HttpException,
     HttpStatus,
     Inject,
-    Param,
     Post,
-    Put,
 } from '@nestjs/common';
+import { MongooseError } from 'mongoose';
+import {UserAlreadyExistsError} from 'src/BusinessErrors';
 
 
 @Controller("user")
@@ -35,10 +33,16 @@ class RegisterUserController {
             return this.toDTO(response);
         }
         catch(err){
-            throw new HttpException("TODO: qua arrivano errori di business e db", HttpStatus.BAD_REQUEST);
+            if (err instanceof MongooseError) {
+                throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            if (err instanceof UserAlreadyExistsError) {
+                throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
+            }
+
+            throw new Error("Unreachable");
         }
     }
-  
 }
 
 export default RegisterUserController;

@@ -3,7 +3,7 @@ import { REGISTER_USER_PORT, RegisterUserPort } from './port/output/RegisterUser
 import { GET_USER_PORT, GetUserPort } from './port/output/GetUserPort';
 import { RegisterUserUseCase } from './port/input/RegisterUserUseCase';
 import { Inject, Injectable } from '@nestjs/common';
-
+import { UserAlreadyExistsError } from 'src/BusinessErrors';
 
 @Injectable()
 class RegisterUserService implements RegisterUserUseCase {
@@ -13,7 +13,7 @@ class RegisterUserService implements RegisterUserUseCase {
     async registerUser(user: User): Promise<User> {
         const foundUser = await this.getUserPort.getUserByUsername(user.username);
         if (foundUser) {
-            throw new Error('User already exists');
+            throw new UserAlreadyExistsError();
         }
         return await this.registerUserPort.registerUser(await user.hashPassword());
     }
