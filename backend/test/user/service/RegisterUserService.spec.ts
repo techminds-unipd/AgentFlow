@@ -3,8 +3,6 @@ import User from 'src/user/domain/User';
 import RegisterUserService from 'src/user/service/RegisterUserService';
 import { GET_USER_PORT } from 'src/user/service/port/output/GetUserPort';
 import { REGISTER_USER_PORT } from 'src/user/service/port/output/RegisterUserPort';
-import { HttpException, HttpStatus } from '@nestjs/common';
-import {MongooseError} from 'mongoose';
 import { UserAlreadyExistsError } from 'src/BusinessErrors';
 
 describe('RegisterUserService', () => {
