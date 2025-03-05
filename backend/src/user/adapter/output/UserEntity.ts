@@ -6,13 +6,13 @@ export type UserDocument = HydratedDocument<UserEntity>;
 
 @Schema()
 export class UserEntity {
-    @Prop()
+    @Prop({ required: true })
     username: string;
 
-    @Prop()
+    @Prop({ required: true })
     password: string;
 
-    @Prop()
+    @Prop({ required: true })
     workflows: WorkflowEntity[];
 }
 
