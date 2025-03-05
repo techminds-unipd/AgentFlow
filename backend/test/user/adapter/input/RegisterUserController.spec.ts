@@ -36,6 +36,18 @@ describe('RegisterUserController', () => {
             registerUseCaseMock.registerUser.mockResolvedValue(new User("Gianni", "Testing1234"));
             expect(await registerUserController.registerUser(new UserDTO("Gianni", "Testing1234"))).toEqual(new UserDTO("Gianni", "Testing1234"));
         });
+        
+        it('should throw HttpException because the database throws an exception', async () => {
+            registerUseCaseMock.registerUser.mockImplementation(() => {
+                throw new MongooseError("");
+            });
+            try {
+                await registerUserController.registerUser(new UserDTO("Gianni", "Testing1234"));
+            } catch (err) {
+                expect(err).toBeInstanceOf(HttpException);
+                expect(err.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        });
 
         it('should throw HttpException because username already exists', async () => {
             registerUseCaseMock.registerUser.mockImplementation(() => {
@@ -46,18 +58,6 @@ describe('RegisterUserController', () => {
             } catch (err) {
                 expect(err).toBeInstanceOf(HttpException);
                 expect(err.status).toBe(HttpStatus.BAD_REQUEST);
-            }
-        });
-
-        it('should throw HttpException because the database throws an exception', async () => {
-            registerUseCaseMock.registerUser.mockImplementation(() => {
-                throw new MongooseError("");
-            });
-            try {
-                await registerUserController.registerUser(new UserDTO("Gianni", "Testing1234"));
-            } catch (err) {
-                expect(err).toBeInstanceOf(HttpException);
-                expect(err.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         });
     });
