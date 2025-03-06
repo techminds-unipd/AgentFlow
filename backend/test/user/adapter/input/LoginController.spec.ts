@@ -12,9 +12,9 @@ describe('LoginController', () => {
     let loginController: LoginController;
     let jwtService: { signAsync: jest.Mock };
     let loginUseCaseMock: { login: jest.Mock };
-    const userMock = new User("Gianni", "Testing1234");
-    const userDTOMock = new UserDTO("Gianni", "Testing1234");
-    const jwtMock = {"accessToken": "mockToken"};
+    const userMock = new User('Gianni', 'Testing1234');
+    const userDTOMock = new UserDTO('Gianni', 'Testing1234');
+    const jwtMock = { accessToken: 'mockToken' };
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -52,7 +52,7 @@ describe('LoginController', () => {
 
         it('should throw HttpException because the database throws an exception', async () => {
             loginUseCaseMock.login.mockImplementation(() => {
-                throw new MongooseError("");
+                throw new MongooseError('');
             });
             try {
                 await loginController.login(userDTOMock);
@@ -74,7 +74,7 @@ describe('LoginController', () => {
             }
         });
 
-        it('should throw HttpException because password doesn\'t match', async () => {
+        it("should throw HttpException because password doesn't match", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new WrongPasswordError();
             });

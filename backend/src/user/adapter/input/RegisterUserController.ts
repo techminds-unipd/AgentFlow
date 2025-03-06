@@ -1,6 +1,9 @@
-import UserDTO from "./UserDTO";
-import User from "src/user/domain/User";
-import { REGISTER_USER_USE_CASE, RegisterUserUseCase } from "src/user/service/port/input/RegisterUserUseCase";
+import UserDTO from './UserDTO';
+import User from 'src/user/domain/User';
+import {
+    REGISTER_USER_USE_CASE,
+    RegisterUserUseCase,
+} from 'src/user/service/port/input/RegisterUserUseCase';
 import {
     Body,
     Controller,
@@ -10,12 +13,14 @@ import {
     Post,
 } from '@nestjs/common';
 import { MongooseError } from 'mongoose';
-import {UserAlreadyExistsError} from 'src/BusinessErrors';
+import { UserAlreadyExistsError } from 'src/BusinessErrors';
 
-
-@Controller("user")
+@Controller('user')
 class RegisterUserController {
-    constructor(@Inject(REGISTER_USER_USE_CASE) private readonly registerUserUseCase: RegisterUserUseCase) {}
+    constructor(
+        @Inject(REGISTER_USER_USE_CASE)
+        private readonly registerUserUseCase: RegisterUserUseCase,
+    ) {}
 
     private toDomain(userDTO: UserDTO): User {
         return new User(userDTO.username, userDTO.password);
@@ -24,23 +29,28 @@ class RegisterUserController {
     private toDTO(user: User): UserDTO {
         return new UserDTO(user.username, user.password);
     }
-    
-    @Post("/register")
+
+    @Post('/register')
     async registerUser(@Body() req: UserDTO): Promise<UserDTO> {
         const user = this.toDomain(req);
-        try{
+        try {
             const response = await this.registerUserUseCase.registerUser(user);
             return this.toDTO(response);
-        }
-        catch(err){
+        } catch (err) {
             if (err instanceof MongooseError) {
-                throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+                throw new HttpException(
+                    'Internal server error',
+                    HttpStatus.INTERNAL_SERVER_ERROR,
+                );
             }
             if (err instanceof UserAlreadyExistsError) {
-                throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
+                throw new HttpException(
+                    'Username already exists',
+                    HttpStatus.BAD_REQUEST,
+                );
             }
 
-            throw new Error("Unreachable");
+            throw new Error('Unreachable');
         }
     }
 }

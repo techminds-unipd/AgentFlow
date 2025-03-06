@@ -4,17 +4,16 @@ abstract class BusinessError extends Error {
 }
 
 export class UserAlreadyExistsError extends BusinessError {
-    name = "UserAlredyExists";
-    message = "Attempted to register a user that is already been saved";
+    name = 'UserAlredyExists';
+    message = 'Attempted to register a user that is already been saved';
 }
 
 export class UserNotFoundError extends BusinessError {
-    name = "UserNotFoundError";
-    message = "User not found when attempt to login";
+    name = 'UserNotFoundError';
+    message = 'User not found when attempt to login';
 }
 
 export class WrongPasswordError extends BusinessError {
-    name = "WrongPasswordError";
+    name = 'WrongPasswordError';
     message = "Password doesn't match when attempt to login";
 }
-

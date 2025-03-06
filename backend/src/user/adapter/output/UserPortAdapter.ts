@@ -1,19 +1,15 @@
-import User from "src/user/domain/User";
-import { UserRepository } from "./UserRepository";
-import { GetUserPort } from "src/user/service/port/output/GetUserPort";
-import { RegisterUserPort } from "src/user/service/port/output/RegisterUserPort";
-import { Injectable } from "@nestjs/common";
-import { UserEntity } from "./UserEntity";
+import User from 'src/user/domain/User';
+import { UserRepository } from './UserRepository';
+import { GetUserPort } from 'src/user/service/port/output/GetUserPort';
+import { RegisterUserPort } from 'src/user/service/port/output/RegisterUserPort';
+import { Injectable } from '@nestjs/common';
+import { UserEntity } from './UserEntity';
 
 @Injectable()
 class UserPortAdapter implements GetUserPort, RegisterUserPort {
-
     constructor(private readonly userRepository: UserRepository) {}
 
     private toDomain(userEntity: UserEntity): User {
-        if(!userEntity) {
-            
-        }
         return new User(userEntity.username, userEntity.password);
     }
 
@@ -21,7 +17,7 @@ class UserPortAdapter implements GetUserPort, RegisterUserPort {
         return {
             username: user.username,
             password: user.password,
-            workflows: []
+            workflows: [],
         };
     }
 

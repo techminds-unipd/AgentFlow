@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-
 export type UserDocument = HydratedDocument<UserEntity>;
 
 @Schema()
@@ -16,8 +15,7 @@ export class UserEntity {
     workflows: WorkflowEntity[];
 }
 
-export const UserEntitySchema = SchemaFactory.createForClass(UserEntity);
-
+export const userEntitySchema = SchemaFactory.createForClass(UserEntity);
 
 class NodeEntity {
     type: string;
@@ -30,4 +28,3 @@ class WorkflowEntity {
     name: string;
     nodes: NodeEntity[];
 }
-

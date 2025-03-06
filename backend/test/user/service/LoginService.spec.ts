@@ -7,7 +7,7 @@ import { UserNotFoundError, WrongPasswordError } from 'src/BusinessErrors';
 describe('LoginService', () => {
     let loginService: LoginService;
     let getUserPortMock: { getUserByUsername: jest.Mock };
-    const userMock = new User("Gianni", "Testing1234");
+    const userMock = new User('Gianni', 'Testing1234');
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -36,25 +36,24 @@ describe('LoginService', () => {
             expect(await loginService.login(userMock)).toEqual(userDB);
         });
 
-        it('shouldn\'t login the user because the username was not found in the database', async () => {
+        it("shouldn't login the user because the username was not found in the database", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
             try {
                 await loginService.login(userMock);
-            }
-            catch (err) {
+            } catch (err) {
                 expect(err).toBeInstanceOf(UserNotFoundError);
             }
         });
 
-        it('shouldn\'t login the user because password doesn\'t match', async () => {
-            getUserPortMock.getUserByUsername.mockResolvedValue(userMock.hashPassword());
+        it("shouldn't login the user because password doesn't match", async () => {
+            getUserPortMock.getUserByUsername.mockResolvedValue(
+                userMock.hashPassword(),
+            );
             try {
                 await loginService.login(userMock);
-            }
-            catch (err) {
+            } catch (err) {
                 expect(err).toBeInstanceOf(WrongPasswordError);
             }
         });
     });
-
 });
