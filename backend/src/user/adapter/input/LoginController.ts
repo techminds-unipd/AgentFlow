@@ -5,20 +5,20 @@ import {
     HttpStatus,
     Inject,
     Post,
-} from '@nestjs/common';
+} from "@nestjs/common";
 import {
     LOGIN_USE_CASE,
     LoginUseCase,
-} from 'src/user/service/port/input/LoginUseCase';
-import User from 'src/user/domain/User';
-import UserDTO from './UserDTO';
-import { JwtService } from '@nestjs/jwt';
-import { MongooseError } from 'mongoose';
-import { UserNotFoundError, WrongPasswordError } from 'src/BusinessErrors';
+} from "src/user/service/port/input/LoginUseCase";
+import User from "src/user/domain/User";
+import UserDTO from "./UserDTO";
+import { JwtService } from "@nestjs/jwt";
+import { MongooseError } from "mongoose";
+import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 
 type JWT = { readonly accessToken: string };
 
-@Controller('user')
+@Controller("user")
 class LoginController {
     constructor(
         @Inject(LOGIN_USE_CASE) private readonly loginUseCase: LoginUseCase,
@@ -33,7 +33,7 @@ class LoginController {
         return new UserDTO(user.username, user.password);
     }
 
-    @Post('/login')
+    @Post("/login")
     async login(@Body() req: UserDTO): Promise<JWT> {
         const user = this.toDomain(req);
         try {
@@ -43,7 +43,7 @@ class LoginController {
         } catch (err) {
             if (err instanceof MongooseError) {
                 throw new HttpException(
-                    'Internal server error',
+                    "Internal server error",
                     HttpStatus.INTERNAL_SERVER_ERROR,
                 );
             }
@@ -52,12 +52,12 @@ class LoginController {
                 err instanceof WrongPasswordError
             ) {
                 throw new HttpException(
-                    'Wrong credentials',
+                    "Wrong credentials",
                     HttpStatus.BAD_REQUEST,
                 );
             }
 
-            throw new Error('Unreachable');
+            throw new Error("Unreachable");
         }
     }
 }

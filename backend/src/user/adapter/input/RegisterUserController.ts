@@ -1,9 +1,9 @@
-import UserDTO from './UserDTO';
-import User from 'src/user/domain/User';
+import UserDTO from "./UserDTO";
+import User from "src/user/domain/User";
 import {
     REGISTER_USER_USE_CASE,
     RegisterUserUseCase,
-} from 'src/user/service/port/input/RegisterUserUseCase';
+} from "src/user/service/port/input/RegisterUserUseCase";
 import {
     Body,
     Controller,
@@ -11,11 +11,11 @@ import {
     HttpStatus,
     Inject,
     Post,
-} from '@nestjs/common';
-import { MongooseError } from 'mongoose';
-import { UserAlreadyExistsError } from 'src/BusinessErrors';
+} from "@nestjs/common";
+import { MongooseError } from "mongoose";
+import { UserAlreadyExistsError } from "src/BusinessErrors";
 
-@Controller('user')
+@Controller("user")
 class RegisterUserController {
     constructor(
         @Inject(REGISTER_USER_USE_CASE)
@@ -30,7 +30,7 @@ class RegisterUserController {
         return new UserDTO(user.username, user.password);
     }
 
-    @Post('/register')
+    @Post("/register")
     async registerUser(@Body() req: UserDTO): Promise<UserDTO> {
         const user = this.toDomain(req);
         try {
@@ -39,18 +39,18 @@ class RegisterUserController {
         } catch (err) {
             if (err instanceof MongooseError) {
                 throw new HttpException(
-                    'Internal server error',
+                    "Internal server error",
                     HttpStatus.INTERNAL_SERVER_ERROR,
                 );
             }
             if (err instanceof UserAlreadyExistsError) {
                 throw new HttpException(
-                    'Username already exists',
+                    "Username already exists",
                     HttpStatus.BAD_REQUEST,
                 );
             }
 
-            throw new Error('Unreachable');
+            throw new Error("Unreachable");
         }
     }
 }

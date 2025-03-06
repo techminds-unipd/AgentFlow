@@ -1,9 +1,9 @@
-import User from 'src/user/domain/User';
-import { UserRepository } from './UserRepository';
-import { GetUserPort } from 'src/user/service/port/output/GetUserPort';
-import { RegisterUserPort } from 'src/user/service/port/output/RegisterUserPort';
-import { Injectable } from '@nestjs/common';
-import { UserEntity } from './UserEntity';
+import User from "src/user/domain/User";
+import { UserRepository } from "./UserRepository";
+import { GetUserPort } from "src/user/service/port/output/GetUserPort";
+import { RegisterUserPort } from "src/user/service/port/output/RegisterUserPort";
+import { Injectable } from "@nestjs/common";
+import { UserEntity } from "./UserEntity";
 
 @Injectable()
 class UserPortAdapter implements GetUserPort, RegisterUserPort {

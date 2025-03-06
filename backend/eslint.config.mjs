@@ -27,13 +27,13 @@ export default tseslint.config(
     },
     {
         rules: {
-            "@typescript-eslint/no-explicit-any": 'warn',
-            "@typescript-eslint/no-floating-promises": 'warn',
-            "@typescript-eslint/no-unsafe-argument": 'warn',
-            "@typescript-eslint/default-param-last": 'warn',
-            "@typescript-eslint/dot-notation": 'warn',
-            "@typescript-eslint/explicit-function-return-type": 'warn',
-            "@typescript-eslint/explicit-module-boundary-types": 'warn',
+            "@typescript-eslint/no-explicit-any": "warn",
+            "@typescript-eslint/no-floating-promises": "warn",
+            "@typescript-eslint/no-unsafe-argument": "warn",
+            "@typescript-eslint/default-param-last": "warn",
+            "@typescript-eslint/dot-notation": "warn",
+            "@typescript-eslint/explicit-function-return-type": "warn",
+            "@typescript-eslint/explicit-module-boundary-types": "warn",
             "@typescript-eslint/naming-convention": [
                 "warn",
                 {
@@ -59,6 +59,13 @@ export default tseslint.config(
             "@typescript-eslint/no-use-before-define": "error",
             "@typescript-eslint/strict-boolean-expressions": "error",
             "@typescript-eslint/unified-signatures": "error",
+            "no-console": "warn",
+            "no-duplicate-case": "error",
+            "eqeqeq": "error",
+            "prefer-const": "warn",
+            "no-empty": "error",
+            "no-fallthrough": "error",
+            
             "max-lines-per-function": ["error", 30],
             "complexity": ["error", { "max": 7 }],
             "max-params": ["error", 6],
