@@ -9,17 +9,11 @@ export class UserRepository {
 
     async getUserByUsername(username: string): Promise<UserEntity | null> {
         const user = await this.userEntityModel.findOne({ username: username });
-        //console.log(user);
         return user;
     }
-    /*
-    async registerUser(user: UserEntity): Promise<UserEntity> {
-        const newUser = new this.userEntityModel(user);
-        return newUser.save();
-    }*/
+
    async registerUser(user: UserEntity): Promise<UserEntity> {
         const registeredUser = await this.userEntityModel.create(user);
-        //console.log(registeredUser);
         return registeredUser;
     }
 }

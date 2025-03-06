@@ -12,6 +12,9 @@ describe('LoginController', () => {
     let loginController: LoginController;
     let jwtService: { signAsync: jest.Mock };
     let loginUseCaseMock: { login: jest.Mock };
+    const userMock = new User("Gianni", "Testing1234");
+    const userDTOMock = new UserDTO("Gianni", "Testing1234");
+    const jwtMock = {"accessToken": "mockToken"};
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -42,9 +45,9 @@ describe('LoginController', () => {
 
     describe('login', () => {
         it('should login the user', async () => {
-            loginUseCaseMock.login.mockResolvedValue(new User("Gianni", "Testing1234"));
-            jwtService.signAsync.mockResolvedValue("mockToken");
-            expect(await loginController.login(new UserDTO("Gianni", "Testing1234"))).toEqual({"accessToken": "mockToken"});
+            loginUseCaseMock.login.mockResolvedValue(userMock);
+            jwtService.signAsync.mockResolvedValue(jwtMock.accessToken);
+            expect(await loginController.login(userDTOMock)).toEqual(jwtMock);
         });
 
         it('should throw HttpException because the database throws an exception', async () => {
@@ -52,7 +55,7 @@ describe('LoginController', () => {
                 throw new MongooseError("");
             });
             try {
-                await loginController.login(new UserDTO("Gianni", "Testing1234"));
+                await loginController.login(userDTOMock);
             } catch (err) {
                 expect(err).toBeInstanceOf(HttpException);
                 expect(err.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -64,7 +67,7 @@ describe('LoginController', () => {
                 throw new UserNotFoundError();
             });
             try {
-                await loginController.login(new UserDTO("Gianni", "Testing1234"));
+                await loginController.login(userDTOMock);
             } catch (err) {
                 expect(err).toBeInstanceOf(HttpException);
                 expect(err.status).toBe(HttpStatus.BAD_REQUEST);
@@ -76,7 +79,7 @@ describe('LoginController', () => {
                 throw new WrongPasswordError();
             });
             try {
-                await loginController.login(new UserDTO("Gianni", "Testing1234"));
+                await loginController.login(userDTOMock);
             } catch (err) {
                 expect(err).toBeInstanceOf(HttpException);
                 expect(err.status).toBe(HttpStatus.BAD_REQUEST);

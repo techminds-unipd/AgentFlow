@@ -9,6 +9,7 @@ describe('RegisterUserService', () => {
     let registerUserService: RegisterUserService;
     let registerUserPortMock: { registerUser: jest.Mock };
     let getUserPortMock: { getUserByUsername: jest.Mock };
+    const userMock = new User("Gianni", "Testing1234");
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -39,18 +40,18 @@ describe('RegisterUserService', () => {
 
     describe('registerUser', () => {
         it('should register the user', async () => {
-            registerUserPortMock.registerUser.mockResolvedValue(new User("Gianni", "Testing1234"));
+            registerUserPortMock.registerUser.mockResolvedValue(userMock);
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
-            expect(await registerUserService.registerUser(new User("Gianni", "Testing1234"))).toEqual(new User("Gianni", "Testing1234"));
+            expect(await registerUserService.registerUser(userMock)).toEqual(userMock);
         });
     });
 
     describe('registerUser', () => {
         it('should not register the user because the username is already taken', async () => {
-            registerUserPortMock.registerUser.mockResolvedValue(new User("Gianni", "Testing1234"));
-            getUserPortMock.getUserByUsername.mockResolvedValue(new User("Gianni", "Testing1234"));
+            registerUserPortMock.registerUser.mockResolvedValue(userMock);
+            getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
             try {
-                await registerUserService.registerUser(new User("Gianni", "Testing1234"))
+                await registerUserService.registerUser(userMock)
             } catch (err) {
                 expect(err).toBeInstanceOf(UserAlreadyExistsError);
             }

@@ -7,6 +7,8 @@ import { UserRepository } from 'src/user/adapter/output/UserRepository';
 describe('UserPortAdapter', () => {
     let userPortAdapter: UserPortAdapter;
     let userRepositoryMock: { getUserByUsername: jest.Mock, registerUser: jest.Mock };
+    const userMock = new User("Gianni", "Testing1234");
+    const userEntityMock: UserEntity = {username: "Gianni", password: "Testing1234", workflows: []};
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -31,22 +33,20 @@ describe('UserPortAdapter', () => {
 
     describe('getUserByUsername', () => {
         it('should return the user that has the input username', async () => {
-            userRepositoryMock.getUserByUsername.mockResolvedValue({username: "Gianni", password: "Testing1234", workflows: []} as UserEntity);
-            expect(await userPortAdapter.getUserByUsername("Gianni")).toEqual(new User("Gianni", "Testing1234"));
+            userRepositoryMock.getUserByUsername.mockResolvedValue(userEntityMock);
+            expect(await userPortAdapter.getUserByUsername(userMock.username)).toEqual(userMock);
         });
-    });
 
-    describe('getUserByUsername', () => {
         it('should return null if the user doesn\'t exists', async () => {
             userRepositoryMock.getUserByUsername.mockResolvedValue(null);
-            expect(await userPortAdapter.getUserByUsername("Gianni")).toEqual(null);
+            expect(await userPortAdapter.getUserByUsername(userMock.username)).toEqual(null);
         });
     });
 
     describe('registerUser', () => {
         it('should return the registered user', async () => {
-            userRepositoryMock.registerUser.mockResolvedValue({username: "Gianni", password: "Testing1234", workflows: []} as UserEntity);
-            expect(await userPortAdapter.registerUser(new User("Gianni", "Testing1234"))).toEqual(new User("Gianni", "Testing1234"));
+            userRepositoryMock.registerUser.mockResolvedValue(userEntityMock);
+            expect(await userPortAdapter.registerUser(userMock)).toEqual(userMock);
         });
     });
 

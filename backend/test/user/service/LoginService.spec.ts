@@ -7,6 +7,7 @@ import { UserNotFoundError, WrongPasswordError } from 'src/BusinessErrors';
 describe('LoginService', () => {
     let loginService: LoginService;
     let getUserPortMock: { getUserByUsername: jest.Mock };
+    const userMock = new User("Gianni", "Testing1234");
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -30,15 +31,15 @@ describe('LoginService', () => {
 
     describe('login', () => {
         it('should login the user', async () => {
-            const userDB = await new User("Gianni", "Testing1234").hashPassword();
+            const userDB = await userMock.hashPassword();
             getUserPortMock.getUserByUsername.mockResolvedValue(userDB);
-            expect(await loginService.login(new User("Gianni", "Testing1234"))).toEqual(userDB);
+            expect(await loginService.login(userMock)).toEqual(userDB);
         });
 
         it('shouldn\'t login the user because the username was not found in the database', async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
             try {
-                await loginService.login(new User("Gianni", "Testing1234"));
+                await loginService.login(userMock);
             }
             catch (err) {
                 expect(err).toBeInstanceOf(UserNotFoundError);
@@ -46,10 +47,9 @@ describe('LoginService', () => {
         });
 
         it('shouldn\'t login the user because password doesn\'t match', async () => {
-            const userDB = await new User("Gianni", "Testing123").hashPassword();
-            getUserPortMock.getUserByUsername.mockResolvedValue(userDB);
+            getUserPortMock.getUserByUsername.mockResolvedValue(userMock.hashPassword());
             try {
-                await loginService.login(new User("Gianni", "Testing1234"));
+                await loginService.login(userMock);
             }
             catch (err) {
                 expect(err).toBeInstanceOf(WrongPasswordError);

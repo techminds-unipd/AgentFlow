@@ -10,6 +10,8 @@ import {MongooseError} from 'mongoose';
 describe('RegisterUserController', () => {
     let registerUserController: RegisterUserController;
     let registerUseCaseMock: { registerUser: jest.Mock };
+    const userMock = new User("Gianni", "Testing1234");
+    const userDTOMock = new UserDTO("Gianni", "Testing1234");
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -33,8 +35,8 @@ describe('RegisterUserController', () => {
 
     describe('registerUser', () => {
         it('should register the user', async () => {
-            registerUseCaseMock.registerUser.mockResolvedValue(new User("Gianni", "Testing1234"));
-            expect(await registerUserController.registerUser(new UserDTO("Gianni", "Testing1234"))).toEqual(new UserDTO("Gianni", "Testing1234"));
+            registerUseCaseMock.registerUser.mockResolvedValue(userMock);
+            expect(await registerUserController.registerUser(userDTOMock)).toEqual(userDTOMock);
         });
         
         it('should throw HttpException because the database throws an exception', async () => {
@@ -42,7 +44,7 @@ describe('RegisterUserController', () => {
                 throw new MongooseError("");
             });
             try {
-                await registerUserController.registerUser(new UserDTO("Gianni", "Testing1234"));
+                await registerUserController.registerUser(userDTOMock);
             } catch (err) {
                 expect(err).toBeInstanceOf(HttpException);
                 expect(err.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,7 +56,7 @@ describe('RegisterUserController', () => {
                 throw new UserAlreadyExistsError();
             });
             try {
-                await registerUserController.registerUser(new UserDTO("Gianni", "Testing1234"));
+                await registerUserController.registerUser(userDTOMock);
             } catch (err) {
                 expect(err).toBeInstanceOf(HttpException);
                 expect(err.status).toBe(HttpStatus.BAD_REQUEST);
