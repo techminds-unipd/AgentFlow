@@ -14,11 +14,7 @@ class UserPortAdapter implements GetUserPort, RegisterUserPort {
     }
 
     private toEntity(user: User): UserEntity {
-        return {
-            username: user.username,
-            password: user.password,
-            workflows: [],
-        };
+        return { username: user.username, password: user.password, workflows: [] };
     }
 
     async getUserByUsername(username: string): Promise<User | null> {

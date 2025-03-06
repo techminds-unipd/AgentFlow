@@ -13,11 +13,7 @@ import { LOGIN_USE_CASE } from "./service/port/input/LoginUseCase";
 import LoginService from "./service/LoginService";
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([
-            { name: UserEntity.name, schema: userEntitySchema },
-        ]),
-    ],
+    imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
     controllers: [RegisterUserController, LoginController],
 
     providers: [
@@ -25,7 +21,7 @@ import LoginService from "./service/LoginService";
         { provide: LOGIN_USE_CASE, useClass: LoginService },
         { provide: REGISTER_USER_PORT, useClass: UserPortAdapter },
         { provide: GET_USER_PORT, useClass: UserPortAdapter },
-        UserRepository,
-    ],
+        UserRepository
+    ]
 })
 export class UserModule {}

@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
     {
-        ignores: ['eslint.config.mjs', 'test'],
+        ignores: ['test'],
     },
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
@@ -65,13 +65,14 @@ export default tseslint.config(
             "prefer-const": "warn",
             "no-empty": "error",
             "no-fallthrough": "error",
-            
+            "curly": ["warn", "multi-or-nest"],
+            // Queste sono quelle definite in pdq
             "max-lines-per-function": ["error", 30],
             "complexity": ["error", { "max": 7 }],
             "max-params": ["error", 6],
-            "max-depth": ["error", 4],  //da mettere in pdq
-            "max-lines": ["error", 300], //da mettere in pdq
-            "max-statements": ["error", 10], //da mettere in pdq
+            "max-depth": ["error", 4],  
+            "max-lines": ["error", 300], 
+            "max-statements": ["error", 10], 
         },
     },
 );

@@ -7,22 +7,15 @@ import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 
 @Injectable()
 class LoginService implements LoginUseCase {
-    constructor(
-        @Inject(GET_USER_PORT) private readonly getUserPort: GetUserPort,
-    ) {}
+    constructor(@Inject(GET_USER_PORT) private readonly getUserPort: GetUserPort) {}
 
     async login(user: User): Promise<User> {
         const userDB = await this.getUserPort.getUserByUsername(user.username);
-        if (!userDB) {
-            throw new UserNotFoundError();
-        }
-        const passwordMatch = await bcrypt.compare(
-            user.password,
-            userDB.password,
-        );
-        if (!passwordMatch) {
-            throw new WrongPasswordError();
-        }
+        if (!userDB) throw new UserNotFoundError();
+
+        const passwordMatch = await bcrypt.compare(user.password, userDB.password);
+        if (!passwordMatch) throw new WrongPasswordError();
+
         return userDB;
     }
 }

@@ -1,15 +1,5 @@
-import {
-    Body,
-    Controller,
-    HttpException,
-    HttpStatus,
-    Inject,
-    Post,
-} from "@nestjs/common";
-import {
-    LOGIN_USE_CASE,
-    LoginUseCase,
-} from "src/user/service/port/input/LoginUseCase";
+import { Body, Controller, HttpException, HttpStatus, Inject, Post } from "@nestjs/common";
+import { LOGIN_USE_CASE, LoginUseCase } from "src/user/service/port/input/LoginUseCase";
 import User from "src/user/domain/User";
 import UserDTO from "./UserDTO";
 import { JwtService } from "@nestjs/jwt";
@@ -22,7 +12,7 @@ type JWT = { readonly accessToken: string };
 class LoginController {
     constructor(
         @Inject(LOGIN_USE_CASE) private readonly loginUseCase: LoginUseCase,
-        private readonly jwtService: JwtService,
+        private readonly jwtService: JwtService
     ) {}
 
     private toDomain(userDTO: UserDTO): User {
@@ -41,21 +31,11 @@ class LoginController {
             const payload = { username: loggedUser.username };
             return { accessToken: await this.jwtService.signAsync(payload) };
         } catch (err) {
-            if (err instanceof MongooseError) {
-                throw new HttpException(
-                    "Internal server error",
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                );
-            }
-            if (
-                err instanceof UserNotFoundError ||
-                err instanceof WrongPasswordError
-            ) {
-                throw new HttpException(
-                    "Wrong credentials",
-                    HttpStatus.BAD_REQUEST,
-                );
-            }
+            if (err instanceof MongooseError)
+                throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+
+            if (err instanceof UserNotFoundError || err instanceof WrongPasswordError)
+                throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
 
             throw new Error("Unreachable");
         }

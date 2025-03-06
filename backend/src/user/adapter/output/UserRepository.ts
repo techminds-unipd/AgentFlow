@@ -7,7 +7,7 @@ import { UserEntity } from "./UserEntity";
 export class UserRepository {
     constructor(
         @InjectModel(UserEntity.name)
-        private readonly userEntityModel: Model<UserEntity>,
+        private readonly userEntityModel: Model<UserEntity>
     ) {}
 
     async getUserByUsername(username: string): Promise<UserEntity | null> {

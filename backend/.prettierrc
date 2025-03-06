@@ -1,5 +1,8 @@
 {
   "singleQuote": false,
-  "trailingComma": "all",
-  "tabWidth": 4
+  "trailingComma": "none",
+  "tabWidth": 4,
+  "bracketSpacing": true,
+  "objectWrap": "collapse",
+  "printWidth": 120
 }

@@ -7,13 +7,9 @@ import { JwtModule } from "@nestjs/jwt";
     imports: [
         UserModule,
         MongooseModule.forRoot("mongodb://root:password@localhost:27017/"),
-        JwtModule.register({
-            global: true,
-            secret: "chiaveSegreta",
-            signOptions: { expiresIn: "60s" },
-        }),
+        JwtModule.register({ global: true, secret: "chiaveSegreta", signOptions: { expiresIn: "60s" } })
     ],
     controllers: [],
-    providers: [],
+    providers: []
 })
 export class AppModule {}
