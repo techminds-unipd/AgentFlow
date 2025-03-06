@@ -72,7 +72,7 @@ export default tseslint.config(
             "max-params": ["error", 6],
             "max-depth": ["error", 4],  
             "max-lines": ["error", 300], 
-            "max-statements": ["error", 10], 
+            "max-statements": ["error", 8], 
         },
     },
 );
