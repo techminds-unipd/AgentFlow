@@ -19,6 +19,7 @@ class RegisterUserController {
         return new UserDTO(user.username, user.password);
     }
 
+
     @Post("/register")
     async registerUser(@Body() req: UserDTO): Promise<UserDTO> {
         const user = this.toDomain(req);
