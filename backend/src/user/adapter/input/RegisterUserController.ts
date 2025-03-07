@@ -2,7 +2,6 @@ import UserDTO from "./UserDTO";
 import User from "src/user/domain/User";
 import { REGISTER_USER_USE_CASE, RegisterUserUseCase } from "src/user/service/port/input/RegisterUserUseCase";
 import { Body, Controller, HttpException, HttpStatus, Inject, Post } from "@nestjs/common";
-import { MongooseError } from "mongoose";
 import { UserAlreadyExistsError } from "src/BusinessErrors";
 
 @Controller("user")
@@ -27,13 +26,10 @@ class RegisterUserController {
             const response = await this.registerUserUseCase.registerUser(user);
             return this.toDTO(response);
         } catch (err) {
-            if (err instanceof MongooseError)
-                throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-
             if (err instanceof UserAlreadyExistsError)
                 throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
 
-            throw new Error("Unreachable");
+            throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

@@ -3,7 +3,6 @@ import { LOGIN_USE_CASE, LoginUseCase } from "src/user/service/port/input/LoginU
 import User from "src/user/domain/User";
 import UserDTO from "./UserDTO";
 import { JwtService } from "@nestjs/jwt";
-import { MongooseError } from "mongoose";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 
 type JWT = { readonly accessToken: string };
@@ -31,13 +30,10 @@ class LoginController {
             const payload = { username: loggedUser.username };
             return { accessToken: await this.jwtService.signAsync(payload) };
         } catch (err) {
-            if (err instanceof MongooseError)
-                throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-
             if (err instanceof UserNotFoundError || err instanceof WrongPasswordError)
                 throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
 
-            throw new Error("Unreachable");
+            throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

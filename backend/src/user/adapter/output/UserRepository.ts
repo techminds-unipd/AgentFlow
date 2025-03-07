@@ -11,7 +11,7 @@ export class UserRepository {
     ) {}
 
     async getUserByUsername(username: string): Promise<UserEntity | null> {
-        const user = await this.userEntityModel.findOne({ username: username });
+        const user = await this.userEntityModel.findOne({ username: username }).exec();
         return user;
     }
 

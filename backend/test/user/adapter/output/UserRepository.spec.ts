@@ -7,7 +7,7 @@ import User from "src/user/domain/User";
 
 describe("UserRepository", () => {
     let userRepository: UserRepository;
-    let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock };
+    let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock; exec: jest.Mock };
     const userEntityMock: UserEntity = { username: "Gianni", password: "Testing1234", workflows: [] };
 
     const createTestingModule = async () => {
@@ -18,13 +18,14 @@ describe("UserRepository", () => {
     };
 
     beforeEach(async () => {
-        userEntityModelMock = { findOne: jest.fn(), create: jest.fn() };
+        userEntityModelMock = { findOne: jest.fn(), create: jest.fn(), exec: jest.fn() };
         await createTestingModule();
     });
 
     describe("getUserByUsername", () => {
         it("should return a user", async () => {
-            userEntityModelMock.findOne.mockResolvedValue(userEntityMock);
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await userRepository.getUserByUsername(userEntityMock.username)).toEqual(userEntityMock);
         });
     });
