@@ -3,6 +3,9 @@ import User from "src/user/domain/User";
 import { GET_USER_PORT } from "src/user/service/port/output/GetUserPort";
 import LoginService from "src/user/service/LoginService";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
+import * as bcrypt from "bcrypt";
+
+jest.mock("bcrypt", () => ({ compare: jest.fn() }));
 
 describe("LoginService", () => {
     let loginService: LoginService;
@@ -23,27 +26,20 @@ describe("LoginService", () => {
 
     describe("login", () => {
         it("should login the user", async () => {
-            const userDB = await userMock.hashPassword();
-            getUserPortMock.getUserByUsername.mockResolvedValue(userDB);
-            expect(await loginService.login(userMock)).toEqual(userDB);
+            getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
+            (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+            expect(await loginService.login(userMock)).toEqual(userMock);
         });
 
         it("shouldn't login the user because the username was not found in the database", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
-            try {
-                await loginService.login(userMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(UserNotFoundError);
-            }
+            await expect(loginService.login(userMock)).rejects.toThrow(UserNotFoundError);
         });
 
         it("shouldn't login the user because password doesn't match", async () => {
-            getUserPortMock.getUserByUsername.mockResolvedValue(userMock.hashPassword());
-            try {
-                await loginService.login(userMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(WrongPasswordError);
-            }
+            getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
+            (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+            await expect(loginService.login(userMock)).rejects.toThrow(WrongPasswordError);
         });
     });
 });
