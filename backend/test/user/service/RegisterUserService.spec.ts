@@ -40,7 +40,7 @@ describe("RegisterUserService", () => {
         it("should not register the user because the username is already taken", async () => {
             registerUserPortMock.registerUser.mockResolvedValue(userMock);
             getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
-            await expect(registerUserService.registerUser(userMock)).rejects.toThrow(UserAlreadyExistsError);
+            expect(registerUserService.registerUser(userMock)).rejects.toThrow(UserAlreadyExistsError);
         });
     });
 });

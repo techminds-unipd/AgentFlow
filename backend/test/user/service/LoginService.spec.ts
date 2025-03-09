@@ -33,13 +33,13 @@ describe("LoginService", () => {
 
         it("shouldn't login the user because the username was not found in the database", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
-            await expect(loginService.login(userMock)).rejects.toThrow(UserNotFoundError);
+            expect(loginService.login(userMock)).rejects.toThrow(UserNotFoundError);
         });
 
         it("shouldn't login the user because password doesn't match", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
             (bcrypt.compare as jest.Mock).mockResolvedValue(false);
-            await expect(loginService.login(userMock)).rejects.toThrow(WrongPasswordError);
+            expect(loginService.login(userMock)).rejects.toThrow(WrongPasswordError);
         });
     });
 });

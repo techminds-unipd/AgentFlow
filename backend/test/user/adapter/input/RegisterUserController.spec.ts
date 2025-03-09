@@ -36,24 +36,18 @@ describe("RegisterUserController", () => {
             registerUseCaseMock.registerUser.mockImplementation(() => {
                 throw new MongooseError("");
             });
-            try {
-                await registerUserController.registerUser(userDTOMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(HttpException);
-                expect(err.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            const result = registerUserController.registerUser(userDTOMock);
+            expect(result).rejects.toThrow(HttpException);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
         it("should throw HttpException because username already exists", async () => {
             registerUseCaseMock.registerUser.mockImplementation(() => {
                 throw new UserAlreadyExistsError();
             });
-            try {
-                await registerUserController.registerUser(userDTOMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(HttpException);
-                expect(err.status).toBe(HttpStatus.BAD_REQUEST);
-            }
+            const result = registerUserController.registerUser(userDTOMock);
+            expect(result).rejects.toThrow(HttpException);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
         });
     });
 });

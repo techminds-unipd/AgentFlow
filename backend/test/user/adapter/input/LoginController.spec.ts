@@ -44,36 +44,27 @@ describe("LoginController", () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new MongooseError("");
             });
-            try {
-                await loginController.login(userDTOMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(HttpException);
-                expect(err.status).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            const result = loginController.login(userDTOMock);
+            expect(result).rejects.toThrow(HttpException);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
         it("should throw HttpException because the username was not found in the database", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new UserNotFoundError();
             });
-            try {
-                await loginController.login(userDTOMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(HttpException);
-                expect(err.status).toBe(HttpStatus.BAD_REQUEST);
-            }
+            const result = loginController.login(userDTOMock);
+            expect(result).rejects.toThrow(HttpException);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
         });
 
         it("should throw HttpException because password doesn't match", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new WrongPasswordError();
             });
-            try {
-                await loginController.login(userDTOMock);
-            } catch (err) {
-                expect(err).toBeInstanceOf(HttpException);
-                expect(err.status).toBe(HttpStatus.BAD_REQUEST);
-            }
+            const result = loginController.login(userDTOMock);
+            expect(result).rejects.toThrow(HttpException);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
         });
     });
 });
