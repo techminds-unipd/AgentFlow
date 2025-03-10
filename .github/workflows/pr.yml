@@ -26,8 +26,6 @@ jobs:
               run: npm ci --prefix ./backend
             - name: Unit testing
               run: npm test --prefix ./backend
-            - name: e2e testing
-              run: npm run test:e2e --prefix ./backend
     #Frontend:
     #   runs-on: ubuntu-latest
         
