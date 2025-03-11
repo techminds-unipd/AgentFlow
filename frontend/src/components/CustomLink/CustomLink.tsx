@@ -31,14 +31,14 @@ export const CustomLink=( {name, link}: CustomLinkProps) =>{
       );
     return(
         <>
-            {pathname===link?<Typography sx={{ fontSize: 17 }}>{name}</Typography>:
+            {pathname===link?<Typography sx={{ fontSize: 18 }}>{name}</Typography>:
             <Link 
                 component={LinkBehavior} 
                 underline='always' 
                 sx={{ 
                     color: 'var(--white-text)',
                     textDecoration: 'underline var(--white-text)',
-                    fontSize: 17
+                    fontSize: 18
                 }}
             >
                 {name}

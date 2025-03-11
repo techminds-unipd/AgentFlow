@@ -28,7 +28,12 @@ export const Navbar = () => {
                     alt="Logo" 
                     style={{ height: 40, width: 'auto' }} 
                 />
-                <Typography variant="body1" sx={{ color: 'var(--white-text)' }}>
+                <Typography 
+                    variant="body1" 
+                    sx={{ 
+                        color: 'var(--white-text)',
+                        fontSize: 20 
+                    }}>
                     Agent Flow
                 </Typography>
             </Grid2>
