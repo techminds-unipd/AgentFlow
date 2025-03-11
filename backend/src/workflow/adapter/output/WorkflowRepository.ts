@@ -10,7 +10,11 @@ export class WorkflowRepository {
     ) {}
 
     async getWorkflowByName(username: string, workflowName: string): Promise<WorkflowEntity | null> {
-        return null;
+        const user = await this.userEntityModel
+            .findOne({ username: username, "workflows.name": workflowName }, { "workflows.$": 1 })
+            .exec();
+        if (!user) return null;
+        return user.workflows[0];
     }
 
     async addWorkflow(username: string, workflow: WorkflowEntity): Promise<WorkflowEntity | null> {

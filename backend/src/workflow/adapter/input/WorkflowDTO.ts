@@ -51,3 +51,5 @@ export class WorkflowDTO {
         this.edges = edges;
     }
 }
+
+export type RequestHeader = { username: string };
