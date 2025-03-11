@@ -2,13 +2,13 @@ import { Test, TestingModule } from "@nestjs/testing";
 import User from "src/user/domain/User";
 import UserDTO from "src/user/adapter/input/UserDTO";
 import { JwtService } from "@nestjs/jwt";
-import { LOGIN_USE_CASE } from "src/user/service/port/input/LoginUseCase";
-import LoginController from "src/user/adapter/input/LoginController";
+import { LOGIN_USER_USE_CASE } from "src/user/service/port/input/LoginUserUseCase";
+import LoginController from "src/user/adapter/input/LoginUserController";
 import { MongooseError } from "mongoose";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 
-describe("LoginController", () => {
+describe("LoginUserController", () => {
     let loginController: LoginController;
     let jwtService: { signAsync: jest.Mock };
     let loginUseCaseMock: { login: jest.Mock };
@@ -20,7 +20,7 @@ describe("LoginController", () => {
         const module: TestingModule = await Test.createTestingModule({
             controllers: [LoginController],
             providers: [
-                { provide: LOGIN_USE_CASE, useValue: loginUseCaseMock },
+                { provide: LOGIN_USER_USE_CASE, useValue: loginUseCaseMock },
                 { provide: JwtService, useValue: jwtService }
             ]
         }).compile();

@@ -1,13 +1,13 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import User from "src/user/domain/User";
 import { GET_USER_PORT } from "src/user/service/port/output/GetUserPort";
-import LoginService from "src/user/service/LoginService";
+import LoginService from "src/user/service/LoginUserService";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 import * as bcrypt from "bcrypt";
 
 jest.mock("bcrypt", () => ({ compare: jest.fn() }));
 
-describe("LoginService", () => {
+describe("LoginUserService", () => {
     let loginService: LoginService;
     let getUserPortMock: { getUserByUsername: jest.Mock };
     const userMock = new User("Gianni", "Testing1234");

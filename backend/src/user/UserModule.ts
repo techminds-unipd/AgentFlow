@@ -8,17 +8,17 @@ import UserPortAdapter from "./adapter/output/UserPortAdapter";
 import { GET_USER_PORT } from "./service/port/output/GetUserPort";
 import { REGISTER_USER_PORT } from "./service/port/output/RegisterUserPort";
 import { REGISTER_USER_USE_CASE } from "./service/port/input/RegisterUserUseCase";
-import LoginController from "./adapter/input/LoginController";
-import { LOGIN_USE_CASE } from "./service/port/input/LoginUseCase";
-import LoginService from "./service/LoginService";
+import LoginUserController from "./adapter/input/LoginUserController";
+import { LOGIN_USER_USE_CASE } from "./service/port/input/LoginUserUseCase";
+import LoginUserService from "./service/LoginUserService";
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
-    controllers: [RegisterUserController, LoginController],
+    controllers: [RegisterUserController, LoginUserController],
 
     providers: [
         { provide: REGISTER_USER_USE_CASE, useClass: RegisterUserService },
-        { provide: LOGIN_USE_CASE, useClass: LoginService },
+        { provide: LOGIN_USER_USE_CASE, useClass: LoginUserService },
         { provide: REGISTER_USER_PORT, useClass: UserPortAdapter },
         { provide: GET_USER_PORT, useClass: UserPortAdapter },
         UserRepository
