@@ -3,6 +3,8 @@ abstract class BusinessError extends Error {
     readonly message: string;
 }
 
+// USER ERRORS
+
 export class UserAlreadyExistsError extends BusinessError {
     name = "UserAlredyExists";
     message = "Attempted to register a user that is already been saved";
@@ -16,4 +18,16 @@ export class UserNotFoundError extends BusinessError {
 export class WrongPasswordError extends BusinessError {
     name = "WrongPasswordError";
     message = "Password doesn't match when attempt to login";
+}
+
+// WORKFLOW ERRORS
+
+export class WorkflowAlreadyExistsError extends BusinessError {
+    name = "WorkflowAlreadyExists";
+    message = "Attempted to create a workflow with the same name as an existing one";
+}
+
+export class WorkflowNotAddedError extends BusinessError {
+    name = "WorkflowNotAdded";
+    message = "Workflow not added to the user";
 }

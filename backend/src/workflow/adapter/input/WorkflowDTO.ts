@@ -51,4 +51,3 @@ export class WorkflowDTO {
         this.edges = edges;
     }
 }
-
