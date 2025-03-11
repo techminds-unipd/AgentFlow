@@ -19,7 +19,7 @@ describe("WorkflowRepository", () => {
         new NodeEntity("GMAIL", "action2", 2, 2),
         new NodeEntity("PASTEBIN", "action3", 3, 3),
     ]);
-    
+
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [WorkflowRepository, { provide: getModelToken(UserEntity.name), useValue: userEntityModelMock }]
@@ -37,6 +37,12 @@ describe("WorkflowRepository", () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(workflowEntityMock);
+        });
+
+        it("should return null if the workflow doesn't exists", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(null);
+            expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(null);
         });
     });
 

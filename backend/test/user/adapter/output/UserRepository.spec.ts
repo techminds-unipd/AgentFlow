@@ -28,6 +28,12 @@ describe("UserRepository", () => {
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await userRepository.getUserByUsername(userEntityMock.username)).toEqual(userEntityMock);
         });
+
+        it("should return null because the user was not found", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(null);
+            expect(await userRepository.getUserByUsername(userEntityMock.username)).toEqual(null);
+        });
     });
 
     describe("registerUser", () => {
