@@ -4,8 +4,7 @@ import User from "src/user/domain/User";
 import UserDTO from "./UserDTO";
 import { JwtService } from "@nestjs/jwt";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
-
-type JWT = { readonly accessToken: string };
+import JWT from "src/JWT";
 
 @Controller("user")
 class LoginController {
