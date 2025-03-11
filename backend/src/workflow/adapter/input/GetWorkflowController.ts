@@ -19,8 +19,7 @@ import { Workflow } from "src/workflow/domain/Workflow";
 @Controller("workflow")
 class GetWorkflowController {
     constructor(
-        @Inject(GET_WORKFLOW_USE_CASE) private readonly getWorkflowUseCase: GetWorkflowUseCase,
-        private readonly jwtService: JwtService
+        @Inject(GET_WORKFLOW_USE_CASE) private readonly getWorkflowUseCase: GetWorkflowUseCase
     ) {}
 
     private toDTO(workflow: Workflow): WorkflowDTO {
