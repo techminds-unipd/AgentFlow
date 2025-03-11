@@ -1,17 +1,51 @@
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
-import { expect, test, describe } from 'vitest'
-import { CustomLink } from './CustomLink'
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { expect, test, describe } from "vitest";
+import { MemoryRouter } from "react-router";
+import { CustomLink } from "./CustomLink";
 
-describe('CustomLink', () => {
-    test('Renders the GitHub link in footer', () => {
-        render(<Footer/>)
-        expect(screen.getByRole('link')).toBeInTheDocument()
-        expect(screen.getByRole('link')).toHaveTextContent('GitHub repository')
-        expect(screen.getByRole('link')).toHaveAttribute('href', 'https://github.com/techminds-unipd')
-    });
-    test('Renders the Tech Minds text in footer', () => {
-        render(<Footer/>)
-        expect(screen.getByText('Made by Tech Minds')).toBeInTheDocument()
-    });
-})
+describe("CustomLink", () => {
+  const text = "about us";
+  const dest = "/aboutus";
+
+  test("Renders a link if the link is on a different route", () => {
+    const route = "/";
+    render(
+      <MemoryRouter initialEntries={[route]}>
+        <CustomLink name={text} link={dest} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText(text).tagName).toBe("A");
+    expect(screen.getByText(text)).toHaveAttribute("href", dest);
+  });
+
+  test("Renders a simple text if the link is on the same route", () => {
+    const route = "/aboutus";
+    render(
+      <MemoryRouter initialEntries={[route]}>
+        <CustomLink name={text} link={dest} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText(text).tagName).toBe("P");
+  });
+
+  test("Renders the text passed as name prop when CustomLink is a link", ()=>{
+    const route = "/";
+    render(
+      <MemoryRouter initialEntries={[route]}>
+        <CustomLink name={text} link={dest} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText(text)).toBeInTheDocument();
+  });
+
+  test("Renders the text passed as name prop when CustomLink is not a link", ()=>{
+    const route = "/aboutus";
+    render(
+      <MemoryRouter initialEntries={[route]}>
+        <CustomLink name={text} link={dest} />
+      </MemoryRouter>
+    );
+    expect(screen.getByText(text)).toBeInTheDocument();
+  });
+});
