@@ -31,3 +31,8 @@ export class WorkflowNotAddedError extends BusinessError {
     name = "WorkflowNotAdded";
     message = "Workflow not added to the user";
 }
+
+export class WorkflowNotFoundError extends BusinessError {
+    name = "WorkflowNotFoundError";
+    message = "Workflow not found";
+}

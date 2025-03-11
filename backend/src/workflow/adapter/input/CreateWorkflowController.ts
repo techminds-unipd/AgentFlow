@@ -1,28 +1,29 @@
-import { Controller, HttpException, HttpStatus, Inject, Param, Post } from "@nestjs/common";
+import { Controller, HttpException, HttpStatus, Inject, Param, Post, UseGuards, Request } from "@nestjs/common";
 import { CREATE_WORKFLOW_USE_CASE, CreateWorkflowUseCase } from "src/workflow/service/port/input/CreateWorkflowUseCase";
-import { WorkflowDTO } from "./WorkflowDTO";
+import { RequestHeader, WorkflowDTO } from "./WorkflowDTO";
 import { Workflow } from "src/workflow/domain/Workflow";
 import CreateWorkflowCommand from "src/workflow/domain/CreateWorkflowCommand";
 import { WorkflowAlreadyExistsError, WorkflowNotAddedError } from "src/BusinessErrors";
+import { AuthGuard } from "./AuthGuard";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 @Controller("workflow")
 class CreateWorkflowController {
-    constructor(
-        @Inject(CREATE_WORKFLOW_USE_CASE) private readonly createWorkflowUseCase: CreateWorkflowUseCase
-    ) {}
+    constructor(@Inject(CREATE_WORKFLOW_USE_CASE) private readonly createWorkflowUseCase: CreateWorkflowUseCase) {}
 
-    private toDomain(workflowName: string): CreateWorkflowCommand {
-        // serve controllare il JWT e ricavare lo username
-        return new CreateWorkflowCommand(workflowName, "username");
+    private toDomain(workflowName: string, username: string): CreateWorkflowCommand {
+        return new CreateWorkflowCommand(workflowName, username);
     }
 
     private toDTO(workflow: Workflow): WorkflowDTO {
         return new WorkflowDTO(workflow.name, [], []);
     }
 
+    @ApiBearerAuth()
+    @UseGuards(AuthGuard)
     @Post("/create/:name")
-    async createWorkflow(@Param("name") workflowName: string): Promise<WorkflowDTO> {
-        const cmd = this.toDomain(workflowName);
+    async createWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
+        const cmd = this.toDomain(workflowName, request.username);
         try {
             const workflow = await this.createWorkflowUseCase.createWorkflow(cmd);
             return this.toDTO(workflow);
