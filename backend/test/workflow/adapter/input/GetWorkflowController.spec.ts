@@ -16,12 +16,11 @@ describe("GetWorkflowController", () => {
     let getWorkflowController: GetWorkflowController;
     let getWorkflowUseCaseMock: { getWorkflow: jest.Mock };
     let jwtService: { verifyAsync: jest.Mock };
-    const workflowNodesMock: Node[] = [
+    const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
         new Node(NodeType.Gmail, "action2", new Point(2, 2)),
         new Node(NodeType.Pastebin, "", new Point(3, 3))
-    ];
-    const workflowMock = new Workflow("prova", workflowNodesMock);
+    ]);
     const workflowDTOMock = new WorkflowDTO("prova", [
         new NodeDTO(0, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
         new NodeDTO(1, new PositionDTO(2, 2), new NodeDataDTO("GMAIL")),
