@@ -1,13 +1,4 @@
-import {
-    Controller,
-    Get,
-    HttpException,
-    HttpStatus,
-    Inject,
-    Param,
-    Request,
-    UseGuards
-} from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Inject, Param, Request, UseGuards } from "@nestjs/common";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
 import { GET_WORKFLOW_USE_CASE, GetWorkflowUseCase } from "src/workflow/service/port/input/GetWorkflowUseCase";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO } from "./WorkflowDTO";
@@ -19,9 +10,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 @ApiBearerAuth()
 @Controller("workflow")
 class GetWorkflowController {
-    constructor(
-        @Inject(GET_WORKFLOW_USE_CASE) private readonly getWorkflowUseCase: GetWorkflowUseCase
-    ) {}
+    constructor(@Inject(GET_WORKFLOW_USE_CASE) private readonly getWorkflowUseCase: GetWorkflowUseCase) {}
 
     private toDTO(workflow: Workflow): WorkflowDTO {
         const nodes: NodeDTO[] = workflow.nodes.map(
@@ -37,10 +26,7 @@ class GetWorkflowController {
 
     @UseGuards(AuthGuard)
     @Get("/get/:name")
-    async getWorkflow(
-        @Param("name") workflowName: string,
-        @Request() request: RequestHeader
-    ): Promise<WorkflowDTO> {
+    async getWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         try {
             const username = request.username;
             const workflow = await this.getWorkflowUseCase.getWorkflow(new GetWorkflowCommand(username, workflowName));

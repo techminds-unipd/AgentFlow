@@ -14,11 +14,12 @@ describe("WorkflowRepository", () => {
             { type: "PASTEBIN", action: "action3", positionX: 3, positionY: 3 },
         ] },
     ] };
-    const WorkflowEntityMock = new WorkflowEntity("prova", [
+    const workflowEntityMock = new WorkflowEntity("prova", [
         new NodeEntity("GCALENDAR", "action1", 1, 1),
         new NodeEntity("GMAIL", "action2", 2, 2),
         new NodeEntity("PASTEBIN", "action3", 3, 3),
-    ])
+    ]);
+    
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [WorkflowRepository, { provide: getModelToken(UserEntity.name), useValue: userEntityModelMock }]
@@ -35,7 +36,7 @@ describe("WorkflowRepository", () => {
         it("should return a workflow", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
-            expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(WorkflowEntityMock);
+            expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(workflowEntityMock);
         });
     });
 
