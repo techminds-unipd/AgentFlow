@@ -33,6 +33,12 @@ class WorkflowPortAdapter implements GetWorkflowPort {
         if (!workflowEntity) return null;
         return this.toDomain(workflowEntity);
     }
+
+    async deleteWorkflow(username: string, workflowName: string): Promise<Workflow | null> {
+        const workflowEntity = await this.workflowRepository.deleteWorkflow(username, workflowName);
+        if (!workflowEntity) return null;
+        return this.toDomain(workflowEntity);
+    }
 }
 
 export default WorkflowPortAdapter;
