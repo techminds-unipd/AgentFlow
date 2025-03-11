@@ -8,14 +8,15 @@ import {
     Request,
     UseGuards
 } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
 import { GET_WORKFLOW_USE_CASE, GetWorkflowUseCase } from "src/workflow/service/port/input/GetWorkflowUseCase";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO } from "./WorkflowDTO";
 import GetWorkflowCommand from "src/workflow/domain/GetWorkflowCommand";
 import { AuthGuard } from "./AuthGuard";
 import { Workflow } from "src/workflow/domain/Workflow";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
+@ApiBearerAuth()
 @Controller("workflow")
 class GetWorkflowController {
     constructor(
@@ -35,7 +36,7 @@ class GetWorkflowController {
     }
 
     @UseGuards(AuthGuard)
-    @Get(":name")
+    @Get("/get/:name")
     async getWorkflow(
         @Param("name") workflowName: string,
         @Request() request: RequestHeader
