@@ -8,13 +8,12 @@ import WorkflowPortAdapter from "./adapter/output/WorkflowPortAdapter";
 import { WorkflowRepository } from "./adapter/output/WorkflowRepository";
 import DeleteWorkflowController from "./adapter/input/DeleteWorkflowController";
 
-
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
     controllers: [DeleteWorkflowController],
     providers: [
-        {provide: DELETE_WORKFLOW_USE_CASE, useClass: DeleteWorkflowService},
-        {provide: DELETE_WORKFLOW_PORT, useClass: WorkflowPortAdapter},
+        { provide: DELETE_WORKFLOW_USE_CASE, useClass: DeleteWorkflowService },
+        { provide: DELETE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         WorkflowRepository
     ]
 })

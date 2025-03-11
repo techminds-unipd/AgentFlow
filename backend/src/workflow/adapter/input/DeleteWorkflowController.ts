@@ -1,13 +1,4 @@
-import {
-    Controller,
-    Get,
-    HttpException,
-    HttpStatus,
-    Inject,
-    Param,
-    Request,
-    UseGuards
-} from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Inject, Param, Request, UseGuards } from "@nestjs/common";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO } from "./WorkflowDTO";
 import { AuthGuard } from "./AuthGuard";
 import { Workflow } from "src/workflow/domain/Workflow";
@@ -18,9 +9,7 @@ import { ApiBearerAuth } from "@nestjs/swagger";
 @ApiBearerAuth()
 @Controller("workflow")
 class DeleteWorkflowController {
-    constructor(
-        @Inject(DELETE_WORKFLOW_USE_CASE) private readonly deletetWorkflowUseCase: DeleteWorkflowUseCase,
-    ) {}
+    constructor(@Inject(DELETE_WORKFLOW_USE_CASE) private readonly deletetWorkflowUseCase: DeleteWorkflowUseCase) {}
 
     private toDTO(workflow: Workflow): WorkflowDTO {
         const nodes: NodeDTO[] = workflow.nodes.map(
@@ -36,13 +25,12 @@ class DeleteWorkflowController {
 
     @UseGuards(AuthGuard)
     @Get("/delete/:name")
-    async deleteWorkflow(
-        @Param("name") workflowName: string,
-        @Request() request: RequestHeader
-    ): Promise<WorkflowDTO> {
+    async deleteWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         try {
             const username = request.username;
-            const workflow = await this.deletetWorkflowUseCase.deleteWorkflow(new DeleteWorkflowCommand(username, workflowName));
+            const workflow = await this.deletetWorkflowUseCase.deleteWorkflow(
+                new DeleteWorkflowCommand(username, workflowName)
+            );
             return this.toDTO(workflow);
         } catch (error) {
             //if (error instanceof WorkflowNotFoundError) throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
