@@ -5,6 +5,7 @@ import {
     LinkProps as RouterLinkProps,
   } from 'react-router';
 import React from "react";
+import '../../index.css'
 
 interface CustomLinkProps {
     name: string,
@@ -30,8 +31,18 @@ export const CustomLink=( {name, link}: CustomLinkProps) =>{
       );
     return(
         <>
-            {pathname===link?<Typography>{name}</Typography>:
-            <Link component={LinkBehavior} underline='always' color={'warning'}>{name}</Link>
+            {pathname===link?<Typography sx={{ fontSize: 17 }}>{name}</Typography>:
+            <Link 
+                component={LinkBehavior} 
+                underline='always' 
+                sx={{ 
+                    color: 'var(--white-text)',
+                    textDecoration: 'underline var(--white-text)',
+                    fontSize: 17
+                }}
+            >
+                {name}
+            </Link>
             }
         </>
     )
