@@ -8,7 +8,7 @@ import { GET_WORKFLOW_PORT } from "src/workflow/service/port/output/GetWorkflowP
 describe("GetWorkflowService", () => {
     let getWorkflowService: GetWorkflowService;
     let getWorkflowPortMock: { getWorkflowByName: jest.Mock };
-    let getWorkflowCommandMock = new GetWorkflowCommand("prova", "username");
+    let getWorkflowCommandMock = new GetWorkflowCommand("username", "prova");
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
         new Node(NodeType.Gmail, "action2", new Point(2, 2)),

@@ -35,12 +35,12 @@ describe("WorkflowPortAdapter", () => {
     describe("getWorkflowByName", () => {
         it("should return the workflow of the user", async () => {
             workflowRepositoryMock.getWorkflowByName.mockResolvedValue(workflowEntityMock);
-            expect(await workflowPortAdapter.getWorkflowByName("prova", "username")).toEqual(workflowMock);
+            expect(await workflowPortAdapter.getWorkflowByName("username", "prova")).toEqual(workflowMock);
         });
 
         it("should return null if the workflow doesn't exists", async () => {
             workflowRepositoryMock.getWorkflowByName.mockResolvedValue(null);
-            expect(await workflowPortAdapter.getWorkflowByName("prova", "username")).toEqual(null);
+            expect(await workflowPortAdapter.getWorkflowByName("username", "prova")).toEqual(null);
         });
     });
     
