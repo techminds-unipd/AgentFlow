@@ -3,9 +3,7 @@ import { WorkflowNotFoundError } from "src/BusinessErrors";
 import GetWorkflowCommand from "src/workflow/domain/GetWorkflowCommand";
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { GetWorkflowService } from "src/workflow/service/GetWorkflowService";
-import { GET_WORKFLOW_PORT } from "src/workflow/service/port/output/GetWorkflowPort";
-
-jest.mock("bcrypt", () => ({ compare: jest.fn() }));
+import { GET_WORKFLOW_PORT } from "src/workflow/service/port/output/GetWorkflowPort";;
 
 describe("GetWorkflowService", () => {
     let getWorkflowService: GetWorkflowService;
