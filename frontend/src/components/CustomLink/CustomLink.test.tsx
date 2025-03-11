@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom'
-import {render, screen} from '@testing-library/react'
-import {expect, test, describe} from 'vitest'
+import { render, screen } from '@testing-library/react'
+import { expect, test, describe } from 'vitest'
 import { CustomLink } from './CustomLink'
 
 describe('CustomLink', () => {

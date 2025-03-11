@@ -13,7 +13,7 @@ interface CustomLinkProps {
 
 export const CustomLink=( {name, link}: CustomLinkProps) =>{
     const {pathname} = useLocation();
-    const LinkBehavior = React.forwardRef<any, Omit<RouterLinkProps, 'to'>>(
+    const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(
         (props, ref) => (
           <RouterLink
             ref={ref}
