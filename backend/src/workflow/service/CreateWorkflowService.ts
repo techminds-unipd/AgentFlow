@@ -13,7 +13,7 @@ class CreateWorkflowService implements CreateWorkflowUseCase {
         @Inject(GET_WORKFLOW_PORT) private readonly getWorkflowPort: GetWorkflowPort
     ) {}
 
-    // controlla se esiste già un workflow con lo stesso nome, se c'è allora lancia errore, altrimenti crea il workflow con nodi vuoti
+    // controlla se esiste già un workflow con lo stesso nome, se c'è allora lancia un errore, altrimenti crea il workflow con nodi vuoti
     async createWorkflow(cmd: CreateWorkflowCommand): Promise<Workflow> {
         const foundWorkflow = await this.getWorkflowPort.getWorkflowByName(cmd.username, cmd.workflowName);
         if (foundWorkflow) throw new WorkflowAlreadyExistsError();
