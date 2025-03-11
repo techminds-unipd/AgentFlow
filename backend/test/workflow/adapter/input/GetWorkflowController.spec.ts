@@ -64,7 +64,7 @@ describe("GetWorkflowController", () => {
             });
             const result = getWorkflowController.getWorkflow("prova", { username: "username" });
             expect(result).rejects.toThrow(HttpException);
-            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.NOT_FOUND);
         });
         
     });
