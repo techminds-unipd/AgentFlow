@@ -2,6 +2,7 @@ import { Grid2 } from '@mui/material';
 import { CustomLink } from '../CustomLink/CustomLink.tsx';
 import { CustomButton } from '../CustomButton/CustomButton.tsx';
 import { Typography } from '@mui/material';
+import logo from '../../assets/Logo.Tech-Minds-fe.png';
 import '../../index.css';
 
 export const Navbar = () => {
@@ -23,7 +24,7 @@ export const Navbar = () => {
         >
             <Grid2 display="flex" gap={1} alignItems="center">
                 <img 
-                    src="../../assets/Logo.Tech-Minds-fe.png"  // DA FIXARE PERCORSO
+                    src={logo}
                     alt="Logo" 
                     style={{ height: 40, width: 'auto' }} 
                 />
