@@ -8,10 +8,10 @@ import React from "react";
 interface CustomButtonProps {
     name: string,
     link: string,
-    variant: "contained" | "outlined"
+    variant?: "contained" | "outlined"
 }
 
-export const CustomButton=( {name, link, variant}: CustomButtonProps) =>{
+export const CustomButton=( {name, link, variant = "contained"}: CustomButtonProps) =>{
     const ButtonBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterButtonProps, 'to'>>(
         (props, ref) => (
           <RouterButton
