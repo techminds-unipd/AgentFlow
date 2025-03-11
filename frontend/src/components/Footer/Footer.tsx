@@ -1,4 +1,4 @@
-import {Link, Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import '../../index.css'
