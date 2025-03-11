@@ -17,3 +17,8 @@ export class WrongPasswordError extends BusinessError {
     name = "WrongPasswordError";
     message = "Password doesn't match when attempt to login";
 }
+
+export class WorkflowNotFoundError extends BusinessError {
+    name = "WorkflowNotFoundError";
+    message = "Workflow not found";
+}
