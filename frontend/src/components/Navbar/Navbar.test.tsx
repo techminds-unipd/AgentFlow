@@ -5,7 +5,7 @@ import { Navbar } from './Navbar'
 import { MemoryRouter } from "react-router";
 
 describe('Navbar', () => {
-  
+  //DA DIFFERENZIARE TRA QUANDO L'UTENTE E' LOGGATO E QUANDO NON LO E'
   test('Renders the navbar', () => {
     render(
       <MemoryRouter>
@@ -32,6 +32,35 @@ describe('Navbar', () => {
     );
       expect(screen.getByText('About Us')).toBeInTheDocument()
   });
+  //Da qui in poi si vedono i test della navbar quando l'utente è loggato
+  test("Renders the workflow item", () => {
+    render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>
+    );
+    expect(screen.getByText("Workflow")).toBeInTheDocument();
+  });
+  //i test a seguire non funzionano
+  test("Renders the Sign In item", () => {
+    render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Sign In')).toBeInTheDocument();
+    //expect(screen.getByRole('link', { name: "Sign In"})).toBeInTheDocument();
+    //expect(screen.getByRole('button', { name: "Sign In"})).toBeInTheDocument();
+  });
 
-
+  test("Renders the Sign Up item", () => {
+    render(
+      <MemoryRouter>
+        <Navbar />
+      </MemoryRouter>
+    );
+    expect(screen.getByText('Sign Up')).toBeInTheDocument();
+    //expect(screen.getByRole('link', { name: "Sign Up"})).toBeInTheDocument();
+    //expect(screen.getByRole('button', { name: "Sign Up"})).toBeInTheDocument();
+  });
 });
