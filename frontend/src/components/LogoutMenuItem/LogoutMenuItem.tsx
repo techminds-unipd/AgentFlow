@@ -22,9 +22,9 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
 
     const handleLogout = () => {
         handleCloseDialog();
+        /* qui ci andrà la logica di logut */
         navigate("/");
         handleCloseMenu();
-        /* qui ci andrà la logica di logut */
     };
     
     return(

@@ -1,10 +1,22 @@
 import "@testing-library/jest-dom";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { expect, test, describe, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router";
+import { useNavigate } from "react-router";
 import { LogoutMenuItem } from "./LogoutMenuItem";
 
 describe("LogoutMenuItem", () => {
+  /*
+  const mockPush = vi.fn();
+  vi.mock('@hooks/useNavigation', () => {
+    return {
+      default: () => ({
+        push: mockPush,
+      }),
+    };
+  });*/
+
   test("Renders logout menu item", () => {
     const fn = vi.fn();
     render(
@@ -31,7 +43,56 @@ describe("LogoutMenuItem", () => {
     expect(screen.getByRole("dialog")).toBeInTheDocument();
   });
 
-  
+  test("Renders close dialog if 'no' button is clicked", async () => {
+    const fn = vi.fn();
+    render(
+        <MemoryRouter>
+            <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+    );
 
+    fireEvent.click(screen.getByRole("menuitem"));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /no/i }));
+    await waitFor(() => {
+        expect(screen.queryByRole("dialog")).toBeNull();
+    });
+  });
+
+  test("Renders close dialog if 'yes' button is clicked", async () => {
+    const fn = vi.fn();
+    render(
+        <MemoryRouter>
+            <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+    );
+
+    fireEvent.click(screen.getByRole("menuitem"));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("button", { name: /yes/i }));
+    await waitFor(() => {
+        expect(screen.queryByRole("dialog")).toBeNull();
+    });
+  });
+
+  /*test("Renders navigate in home page if the 'yes' button is clicked", async () => {
+    const fn = vi.fn();
+    render(
+      <MemoryRouter>
+        <LogoutMenuItem handleCloseMenu={fn} />
+      </MemoryRouter>
+    );
   
+    expect(screen.queryByRole("dialog")).toBeNull();
+    userEvent.click(screen.getByRole("menuitem"));
+    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: /yes/i });
+    expect(button).toBeDefined();
+    await userEvent.click(button);
+  
+    await waitFor(() => {
+      expect(mockPush.mock.lastCall[0]).toEqual("/");
+    });
+  });*/
+    
 });
