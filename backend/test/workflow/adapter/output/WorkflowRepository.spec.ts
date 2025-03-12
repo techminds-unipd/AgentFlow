@@ -11,9 +11,10 @@ describe("WorkflowRepository", () => {
         { name: "prova", nodes: [
             { type: "GCALENDAR", action: "action1", positionX: 1, positionY: 1 },
             { type: "GMAIL", action: "action2", positionX: 2, positionY: 2 },
-            { type: "PASTEBIN", action: "action3", positionX: 3, positionY: 3 },
+            { type: "PASTEBIN", action: "", positionX: 3, positionY: 3 },
         ] },
     ] };
+
     const userEntityEmptyMock = { workflows: [
         { name: "prova", nodes: [] }
     ] };
@@ -21,8 +22,9 @@ describe("WorkflowRepository", () => {
     const workflowEntityMock = new WorkflowEntity("prova", [
         new NodeEntity("GCALENDAR", "action1", 1, 1),
         new NodeEntity("GMAIL", "action2", 2, 2),
-        new NodeEntity("PASTEBIN", "action3", 3, 3),
+        new NodeEntity("PASTEBIN", "", 3, 3),
     ]);
+
     const workflowEntityEmptyMock = new WorkflowEntity("prova", []);
 
     const createTestingModule = async () => {
@@ -45,6 +47,11 @@ describe("WorkflowRepository", () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(workflowEntityMock);
+        });
+        it("should return null if the workflow doesn't exists", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(null);
+            expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(null);
         });
     });
 
@@ -69,3 +76,4 @@ describe("WorkflowRepository", () => {
     });
 
 });
+
