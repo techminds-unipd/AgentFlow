@@ -11,15 +11,21 @@ import WorkflowPortAdapter from "./adapter/output/WorkflowPortAdapter";
 import { GetWorkflowService } from "./service/GetWorkflowService";
 import { WorkflowRepository } from "./adapter/output/WorkflowRepository";
 import { UserEntity, userEntitySchema } from "src/user/adapter/output/UserEntity";
+import { GET_USER_WORKFLOW_PORT } from "./service/port/output/GetUserWorkflowsPort";
+import { WorkflowNameListService } from "./service/WorkflowNameListService";
+import WorkflowNameListController from "./adapter/input/WorkflowNameListController";
+import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameListUseCase";
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
-    controllers: [CreateWorkflowController, GetWorkflowController],
+    controllers: [CreateWorkflowController, GetWorkflowController, WorkflowNameListController],
     providers: [
         { provide: CREATE_WORKFLOW_USE_CASE, useClass: CreateWorkflowService },
         { provide: CREATE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: GET_WORKFLOW_USE_CASE, useClass: GetWorkflowService },
         { provide: GET_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
+        { provide: WORKFLOW_NAME_LIST_USE_CASE, useClass: WorkflowNameListService },
+        { provide: GET_USER_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         WorkflowRepository
     ]
 })

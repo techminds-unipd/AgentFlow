@@ -4,9 +4,10 @@ import { GetWorkflowPort } from "src/workflow/service/port/output/GetWorkflowPor
 import { WorkflowRepository } from "./WorkflowRepository";
 import { CreateWorkflowPort } from "src/workflow/service/port/output/CreateWorkflowPort";
 import { NodeEntity, WorkflowEntity } from "./WorkflowEntity";
+import { GetUserWorkflowPort } from "src/workflow/service/port/output/GetUserWorkflowsPort";
 
 @Injectable()
-class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort {
+class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, GetUserWorkflowPort {
     constructor(private readonly workflowRepository: WorkflowRepository) {}
 
     private toDomain(workflowEntity: WorkflowEntity): Workflow {
@@ -38,6 +39,12 @@ class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort {
         const addedWorkflow = await this.workflowRepository.addWorkflow(username, this.toEntity(workflow));
         if (!addedWorkflow) return null;
         return this.toDomain(addedWorkflow);
+    }
+
+    async getAllWorkflowByUsername(username: string): Promise<Workflow[] | null> {
+        const workflows = await this.workflowRepository.getAllWorkflowByUsername(username);
+        if (!workflows) return null;
+        return workflows.map((workflow) => this.toDomain(workflow));
     }
 }
 

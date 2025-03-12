@@ -12,7 +12,7 @@ export class UserAlreadyExistsError extends BusinessError {
 
 export class UserNotFoundError extends BusinessError {
     name = "UserNotFoundError";
-    message = "User not found when attempt to login";
+    message = "User not found in the database";
 }
 
 export class WrongPasswordError extends BusinessError {
