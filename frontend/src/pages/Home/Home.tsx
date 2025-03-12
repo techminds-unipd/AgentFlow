@@ -7,17 +7,17 @@ import "./Home.css";
 export const Home = () => {
   return (
     <main>
-      <Grid container spacing={6} p={10}>
+      <Grid container spacing={5} p={10}>
         <Grid size={12} textAlign={"center"}>
           <Typography variant="h1">Agent Flow</Typography>
-          <Typography variant="h4">Your personal assistant.</Typography>
+          <Typography variant="h2">Your personal assistant.</Typography>
         </Grid>
         <Grid container size={12} paddingTop={5}>
           <Grid size={4}>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{backgroundColor: "var(--maincolor)", color: "var(--white-text)"}}>
               <CardContent>
-                <Typography variant="h4">What does it do?</Typography>
-                <Typography>
+                <Typography variant="h3">What does it do?</Typography>
+                <Typography fontSize={20}>
                   Agent Flow is a web application that executes all those boring
                   and repetitive workflows on your behalf. These automations
                   seemingly integrate with services like Gmail, Google Calendar
@@ -29,10 +29,18 @@ export const Home = () => {
             </Card>
           </Grid>
           <Grid size={4}>
-            <Card variant="outlined">
+            <Card variant="outlined" sx={{backgroundColor: "var(--maincolor)", color: "var(--white-text)"}}>
               <CardContent>
-                <Typography variant="h4">How does it work?</Typography>
-                <Typography>
+                <Typography variant="h3">Example of a workflow</Typography>
+                <Typography fontSize={20}>This product executes workflows!! WOW</Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={4}>
+            <Card variant="outlined" sx={{backgroundColor: "var(--maincolor)", color: "var(--white-text)"}}>
+              <CardContent>
+                <Typography variant="h3">How does it work?</Typography>
+                <Typography fontSize={20}>
                   This webapp uses cutting-edge tecnologies as well as
                   producion-ready and well tested ones. The interface is made in
                   React, with the workflow editor being made in React Flow. The
@@ -40,14 +48,6 @@ export const Home = () => {
                   also known as Agent, uses Flask to handle requests, Langchain
                   for the tools and Groq for the inference service.
                 </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid size={4}>
-            <Card variant="outlined">
-              <CardContent>
-                <Typography variant="h4">Example of a workflow</Typography>
-                <Typography>This product executes workflows!! WOW</Typography>
               </CardContent>
             </Card>
           </Grid>
