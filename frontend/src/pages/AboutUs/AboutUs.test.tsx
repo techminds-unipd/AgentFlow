@@ -15,9 +15,7 @@ describe("AboutUs section test", ()=>{
     });
     test("Link to documentation is present", ()=>{
         render(<AboutUs/>);
-        let found: boolean = false;
         const linksArray = screen.getAllByRole("link");
-        
-        assert(found);
+        assert(linksArray.some(link => link.getAttribute('href') === 'https://techminds-unipd.github.io/docs/'));
     });
 })
