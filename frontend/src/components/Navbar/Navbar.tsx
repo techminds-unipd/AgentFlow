@@ -1,4 +1,4 @@
-import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography, FormControlLabel, FormGroup, Switch } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { CustomLink } from '../CustomLink/CustomLink.tsx';
 import { CustomButton } from '../CustomButton/CustomButton.tsx';
@@ -9,10 +9,14 @@ import logo from '../../assets/Logo.Tech-Minds-fe.png';
 import '../../index.css';
 
 export const Navbar = () => {
+    const [auth, setAuth] = React.useState(true);
     let navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setAuth(event.target.checked);
+    };
     const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -20,12 +24,26 @@ export const Navbar = () => {
         setAnchorEl(null);
     };
     const handleNavigate = () => {
-        handleClose;
+        handleClose();
         navigate("/services");
     };
 
     return (
         <Box sx={{ flexGrow: 1 }}>
+            {/* per vedere loggato e non loggato scommentare questo codice. da togliere quando ci colleghiamo con il backend
+            <FormGroup>
+                <FormControlLabel
+                    control={
+                    <Switch
+                        checked={auth}
+                        onChange={handleChange}
+                        aria-label="login switch"
+                />
+            }
+            label={auth ? 'Logout' : 'Login'}
+            />
+            </FormGroup>
+            */}
             <AppBar 
                 position="static"
                 sx={{
@@ -51,27 +69,37 @@ export const Navbar = () => {
                     <Box display="flex" gap={2} alignItems="center">
                         <CustomLink name="Home" link="/" />
                         <CustomLink name="About Us" link="/aboutus" />
-                        <CustomButton name="Sign In" link="/signin" variant="contained"/>
-                        <CustomButton name="Sign Up" link="/signup" variant="outlined" />
-                        <IconButton
-                            size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={handleMenu}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                        <Menu 
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleClose}
-                        >
-                            <MenuItem onClick={handleNavigate}>Services</MenuItem>
-                            <LogoutMenuItem handleCloseMenu={handleClose} />
-                        </Menu>
+                        {!auth && ( 
+                            <>
+                                <CustomButton name="Sign In" link="/signin" variant="contained"/>
+                                <CustomButton name="Sign Up" link="/signup" variant="outlined" />
+                            </>
+                        )}
+                        {auth && ( 
+                            <>
+                                <CustomLink name="Dashboard" link="/dashboard" />
+                                <CustomLink name="Workflow" link="/workflow" />
+                                <IconButton
+                                    size="large"
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleMenu}
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                                <Menu 
+                                    id="basic-menu"
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                >
+                                    <MenuItem onClick={handleNavigate}>Services</MenuItem>
+                                    <LogoutMenuItem handleCloseMenu={handleClose} />
+                                </Menu>
+                            </>
+                        )}
                     </Box>
                 </Toolbar>
             </AppBar>
