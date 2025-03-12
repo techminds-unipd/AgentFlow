@@ -7,7 +7,6 @@ export const Footer=()=>{
     return(
         <Grid 
             container  
-            className='footer' 
             textAlign={'center'}
             bottom={0}
             width={'100%'}
