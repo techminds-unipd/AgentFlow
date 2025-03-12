@@ -16,4 +16,14 @@ export class WorkflowRepository {
         if (!user) return null;
         return user.workflows[0];
     }
+
+    async addWorkflow(username: string, workflow: WorkflowEntity): Promise<WorkflowEntity | null> {
+        const user = await this.userEntityModel
+            .findOneAndUpdate({ username: username }, { $push: { workflows: workflow } }, { new: true })
+            .exec();
+        if (!user) return null;
+        const addedWorkflow = user.workflows.find((w) => w.name === workflow.name);
+        if (!addedWorkflow) return null;
+        return addedWorkflow;
+    }
 }
