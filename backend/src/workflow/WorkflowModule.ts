@@ -31,6 +31,3 @@ import { GetWorkflowService } from "./service/GetWorkflowService";
     ]
 })
 export class WorkflowModule {}
-
-
-

@@ -20,7 +20,6 @@ export class WrongPasswordError extends BusinessError {
     message = "Password doesn't match when attempt to login";
 }
 
-
 // WORKFLOW ERRORS
 
 export class WorkflowAlreadyExistsError extends BusinessError {

@@ -17,11 +17,12 @@ export class WorkflowRepository {
         return user.workflows[0];
     }
 
-
     async deleteWorkflow(username: string, workflowName: string): Promise<WorkflowEntity | null> {
-        const user = await this.userEntityModel.findOneAndUpdate({ username: username}, {$pull: { workflows: { name: workflowName }}}).exec()
+        const user = await this.userEntityModel
+            .findOneAndUpdate({ username: username }, { $pull: { workflows: { name: workflowName } } })
+            .exec();
         if (!user) return null;
-        const deletedWorkflow = user.workflows.find((w) => w.name === workflowName)
+        const deletedWorkflow = user.workflows.find((w) => w.name === workflowName);
         if (!deletedWorkflow) return null;
         return deletedWorkflow;
     }

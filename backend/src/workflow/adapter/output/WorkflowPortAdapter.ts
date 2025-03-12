@@ -34,7 +34,6 @@ class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort {
         return this.toDomain(workflowEntity);
     }
 
-
     async deleteWorkflow(username: string, workflowName: string): Promise<Workflow | null> {
         const workflowEntity = await this.workflowRepository.deleteWorkflow(username, workflowName);
         if (!workflowEntity) return null;
@@ -45,7 +44,6 @@ class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort {
         const addedWorkflow = await this.workflowRepository.addWorkflow(username, this.toEntity(workflow));
         if (!addedWorkflow) return null;
         return this.toDomain(addedWorkflow);
-
     }
 }
 
