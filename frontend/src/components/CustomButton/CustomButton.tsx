@@ -9,7 +9,7 @@ import '../../index.css'
 interface CustomButtonProps {
   name: string,
   link: string,
-  variant?: "contained" | "outlined"
+  variant: "contained" | "outlined"
 }
 
 export const CustomButton = ({ name, link, variant = "contained" }: CustomButtonProps) => {
@@ -20,7 +20,7 @@ export const CustomButton = ({ name, link, variant = "contained" }: CustomButton
               textColor: 'var(--white-text)',
               backgroundColor: 'var(--maincolor)',
           };
-      } else if (variant === "contained") {
+      } else {
           return {
               textColor: 'var(--maincolor)',
               backgroundColor: 'var(--white-text)',
