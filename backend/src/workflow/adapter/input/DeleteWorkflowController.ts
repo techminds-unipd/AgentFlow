@@ -34,7 +34,7 @@ class DeleteWorkflowController {
             );
             return this.toDTO(workflow);
         } catch (error) {
-            if (error instanceof WorkflowNotFoundError) throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+            if (error instanceof WorkflowNotFoundError) throw new HttpException("Workflow not found", HttpStatus.BAD_REQUEST);
             throw new HttpException("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
