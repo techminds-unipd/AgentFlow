@@ -6,7 +6,7 @@ import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 
 describe("WorkflowPortAdapter", () => {
     let workflowPortAdapter: WorkflowPortAdapter;
-    let workflowRepositoryMock: { getWorkflowByName: jest.Mock, addWorkflow: jest.Mock };
+    let workflowRepositoryMock: { getWorkflowByName: jest.Mock, addWorkflow: jest.Mock, deleteWorkflow: jest.Mock };
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
         new Node(NodeType.Gmail, "action2", new Point(2, 2)),
@@ -31,7 +31,7 @@ describe("WorkflowPortAdapter", () => {
     };
 
     beforeEach(async () => {
-        workflowRepositoryMock = { getWorkflowByName: jest.fn(), addWorkflow: jest.fn() };
+        workflowRepositoryMock = { getWorkflowByName: jest.fn(), addWorkflow: jest.fn(), deleteWorkflow: jest.fn() };
         await createTestingModule();
     });
 
@@ -58,4 +58,17 @@ describe("WorkflowPortAdapter", () => {
             expect(await workflowPortAdapter.addWorkflow("prova", workflowEmptyMock)).toEqual(null);
         });
     })
+
+    describe("deleteWorkflow", () => {
+        it("should return the workflow of the user", async () => {
+            workflowRepositoryMock.deleteWorkflow.mockResolvedValue(workflowEntityMock);
+            expect(await workflowPortAdapter.deleteWorkflow("username", "prova")).toEqual(workflowMock);
+        });
+
+        it("should return null if the workflow doesn't exists", async () => {
+            workflowRepositoryMock.deleteWorkflow.mockResolvedValue(null);
+            expect(await workflowPortAdapter.deleteWorkflow("username", "prova")).toEqual(null);
+        });
+    });
+
 });
