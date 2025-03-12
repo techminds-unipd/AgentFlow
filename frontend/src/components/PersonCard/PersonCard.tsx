@@ -9,6 +9,8 @@ interface PersonCardProps {
 }
 
 export const PersonCard = ({ name, GitHubUsername }: PersonCardProps) => {
+  if (name === "") name = "Name Surname";
+  if (GitHubUsername === "") GitHubUsername = "github";
   return (
     <Box textAlign={"center"}>
       <Link
