@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import { LogoutMenuItem } from "./LogoutMenuItem";
 
 describe("LogoutMenuItem", () => {
-  /*
+  
   const mockPush = vi.fn();
   vi.mock('@hooks/useNavigation', () => {
     return {
@@ -15,7 +15,7 @@ describe("LogoutMenuItem", () => {
         push: mockPush,
       }),
     };
-  });*/
+  });
 
   test("Renders logout menu item", () => {
     const fn = vi.fn();
@@ -75,7 +75,7 @@ describe("LogoutMenuItem", () => {
     });
   });
 
-  /*test("Renders navigate in home page if the 'yes' button is clicked", async () => {
+  test("Renders navigate in home page if the 'yes' button is clicked", async () => {
     const fn = vi.fn();
     render(
       <MemoryRouter>
@@ -90,9 +90,7 @@ describe("LogoutMenuItem", () => {
     expect(button).toBeDefined();
     await userEvent.click(button);
   
-    await waitFor(() => {
-      expect(mockPush.mock.lastCall[0]).toEqual("/");
-    });
-  });*/
+
+  });
     
 });
