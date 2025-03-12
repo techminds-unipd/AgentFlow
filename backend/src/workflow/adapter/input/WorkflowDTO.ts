@@ -52,5 +52,4 @@ export class WorkflowDTO {
     }
 }
 
-
 export type RequestHeader = { username: string };
