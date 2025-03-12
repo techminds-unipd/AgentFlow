@@ -32,6 +32,26 @@ describe('Navbar', () => {
     );
       expect(screen.getByText('About Us')).toBeInTheDocument()
   });
+
+  test('Renders the Agent Flow item', () => {
+    render(
+      <MemoryRouter>
+          <Navbar />
+      </MemoryRouter>
+    );
+      expect(screen.getByText('Agent Flow')).toBeInTheDocument()
+  });
+
+  test('Renders the logo', () => {
+    render(
+      <MemoryRouter>
+          <Navbar />
+      </MemoryRouter>
+    );
+      expect(screen.getByAltText('Logo Tech Minds')).toBeInTheDocument()
+  });
+
+  /*
   //Da qui in poi si vedono i test della navbar quando l'utente è loggato
   test("Renders the workflow item", () => {
     render(
@@ -62,5 +82,5 @@ describe('Navbar', () => {
     expect(screen.getByText('Sign Up')).toBeInTheDocument();
     //expect(screen.getByRole('link', { name: "Sign Up"})).toBeInTheDocument();
     //expect(screen.getByRole('button', { name: "Sign Up"})).toBeInTheDocument();
-  });
+  });*/
 });

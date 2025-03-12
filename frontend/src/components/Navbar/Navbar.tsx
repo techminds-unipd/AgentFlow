@@ -54,7 +54,7 @@ export const Navbar = () => {
                 <Toolbar disableGutters sx={{ paddingRight: 2}} >
                     <img 
                         src={logo}
-                        alt="Logo" 
+                        alt="Logo Tech Minds" 
                         style={{ height: 40, width: 'auto' }} 
                     />
                     <Typography 
