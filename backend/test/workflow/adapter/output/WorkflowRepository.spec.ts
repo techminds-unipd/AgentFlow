@@ -6,7 +6,7 @@ import { WorkflowRepository } from "src/workflow/adapter/output/WorkflowReposito
 
 describe("WorkflowRepository", () => {
     let workflowRepository: WorkflowRepository;
-    let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock; exec: jest.Mock, findOneAndUpdate: jest.Mock};
+    let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock; exec: jest.Mock, findOneAndUpdate: jest.Mock };
     const userEntityMock = { workflows: [
         { name: "prova", nodes: [
             { type: "GCALENDAR", action: "action1", positionX: 1, positionY: 1 },
@@ -77,17 +77,28 @@ describe("WorkflowRepository", () => {
 
     describe("deleteWorkflow", () => {
         it("should return a workflow", async () => {
+            workflowRepository.getWorkflowByName = jest.fn();
+            (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(workflowEntityMock);
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
-            userEntityModelMock.exec.mockResolvedValue(userEntityMock);
+            userEntityModelMock.exec.mockResolvedValue(userEntityEmptyWorkflowMock);
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(workflowEntityMock);
         });
+
         it("should return null if the workflow doesn't exists", async () => {
-            userEntityModelMock.findOneAndUpdate.mockReturnThis();
-            userEntityModelMock.exec.mockResolvedValue(null);
+            workflowRepository.getWorkflowByName = jest.fn();
+            (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(null);
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
         });
-    });
 
+        it("should return null if it didn't delete the workflow", async () => {
+            workflowRepository.getWorkflowByName = jest.fn();
+            (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(workflowEntityMock);
+            userEntityModelMock.findOneAndUpdate.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(userEntityMock);
+            expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
+        });
+        
+    });
 
 });
 
