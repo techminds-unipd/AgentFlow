@@ -10,8 +10,8 @@ describe("GetWorkflowService", () => {
     let createWorkflowService: CreateWorkflowService;
     let getWorkflowPortMock: { getWorkflowByName: jest.Mock };
     let createWorkflowPortMock: { addWorkflow: jest.Mock };
-    let createWorkflowCommandMock = new CreateWorkflowCommand("prova", "username");
-    let workflowMock = new Workflow("prova", []);
+    const createWorkflowCommandMock = new CreateWorkflowCommand("prova", "username");
+    const workflowMock = new Workflow("prova", []);
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({

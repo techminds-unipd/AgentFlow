@@ -12,9 +12,9 @@ describe("CreateWorkflowController", () => {
     let createWorkflowController: CreateWorkflowController;
     let createWorkflowUseCaseMock: { createWorkflow: jest.Mock };
     let jwtService: { verifyAsync: jest.Mock };
-    let workflowMock = new Workflow("prova", []);
-    let requestMock = { username: "gianni" };
-    let workflowDTOMock = new WorkflowDTO("prova", [], []);
+    const workflowMock = new Workflow("prova", []);
+    const requestMock = { username: "gianni" };
+    const workflowDTOMock = new WorkflowDTO("prova", [], []);
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({

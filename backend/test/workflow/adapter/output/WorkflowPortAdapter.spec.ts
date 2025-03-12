@@ -17,8 +17,8 @@ describe("WorkflowPortAdapter", () => {
         new NodeEntity("GMAIL", "action2", 2, 2),
         new NodeEntity("PASTEBIN", "", 3, 3)
     ]);
-    let workflowEmptyMock = new Workflow("prova", []);
-    let workflowEntityEmptyMock = new WorkflowEntity("prova", []);
+    const workflowEmptyMock = new Workflow("prova", []);
+    const workflowEntityEmptyMock = new WorkflowEntity("prova", []);
     
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
