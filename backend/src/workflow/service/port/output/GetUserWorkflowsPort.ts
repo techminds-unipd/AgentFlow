@@ -1,7 +1,7 @@
 import { Workflow } from "src/workflow/domain/Workflow";
 
-export interface GetUserWorkflowPort {
+export interface GetUserWorkflowsPort {
     getAllWorkflowByUsername(username: string): Promise<Workflow[] | null>;
 }
 
-export const GET_USER_WORKFLOW_PORT = "GET_USER_WORKFLOW_PORT";
+export const GET_USER_WORKFLOWS_PORT = "GET_USER_WORKFLOWS_PORT";

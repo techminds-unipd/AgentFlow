@@ -4,10 +4,10 @@ import { GetWorkflowPort } from "src/workflow/service/port/output/GetWorkflowPor
 import { WorkflowRepository } from "./WorkflowRepository";
 import { CreateWorkflowPort } from "src/workflow/service/port/output/CreateWorkflowPort";
 import { NodeEntity, WorkflowEntity } from "./WorkflowEntity";
-import { GetUserWorkflowPort } from "src/workflow/service/port/output/GetUserWorkflowsPort";
+import { GetUserWorkflowsPort } from "src/workflow/service/port/output/GetUserWorkflowsPort";
 
 @Injectable()
-class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, GetUserWorkflowPort {
+class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, GetUserWorkflowsPort {
     constructor(private readonly workflowRepository: WorkflowRepository) {}
 
     private toDomain(workflowEntity: WorkflowEntity): Workflow {

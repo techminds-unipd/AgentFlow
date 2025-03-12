@@ -11,7 +11,7 @@ import WorkflowPortAdapter from "./adapter/output/WorkflowPortAdapter";
 import { GetWorkflowService } from "./service/GetWorkflowService";
 import { WorkflowRepository } from "./adapter/output/WorkflowRepository";
 import { UserEntity, userEntitySchema } from "src/user/adapter/output/UserEntity";
-import { GET_USER_WORKFLOW_PORT } from "./service/port/output/GetUserWorkflowsPort";
+import { GET_USER_WORKFLOWS_PORT } from "./service/port/output/GetUserWorkflowsPort";
 import { WorkflowNameListService } from "./service/WorkflowNameListService";
 import WorkflowNameListController from "./adapter/input/WorkflowNameListController";
 import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameListUseCase";
@@ -25,7 +25,7 @@ import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameLi
         { provide: GET_WORKFLOW_USE_CASE, useClass: GetWorkflowService },
         { provide: GET_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: WORKFLOW_NAME_LIST_USE_CASE, useClass: WorkflowNameListService },
-        { provide: GET_USER_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
+        { provide: GET_USER_WORKFLOWS_PORT, useClass: WorkflowPortAdapter },
         WorkflowRepository
     ]
 })
