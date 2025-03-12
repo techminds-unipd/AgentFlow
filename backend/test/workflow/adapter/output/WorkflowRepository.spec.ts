@@ -7,44 +7,25 @@ import { WorkflowRepository } from "src/workflow/adapter/output/WorkflowReposito
 describe("WorkflowRepository", () => {
     let workflowRepository: WorkflowRepository;
     let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock; exec: jest.Mock, findOneAndUpdate: jest.Mock };
-    const userEntityMock = { workflows: [
-        { name: "prova", nodes: [
-            { type: "GCALENDAR", action: "action1", positionX: 1, positionY: 1 },
-            { type: "GMAIL", action: "action2", positionX: 2, positionY: 2 },
-            { type: "PASTEBIN", action: "", positionX: 3, positionY: 3 },
-        ] },
-    ] };
-
-    const userEntityEmptyMock = { workflows: [
-        { name: "prova", nodes: [] }
-    ] };
-    const userEntityEmptyWorkflowMock = { workflows: [] };
     const workflowEntityMock = new WorkflowEntity("prova", [
         new NodeEntity("GCALENDAR", "action1", 1, 1),
         new NodeEntity("GMAIL", "action2", 2, 2),
         new NodeEntity("PASTEBIN", "", 3, 3),
     ]);
-
-    const UserEntityWithWorkflowListMock = { workflows: [
-        { name: "prova", nodes: [
-            { type: "GCALENDAR", action: "action1", positionX: 1, positionY: 1 },
-            { type: "GMAIL", action: "action2", positionX: 2, positionY: 2 },
-            { type: "PASTEBIN", action: "", positionX: 3, positionY: 3 },
-        ] },
-        { name: "prova2", nodes: [] },
-        { name: "prova3", nodes: [] }
-    ]};
+    const userEntityMock = { workflows: [
+        workflowEntityMock
+    ] };
+    const workflowEntityEmptyMock = new WorkflowEntity("prova1", []);
+    const userEntityEmptyMock = { workflows: [
+        workflowEntityEmptyMock
+    ] };
+    const userEntityEmptyWorkflowMock = { workflows: [] };
     const workflowEntityListMock = [
-        new WorkflowEntity("prova", [
-            new NodeEntity("GCALENDAR", "action1", 1, 1),
-            new NodeEntity("GMAIL", "action2", 2, 2),   
-            new NodeEntity("PASTEBIN", "", 3, 3)
-        ]),
-        new WorkflowEntity("prova2", []),
-        new WorkflowEntity("prova3", [])
+        workflowEntityMock,
+        workflowEntityEmptyMock,
+        new WorkflowEntity("prova2", [])
     ];
-
-    const workflowEntityEmptyMock = new WorkflowEntity("prova", []);
+    const UserEntityWithWorkflowListMock = { workflows: workflowEntityListMock };
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({

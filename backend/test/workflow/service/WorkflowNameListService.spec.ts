@@ -8,22 +8,15 @@ describe("WorkflowNameListService", () => {
     let workflowNameListService: WorkflowNameListService;
     let getUserWorkflowsPortMock: { getAllWorkflowByUsername: jest.Mock };
     const workflowNameListMock: string[] = ["prova", "prova2", "prova3"];
+    const nodesMock: Node[] = [
+        new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
+        new Node(NodeType.Gmail, "action2", new Point(2, 2)),
+        new Node(NodeType.Pastebin, "", new Point(3, 3))
+    ];
     const workflowMock: Workflow[] = [
-        new Workflow("prova", [
-            new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
-            new Node(NodeType.Gmail, "action2", new Point(2, 2)),
-            new Node(NodeType.Pastebin, "", new Point(3, 3))
-        ]),
-        new Workflow("prova2", [
-            new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
-            new Node(NodeType.Gmail, "action2", new Point(2, 2)),
-            new Node(NodeType.Pastebin, "", new Point(3, 3))
-        ]),
-        new Workflow("prova3", [
-            new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
-            new Node(NodeType.Gmail, "action2", new Point(2, 2)),
-            new Node(NodeType.Pastebin, "", new Point(3, 3))
-        ])
+        new Workflow(workflowNameListMock[0], nodesMock),
+        new Workflow(workflowNameListMock[1], nodesMock),
+        new Workflow(workflowNameListMock[2], nodesMock)
     ];
 
     const createTestingModule = async () => {

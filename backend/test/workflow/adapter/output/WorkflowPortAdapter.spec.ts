@@ -24,20 +24,12 @@ describe("WorkflowPortAdapter", () => {
     const workflowEmptyMock = new Workflow("prova", []);
     const workflowEntityEmptyMock = new WorkflowEntity("prova", []);
     const workflowEntityListMock = [
-        new WorkflowEntity("prova", [
-            new NodeEntity("GCALENDAR", "action1", 1, 1),
-            new NodeEntity("GMAIL", "action2", 2, 2),
-            new NodeEntity("PASTEBIN", "", 3, 3)
-        ]),
+        workflowEntityMock,
         new WorkflowEntity("prova2", []),
         new WorkflowEntity("prova3", [])
     ];
     const workflowListMock = [
-        new Workflow("prova", [
-            new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
-            new Node(NodeType.Gmail, "action2", new Point(2, 2)),
-            new Node(NodeType.Pastebin, "", new Point(3, 3))
-        ]),
+        workflowMock,
         new Workflow("prova2", []),
         new Workflow("prova3", [])
     ];
