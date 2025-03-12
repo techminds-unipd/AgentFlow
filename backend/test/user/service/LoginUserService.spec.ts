@@ -1,22 +1,22 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import User from "src/user/domain/User";
 import { GET_USER_PORT } from "src/user/service/port/output/GetUserPort";
-import LoginService from "src/user/service/LoginService";
+import LoginUserService from "src/user/service/LoginUserService";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 import * as bcrypt from "bcrypt";
 
 jest.mock("bcrypt", () => ({ compare: jest.fn() }));
 
-describe("LoginService", () => {
-    let loginService: LoginService;
+describe("LoginUserService", () => {
+    let loginUserService: LoginUserService;
     let getUserPortMock: { getUserByUsername: jest.Mock };
     const userMock = new User("Gianni", "Testing1234");
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
-            providers: [LoginService, { provide: GET_USER_PORT, useValue: getUserPortMock }]
+            providers: [LoginUserService, { provide: GET_USER_PORT, useValue: getUserPortMock }]
         }).compile();
-        loginService = module.get<LoginService>(LoginService);
+        loginUserService = module.get<LoginUserService>(LoginUserService);
     };
 
     beforeEach(async () => {
@@ -28,18 +28,18 @@ describe("LoginService", () => {
         it("should login the user", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-            expect(await loginService.login(userMock)).toEqual(userMock);
+            expect(await loginUserService.login(userMock)).toEqual(userMock);
         });
 
         it("shouldn't login the user because the username was not found in the database", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
-            expect(loginService.login(userMock)).rejects.toThrow(UserNotFoundError);
+            expect(loginUserService.login(userMock)).rejects.toThrow(UserNotFoundError);
         });
 
         it("shouldn't login the user because password doesn't match", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
             (bcrypt.compare as jest.Mock).mockResolvedValue(false);
-            expect(loginService.login(userMock)).rejects.toThrow(WrongPasswordError);
+            expect(loginUserService.login(userMock)).rejects.toThrow(WrongPasswordError);
         });
     });
 });

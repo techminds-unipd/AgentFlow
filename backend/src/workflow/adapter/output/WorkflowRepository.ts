@@ -17,6 +17,7 @@ export class WorkflowRepository {
         return user.workflows[0];
     }
 
+
     async deleteWorkflow(username: string, workflowName: string): Promise<WorkflowEntity | null> {
         const user = await this.userEntityModel
             .findOne({ username: username, "workflows.name": workflowName }, { "workflows.$": 1 })
@@ -30,5 +31,15 @@ export class WorkflowRepository {
         if (deleteResult.modifiedCount !== 1) return null;
 
         return deletedWorkflow;
+    }
+
+    async addWorkflow(username: string, workflow: WorkflowEntity): Promise<WorkflowEntity | null> {
+        const user = await this.userEntityModel
+            .findOneAndUpdate({ username: username }, { $push: { workflows: workflow } }, { new: true })
+            .exec();
+        if (!user) return null;
+        const addedWorkflow = user.workflows.find((w) => w.name === workflow.name);
+        if (!addedWorkflow) return null;
+        return addedWorkflow;
     }
 }
