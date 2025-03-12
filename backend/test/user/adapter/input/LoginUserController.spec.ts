@@ -2,14 +2,14 @@ import { Test, TestingModule } from "@nestjs/testing";
 import User from "src/user/domain/User";
 import UserDTO from "src/user/adapter/input/UserDTO";
 import { JwtService } from "@nestjs/jwt";
-import { LOGIN_USE_CASE } from "src/user/service/port/input/LoginUseCase";
-import LoginController from "src/user/adapter/input/LoginController";
+import { LOGIN_USER_USE_CASE } from "src/user/service/port/input/LoginUserUseCase";
+import LoginUserController from "src/user/adapter/input/LoginUserController";
 import { MongooseError } from "mongoose";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 
-describe("LoginController", () => {
-    let loginController: LoginController;
+describe("LoginUserController", () => {
+    let loginUserController: LoginUserController;
     let jwtService: { signAsync: jest.Mock };
     let loginUseCaseMock: { login: jest.Mock };
     const userMock = new User("Gianni", "Testing1234");
@@ -18,13 +18,13 @@ describe("LoginController", () => {
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
-            controllers: [LoginController],
+            controllers: [LoginUserController],
             providers: [
-                { provide: LOGIN_USE_CASE, useValue: loginUseCaseMock },
+                { provide: LOGIN_USER_USE_CASE, useValue: loginUseCaseMock },
                 { provide: JwtService, useValue: jwtService }
             ]
         }).compile();
-        loginController = module.get<LoginController>(LoginController);
+        loginUserController = module.get<LoginUserController>(LoginUserController);
     };
 
     beforeEach(async () => {
@@ -37,14 +37,14 @@ describe("LoginController", () => {
         it("should login the user", async () => {
             loginUseCaseMock.login.mockResolvedValue(userMock);
             jwtService.signAsync.mockResolvedValue(jwtMock.accessToken);
-            expect(await loginController.login(userDTOMock)).toEqual(jwtMock);
+            expect(await loginUserController.login(userDTOMock)).toEqual(jwtMock);
         });
 
         it("should throw HttpException because the database throws an exception", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new MongooseError("");
             });
-            const result = loginController.login(userDTOMock);
+            const result = loginUserController.login(userDTOMock);
             expect(result).rejects.toThrow(HttpException);
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
@@ -53,7 +53,7 @@ describe("LoginController", () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new UserNotFoundError();
             });
-            const result = loginController.login(userDTOMock);
+            const result = loginUserController.login(userDTOMock);
             expect(result).rejects.toThrow(HttpException);
             expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
         });
@@ -62,7 +62,7 @@ describe("LoginController", () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new WrongPasswordError();
             });
-            const result = loginController.login(userDTOMock);
+            const result = loginUserController.login(userDTOMock);
             expect(result).rejects.toThrow(HttpException);
             expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
         });
