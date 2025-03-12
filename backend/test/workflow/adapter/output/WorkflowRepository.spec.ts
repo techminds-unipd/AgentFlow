@@ -38,7 +38,7 @@ describe("WorkflowRepository", () => {
     };
 
     beforeEach(async () => {
-        userEntityModelMock = { findOne: jest.fn(), create: jest.fn(), exec: jest.fn(), findOneAndUpdate: jest.fn() };
+        userEntityModelMock = { findOne: jest.fn(), create: jest.fn(), exec: jest.fn(), findOneAndUpdate: jest.fn()};
         await createTestingModule();
     });
 
@@ -89,5 +89,28 @@ describe("WorkflowRepository", () => {
         });
     });
 
+    describe("deleteWorkflow", () => {
+        it("should return a workflow", async () => {
+            workflowRepository.getWorkflowByName = jest.fn();
+            (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(workflowEntityMock);
+            userEntityModelMock.findOneAndUpdate.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(userEntityEmptyWorkflowMock);
+            expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(workflowEntityMock);
+        });
+
+        it("should return null if the workflow doesn't exists", async () => {
+            workflowRepository.getWorkflowByName = jest.fn();
+            (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(null);
+            expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
+        });
+
+        it("should return null if it didn't delete the workflow", async () => {
+            workflowRepository.getWorkflowByName = jest.fn();
+            (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(workflowEntityMock);
+            userEntityModelMock.findOneAndUpdate.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(userEntityMock);
+            expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
+        });
+    });
 });
 
