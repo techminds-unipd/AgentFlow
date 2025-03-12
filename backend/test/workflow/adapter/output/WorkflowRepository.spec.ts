@@ -81,7 +81,7 @@ describe("WorkflowRepository", () => {
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(workflowEntityMock);
         });
-        it("should return null if the user or the workflow doesn't exists", async () => {
+        it("should return null if the workflow doesn't exists", async () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(null);
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
