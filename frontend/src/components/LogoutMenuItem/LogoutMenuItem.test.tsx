@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { expect, test, describe, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, Routes, Route } from "react-router";
 import { useNavigate } from "react-router";
 import { LogoutMenuItem } from "./LogoutMenuItem";
 
@@ -78,18 +78,23 @@ describe("LogoutMenuItem", () => {
   test("Renders navigate in home page if the 'yes' button is clicked", async () => {
     const fn = vi.fn();
     render(
-      <MemoryRouter>
-        <LogoutMenuItem handleCloseMenu={fn} />
+      <MemoryRouter initialEntries={['/test']}>
+        <Routes>
+          <Route path="/test" element={<LogoutMenuItem handleCloseMenu={fn}></LogoutMenuItem>} />
+          <Route path="/" element={<div>Test home page</div>} />
+        </Routes>
       </MemoryRouter>
     );
   
     expect(screen.queryByRole("dialog")).toBeNull();
-    userEvent.click(screen.getByRole("menuitem"));
+    fireEvent.click(screen.getByRole("menuitem"));
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     const button = screen.getByRole("button", { name: /yes/i });
     expect(button).toBeDefined();
-    await userEvent.click(button);
-  
+    await userEvent.click(screen.getByRole("button", { name: /yes/i }));
+    await waitFor(() => {
+      expect(screen.getByText('Test home page')).toBeInTheDocument();
+    });
 
   });
     
