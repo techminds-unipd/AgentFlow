@@ -8,7 +8,7 @@ export const AboutUs = () => {
     <main>
       <Grid container>
         <Grid container justifyContent="center" size={12} marginBottom={4}>
-          <img src="/Logo-TechMinds.png" />
+          <img src="/Logo-TechMinds.png" alt="Tech Minds logo" className="logo"/>
         </Grid>
         <Grid
           container
