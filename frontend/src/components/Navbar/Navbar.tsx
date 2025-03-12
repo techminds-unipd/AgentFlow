@@ -1,20 +1,26 @@
-import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton } from '@mui/material';
+import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Link, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { CustomLink } from '../CustomLink/CustomLink.tsx';
 import { CustomButton } from '../CustomButton/CustomButton.tsx';
-import { Typography } from '@mui/material';
+import { useNavigate } from "react-router";
 import * as React from 'react';
 import logo from '../../assets/Logo.Tech-Minds-fe.png';
 import '../../index.css';
 
 export const Navbar = () => {
+    let navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    
     const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
         setAnchorEl(null);
+    };
+    const handleNavigate = () => {
+        handleClose;
+        navigate("/services");
     };
 
     return (
@@ -57,10 +63,12 @@ export const Navbar = () => {
                             <AccountCircle />
                         </IconButton>
                         <Menu 
+                            id="basic-menu"
+                            anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}
                         >
-                            <MenuItem></MenuItem>
+                            <MenuItem onClick={handleNavigate}>Services</MenuItem>
                         </Menu>
                     </Box>
                 </Toolbar>
