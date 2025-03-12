@@ -6,6 +6,7 @@ import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/workflow/adapter/input/WorkflowDTO";
 import DeleteWorkflowController from "src/workflow/adapter/input/DeleteWorkflowController";
 import { DELETE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/DeleteWorkflowUseCase";
+import { WorkflowNotFoundError } from "src/BusinessErrors";
 
 describe("DeleteWorkflowController", () => {
     let deleteWorkflowController: DeleteWorkflowController;
@@ -58,14 +59,14 @@ describe("DeleteWorkflowController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
-        // it("should throw HttpException because the workflow was not found in the database", async () => {
-        //     getWorkflowUseCaseMock.getWorkflow.mockImplementation(() => {
-        //         throw new WorkflowNotFoundError;
-        //     });
-        //     const result = getWorkflowController.getWorkflow("prova", { username: "username" });
-        //     expect(result).rejects.toThrow(HttpException);
-        //     expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
-        // });
+        it("should throw HttpException because the workflow was not found in the database", async () => {
+            deleteWorkflowUseCaseMock.deleteWorkflow.mockImplementation(() => {
+                throw new WorkflowNotFoundError;
+            });
+            const result = deleteWorkflowController.deleteWorkflow("prova", { username: "username" });
+            expect(result).rejects.toThrow(HttpException);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
+        });
 
     });
 });

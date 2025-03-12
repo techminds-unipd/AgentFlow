@@ -5,6 +5,7 @@ import { Workflow } from "src/workflow/domain/Workflow";
 import { DeleteWorkflowUseCase, DELETE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/DeleteWorkflowUseCase";
 import DeleteWorkflowCommand from "src/workflow/domain/DeleteWorkflowCommand";
 import { ApiBearerAuth } from "@nestjs/swagger";
+import { WorkflowNotFoundError } from "src/BusinessErrors";
 
 @ApiBearerAuth()
 @Controller("workflow")
@@ -33,7 +34,7 @@ class DeleteWorkflowController {
             );
             return this.toDTO(workflow);
         } catch (error) {
-            //if (error instanceof WorkflowNotFoundError) throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+            if (error instanceof WorkflowNotFoundError) throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
             throw new HttpException("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
