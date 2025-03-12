@@ -26,4 +26,18 @@ export class WorkflowRepository {
         if (!addedWorkflow) return null;
         return addedWorkflow;
     }
+
+    async saveWorkflow(username: string, workflow: WorkflowEntity): Promise<WorkflowEntity | null> {
+        const user = await this.userEntityModel
+            .findOneAndUpdate(
+                { username: username, "workflows.name": workflow.name },
+                { $set: { "workflows.$": workflow } },
+                { new: true }
+            )
+            .exec();
+        if (!user) return null;
+        const savedWorkflow = user.workflows.find((w) => w.name === workflow.name);
+        if (!savedWorkflow) return null;
+        return savedWorkflow;
+    }
 }
