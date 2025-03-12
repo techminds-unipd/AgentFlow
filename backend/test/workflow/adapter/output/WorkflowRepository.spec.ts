@@ -6,7 +6,7 @@ import { WorkflowRepository } from "src/workflow/adapter/output/WorkflowReposito
 
 describe("WorkflowRepository", () => {
     let workflowRepository: WorkflowRepository;
-    let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock; exec: jest.Mock, findOneAndUpdate: jest.Mock };
+    let userEntityModelMock: { findOne: jest.Mock; create: jest.Mock; exec: jest.Mock, findOneAndUpdate: jest.Mock, updateOne: jest.Mock };
     const userEntityMock = { workflows: [
         { name: "prova", nodes: [
             { type: "GCALENDAR", action: "action1", positionX: 1, positionY: 1 },
@@ -38,7 +38,7 @@ describe("WorkflowRepository", () => {
     };
 
     beforeEach(async () => {
-        userEntityModelMock = { findOne: jest.fn(), create: jest.fn(), exec: jest.fn(), findOneAndUpdate: jest.fn() };
+        userEntityModelMock = { findOne: jest.fn(), create: jest.fn(), exec: jest.fn(), findOneAndUpdate: jest.fn(), updateOne: jest.fn() };
         await createTestingModule();
     });
 
@@ -74,6 +74,27 @@ describe("WorkflowRepository", () => {
             expect(await workflowRepository.addWorkflow("username", workflowEntityEmptyMock)).toEqual(null);
         });
     });
+
+    describe("deleteWorkflow", () => {
+        it("should return a workflow", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(userEntityMock);
+            userEntityModelMock.updateOne.mockResolvedValue({modifiedCount: 1});
+            expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(workflowEntityMock);
+        });
+        it("should return null if the workflow doesn't exists", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(null);
+            expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(null);
+        });
+        // it("should return null if the workflow is not deleted", async () => {
+        //     userEntityModelMock.findOne.mockImplementation();
+        //     userEntityModelMock.exec.mockResolvedValue(userEntityMock);
+        //     userEntityModelMock.updateOne.mockResolvedValue({modifiedCount: 0});
+        //     expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(null);
+        // });
+    });
+
 
 });
 
