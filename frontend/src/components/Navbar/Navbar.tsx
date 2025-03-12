@@ -30,7 +30,7 @@ export const Navbar = () => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            {/* per vedere loggato e non loggato scommentare questo codice. da togliere quando ci colleghiamo con il backend
+            {/* per vedere loggato e non loggato scommentare questo codice. da togliere quando ci colleghiamo con il backend*/}
             <FormGroup>
                 <FormControlLabel
                     control={
@@ -43,7 +43,7 @@ export const Navbar = () => {
             label={auth ? 'Logout' : 'Login'}
             />
             </FormGroup>
-            */}
+            
             <AppBar 
                 position="static"
                 sx={{
