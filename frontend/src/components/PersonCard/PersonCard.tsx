@@ -1,6 +1,6 @@
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import "../../index.css";
 
 interface PersonCardProps {
@@ -27,7 +27,9 @@ export const PersonCard = ({ name, GitHubUsername }: PersonCardProps) => {
           src={`https://github.com/${GitHubUsername}.png`}
           sx={{ width: 150, height: 150 }}
         />
-        {name}
+        <Typography marginTop={2}>
+            {name}
+        </Typography>
       </Link>
     </Box>
   );
