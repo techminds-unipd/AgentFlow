@@ -22,7 +22,12 @@ import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameLi
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
-    controllers: [CreateWorkflowController, GetWorkflowController, WorkflowNameListController, DeleteWorkflowController],
+    controllers: [
+        CreateWorkflowController,
+        GetWorkflowController,
+        WorkflowNameListController,
+        DeleteWorkflowController
+    ],
     providers: [
         { provide: DELETE_WORKFLOW_USE_CASE, useClass: DeleteWorkflowService },
         { provide: DELETE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
