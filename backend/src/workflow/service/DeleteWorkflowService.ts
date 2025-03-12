@@ -3,7 +3,7 @@ import { Workflow } from "../domain/Workflow";
 import DeleteWorkflowCommand from "../domain/DeleteWorkflowCommand";
 import { DeleteWorkflowUseCase } from "./port/input/DeleteWorkflowUseCase";
 import { DELETE_WORKFLOW_PORT, DeleteWorkflowPort } from "./port/output/DeleteWorkflowPort";
-//import { WorkflowNotFoundError } from "src/BusinessErrors";
+import { WorkflowNotFoundError } from "src/BusinessErrors";
 
 @Injectable()
 export class DeleteWorkflowService implements DeleteWorkflowUseCase {
@@ -11,8 +11,7 @@ export class DeleteWorkflowService implements DeleteWorkflowUseCase {
 
     async deleteWorkflow(cmd: DeleteWorkflowCommand): Promise<Workflow> {
         const deletedWorkflow = await this.deleteWorkflowPort.deleteWorkflow(cmd.username, cmd.workflowName);
-        //if (!deletedWorkflow) throw new WorkflowNotFoundError();
-        if (!deletedWorkflow) throw new Error("WorkflowNotFoundError");
+        if (!deletedWorkflow) throw new WorkflowNotFoundError();
         return deletedWorkflow;
     }
 }
