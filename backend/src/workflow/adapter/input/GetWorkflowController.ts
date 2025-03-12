@@ -17,9 +17,9 @@ class GetWorkflowController {
             (node, index) =>
                 new NodeDTO(index, new PositionDTO(node.position.x, node.position.y), new NodeDataDTO(node.type))
         );
-        const edges: EdgeDTO[] = [];
-
-        for (let i = 0; i < workflow.nodes.length - 1; i++) edges.push(new EdgeDTO(workflow.nodes[i].action, i, i + 1));
+        const edges: EdgeDTO[] = workflow.nodes
+            .slice(0, workflow.nodes.length - 1)
+            .map((node, index) => new EdgeDTO(node.action, index, index + 1));
 
         return new WorkflowDTO(workflow.name, nodes, edges);
     }
