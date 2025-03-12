@@ -41,7 +41,7 @@ jobs:
             - name: Installazione dipendenze
               run: npm ci --prefix ./frontend
             - name: Unit testing
-              run: npm test --prefix ./frontend
+              run: npm run coverage --prefix ./frontend
         
     Agente:
         runs-on: ubuntu-latest
