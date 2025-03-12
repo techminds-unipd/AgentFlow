@@ -1,49 +1,51 @@
-import { useLocation } from "react-router";
-import { Link, Typography } from '@mui/material';
-import {
-    Link as RouterLink,
-    LinkProps as RouterLinkProps,
-  } from 'react-router';
-import React from "react";
+import * as React from 'react';
+import { MenuItem, Dialog, DialogActions, DialogTitle, Button} from '@mui/material';
+import { useNavigate } from "react-router";
 import '../../index.css'
 
-interface CustomLinkProps {
-    name: string,
-    link: string
-}
+interface LogoutMenuItem {
+    handleCloseMenu(): void
+  }
 
-/**
- * Componente custom che permette di avere link non circolari. Quando il percorso che viene passato come link
- * è uguale al percorso di React Router in cui si trova il componente, allora viene ritornato un semplice testo con Typography.
- * La funzione LinkBehaviour è stata presa da https://mui.com/material-ui/integrations/routing/
- */
+export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
+    let navigate = useNavigate();
+    const [open, setOpen] = React.useState(false);
 
-export const CustomLink=( {name, link}: CustomLinkProps) =>{
-    const {pathname} = useLocation();
-    const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(
-        (props, ref) => (
-          <RouterLink
-            ref={ref}
-            to={link}
-            {...props}
-          />
-        ),
-      );
+    const handleOpenDialog = () => {
+        setOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setOpen(false);
+        handleCloseMenu();
+    };
+
+    const handleLogout = () => {
+        handleCloseDialog();
+        navigate("/");
+        handleCloseMenu();
+        /* qui ci andrà la logica di logout */
+    };
+    
     return(
         <>
-            {pathname===link?<Typography sx={{ fontSize: 18 }}>{name}</Typography>:
-            <Link 
-                component={LinkBehavior} 
-                underline='always' 
-                sx={{ 
-                    color: 'var(--white-text)',
-                    textDecoration: 'underline var(--white-text)',
-                    fontSize: 18
-                }}
+            <MenuItem onClick={handleOpenDialog}>Logout</MenuItem>
+            <Dialog
+                open={open}
+                onClose={handleCloseDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-                {name}
-            </Link>
-            }
+                <DialogTitle id="alert-dialog-title">
+                {"Are you sure you want to logout?"}
+                </DialogTitle>
+                <DialogActions>
+                <Button onClick={handleCloseDialog}>No</Button>
+                <Button onClick={handleLogout} autoFocus>
+                    Yes
+                </Button>
+                </DialogActions>
+            </Dialog>
         </>
     )
 }

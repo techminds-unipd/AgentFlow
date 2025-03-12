@@ -1,7 +1,8 @@
-import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Link, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
 import { CustomLink } from '../CustomLink/CustomLink.tsx';
 import { CustomButton } from '../CustomButton/CustomButton.tsx';
+import { LogoutMenuItem } from '../LogoutMenuItem/LogoutMenuItem.tsx';
 import { useNavigate } from "react-router";
 import * as React from 'react';
 import logo from '../../assets/Logo.Tech-Minds-fe.png';
@@ -50,7 +51,7 @@ export const Navbar = () => {
                     <Box display="flex" gap={2} alignItems="center">
                         <CustomLink name="Home" link="/" />
                         <CustomLink name="About Us" link="/aboutus" />
-                        <CustomButton name="Sign In" link="/signin" />
+                        <CustomButton name="Sign In" link="/signin" variant="contained"/>
                         <CustomButton name="Sign Up" link="/signup" variant="outlined" />
                         <IconButton
                             size="large"
@@ -69,6 +70,7 @@ export const Navbar = () => {
                             onClose={handleClose}
                         >
                             <MenuItem onClick={handleNavigate}>Services</MenuItem>
+                            <LogoutMenuItem handleCloseMenu={handleClose} />
                         </Menu>
                     </Box>
                 </Toolbar>
