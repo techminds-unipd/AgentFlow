@@ -25,6 +25,25 @@ describe("WorkflowRepository", () => {
         new NodeEntity("PASTEBIN", "", 3, 3),
     ]);
 
+    const UserEntityWithWorkflowListMock = { workflows: [
+        { name: "prova", nodes: [
+            { type: "GCALENDAR", action: "action1", positionX: 1, positionY: 1 },
+            { type: "GMAIL", action: "action2", positionX: 2, positionY: 2 },
+            { type: "PASTEBIN", action: "", positionX: 3, positionY: 3 },
+        ] },
+        { name: "prova2", nodes: [] },
+        { name: "prova3", nodes: [] }
+    ]};
+    const workflowEntityListMock = [
+        new WorkflowEntity("prova", [
+            new NodeEntity("GCALENDAR", "action1", 1, 1),
+            new NodeEntity("GMAIL", "action2", 2, 2),   
+            new NodeEntity("PASTEBIN", "", 3, 3)
+        ]),
+        new WorkflowEntity("prova2", []),
+        new WorkflowEntity("prova3", [])
+    ];
+
     const workflowEntityEmptyMock = new WorkflowEntity("prova", []);
 
     const createTestingModule = async () => {
@@ -72,6 +91,20 @@ describe("WorkflowRepository", () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityEmptyWorkflowMock);
             expect(await workflowRepository.addWorkflow("username", workflowEntityEmptyMock)).toEqual(null);
+        });
+    });
+
+    describe("getAllWorkflowByUsername", () => {
+        it("should return all the workflows of the user", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(UserEntityWithWorkflowListMock);
+            expect(await workflowRepository.getAllWorkflowByUsername("username")).toEqual(workflowEntityListMock);
+        });
+
+        it("should return null if the user doesn't exists", async () => {
+            userEntityModelMock.findOne.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(null);
+            expect(await workflowRepository.getAllWorkflowByUsername("username")).toEqual(null);
         });
     });
 

@@ -1,9 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Workflow } from "../domain/Workflow";
 import { GET_USER_WORKFLOW_PORT, GetUserWorkflowPort } from "./port/output/GetUserWorkflowsPort";
 import { WorkflowNameListUseCase } from "./port/input/WorkflowNameListUseCase";
 import { UserNotFoundError } from "src/BusinessErrors";
-
 
 @Injectable()
 export class WorkflowNameListService implements WorkflowNameListUseCase {
