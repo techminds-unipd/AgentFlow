@@ -1,10 +1,10 @@
-import { Button } from '@mui/material';
+import { Button } from "@mui/material";
 import {
     Link as RouterButton,
     LinkProps as RouterButtonProps,
-  } from 'react-router';
+  } from "react-router";
 import React from "react";
-import '../../index.css'
+import "../../index.css";
 
 interface CustomButtonProps {
   name: string,
@@ -17,20 +17,20 @@ export const CustomButton = ({ name, link, variant = "contained" }: CustomButton
   const getButtonStyles = (variant: string) => {
       if (variant === "outlined") {
           return {
-              textColor: 'var(--white-text)',
-              backgroundColor: 'var(--maincolor)',
+              textColor: "var(--white-text)",
+              backgroundColor: "var(--maincolor)",
           };
       } else {
           return {
-              textColor: 'var(--maincolor)',
-              backgroundColor: 'var(--white-text)',
+              textColor: "var(--maincolor)",
+              backgroundColor: "var(--white-text)",
           };
       }
   };
 
   const { textColor, backgroundColor } = getButtonStyles(variant);
 
-  const ButtonBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterButtonProps, 'to'>>(
+  const ButtonBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterButtonProps, "to">>(
       (props, ref) => (
           <RouterButton
               ref={ref}
@@ -49,7 +49,7 @@ export const CustomButton = ({ name, link, variant = "contained" }: CustomButton
               backgroundColor: backgroundColor,
               color: textColor,
               borderColor: textColor,
-              '&:hover': {
+              "&:hover": {
                   backgroundColor: textColor,
                   color: backgroundColor,
               },

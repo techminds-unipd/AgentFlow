@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { MenuItem, Dialog, DialogActions, DialogTitle, Button} from '@mui/material';
+import * as React from "react";
+import { MenuItem, Dialog, DialogActions, DialogTitle, Button} from "@mui/material";
 import { useNavigate } from "react-router";
-import '../../index.css'
+import "../../index.css";
 
 interface LogoutMenuItem {
     handleCloseMenu(): void

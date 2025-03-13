@@ -8,7 +8,7 @@ import { LogoutMenuItem } from "./LogoutMenuItem";
 describe("LogoutMenuItem", () => {
   
   const mockPush = vi.fn();
-  vi.mock('@hooks/useNavigation', () => {
+  vi.mock("@hooks/useNavigation", () => {
     return {
       default: () => ({
         push: mockPush,
@@ -77,7 +77,7 @@ describe("LogoutMenuItem", () => {
   test("Renders navigate in home page if the 'yes' button is clicked", async () => {
     const fn = vi.fn();
     render(
-      <MemoryRouter initialEntries={['/test']}>
+      <MemoryRouter initialEntries={["/test"]}>
         <Routes>
           <Route path="/test" element={<LogoutMenuItem handleCloseMenu={fn}></LogoutMenuItem>} />
           <Route path="/" element={<div>Test home page</div>} />
@@ -92,7 +92,7 @@ describe("LogoutMenuItem", () => {
     expect(button).toBeDefined();
     await userEvent.click(screen.getByRole("button", { name: /yes/i }));
     await waitFor(() => {
-      expect(screen.getByText('Test home page')).toBeInTheDocument();
+      expect(screen.getByText("Test home page")).toBeInTheDocument();
     });
 
   });

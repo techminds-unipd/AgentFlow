@@ -1,11 +1,11 @@
 import { useLocation } from "react-router";
-import { Link, Typography } from '@mui/material';
+import { Link, Typography } from "@mui/material";
 import {
     Link as RouterLink,
     LinkProps as RouterLinkProps,
-  } from 'react-router';
+  } from "react-router";
 import React from "react";
-import '../../index.css'
+import "../../index.css";
 
 interface CustomLinkProps {
     name: string,
@@ -20,7 +20,7 @@ interface CustomLinkProps {
 
 export const CustomLink=( {name, link}: CustomLinkProps) =>{
     const {pathname} = useLocation();
-    const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'>>(
+    const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, "to">>(
         (props, ref) => (
           <RouterLink
             ref={ref}
@@ -34,10 +34,10 @@ export const CustomLink=( {name, link}: CustomLinkProps) =>{
             {pathname===link?<Typography sx={{ fontSize: 18 }}>{name}</Typography>:
             <Link 
                 component={LinkBehavior} 
-                underline='always' 
+                underline="always" 
                 sx={{ 
-                    color: 'var(--white-text)',
-                    textDecoration: 'underline var(--white-text)',
+                    color: "var(--white-text)",
+                    textDecoration: "underline var(--white-text)",
                     fontSize: 18
                 }}
             >

@@ -19,7 +19,7 @@ describe("CustomButton", () => {
     expect(screen.getByRole("link", { name: buttonText })).toBeInTheDocument();
   });
 
-  test("Renders button has the correct link", () => {
+  test("Rendered button has the correct link", () => {
     render(
       <MemoryRouter>
         <CustomButton name={buttonText} link={buttonLink} variant="contained" />
@@ -29,7 +29,7 @@ describe("CustomButton", () => {
     expect(screen.getByRole("link", { name: buttonText })).toHaveAttribute("href", buttonLink);
   });
 
-  test("Navigates to the correct page on click", async () => {
+  test("Navigates to the correct page on button click", async () => {
     render(
       <MemoryRouter initialEntries={["/"]}>
         <Routes>

@@ -1,12 +1,12 @@
-import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography, FormControlLabel, FormGroup, Switch } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
-import { CustomLink } from '../CustomLink/CustomLink.tsx';
-import { CustomButton } from '../CustomButton/CustomButton.tsx';
-import { LogoutMenuItem } from '../LogoutMenuItem/LogoutMenuItem.tsx';
+import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography, FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { AccountCircle } from "@mui/icons-material";
+import { CustomLink } from "../CustomLink/CustomLink.tsx";
+import { CustomButton } from "../CustomButton/CustomButton.tsx";
+import { LogoutMenuItem } from "../LogoutMenuItem/LogoutMenuItem.tsx";
 import { useNavigate } from "react-router";
-import * as React from 'react';
-import logo from '../../assets/Logo.Tech-Minds-fe.png';
-import '../../index.css';
+import * as React from "react";
+import logo from "../../assets/Logo.Tech-Minds-fe.png";
+import "../../index.css";
 
 export const Navbar = () => {
     const [auth, setAuth] = React.useState(true);
@@ -40,27 +40,27 @@ export const Navbar = () => {
                         aria-label="login switch"
                 />
             }
-            label={auth ? 'Logout' : 'Login'}
+            label={auth ? "Logout" : "Login"}
             />
             </FormGroup>
             
             <AppBar 
                 position="static"
                 sx={{
-                    backgroundColor: 'var(--maincolor)',
-                    boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
-                    color: 'var(--white-text)'
+                    backgroundColor: "var(--maincolor)",
+                    boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",
+                    color: "var(--white-text)"
                 }}>
                 <Toolbar disableGutters sx={{ paddingRight: 2}} >
                     <img 
                         src={logo}
                         alt="Logo Tech Minds" 
-                        style={{ height: 40, width: 'auto' }} 
+                        style={{ height: 40, width: "auto" }} 
                     />
                     <Typography 
                         variant="body1" 
                         sx={{ 
-                            color: 'var(--white-text)',
+                            color: "var(--white-text)",
                             fontSize: 20, 
                             flexGrow: 1
                         }}>
