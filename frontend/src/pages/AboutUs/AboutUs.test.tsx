@@ -8,10 +8,10 @@ describe("AboutUs section test", ()=>{
         render(<AboutUs/>);
         expect(screen.getByAltText("Tech Minds logo")).toBeInTheDocument();
     });
-    test("6 PersonCards are present", ()=>{
+    test("7 PersonCards are present", ()=>{
         render(<AboutUs/>);
         const personCards = screen.getAllByRole("img");
-        assert(personCards.length>=7);
+        assert(personCards.length>=8);
     });
     test("Link to documentation is present", ()=>{
         render(<AboutUs/>);
