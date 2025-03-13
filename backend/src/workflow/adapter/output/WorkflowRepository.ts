@@ -31,12 +31,14 @@ export class WorkflowRepository {
         const user = await this.userEntityModel
             .findOneAndUpdate(
                 { username: username, "workflows.name": workflow.name },
-                { $set: { "workflows.$": workflow } },
+                { $set: { "workflows.$": workflow }},
                 { new: true }
             )
             .exec();
+        console.log(user);
         if (!user) return null;
         const savedWorkflow = user.workflows.find((w) => w.name === workflow.name);
+        //da guardare la projection per ritornare direttamente il workflow salvato
         if (!savedWorkflow) return null;
         return savedWorkflow;
     }
