@@ -20,11 +20,11 @@ export const Navbar = () => {
     const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
-    const handleClose = () => {
+    const handleCloseMenu = () => {
         setAnchorEl(null);
     };
     const handleNavigate = () => {
-        handleClose();
+        handleCloseMenu();
         navigate("/services");
     };
 
@@ -93,10 +93,10 @@ export const Navbar = () => {
                                     id="basic-menu"
                                     anchorEl={anchorEl}
                                     open={open}
-                                    onClose={handleClose}
+                                    onClose={handleCloseMenu}
                                 >
                                     <MenuItem onClick={handleNavigate}>Services</MenuItem>
-                                    <LogoutMenuItem handleCloseMenu={handleClose} />
+                                    <LogoutMenuItem handleCloseMenu={handleCloseMenu} />
                                 </Menu>
                             </>
                         )}
