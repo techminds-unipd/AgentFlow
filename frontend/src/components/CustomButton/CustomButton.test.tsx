@@ -1,7 +1,8 @@
 import "@testing-library/jest-dom";
+import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { expect, test, describe } from "vitest";
-import { MemoryRouter } from "react-router";
+import { MemoryRouter, Routes, Route } from "react-router";
 import { CustomButton } from "./CustomButton";
 
 describe("CustomButton", () => {
@@ -28,14 +29,18 @@ describe("CustomButton", () => {
     expect(screen.getByRole("link", { name: buttonText })).toHaveAttribute("href", buttonLink);
   });
 
-  test("Renders button navigation on click", async () => {
+  test("Navigates to the correct page on click", async () => {
     render(
-      <MemoryRouter>
-        <CustomButton name={buttonText} link={buttonLink} variant="contained" />
+      <MemoryRouter initialEntries={["/"]}>
+        <Routes>
+          <Route path="/" element={<CustomButton name={buttonText} link={buttonLink} variant="contained" />} />
+          <Route path={buttonLink} element={<div>Test Page</div>} />
+        </Routes>
       </MemoryRouter>
     );
 
     const button = screen.getByRole("link", { name: buttonText });
-    expect(button).toHaveAttribute("href", buttonLink);
+    await userEvent.click(button);
+    expect(screen.getByText("Test Page")).toBeInTheDocument();
   });
 });
