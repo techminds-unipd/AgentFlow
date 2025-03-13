@@ -1,5 +1,9 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class PositionDTO {
+    @ApiProperty()
     readonly x: number;
+    @ApiProperty()
     readonly y: number;
 
     constructor(x: number, y: number) {
@@ -9,6 +13,7 @@ export class PositionDTO {
 }
 
 export class NodeDataDTO {
+    @ApiProperty()
     readonly label: string;
 
     constructor(label: string) {
@@ -17,8 +22,11 @@ export class NodeDataDTO {
 }
 
 export class NodeDTO {
+    @ApiProperty()
     readonly id: number;
+    @ApiProperty({type: PositionDTO})
     readonly position: PositionDTO;
+    @ApiProperty({type: NodeDataDTO})
     readonly data: NodeDataDTO;
 
     constructor(id: number, position: PositionDTO, data: NodeDataDTO) {
@@ -29,8 +37,11 @@ export class NodeDTO {
 }
 
 export class EdgeDTO {
+    @ApiProperty()
     readonly label: string;
+    @ApiProperty()
     readonly source: number;
+    @ApiProperty()
     readonly target: number;
 
     constructor(label: string, source: number, target: number) {
@@ -41,8 +52,11 @@ export class EdgeDTO {
 }
 
 export class WorkflowDTO {
+    @ApiProperty()
     readonly name: string;
+    @ApiProperty({type: NodeDTO, isArray: true})
     readonly nodes: NodeDTO[];
+    @ApiProperty({type: EdgeDTO, isArray: true})
     readonly edges: EdgeDTO[];
 
     constructor(name: string, nodes: NodeDTO[], edges: EdgeDTO[]) {

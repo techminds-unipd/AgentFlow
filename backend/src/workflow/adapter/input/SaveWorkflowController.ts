@@ -12,6 +12,51 @@ import { isNotIn } from "class-validator";
 @Controller("workflow")
 class SaveWorkflowController {
     constructor(@Inject(SAVE_WORKFLOW_USE_CASE) private readonly saveWorkflowUseCase: SaveWorkflowUseCase) {}
+
+    private checkWorkflow(workflow: WorkflowDTO): boolean {
+        // non ci sono sufficienti nodi
+        if (workflow.nodes.length >= 2) return false;
+        // non ci sono sufficienti archi
+        if (workflow.edges.length-1 !== workflow.nodes.length) return false;
+        // ci sono archi senza label
+        workflow.edges.forEach(edge => {
+            if(edge.label === "") return false;
+        });
+
+        const targets = workflow.edges.map(edge => edge.target);
+        const sources = workflow.edges.map(edge => edge.source);
+        const nodesId = workflow.nodes.map(node => node.id);
+
+        // ci sono duplicati negli id dei nodi
+        if(new Set(nodesId).size !== nodesId.length) return false;
+        // ci sono duplicati nelle source degli archi
+        if(new Set(sources).size !== sources.length) return false;
+        // ci sono duplicati nei target degli archi
+        if(new Set(targets).size !== targets.length) return false;
+
+        // un target oppure una source non è un nodeId (un arco non è collegato a un nodo)
+        workflow.edges.forEach(edge => {
+            if(isNotIn(edge.source, nodesId) || isNotIn(edge.target, nodesId)) return false;
+        });
+
+        // ci sono nodi isolati (FORSE NON SERVE PERCHE' CI SONO N-1 ARCHI COLLEGATI AI NODI) 
+        nodesId.forEach(id => {
+            if(isNotIn(id, sources) && isNotIn(id, targets)) return false;
+        });
+
+        /*
+        // un target non è un nodeId
+        target.forEach(t => {
+            if(isNotIn(t, nodesId)) return false;
+        });
+        // un source non è un nodoId
+        source.forEach(s => {
+            if(isNotIn(s, nodesId)) return false;
+        });
+        */
+
+        return true;
+    }
     
     private toDomain(workflowDto: WorkflowDTO): Workflow {
         let workflow: Workflow = new Workflow(workflowDto.name, []);
@@ -57,6 +102,9 @@ class SaveWorkflowController {
     @UseGuards(AuthGuard)
     @Post("/save")
     async saveWorkflow(@Body() workflow: WorkflowDTO, @Request() request: RequestHeader): Promise<WorkflowDTO> {
+        //console.log(this.checkWorkflow(workflow));
+        throw new HttpException(this.checkWorkflow(workflow).toString(), HttpStatus.BAD_REQUEST);
+        /*if (!this.checkWorkflow(workflow)) throw new HttpException("Invalid workflow", HttpStatus.BAD_REQUEST);
         try {
             const username = request.username;
             const savedWorkflow = await this.saveWorkflowUseCase.saveWorkflow(new SaveWorkflowCommand(username, this.toDomain(workflow)));
@@ -65,7 +113,8 @@ class SaveWorkflowController {
             if (error instanceof WorkflowNotFoundError) throw new HttpException(error.message, HttpStatus.NOT_FOUND);
 
             throw new HttpException("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        }*/
+        return workflow;
     }
     
 }
