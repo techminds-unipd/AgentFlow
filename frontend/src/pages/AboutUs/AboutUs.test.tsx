@@ -16,6 +16,6 @@ describe("AboutUs section test", ()=>{
     test("Link to GitHub profile is present", ()=>{
         render(<AboutUs/>);
         const linksArray = screen.getAllByRole("link");
-        assert(linksArray.some(link => link.getAttribute('href') === 'https://github.com/techminds-unipd'));
+        assert(linksArray.some(link => link.getAttribute("href") === "https://github.com/techminds-unipd"));
     });
 })

@@ -1,10 +1,7 @@
-//Che ci sia il nome dell'applicazione
-//Che ci siano le tre card
-
 import { render, screen } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 import { Home } from "./Home";
-import '@testing-library/jest-dom'
+import "@testing-library/jest-dom";
 
 
 describe("Home testing", () => {
