@@ -5,9 +5,11 @@ import { WorkflowRepository } from "./WorkflowRepository";
 import { CreateWorkflowPort } from "src/workflow/service/port/output/CreateWorkflowPort";
 import { NodeEntity, WorkflowEntity } from "./WorkflowEntity";
 import { SaveWorkflowPort } from "src/workflow/service/port/output/SaveWorkflowPort";
+import { GetUserWorkflowsPort } from "src/workflow/service/port/output/GetUserWorkflowsPort";
+import { DeleteWorkflowPort } from "src/workflow/service/port/output/DeleteWorkflowPort";
 
 @Injectable()
-class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, SaveWorkflowPort {
+class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, GetUserWorkflowsPort, DeleteWorkflowPort, SaveWorkflowPort {
     constructor(private readonly workflowRepository: WorkflowRepository) {}
 
     private toDomain(workflowEntity: WorkflowEntity): Workflow {
@@ -35,6 +37,12 @@ class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, SaveWo
         return this.toDomain(workflowEntity);
     }
 
+    async deleteWorkflow(username: string, workflowName: string): Promise<Workflow | null> {
+        const workflowEntity = await this.workflowRepository.deleteWorkflow(username, workflowName);
+        if (!workflowEntity) return null;
+        return this.toDomain(workflowEntity);
+    }
+
     async addWorkflow(username: string, workflow: Workflow): Promise<Workflow | null> {
         const addedWorkflow = await this.workflowRepository.addWorkflow(username, this.toEntity(workflow));
         if (!addedWorkflow) return null;
@@ -45,6 +53,12 @@ class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, SaveWo
         const savedWorkflow = await this.workflowRepository.saveWorkflow(username, this.toEntity(workflow));
         if (!savedWorkflow) return null;
         return this.toDomain(savedWorkflow);
+    }
+
+    async getAllWorkflowByUsername(username: string): Promise<Workflow[] | null> {
+        const workflows = await this.workflowRepository.getAllWorkflowByUsername(username);
+        if (!workflows) return null;
+        return workflows.map((workflow) => this.toDomain(workflow));
     }
 }
 
