@@ -6,7 +6,7 @@ import { WorkflowNotFoundError } from "src/BusinessErrors";
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/workflow/adapter/input/WorkflowDTO";
 import SaveWorkflowController from "src/workflow/adapter/input/SaveWorkflowController";
-import { WorkflowDTOValidator } from "src/workflow/adapter/input/WorkflowDTOValidator";
+import WorkflowDTOValidator from "src/workflow/adapter/input/WorkflowDTOValidator";
 import { SAVE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/SaveWorkflowUseCase";
 
 describe("SaveWorkflowController", () => {

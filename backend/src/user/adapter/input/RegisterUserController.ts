@@ -26,8 +26,7 @@ class RegisterUserController {
             const response = await this.registerUserUseCase.registerUser(user);
             return this.toDTO(response);
         } catch (err) {
-            if (err instanceof UserAlreadyExistsError)
-                throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
+            if (err instanceof UserAlreadyExistsError) throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
 
             throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

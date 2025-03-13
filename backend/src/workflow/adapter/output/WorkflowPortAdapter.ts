@@ -9,17 +9,15 @@ import { GetUserWorkflowsPort } from "src/workflow/service/port/output/GetUserWo
 import { DeleteWorkflowPort } from "src/workflow/service/port/output/DeleteWorkflowPort";
 
 @Injectable()
-class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, GetUserWorkflowsPort, DeleteWorkflowPort, SaveWorkflowPort {
+class WorkflowPortAdapter
+    implements GetWorkflowPort, CreateWorkflowPort, GetUserWorkflowsPort, DeleteWorkflowPort, SaveWorkflowPort
+{
     constructor(private readonly workflowRepository: WorkflowRepository) {}
 
     private toDomain(workflowEntity: WorkflowEntity): Workflow {
         const nodes: Node[] = workflowEntity.nodes.map(
             (nodeEntity) =>
-                new Node(
-                    nodeEntity.type as NodeType,
-                    nodeEntity.action,
-                    new Point(nodeEntity.positionX, nodeEntity.positionY)
-                )
+                new Node(nodeEntity.type as NodeType, nodeEntity.action, new Point(nodeEntity.positionX, nodeEntity.positionY))
         );
         return new Workflow(workflowEntity.name, nodes);
     }

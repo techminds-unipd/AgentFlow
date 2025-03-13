@@ -7,7 +7,7 @@ import { AuthGuard } from "./AuthGuard";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
 import SaveWorkflowCommand from "src/workflow/domain/SaveWorkflowCommand";
 import { isNotIn } from "class-validator";
-import { WorkflowDTOValidator } from "./WorkflowDTOValidator";
+import WorkflowDTOValidator from "./WorkflowDTOValidator";
 
 @ApiBearerAuth()
 @Controller("workflow")
@@ -27,11 +27,7 @@ class SaveWorkflowController {
         let nextNode = firstNode;
         let edge = workflowDto.edges.find((edge) => edge.source === nextNode!.id);
         workflow.nodes.push(
-            new Node(
-                nextNode!.data.label as NodeType,
-                edge!.label,
-                new Point(nextNode!.position.x, nextNode!.position.y)
-            )
+            new Node(nextNode!.data.label as NodeType, edge!.label, new Point(nextNode!.position.x, nextNode!.position.y))
         );
         let action: string;
         for (let i = 0; i < workflowDto.nodes.length - 1; i++) {
@@ -40,11 +36,7 @@ class SaveWorkflowController {
             if (edge) action = edge.label;
             else action = "";
             workflow.nodes.push(
-                new Node(
-                    nextNode!.data.label as NodeType,
-                    action,
-                    new Point(nextNode!.position.x, nextNode!.position.y)
-                )
+                new Node(nextNode!.data.label as NodeType, action, new Point(nextNode!.position.x, nextNode!.position.y))
             );
         }
         return workflow;
@@ -52,8 +44,7 @@ class SaveWorkflowController {
 
     private toDTO(workflow: Workflow): WorkflowDTO {
         const nodes: NodeDTO[] = workflow.nodes.map(
-            (node, index) =>
-                new NodeDTO(index, new PositionDTO(node.position.x, node.position.y), new NodeDataDTO(node.type))
+            (node, index) => new NodeDTO(index, new PositionDTO(node.position.x, node.position.y), new NodeDataDTO(node.type))
         );
         const edges: EdgeDTO[] = workflow.nodes
             .slice(0, workflow.nodes.length - 1)
@@ -65,7 +56,6 @@ class SaveWorkflowController {
     @UseGuards(AuthGuard)
     @Post("/save")
     async saveWorkflow(@Body() workflow: WorkflowDTO, @Request() request: RequestHeader): Promise<WorkflowDTO> {
-        //throw new HttpException(this.checkWorkflow(workflow).toString(), HttpStatus.BAD_REQUEST);
         this.workflowDTOValidator.validate(workflow);
         try {
             const username = request.username;
@@ -74,8 +64,7 @@ class SaveWorkflowController {
             );
             return this.toDTO(savedWorkflow);
         } catch (error) {
-            if (error instanceof WorkflowNotFoundError)
-                throw new HttpException("Workflow not found", HttpStatus.NOT_FOUND);
+            if (error instanceof WorkflowNotFoundError) throw new HttpException("Workflow not found", HttpStatus.NOT_FOUND);
 
             throw new HttpException("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

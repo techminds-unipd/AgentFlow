@@ -3,10 +3,9 @@ import { WorkflowDTO } from "./WorkflowDTO";
 import { isNotIn } from "class-validator";
 
 @Injectable()
-export class WorkflowDTOValidator {
+export default class WorkflowDTOValidator {
     public validate(workflow: WorkflowDTO): void {
-        if (workflow.nodes.length < 2)
-            throw new HttpException("Nodes must be at least 2", HttpStatus.PRECONDITION_FAILED);
+        if (workflow.nodes.length < 2) throw new HttpException("Nodes must be at least 2", HttpStatus.PRECONDITION_FAILED);
         if (workflow.edges.length !== workflow.nodes.length - 1)
             throw new HttpException("Edges must be equal to nodes-1", HttpStatus.PRECONDITION_FAILED);
         const targets = workflow.edges.map((edge) => edge.target);
@@ -19,8 +18,7 @@ export class WorkflowDTOValidator {
         if (new Set(targets).size !== targets.length)
             throw new HttpException("Duplicate edge targets id", HttpStatus.PRECONDITION_FAILED);
         workflow.edges.forEach((edge) => {
-            if (edge.label === "")
-                throw new HttpException("Edge must have a description", HttpStatus.PRECONDITION_FAILED);
+            if (edge.label === "") throw new HttpException("Edge must have a description", HttpStatus.PRECONDITION_FAILED);
             if (edge.source === edge.target)
                 throw new HttpException("Edge source and target must be different", HttpStatus.PRECONDITION_FAILED);
             if (isNotIn(edge.source, nodesId))
@@ -30,5 +28,3 @@ export class WorkflowDTOValidator {
         });
     }
 }
-
-//export const WORKFLOW_DTO_VALIDATOR = "WORKFLOW_DTO_VALIDATOR";

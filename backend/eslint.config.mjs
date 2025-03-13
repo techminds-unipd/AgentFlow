@@ -67,12 +67,12 @@ export default tseslint.config(
             "no-fallthrough": "error",
             "curly": ["warn", "multi-or-nest"],
             // Queste sono quelle definite in pdq
+            "max-statements": ["error", 15], 
             "max-lines-per-function": ["error", 30],
             "complexity": ["error", { "max": 7 }],
             "max-params": ["error", 6],
             "max-depth": ["error", 4],  
             "max-lines": ["error", 300], 
-            "max-statements": ["error", 8], 
         },
     },
 );

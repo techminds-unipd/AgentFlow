@@ -19,7 +19,7 @@ import { SAVE_WORKFLOW_PORT } from "./service/port/output/SaveWorkflowPort";
 import { SAVE_WORKFLOW_USE_CASE } from "./service/port/input/SaveWorkflowUseCase";
 import { SaveWorkflowService } from "./service/SaveWorkflowService";
 import SaveWorkflowController from "./adapter/input/SaveWorkflowController";
-import { WorkflowDTOValidator } from "./adapter/input/WorkflowDTOValidator";
+import WorkflowDTOValidator from "./adapter/input/WorkflowDTOValidator";
 import { GET_USER_WORKFLOWS_PORT } from "./service/port/output/GetUserWorkflowsPort";
 import { WorkflowNameListService } from "./service/WorkflowNameListService";
 import WorkflowNameListController from "./adapter/input/WorkflowNameListController";
