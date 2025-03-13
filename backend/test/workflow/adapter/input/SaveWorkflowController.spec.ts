@@ -3,7 +3,6 @@ import { JwtService } from "@nestjs/jwt";
 import { MongooseError } from "mongoose";
 import { HttpException, HttpStatus } from "@nestjs/common";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
-import GetWorkflowController from "src/workflow/adapter/input/GetWorkflowController";
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/workflow/adapter/input/WorkflowDTO";
 import SaveWorkflowController from "src/workflow/adapter/input/SaveWorkflowController";
