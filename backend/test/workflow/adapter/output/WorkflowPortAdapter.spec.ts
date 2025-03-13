@@ -6,7 +6,12 @@ import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 
 describe("WorkflowPortAdapter", () => {
     let workflowPortAdapter: WorkflowPortAdapter;
-    let workflowRepositoryMock: { getWorkflowByName: jest.Mock, addWorkflow: jest.Mock, deleteWorkflow: jest.Mock };
+    let workflowRepositoryMock: { 
+        getWorkflowByName: jest.Mock,
+        addWorkflow: jest.Mock,
+        getAllWorkflowByUsername: jest.Mock,
+        deleteWorkflow: jest.Mock
+    };
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
         new Node(NodeType.Gmail, "action2", new Point(2, 2)),
@@ -19,6 +24,16 @@ describe("WorkflowPortAdapter", () => {
     ]);
     const workflowEmptyMock = new Workflow("prova", []);
     const workflowEntityEmptyMock = new WorkflowEntity("prova", []);
+    const workflowEntityListMock = [
+        workflowEntityMock,
+        new WorkflowEntity("prova2", []),
+        new WorkflowEntity("prova3", [])
+    ];
+    const workflowListMock = [
+        workflowMock,
+        new Workflow("prova2", []),
+        new Workflow("prova3", [])
+    ];
     
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -31,7 +46,12 @@ describe("WorkflowPortAdapter", () => {
     };
 
     beforeEach(async () => {
-        workflowRepositoryMock = { getWorkflowByName: jest.fn(), addWorkflow: jest.fn(), deleteWorkflow: jest.fn() };
+        workflowRepositoryMock = { 
+            getWorkflowByName: jest.fn(),
+            addWorkflow: jest.fn(),
+            getAllWorkflowByUsername: jest.fn(),
+            deleteWorkflow: jest.fn()
+        };
         await createTestingModule();
     });
 
@@ -71,4 +91,15 @@ describe("WorkflowPortAdapter", () => {
         });
     });
 
+    describe("getAllWorkflowByUsername", () => {
+        it("should return all the workflows of the user", async () => {
+            workflowRepositoryMock.getAllWorkflowByUsername.mockResolvedValue(workflowEntityListMock);
+            expect(await workflowPortAdapter.getAllWorkflowByUsername("username")).toEqual(workflowListMock);
+        });
+
+        it("should return null if the user doesn't exist", async () => {
+            workflowRepositoryMock.getAllWorkflowByUsername.mockResolvedValue(null);
+            expect(await workflowPortAdapter.getAllWorkflowByUsername("username")).toEqual(null);
+        });
+    });
 });

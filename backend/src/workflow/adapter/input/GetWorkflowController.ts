@@ -32,7 +32,8 @@ class GetWorkflowController {
             const workflow = await this.getWorkflowUseCase.getWorkflow(new GetWorkflowCommand(username, workflowName));
             return this.toDTO(workflow);
         } catch (error) {
-            if (error instanceof WorkflowNotFoundError) throw new HttpException(error.message, HttpStatus.NOT_FOUND);
+            if (error instanceof WorkflowNotFoundError)
+                throw new HttpException("Workflow not found", HttpStatus.NOT_FOUND);
 
             throw new HttpException("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -41,4 +41,10 @@ export class WorkflowRepository {
         if (!addedWorkflow) return null;
         return addedWorkflow;
     }
+
+    async getAllWorkflowByUsername(username: string): Promise<WorkflowEntity[] | null> {
+        const user = await this.userEntityModel.findOne({ username: username }).exec();
+        if (!user) return null;
+        return user.workflows;
+    }
 }

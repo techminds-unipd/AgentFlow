@@ -1,6 +1,5 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-
 import { UserEntity, userEntitySchema } from "src/user/adapter/output/UserEntity";
 import { DELETE_WORKFLOW_USE_CASE } from "./service/port/input/DeleteWorkflowUseCase";
 import { DeleteWorkflowService } from "./service/DeleteWorkflowService";
@@ -16,10 +15,19 @@ import GetWorkflowController from "./adapter/input/GetWorkflowController";
 import { GET_WORKFLOW_USE_CASE } from "./service/port/input/GetWorkflowUseCase";
 import { GET_WORKFLOW_PORT } from "./service/port/output/GetWorkflowPort";
 import { GetWorkflowService } from "./service/GetWorkflowService";
+import { GET_USER_WORKFLOWS_PORT } from "./service/port/output/GetUserWorkflowsPort";
+import { WorkflowNameListService } from "./service/WorkflowNameListService";
+import WorkflowNameListController from "./adapter/input/WorkflowNameListController";
+import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameListUseCase";
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
-    controllers: [DeleteWorkflowController, GetWorkflowController, CreateWorkflowController],
+    controllers: [
+        CreateWorkflowController,
+        GetWorkflowController,
+        WorkflowNameListController,
+        DeleteWorkflowController
+    ],
     providers: [
         { provide: DELETE_WORKFLOW_USE_CASE, useClass: DeleteWorkflowService },
         { provide: DELETE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
@@ -27,6 +35,8 @@ import { GetWorkflowService } from "./service/GetWorkflowService";
         { provide: CREATE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: GET_WORKFLOW_USE_CASE, useClass: GetWorkflowService },
         { provide: GET_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
+        { provide: WORKFLOW_NAME_LIST_USE_CASE, useClass: WorkflowNameListService },
+        { provide: GET_USER_WORKFLOWS_PORT, useClass: WorkflowPortAdapter },
         WorkflowRepository
     ]
 })
