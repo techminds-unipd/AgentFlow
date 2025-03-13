@@ -46,7 +46,7 @@ export const AboutUs = () => {
             University of Padova. You can find our GitHub profile{" "}
             <Link
               target="_blank"
-              href="https://techminds-unipd.github.io/docs/"
+              href="https://github.com/techminds-unipd"
               sx={{
                 color: "var(--maincolor)",
                 textDecoration: "underline var(--maincolor)",
