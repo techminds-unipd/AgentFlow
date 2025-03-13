@@ -3,7 +3,6 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { expect, test, describe, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router";
-import { useNavigate } from "react-router";
 import { LogoutMenuItem } from "./LogoutMenuItem";
 
 describe("LogoutMenuItem", () => {
