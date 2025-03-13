@@ -13,7 +13,7 @@ describe("AboutUs section test", ()=>{
         const personCards = screen.getAllByRole("img");
         assert(personCards.length>=8);
     });
-    test("Link to documentation is present", ()=>{
+    test("Link to GitHub profile is present", ()=>{
         render(<AboutUs/>);
         const linksArray = screen.getAllByRole("link");
         assert(linksArray.some(link => link.getAttribute('href') === 'https://github.com/techminds-unipd'));
