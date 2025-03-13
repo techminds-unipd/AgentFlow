@@ -28,7 +28,7 @@ describe("SaveWorkflowService", () => {
     });
 
     describe("saveWorkflow", () => {
-        it("should save the workflow", async () => {
+        it("should return the saved workflow", async () => {
             saveWorkflowPortMock.saveWorkflow.mockResolvedValue(workflowMock);
             expect(await saveWorkflowService.saveWorkflow(saveWorkflowCommandMock)).toEqual(workflowMock);
         });

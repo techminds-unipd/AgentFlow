@@ -48,7 +48,7 @@ describe("SaveWorkflowController", () => {
     });
 
     describe("saveWorkflow", () => {
-        it("should save the workflow", async () => {
+        it("should return the saved workflow", async () => {
             saveWorkflowUseCaseMock.saveWorkflow.mockResolvedValue(workflowMock);
             workflowDTOValidatorMock.validate.mockImplementation(() => {});
             expect(await saveWorkflowController.saveWorkflow(workflowDTOMock, { username: "username" })).toEqual(workflowDTOMock);
