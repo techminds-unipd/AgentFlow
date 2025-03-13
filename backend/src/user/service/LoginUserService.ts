@@ -1,12 +1,12 @@
 import { Inject, Injectable } from "@nestjs/common";
 import User from "../domain/User";
 import { GET_USER_PORT, GetUserPort } from "./port/output/GetUserPort";
-import { LoginUseCase } from "./port/input/LoginUseCase";
+import { LoginUserUseCase } from "./port/input/LoginUserUseCase";
 import * as bcrypt from "bcrypt";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 
 @Injectable()
-class LoginService implements LoginUseCase {
+class LoginUserService implements LoginUserUseCase {
     constructor(@Inject(GET_USER_PORT) private readonly getUserPort: GetUserPort) {}
 
     async login(user: User): Promise<User> {
@@ -20,4 +20,4 @@ class LoginService implements LoginUseCase {
     }
 }
 
-export default LoginService;
+export default LoginUserService;

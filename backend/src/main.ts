@@ -9,6 +9,7 @@ async function bootstrap(): Promise<void> {
         .setTitle("Backend")
         .setDescription("Descrizione generica")
         .setVersion("1.0")
+        .addBearerAuth()
         .build();
     const documentFactory = (): OpenAPIObject => SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("api", app, documentFactory);

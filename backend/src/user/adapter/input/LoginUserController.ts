@@ -1,16 +1,15 @@
 import { Body, Controller, HttpException, HttpStatus, Inject, Post } from "@nestjs/common";
-import { LOGIN_USE_CASE, LoginUseCase } from "src/user/service/port/input/LoginUseCase";
+import { LOGIN_USER_USE_CASE, LoginUserUseCase } from "src/user/service/port/input/LoginUserUseCase";
 import User from "src/user/domain/User";
 import UserDTO from "./UserDTO";
 import { JwtService } from "@nestjs/jwt";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
-
-type JWT = { readonly accessToken: string };
+import JWT from "src/JWT";
 
 @Controller("user")
-class LoginController {
+class LoginUserController {
     constructor(
-        @Inject(LOGIN_USE_CASE) private readonly loginUseCase: LoginUseCase,
+        @Inject(LOGIN_USER_USE_CASE) private readonly loginUserUseCase: LoginUserUseCase,
         private readonly jwtService: JwtService
     ) {}
 
@@ -26,7 +25,7 @@ class LoginController {
     async login(@Body() req: UserDTO): Promise<JWT> {
         const user = this.toDomain(req);
         try {
-            const loggedUser = await this.loginUseCase.login(user);
+            const loggedUser = await this.loginUserUseCase.login(user);
             const payload = { username: loggedUser.username };
             return { accessToken: await this.jwtService.signAsync(payload) };
         } catch (err) {
@@ -38,4 +37,4 @@ class LoginController {
     }
 }
 
-export default LoginController;
+export default LoginUserController;

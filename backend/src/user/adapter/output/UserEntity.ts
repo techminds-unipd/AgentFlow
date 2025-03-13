@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
-import WorkflowEntity from "src/workflow/adapter/output/WorkflowEntity";
+import { WorkflowEntity } from "src/workflow/adapter/output/WorkflowEntity";
 
 export type UserDocument = HydratedDocument<UserEntity>;
 
