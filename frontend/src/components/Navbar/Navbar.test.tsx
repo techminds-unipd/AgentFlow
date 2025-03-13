@@ -56,14 +56,6 @@ describe("Navbar", () => {
 
   /*
   //Da qui in poi si vedono i test della navbar quando l'utente è loggato
-  test("Renders the workflow item", () => {
-    render(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>
-    );
-    expect(screen.getByText("Workflow")).toBeInTheDocument();
-  });
   //i test a seguire non funzionano
   test("Renders the Sign In item", () => {
     render(

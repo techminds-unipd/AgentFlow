@@ -78,7 +78,6 @@ export const Navbar = () => {
                         {auth && ( 
                             <>
                                 <CustomLink name="Dashboard" link="/dashboard" />
-                                <CustomLink name="Workflow" link="/workflow" />
                                 <IconButton
                                     size="large"
                                     aria-label="account of current user"
