@@ -48,7 +48,10 @@ describe("Navbar", () => {
           <Navbar />
       </MemoryRouter>
     );
-      expect(screen.getByAltText("Logo Tech Minds")).toBeInTheDocument()
+    expect(screen.getByRole("img")).toHaveAttribute(
+      "alt",
+      "Logo Tech Minds"
+    );
   });
 
   /*
