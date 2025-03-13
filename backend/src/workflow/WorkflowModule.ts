@@ -15,6 +15,7 @@ import { SAVE_WORKFLOW_PORT } from "./service/port/output/SaveWorkflowPort";
 import { SAVE_WORKFLOW_USE_CASE } from "./service/port/input/SaveWorkflowUseCase";
 import { SaveWorkflowService } from "./service/SaveWorkflowService";
 import SaveWorkflowController from "./adapter/input/SaveWorkflowController";
+import { WorkflowDTOValidator } from "./adapter/input/WorkflowDTOValidator";
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
@@ -24,12 +25,11 @@ import SaveWorkflowController from "./adapter/input/SaveWorkflowController";
         { provide: CREATE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: GET_WORKFLOW_USE_CASE, useClass: GetWorkflowService },
         { provide: GET_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
-        { provide: SAVE_WORKFLOW_USE_CASE, useClass: SaveWorkflowService},
+        //{ provide: WORKFLOW_DTO_VALIDATOR, useClass: WorkflowDTOValidator },
+        { provide: SAVE_WORKFLOW_USE_CASE, useClass: SaveWorkflowService },
         { provide: SAVE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
+        WorkflowDTOValidator,
         WorkflowRepository
     ]
 })
 export class WorkflowModule {}
-
-
-

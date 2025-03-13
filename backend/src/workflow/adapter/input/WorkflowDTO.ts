@@ -24,9 +24,9 @@ export class NodeDataDTO {
 export class NodeDTO {
     @ApiProperty()
     readonly id: number;
-    @ApiProperty({type: PositionDTO})
+    @ApiProperty({ type: PositionDTO })
     readonly position: PositionDTO;
-    @ApiProperty({type: NodeDataDTO})
+    @ApiProperty({ type: NodeDataDTO })
     readonly data: NodeDataDTO;
 
     constructor(id: number, position: PositionDTO, data: NodeDataDTO) {
@@ -54,9 +54,9 @@ export class EdgeDTO {
 export class WorkflowDTO {
     @ApiProperty()
     readonly name: string;
-    @ApiProperty({type: NodeDTO, isArray: true})
+    @ApiProperty({ type: NodeDTO, isArray: true })
     readonly nodes: NodeDTO[];
-    @ApiProperty({type: EdgeDTO, isArray: true})
+    @ApiProperty({ type: EdgeDTO, isArray: true })
     readonly edges: EdgeDTO[];
 
     constructor(name: string, nodes: NodeDTO[], edges: EdgeDTO[]) {
@@ -64,7 +64,6 @@ export class WorkflowDTO {
         this.nodes = nodes;
         this.edges = edges;
     }
-
 }
 
 export type RequestHeader = { username: string };
