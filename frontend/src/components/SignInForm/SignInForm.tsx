@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
+import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import useAuth from "../../hooks/useAuth"
 import "../../index.css";
@@ -64,10 +65,6 @@ export default function SignIn() {
     const password = data.get("password") as string;
   
     await loginUser(username, password);
-    console.log( user?.username );
-    if(error) {
-      console.log( error );
-    }
   };
 
   const validateInputs = () => {
@@ -108,6 +105,10 @@ export default function SignIn() {
           >
             Sign in
           </Typography>
+          {error !== null && 
+          <Alert severity="error">
+            {error.toString()}
+          </Alert>}
           <Box
             component="form"
             onSubmit={handleSubmit}
