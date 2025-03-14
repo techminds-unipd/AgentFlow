@@ -14,11 +14,7 @@ class WorkflowPortAdapter implements GetWorkflowPort, CreateWorkflowPort, GetUse
     private toDomain(workflowEntity: WorkflowEntity): Workflow {
         const nodes: Node[] = workflowEntity.nodes.map(
             (nodeEntity) =>
-                new Node(
-                    nodeEntity.type as NodeType,
-                    nodeEntity.action,
-                    new Point(nodeEntity.positionX, nodeEntity.positionY)
-                )
+                new Node(nodeEntity.type as NodeType, nodeEntity.action, new Point(nodeEntity.positionX, nodeEntity.positionY))
         );
         return new Workflow(workflowEntity.name, nodes);
     }

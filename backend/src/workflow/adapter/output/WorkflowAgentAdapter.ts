@@ -15,17 +15,12 @@ class WorkflowAgentAdapter implements ExecuteWorkflowPort {
 
     async executeWorkflow(workflow: Workflow, googleToken: Token): Promise<string> {
         const nodes = workflow.nodes.map((node) => new ExecuteNode(node.action, node.type));
-        const clientID: string | undefined = this.configService.get("CLIENT_ID");
-        const clientSecret: string | undefined = this.configService.get("CLIENT_SECRET");
-        // non so se abbia più senso fare così o tornare una stringa vuota
-        if (clientID === undefined) throw new Error("Client ID not found in the environment variables");
-        if (clientSecret === undefined) throw new Error("Client Secret not found in the environment variables");
         const tokenFile = new TokenFile(
             googleToken.token,
             googleToken.refreshToken,
             "https://oauth2.googleapis.com/token",
-            clientID,
-            clientSecret,
+            this.configService.get("CLIENT_ID") as string,
+            this.configService.get("CLIENT_SECRET") as string,
             ["https://www.googleapis.com/auth/gmail.readonly"],
             "googleapis.com",
             ""

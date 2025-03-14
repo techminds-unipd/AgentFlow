@@ -4,10 +4,7 @@ import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { AuthGuard } from "./AuthGuard";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import ExecuteWorkflowDTO from "./ExecuteWorkflowDTO";
-import {
-    EXECUTE_WORKFLOW_USE_CASE,
-    ExecuteWorkflowUseCase
-} from "src/workflow/service/port/input/ExecuteWorkflowUseCase";
+import { EXECUTE_WORKFLOW_USE_CASE, ExecuteWorkflowUseCase } from "src/workflow/service/port/input/ExecuteWorkflowUseCase";
 import ExecuteWorkflowCommand from "src/workflow/domain/ExecuteWorkflowCommand";
 import { isNotIn } from "class-validator";
 import { HttpService } from "@nestjs/axios";
@@ -23,6 +20,7 @@ class ExecuteWorkflowController {
     ) {}
 
     // uguale ad altri
+    /*eslint-disable max-statements*/
     private toDomain(workflowDto: WorkflowDTO): Workflow {
         const workflow: Workflow = new Workflow(workflowDto.name, []);
         let firstNode = undefined;
@@ -32,11 +30,7 @@ class ExecuteWorkflowController {
         let nextNode = firstNode;
         let edge = workflowDto.edges.find((edge) => edge.source === nextNode!.id);
         workflow.nodes.push(
-            new Node(
-                nextNode!.data.label as NodeType,
-                edge!.label,
-                new Point(nextNode!.position.x, nextNode!.position.y)
-            )
+            new Node(nextNode!.data.label as NodeType, edge!.label, new Point(nextNode!.position.x, nextNode!.position.y))
         );
         let action: string;
         for (let i = 0; i < workflowDto.nodes.length - 1; i++) {
@@ -45,11 +39,7 @@ class ExecuteWorkflowController {
             if (edge) action = edge.label;
             else action = "";
             workflow.nodes.push(
-                new Node(
-                    nextNode!.data.label as NodeType,
-                    action,
-                    new Point(nextNode!.position.x, nextNode!.position.y)
-                )
+                new Node(nextNode!.data.label as NodeType, action, new Point(nextNode!.position.x, nextNode!.position.y))
             );
         }
         return workflow;

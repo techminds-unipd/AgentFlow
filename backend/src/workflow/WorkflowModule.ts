@@ -29,11 +29,7 @@ import { HttpModule } from "@nestjs/axios";
 import { ConfigModule } from "@nestjs/config";
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }]),
-        HttpModule,
-        ConfigModule
-    ],
+    imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }]), HttpModule, ConfigModule],
     controllers: [
         CreateWorkflowController,
         GetWorkflowController,
