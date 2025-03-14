@@ -14,16 +14,12 @@ class ConnectionGoogleRequestController {
         private readonly connectionGoogleRequestUseCase: ConnectionGoogleRequestUseCase
     ) {}
 
-    @UseGuards(AuthGuard)
+    //@UseGuards(AuthGuard)
     @Get("/auth")
     @Redirect()
     googleAuth(): { url: string } {
-        try {
-            const response = this.connectionGoogleRequestUseCase.googleAuth();
-            return { url: response };
-        } catch {
-            throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        const response = this.connectionGoogleRequestUseCase.googleAuth();
+        return { url: response };
     }
 }
 

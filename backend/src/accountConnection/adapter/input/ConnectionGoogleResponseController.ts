@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Inject, Query } from "@nestjs/common";
 import {
     CONNECTION_GOOGLE_RESPONSE_USE_CASE,
     ConnectionGoogleResponseUseCase
@@ -14,7 +14,11 @@ class ConnectionGoogleResponseController {
 
     @Get("/redirect")
     async googleAuthCallback(@Query("code") code: string): Promise<TokenDTO> {
-        return await this.connectionGoogleResponseUseCase.getToken(code);
+        try {
+            return await this.connectionGoogleResponseUseCase.getToken(code);
+        } catch {
+            throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
 

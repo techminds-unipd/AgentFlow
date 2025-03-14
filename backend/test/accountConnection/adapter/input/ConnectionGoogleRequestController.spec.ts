@@ -31,13 +31,5 @@ describe("ConnectionGoogleRequestController", () => {
             connectionGoogleRequestUseCaseMock.googleAuth.mockReturnValue("redirectUrl");
             expect(connectionGoogleRequestController.googleAuth()).toEqual({url: "redirectUrl"});
         });
-
-        it("should throw HttpException because it cannot create a redirect url for google auth", async () => {
-            connectionGoogleRequestUseCaseMock.googleAuth.mockImplementation(() => {
-                throw new Error();
-            });
-            expect(() => connectionGoogleRequestController.googleAuth()).toThrow(new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR));
-        });
-
     });
 });
