@@ -1,5 +1,5 @@
 export interface ConnectionGoogleRequestUseCase {
-    googleAuth(): Promise<string>;
+    googleAuth(): string;
 }
 
 export const CONNECTION_GOOGLE_REQUEST_USE_CASE = "CONNECTION_GOOGLE_REQUEST_USE_CASE";

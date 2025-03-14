@@ -6,11 +6,11 @@ import { CONNECTION_GOOGLE_REQUEST_PORT, ConnectionGoogleRequestPort } from "./p
 class ConnectionGoogleRequestService implements ConnectionGoogleRequestUseCase {
     constructor(
         @Inject(CONNECTION_GOOGLE_REQUEST_PORT)
-        private readonly connectionGoogleRequestPort: ConnectionGoogleRequestPort,
+        private readonly connectionGoogleRequestPort: ConnectionGoogleRequestPort
     ) {}
 
-    async googleAuth(): Promise<string> {
-        return await this.connectionGoogleRequestPort.getOauth2ClientUrl();
+    googleAuth(): string {
+        return this.connectionGoogleRequestPort.getOauth2ClientUrl();
     }
 }
 

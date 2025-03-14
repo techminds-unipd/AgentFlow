@@ -10,7 +10,7 @@ class GoogleTokenPortAdapter implements ConnectionGoogleRequestPort, ConnectionG
     constructor(private readonly googleRepository: GoogleRepository) {}
 
     private toDomain(googleToken: GoogleTokenEntity): Token {
-        const token = new Token(googleToken.accessToken, googleToken.expireDate);
+        const token = new Token(googleToken.accessToken, googleToken.refreshToken, googleToken.expireDate);
         return token;
     }
 
@@ -18,10 +18,9 @@ class GoogleTokenPortAdapter implements ConnectionGoogleRequestPort, ConnectionG
         return this.toDomain(await this.googleRepository.getAuthClientData(code));
     }
 
-    async getOauth2ClientUrl(): Promise<string> {
-        return await this.googleRepository.getOAuth2ClientUrl();
+    getOauth2ClientUrl(): string {
+        return this.googleRepository.getOAuth2ClientUrl();
     }
-
 }
 
 export default GoogleTokenPortAdapter;

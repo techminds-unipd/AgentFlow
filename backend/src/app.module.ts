@@ -11,7 +11,7 @@ import { AccountConnectionModule } from "./accountConnection/AccountConnectionMo
         WorkflowModule,
         AccountConnectionModule,
         MongooseModule.forRoot("mongodb://root:password@localhost:27017/"),
-        JwtModule.register({ global: true, secret: "chiaveSegreta", signOptions: { expiresIn: "10h" } }),
+        JwtModule.register({ global: true, secret: "chiaveSegreta", signOptions: { expiresIn: "10h" } })
     ],
     controllers: [],
     providers: []

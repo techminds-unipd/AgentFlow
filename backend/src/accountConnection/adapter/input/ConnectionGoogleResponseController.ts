@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Query, Redirect } from "@nestjs/common";
+import { Controller, Get, Inject, Query } from "@nestjs/common";
 import {
     CONNECTION_GOOGLE_RESPONSE_USE_CASE,
     ConnectionGoogleResponseUseCase
@@ -13,7 +13,6 @@ class ConnectionGoogleResponseController {
     ) {}
 
     @Get("/redirect")
-    @Redirect()
     async googleAuthCallback(@Query("code") code: string): Promise<TokenDTO> {
         return await this.connectionGoogleResponseUseCase.getToken(code);
     }

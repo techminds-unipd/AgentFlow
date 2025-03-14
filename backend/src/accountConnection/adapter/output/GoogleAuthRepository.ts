@@ -6,29 +6,61 @@ import * as fs from "fs";
 import * as path from "path";
 import GoogleTokenEntity from "./GoogleTokenEntity";
 
+type GoogleCredentialsFile = { installed: { client_id: string; client_secret: string; redirect_uris: string } };
+
 @Injectable()
 export class GoogleRepository {
     private readonly scopesAPI: string[];
     private readonly credentialsPath: string;
+
     constructor(private readonly configService: ConfigService) {
-        this.credentialsPath = path.join(process.cwd(), this.configService.get("GOOGLE_CREDENTIALS_PATH")!);
-        this.scopesAPI = this.configService.get("GOOGLE_SCOPES_API").split(",");
+        this.credentialsPath = path.join(process.cwd(), this.configService.get("GOOGLE_CREDENTIALS_PATH") as string);
+        this.scopesAPI = (this.configService.get("GOOGLE_SCOPES_API") as string).split(",");
     }
 
-    private readCredentials(filePath: string) {
-        const credentialsPath = path.join(filePath);
-        const content: string = fs.readFileSync(credentialsPath, "utf-8");
-        return JSON.parse(content);
-    }
-
-    async getOAuth2ClientUrl(): Promise<string> {
+    getOAuth2ClientUrl(): string {
         const authClient = this.getAuthClient();
         return this.getAuthUrl(authClient);
     }
 
-    getAuthClient(): OAuth2Client {
+    /*eslint-disable max-statements*/
+    async getAuthClientData(code: string): Promise<GoogleTokenEntity> {
+        const authClient = this.getAuthClient();
+        const tokenData = await authClient.getToken(code);
+        const tokens = tokenData.tokens;
+        if (
+            tokens.refresh_token !== null &&
+            tokens.refresh_token !== undefined &&
+            tokens.access_token !== null &&
+            tokens.access_token !== undefined &&
+            tokens.expiry_date !== null &&
+            tokens.expiry_date !== undefined
+        ) {
+            const refreshToken = tokens.refresh_token;
+            const accessToken = tokens.access_token;
+            const expireDate = new Date(tokens.expiry_date);
+
+            authClient.setCredentials(tokens);
+
+            const googleAuth = google.oauth2({ version: "v2", auth: authClient });
+
+            const googleUserInfo = await googleAuth.userinfo.get();
+            const email = googleUserInfo.data.email!;
+
+            // By default it expires in 1h
+            return new GoogleTokenEntity(email, refreshToken, accessToken, expireDate);
+        }
+        throw new Error("Cannot get Google access token or refresh token");
+    }
+
+    private readCredentials(filePath: string): GoogleCredentialsFile {
+        const credentialsPath = path.join(filePath);
+        const content: string = fs.readFileSync(credentialsPath, "utf-8");
+        return JSON.parse(content) as GoogleCredentialsFile;
+    }
+
+    private getAuthClient(): OAuth2Client {
         const keys = this.readCredentials(this.credentialsPath);
-        console.log(keys);
         const authClient = new OAuth2Client(
             keys.installed.client_id,
             keys.installed.client_secret,
@@ -36,7 +68,8 @@ export class GoogleRepository {
         );
         return authClient;
     }
-    getAuthUrl(authClient: OAuth2Client): string {
+
+    private getAuthUrl(authClient: OAuth2Client): string {
         // Generate the url that will be used for the consent dialog.
         const authorizeUrl = authClient.generateAuthUrl({
             access_type: "offline",
@@ -45,21 +78,5 @@ export class GoogleRepository {
             include_granted_scopes: true
         });
         return authorizeUrl;
-    }
-    async getAuthClientData(code: string): Promise<GoogleTokenEntity> {
-        const authClient = this.getAuthClient();
-        const tokenData = await authClient.getToken(code);
-        const tokens = tokenData.tokens;
-        const refreshToken = tokens?.refresh_token || "";
-        const accessToken = tokens?.access_token || "";
-
-        authClient.setCredentials(tokens);
-
-        const googleAuth = google.oauth2({ version: "v2", auth: authClient } as any);
-
-        const googleUserInfo = await googleAuth.userinfo.get();
-        console.log(googleUserInfo);
-        const email = googleUserInfo.data.email!;
-        return new GoogleTokenEntity(email, refreshToken, accessToken, new Date());
     }
 }

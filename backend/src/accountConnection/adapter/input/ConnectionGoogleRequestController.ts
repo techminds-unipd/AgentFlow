@@ -14,11 +14,11 @@ class ConnectionGoogleRequestController {
         private readonly connectionGoogleRequestUseCase: ConnectionGoogleRequestUseCase
     ) {}
 
-
+    @UseGuards(AuthGuard)
     @Get("/auth")
     @Redirect()
-    async googleAuth(): Promise<{ url: string }> {
-        const response = await this.connectionGoogleRequestUseCase.googleAuth();
+    googleAuth(): { url: string } {
+        const response = this.connectionGoogleRequestUseCase.googleAuth();
         return { url: response };
     }
 }
