@@ -8,7 +8,7 @@ import ConnectionGoogleResponseService from "./service/ConnectionGoogleResponseS
 import { CONNECTION_GOOGLE_REQUEST_PORT } from "./service/port/output/ConnectionGoogleRequestPort";
 import GoogleTokenPortAdapter from "./adapter/output/GoogleTokenPortAdapter";
 import { CONNECTION_GOOGLE_RESPONSE_PORT } from "./service/port/output/ConnectionGoogleResponsePort";
-import { GoogleRepository } from "./adapter/output/GoogleAuthRepository";
+import { GoogleAuthRepository } from "./adapter/output/GoogleAuthRepository";
 import { ConfigModule } from "@nestjs/config";
 
 @Module({
@@ -19,7 +19,7 @@ import { ConfigModule } from "@nestjs/config";
         { provide: CONNECTION_GOOGLE_RESPONSE_USE_CASE, useClass: ConnectionGoogleResponseService },
         { provide: CONNECTION_GOOGLE_REQUEST_PORT, useClass: GoogleTokenPortAdapter },
         { provide: CONNECTION_GOOGLE_RESPONSE_PORT, useClass: GoogleTokenPortAdapter },
-        GoogleRepository
+        GoogleAuthRepository
     ]
 })
 export class AccountConnectionModule {}

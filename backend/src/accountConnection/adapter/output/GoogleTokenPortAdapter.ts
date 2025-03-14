@@ -1,13 +1,13 @@
 import { Injectable } from "@nestjs/common";
 import { ConnectionGoogleRequestPort } from "src/accountConnection/service/port/output/ConnectionGoogleRequestPort";
 import { ConnectionGoogleResponsePort } from "src/accountConnection/service/port/output/ConnectionGoogleResponsePort";
-import { GoogleRepository } from "./GoogleAuthRepository";
+import { GoogleAuthRepository } from "./GoogleAuthRepository";
 import GoogleTokenEntity from "./GoogleTokenEntity";
 import Token from "src/accountConnection/domain/Token";
 
 @Injectable()
 class GoogleTokenPortAdapter implements ConnectionGoogleRequestPort, ConnectionGoogleResponsePort {
-    constructor(private readonly googleRepository: GoogleRepository) {}
+    constructor(private readonly googleRepository: GoogleAuthRepository) {}
 
     private toDomain(googleToken: GoogleTokenEntity): Token {
         const token = new Token(googleToken.accessToken, googleToken.refreshToken, googleToken.expireDate);

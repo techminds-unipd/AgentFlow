@@ -9,7 +9,7 @@ import GoogleTokenEntity from "./GoogleTokenEntity";
 type GoogleCredentialsFile = { installed: { client_id: string; client_secret: string; redirect_uris: string } };
 
 @Injectable()
-export class GoogleRepository {
+export class GoogleAuthRepository {
     private readonly scopesAPI: string[];
     private readonly credentialsPath: string;
 
@@ -18,7 +18,7 @@ export class GoogleRepository {
         this.scopesAPI = (this.configService.get("GOOGLE_SCOPES_API") as string).split(",");
     }
 
-    getOAuth2ClientUrl(): string {
+    public getOAuth2ClientUrl(): string {
         const authClient = this.getAuthClient();
         return this.getAuthUrl(authClient);
     }
