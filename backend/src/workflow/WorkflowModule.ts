@@ -25,11 +25,15 @@ import ExecuteWorkflowService from "./service/ExecuteWorkflowService";
 import { EXECUTE_WORKFLOW_PORT } from "./service/port/output/ExecuteWorkflowPort";
 import WorkflowAgentAdapter from "./adapter/output/WorkflowAgentAdapter";
 import AgentRepository from "./adapter/output/AgentRepository";
-import { HttpModule } from '@nestjs/axios';
+import { HttpModule } from "@nestjs/axios";
 import { ConfigModule } from "@nestjs/config";
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }]), HttpModule, ConfigModule],
+    imports: [
+        MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }]),
+        HttpModule,
+        ConfigModule
+    ],
     controllers: [
         CreateWorkflowController,
         GetWorkflowController,
@@ -46,10 +50,10 @@ import { ConfigModule } from "@nestjs/config";
         { provide: GET_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: WORKFLOW_NAME_LIST_USE_CASE, useClass: WorkflowNameListService },
         { provide: GET_USER_WORKFLOWS_PORT, useClass: WorkflowPortAdapter },
-        { provide: EXECUTE_WORKFLOW_USE_CASE, useClass: ExecuteWorkflowService},
-        { provide: EXECUTE_WORKFLOW_PORT, useClass: WorkflowAgentAdapter},
+        { provide: EXECUTE_WORKFLOW_USE_CASE, useClass: ExecuteWorkflowService },
+        { provide: EXECUTE_WORKFLOW_PORT, useClass: WorkflowAgentAdapter },
         WorkflowRepository,
-        AgentRepository 
+        AgentRepository
     ]
 })
 export class WorkflowModule {}
