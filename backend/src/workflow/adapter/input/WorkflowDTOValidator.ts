@@ -4,6 +4,7 @@ import { isNotIn } from "class-validator";
 
 @Injectable()
 export default class WorkflowDTOValidator {
+    /* eslint-disable max-statements */
     public validate(workflow: WorkflowDTO): void {
         if (workflow.nodes.length < 2) throw new HttpException("Nodes must be at least 2", HttpStatus.PRECONDITION_FAILED);
         if (workflow.edges.length !== workflow.nodes.length - 1)

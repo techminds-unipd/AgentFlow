@@ -18,6 +18,7 @@ class SaveWorkflowController {
         private readonly workflowDTOValidator: WorkflowDTOValidator
     ) {}
 
+    /* eslint-disable max-statements */
     private toDomain(workflowDto: WorkflowDTO): Workflow {
         const workflow: Workflow = new Workflow(workflowDto.name, []);
         let firstNode = undefined;
