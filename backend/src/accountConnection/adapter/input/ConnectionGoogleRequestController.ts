@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Redirect, UseGuards } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Inject, Redirect, UseGuards } from "@nestjs/common";
 import { AuthGuard } from "src/workflow/adapter/input/AuthGuard";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import {
@@ -18,8 +18,12 @@ class ConnectionGoogleRequestController {
     @Get("/auth")
     @Redirect()
     googleAuth(): { url: string } {
-        const response = this.connectionGoogleRequestUseCase.googleAuth();
-        return { url: response };
+        try {
+            const response = this.connectionGoogleRequestUseCase.googleAuth();
+            return { url: response };
+        } catch {
+            throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
 
