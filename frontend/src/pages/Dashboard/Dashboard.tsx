@@ -1,8 +1,8 @@
 import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
 import "./Dashboard.css";
-import "../../components/AddWorkflow/AddWorkflow";
 import { AddWorkflow } from "../../components/AddWorkflow/AddWorkflow";
+import { WorkflowList } from "../../components/WorkflowList/WorkflowList";
 
 export const Dashboard = () => {
   return (
@@ -22,6 +22,7 @@ export const Dashboard = () => {
             Hello username!
           </Typography>
           <AddWorkflow />
+          <WorkflowList />
         </Grid>
       </Grid>
     </main>
