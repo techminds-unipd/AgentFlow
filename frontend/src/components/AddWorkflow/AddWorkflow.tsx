@@ -38,7 +38,7 @@ export const AddWorkflow = () => {
                 }}
             >
                 <TextField 
-                    label="Insert workflow name" 
+                    placeholder="Insert workflow name" 
                     variant="outlined"
                     sx={{ 
                         backgroundColor: "var(--white-text)", 
