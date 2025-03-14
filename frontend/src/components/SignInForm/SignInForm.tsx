@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
+import { useAuth } from "../ProvideAuth/ProvideAuth";
 import "../../index.css";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -47,6 +48,8 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn() {
+  const auth = useAuth();
+  const user = auth.user;
   const [usernameError, setUsernameError] = React.useState(false);
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -109,7 +112,7 @@ export default function SignIn() {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign in
+            {user}
           </Typography>
           <Box
             component="form"
