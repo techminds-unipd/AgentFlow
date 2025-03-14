@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
-import { useAuth } from "../ProvideAuth/ProvideAuth";
+import useAuth from "../../hooks/useAuth"
 import "../../index.css";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -48,32 +48,26 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignIn() {
-  const auth = useAuth();
-  const user = auth.user;
+  const { user, loginUser, error } = useAuth();
   const [usernameError, setUsernameError] = React.useState(false);
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  /*
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
-  const handleClose = () => {
-    setOpen(false);
-  };*/
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (usernameError || passwordError) {
-      event.preventDefault();
-      return;
-    }
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    console.log("handleSubmit");
+    event.preventDefault();
+    if (usernameError || passwordError) return;
+  
     const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
+    const username = data.get("username") as string;
+    const password = data.get("password") as string;
+  
+    await loginUser(username, password);
+    console.log( user?.username );
+    if(error) {
+      console.log( error );
+    }
   };
 
   const validateInputs = () => {
@@ -112,7 +106,7 @@ export default function SignIn() {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            {user}
+            Sign in
           </Typography>
           <Box
             component="form"

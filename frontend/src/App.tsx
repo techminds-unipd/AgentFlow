@@ -8,14 +8,12 @@ import { SignUp } from "./pages/SignUp/SignUp";
 import { Services } from "./pages/Services/Services";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { Workflow } from "./pages/Workflow/Workflow";
-import { ProvideAuth } from "./components/ProvideAuth/ProvideAuth";
 
 function App() {
 
   return (
     <>
       <BrowserRouter>
-      <ProvideAuth>
       <Navbar />
       <Routes>
         <Route index element={<Home/>} />
@@ -27,7 +25,6 @@ function App() {
         <Route path='/services' element={<Services/>} />
       </Routes>
       <Footer />
-      </ProvideAuth>
       </BrowserRouter>
     </>
   )
