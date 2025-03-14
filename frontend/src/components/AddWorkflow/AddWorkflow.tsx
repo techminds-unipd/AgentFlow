@@ -1,11 +1,40 @@
-import { Box, TextField, IconButton, Snackbar, Typography } from "@mui/material";
-import { Add as PlusIcon } from "@mui/icons-material";
+import { Box, TextField, IconButton, Snackbar, Typography, SnackbarCloseReason  } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import CloseIcon from '@mui/icons-material/Close';
 import React from "react";
 import "../../index.css";
 
 export const AddWorkflow = () => {
+    const [open, setOpen] = React.useState(false);
 
-  return (
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason,
+  ) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+    const action = (
+        <React.Fragment>
+          <IconButton
+            size="small"
+            aria-label="close"
+            color="inherit"
+            onClick={handleClose}
+          >
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        </React.Fragment>
+      );
+
+    return (
     <>
         <Box
             component="section"
@@ -15,8 +44,8 @@ export const AddWorkflow = () => {
                 backgroundColor: "var(--maincolor)",
                 display: "flex",
                 alignItems: "center",
-                gap: 1, // Space between elements
-                width: 750 // Adjust width as needed
+                gap: 1,
+                width: 750
             }}
         >
             <TextField 
@@ -40,9 +69,16 @@ export const AddWorkflow = () => {
                     }
                 }} 
             />
-            <IconButton aria-label="Add workflow" size="large">
-                <PlusIcon />
+            <IconButton aria-label="Add workflow" size="large" onClick={handleClick}>
+                <Add />
             </IconButton>
+            <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                message="Note archived"
+                action={action}
+            />
         </Box>
     </>
   );
