@@ -42,7 +42,6 @@ describe("GoogleTokenPortAdapter", () => {
     describe("getOauth2ClientUrl", () => {
         it("should create a redirect url for google auth", async () => {
             googleAuthRepositoryMock.getOAuth2ClientUrl.mockReturnValue("redirectUrl");
-            console.log(googleAuthRepositoryMock.getOAuth2ClientUrl())
             expect(googleTokenPortAdapter.getOauth2ClientUrl()).toEqual("redirectUrl");
         });
     });

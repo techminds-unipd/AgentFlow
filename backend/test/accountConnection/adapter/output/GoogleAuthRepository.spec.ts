@@ -1,4 +1,4 @@
-import { ConfigModule } from "@nestjs/config";
+import { ConfigService } from "@nestjs/config";
 import { Test, TestingModule } from "@nestjs/testing";
 import { GoogleAuthRepository } from "src/accountConnection/adapter/output/GoogleAuthRepository";
 
@@ -20,8 +20,20 @@ describe("GoogleAuthRepository", () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 GoogleAuthRepository,
+                { provide: ConfigService,
+            useValue: {
+                get: jest.fn((Key: string, DefaultValue: string) => {
+                    switch (Key) {
+                        case 'GOOGLE_CREDENTIALS_PATH':
+                            return '';
+                        case 'GOOGLE_SCOPES_API':
+                            return '';
+                        default:
+                            return DefaultValue;
+                    }
+                })},
+            }
             ],
-            imports: [ConfigModule.forRoot({ isGlobal: true })]
         }).compile();
         googleAuthRepository = module.get<GoogleAuthRepository>(GoogleAuthRepository);
     };

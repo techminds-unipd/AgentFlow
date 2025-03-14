@@ -14,7 +14,7 @@ class ConnectionGoogleRequestController {
         private readonly connectionGoogleRequestUseCase: ConnectionGoogleRequestUseCase
     ) {}
 
-    //@UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     @Get("/auth")
     @Redirect()
     googleAuth(): { url: string } {
