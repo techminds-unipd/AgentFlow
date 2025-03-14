@@ -12,6 +12,7 @@ import MuiCard from '@mui/material/Card';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import useAuth from "../../hooks/useAuth"
+import { useNavigate } from "react-router";
 import "../../index.css";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -54,7 +55,18 @@ export default function SignIn() {
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  let navigate = useNavigate();
 
+  React.useEffect(() => {
+    if (error) {
+      console.log(error);
+      console.log("fuori");
+    } 
+    if (!error && user) {
+      console.log("dentro");
+      navigate("/"); 
+    }
+  }, [error, user]);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     console.log("handleSubmit");
     event.preventDefault();
