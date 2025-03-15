@@ -21,7 +21,7 @@ describe("CreateWorkflowController", () => {
             controllers: [CreateWorkflowController],
             providers: [
                 { provide: CREATE_WORKFLOW_USE_CASE, useValue: createWorkflowUseCaseMock },
-                { provide: JwtService, useValue: JwtService }
+                { provide: JwtService, useValue: jwtService }
             ]
         }).compile();
         createWorkflowController = module.get<CreateWorkflowController>(CreateWorkflowController);

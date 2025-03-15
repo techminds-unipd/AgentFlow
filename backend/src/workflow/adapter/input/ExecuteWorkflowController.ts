@@ -45,7 +45,7 @@ class ExecuteWorkflowController {
         return workflow;
     }
 
-    async validate(accessToken: string): Promise<void> {
+    private async validate(accessToken: string): Promise<void> {
         await firstValueFrom(
             this.httpService.get(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`).pipe(
                 catchError(() => {
