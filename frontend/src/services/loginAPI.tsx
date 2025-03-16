@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "http://localhost:3000";
 
 interface LoginResponse {
   accessToken: string;
@@ -22,6 +22,6 @@ export const login = async (username: string, password: string): Promise<LoginRe
 
     return await response.json();
   } catch (error) {
-    throw new Error(error instanceof Error ? error.message : "Errore generico");
+    throw new Error(error instanceof Error ? error.message : "Generic error");
   }
 };
