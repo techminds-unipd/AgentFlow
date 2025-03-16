@@ -1,26 +1,43 @@
-import { Box, TextField, IconButton, Snackbar, SnackbarCloseReason } from "@mui/material";
+import { Box, TextField, IconButton, Snackbar } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import CloseIcon from '@mui/icons-material/Close';
 import React from "react";
 import "../../index.css";
+import { useCreateWorkflow } from "../../hooks/useCreateWorkflow";
 
 export const AddWorkflow = () => {
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("");
+    const [openSnackBar, setOpenSnackBar] = React.useState(false);
+    const [snackBarMessage, setSnackBarSetMessage] = React.useState("");
+    const [workflowName, setWorkflowName] = React.useState("");
 
-    const handleClick = () => {
-        setMessage("Tha name you choose already exists.");
-        setOpen(true);
-    };
+    const { createWorkflow, isLoading, error } = useCreateWorkflow();
 
-    const handleClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: SnackbarCloseReason
-    ) => {
-        if (reason === 'clickaway') {
+    const handleClick = async () => {
+        if(!workflowName) {
+            setSnackBarSetMessage("Please enter a valid workflow name.");
+            setOpenSnackBar(true);
             return;
         }
-        setOpen(false);
+
+        try{
+            const result = await createWorkflow(workflowName);
+            console.log(result?.name);
+            if (result && result.name) {
+                // Se la creazione ha successo
+                setSnackBarSetMessage(`Workflow "${result.name}" created successfully.`);
+            } else {
+                // Se qualcosa non va con la creazione
+                setSnackBarSetMessage("Failed to create workflow.");
+            }
+        } catch ( err ) {
+            setSnackBarSetMessage(error || "Something went wrong.");
+        }
+
+        setOpenSnackBar(true);
+    };
+
+    const handleClose = () => {
+        setOpenSnackBar(false);
     };
 
     return (
@@ -38,6 +55,8 @@ export const AddWorkflow = () => {
                 }}
             >
                 <TextField 
+                    value={workflowName}
+                    onChange={(e) => setWorkflowName(e.target.value)}
                     placeholder="Insert workflow name" 
                     variant="outlined"
                     sx={{ 
@@ -52,15 +71,15 @@ export const AddWorkflow = () => {
                         }
                     }} 
                 />
-                <IconButton aria-label="Add workflow" size="large" onClick={handleClick}>
+                <IconButton aria-label="Add workflow" size="large" onClick={handleClick} disabled={isLoading}>
                     <Add fontSize="large"/>
                 </IconButton>
             </Box>
             <Snackbar
-                open={open}
+                open={openSnackBar}
                 autoHideDuration={6000}
                 onClose={handleClose}
-                message={message}
+                message={snackBarMessage}
                 action={
                     <IconButton
                         size="small"
