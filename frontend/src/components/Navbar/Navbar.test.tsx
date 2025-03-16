@@ -3,50 +3,61 @@ import {render, screen} from "@testing-library/react";
 import {expect, test, describe} from "vitest";
 import { Navbar } from "./Navbar";
 import { MemoryRouter } from "react-router";
+import { AuthProvider } from "../../context/AuthContext";
 
 describe("Navbar", () => {
-  //DA DIFFERENZIARE TRA QUANDO L'UTENTE E' LOGGATO E QUANDO NON LO E'
+  //TODO DA DIFFERENZIARE TRA QUANDO L'UTENTE E' LOGGATO E QUANDO NON LO E'
   test("Renders the navbar", () => {
     render(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
+          <Navbar />
+        </MemoryRouter>
+      </AuthProvider>
     );
     expect(screen.getByRole("banner")).toBeInTheDocument()
   });
 
   test("Renders the home item", () => {
     render(
-      <MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
           <Navbar />
-      </MemoryRouter>
+        </MemoryRouter>
+      </AuthProvider>
   );
       expect(screen.getByText("Home")).toBeInTheDocument()
   });
   
   test("Renders the about us item", () => {
     render(
-      <MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
           <Navbar />
-      </MemoryRouter>
+        </MemoryRouter>
+      </AuthProvider>
     );
       expect(screen.getByText("About Us")).toBeInTheDocument()
   });
 
   test("Renders the Agent Flow item", () => {
     render(
-      <MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
           <Navbar />
-      </MemoryRouter>
+        </MemoryRouter>
+      </AuthProvider>
     );
       expect(screen.getByText("Agent Flow")).toBeInTheDocument()
   });
 
   test("Renders the logo", () => {
     render(
-      <MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
           <Navbar />
-      </MemoryRouter>
+        </MemoryRouter>
+      </AuthProvider>
     );
     expect(screen.getByRole("img")).toHaveAttribute(
       "alt",

@@ -4,6 +4,7 @@ import { expect, test, describe, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router";
 import { LogoutMenuItem } from "./LogoutMenuItem";
+import { AuthProvider } from "../../context/AuthContext";
 
 describe("LogoutMenuItem", () => {
   
@@ -19,9 +20,11 @@ describe("LogoutMenuItem", () => {
   test("Renders logout menu item", () => {
     const fn = vi.fn();
     render(
-      <MemoryRouter>
-        <LogoutMenuItem handleCloseMenu={fn} />
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
+          <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+      </AuthProvider>
     );
 
     expect(screen.getByRole("menuitem")).toBeInTheDocument();
@@ -30,9 +33,11 @@ describe("LogoutMenuItem", () => {
   test("Renders open dialog if logout menu item is clicked", () => {
     const fn = vi.fn();
     render(
-      <MemoryRouter>
-        <LogoutMenuItem handleCloseMenu={fn} />
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter>
+          <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+      </AuthProvider>
     );
 
     const logoutMenuItem = screen.getByRole("menuitem");
@@ -45,9 +50,11 @@ describe("LogoutMenuItem", () => {
   test("Renders close dialog if 'no' button is clicked", async () => {
     const fn = vi.fn();
     render(
+      <AuthProvider>
         <MemoryRouter>
-            <LogoutMenuItem handleCloseMenu={fn} />
+          <LogoutMenuItem handleCloseMenu={fn} />
         </MemoryRouter>
+      </AuthProvider>
     );
 
     fireEvent.click(screen.getByRole("menuitem"));
@@ -61,9 +68,11 @@ describe("LogoutMenuItem", () => {
   test("Renders close dialog if 'yes' button is clicked", async () => {
     const fn = vi.fn();
     render(
+      <AuthProvider>
         <MemoryRouter>
-            <LogoutMenuItem handleCloseMenu={fn} />
+          <LogoutMenuItem handleCloseMenu={fn} />
         </MemoryRouter>
+      </AuthProvider>
     );
 
     fireEvent.click(screen.getByRole("menuitem"));
@@ -77,12 +86,14 @@ describe("LogoutMenuItem", () => {
   test("Renders navigate in home page if the 'yes' button is clicked", async () => {
     const fn = vi.fn();
     render(
-      <MemoryRouter initialEntries={["/test"]}>
-        <Routes>
-          <Route path="/test" element={<LogoutMenuItem handleCloseMenu={fn}></LogoutMenuItem>} />
-          <Route path="/" element={<div>Test home page</div>} />
-        </Routes>
-      </MemoryRouter>
+      <AuthProvider>
+        <MemoryRouter initialEntries={["/test"]}> 
+          <Routes>
+            <Route path="/test" element={<LogoutMenuItem handleCloseMenu={fn}></LogoutMenuItem>} />
+            <Route path="/" element={<div>Test home page</div>} />
+          </Routes>
+        </MemoryRouter>
+      </AuthProvider>
     );
   
     expect(screen.queryByRole("dialog")).toBeNull();
