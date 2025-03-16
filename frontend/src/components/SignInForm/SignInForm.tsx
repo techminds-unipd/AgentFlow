@@ -11,7 +11,7 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
-import useAuth from "../../hooks/useAuth"
+import { useAuth } from "../../hooks/useAuth"
 import { useNavigate } from "react-router";
 import "../../index.css";
 
@@ -60,14 +60,13 @@ export default function SignIn() {
   React.useEffect(() => {
     if (error) {
       console.log(error);
-      console.log("fuori");
     } 
     if (!error && user) {
       navigate("/dashboard"); 
     }
   }, [error, user]);
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    console.log("handleSubmit");
     event.preventDefault();
     if (usernameError || passwordError) return;
   

@@ -1,39 +1,14 @@
-import { useState } from "react";
-import { login } from "../services/api";
+import { useContext } from "react";
+import { AuthContext, AuthContextType } from '../context/AuthContext';
 
-interface User {
-  username: string;
-}
+// useAuth ha lo scopo di semplificare l'accesso ai dati del contesto (ovvero user, loginUser, logoutUser e error)
+// in questo modo possiamo evitare di scrivere ogni volta "const context = useContext(AuthContext);"
 
-interface AuthContext {
-  user: User | null;
-  loginUser: (username: string, password: string) => Promise<void>;
-  logoutUser: () => void;
-  error: string | null;
-}
-
-const useAuth = (): AuthContext => {
-  const [user, setUser] = useState<User | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  const loginUser = async (username: string, password: string) => {
-    try {
-      const data = await login(username, password);
-      localStorage.setItem("accessToken", data.accessToken);
-      console.log( data.accessToken );
-      setUser({ username });
-      setError(null);
-    } catch (err) {
-      setError(err as string);
+// hook personalizzato che permette ai componenti di accedere facilmente ai dati di autenticazione
+export const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error("useAuth must be used within an AuthProvider");
     }
-  };
-
-  const logoutUser = () => {
-    localStorage.removeItem("accessToken");
-    setUser(null);
-  };
-
-  return { user, loginUser, logoutUser, error };
+    return context;
 };
-
-export default useAuth;
