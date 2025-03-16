@@ -63,8 +63,7 @@ export default function SignIn() {
       console.log("fuori");
     } 
     if (!error && user) {
-      console.log("dentro");
-      navigate("/"); 
+      navigate("/dashboard"); 
     }
   }, [error, user]);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

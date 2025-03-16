@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000"; // URL dell'API documentata in Swagger
+const API_BASE_URL = "http://localhost:3000";
 
 interface LoginResponse {
   accessToken: string;
