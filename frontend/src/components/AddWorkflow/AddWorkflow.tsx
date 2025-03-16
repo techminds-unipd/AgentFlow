@@ -53,7 +53,7 @@ export const AddWorkflow = () => {
                     }} 
                 />
                 <IconButton aria-label="Add workflow" size="large" onClick={handleClick}>
-                    <Add />
+                    <Add fontSize="large"/>
                 </IconButton>
             </Box>
             <Snackbar

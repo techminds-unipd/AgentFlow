@@ -9,19 +9,26 @@ export const Dashboard = () => {
     <main>
       <Grid container>
         <Grid 
-            size={12} 
-            marginLeft={10} 
-            marginRight={10} 
+            size={12}
             paddingTop={7} 
             sx={{
                 display: "flex", 
                 flexDirection: "column",
                 alignItems: "center"
             }}>
-          <Typography component="h1" variant="h4" textAlign={"center"}>
+          <Typography component="h1" variant="h4" textAlign={"center"} sx= {{ marginBottom: 2 }}>
             Hello username!
           </Typography>
           <AddWorkflow />
+        </Grid>
+        <Grid 
+          size={12}
+          paddingTop={7} 
+          sx={{
+              display: "flex", 
+              flexDirection: "column",
+              alignItems: "center"
+          }}>
           <WorkflowList />
         </Grid>
       </Grid>
