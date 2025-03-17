@@ -4,7 +4,7 @@ import { CustomNode, CustomNodeProps } from "../CustomNode/CustomNode.tsx";
 export const PastebinNode = ({
     nodeTitle = "Pastebin",
     dialogContent = "Descrizione Pastebin blablabla",
-    type = "in-out",
+    type = "in",
     disabled = false,
     draggable = false}: CustomNodeProps) => {
         
