@@ -22,12 +22,13 @@ export const AddWorkflow = () => {
         try{
             const result = await createWorkflow(workflowName);
             console.log(result?.name);
+            console.log(result);
             if (result && result.name) {
                 // Se la creazione ha successo
                 setSnackBarSetMessage(`Workflow "${result.name}" created successfully.`);
             } else {
                 // Se qualcosa non va con la creazione
-                setSnackBarSetMessage("Failed to create workflow.");
+                setSnackBarSetMessage("Workflow with this name already exists.");
             }
         } catch ( err ) {
             setSnackBarSetMessage(error || "Something went wrong.");

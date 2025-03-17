@@ -10,14 +10,11 @@ export const newWorkflow = async (name: string): Promise<newWorkflowResponse> =>
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // quando ci sarà il login finito qua andrà l'accessoToken memorizzato in localStorage
-        "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByb3ZhIiwiaWF0IjoxNzQyMTM0MTcyLCJleHAiOjE3NDIxNzAxNzJ9.44loplnJf1jqA-h4KYDf9nk4Lzm0TJXrWAItvhTVVIU`, 
+        // quando ci sarà il login finito qua andrà l'accessoToken dato da useAuth (user.accessToken)
+        "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByb3ZhIiwiaWF0IjoxNzQyMjAxNjM1LCJleHAiOjE3NDIyMzc2MzV9.3Zi-JYFuiDwC0cc3RUG2z5nB8d6gjrXudc0VUD4MfaI`, 
       },
       body: JSON.stringify({ name }),
     });
-
-    console.log("Response status: ", response.status);
-    console.log("Response body: ", await response.text());
 
     if (response.status === 400) {
       throw new Error("Workflow with this name already exists");
