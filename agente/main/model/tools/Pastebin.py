@@ -13,7 +13,7 @@ class PastebinCreateBinTool(BaseTool):
     args_schema: Type[BinSchema] = BinSchema
     token: str = os.getenv("PASTEBIN_TOKEN")
 
-    def create_bin(self, message):
+    def __create_bin(self, message):
         data = {
             "api_dev_key": self.token,
             "api_option": "paste",
@@ -29,6 +29,6 @@ class PastebinCreateBinTool(BaseTool):
             message: str,
             run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
-        result = self.create_bin(message)
+        result = self.__create_bin(message)
         output = "Bin created: " + result
         return output

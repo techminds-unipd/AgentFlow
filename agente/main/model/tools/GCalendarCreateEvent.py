@@ -32,7 +32,7 @@ class GCalendarCreateEventTool(BaseTool):
         if not self.creds or not self.creds.valid:
             exit(1)
 
-    def create_event(self, summary, location, description, startDateTime, endDateTime):
+    def __create_event(self, summary, location, description, startDateTime, endDateTime):
         event = {
             'summary': summary,
             'location': location,
@@ -67,6 +67,6 @@ class GCalendarCreateEventTool(BaseTool):
             endDateTime: str,
             run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
-        result = self.create_event(summary, location, description, startDateTime, endDateTime)
+        result = self.__create_event(summary, location, description, startDateTime, endDateTime)
         output = 'Event created: %s' % result
         return output

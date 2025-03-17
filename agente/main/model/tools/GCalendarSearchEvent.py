@@ -30,7 +30,7 @@ class GCalendarSearchEventTool(BaseTool):
         if not self.creds or not self.creds.valid:
             exit(1)
 
-    def search_event(self, query, timeMin, timeMax):
+    def __search_event(self, query, timeMin, timeMax):
         try:
             service = build("calendar", "v3", credentials=self.creds)
             events_result = None
@@ -54,5 +54,5 @@ class GCalendarSearchEventTool(BaseTool):
             query: Optional[str] = None,
             run_manager: Optional[CallbackManagerForToolRun] = None,
     ) -> str:
-        result = self.search_event(query, timeMin, timeMax)
+        result = self.__search_event(query, timeMin, timeMax)
         return result
