@@ -10,6 +10,7 @@ import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { Workflow } from "./pages/Workflow/Workflow";
 import { AuthProvider } from "./context/AuthContext";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import { AnonymousRoute } from "./components/AnonymousRoute/AnonymousRoute";
 
 function App() {
 
@@ -21,8 +22,12 @@ function App() {
         <Routes>
           <Route index element={<Home/>} />
           <Route path='/aboutus' element={<AboutUs/>} />
-          <Route path='/signin' element={<SignIn/>} />
-          <Route path='/signup' element={<SignUp/>} />
+          <Route element={<AnonymousRoute />}>
+            <Route path='/signin' element={<SignIn/>} />
+          </Route>
+          <Route element={<AnonymousRoute />}>
+            <Route path='/signup' element={<SignUp/>} />
+          </Route>
           <Route element={<PrivateRoute />}>
             <Route path='/dashboard' element={<Dashboard/>} />
           </Route>
