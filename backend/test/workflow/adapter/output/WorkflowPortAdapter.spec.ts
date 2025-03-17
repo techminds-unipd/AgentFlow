@@ -10,7 +10,8 @@ describe("WorkflowPortAdapter", () => {
         getWorkflowByName: jest.Mock,
         addWorkflow: jest.Mock,
         getAllWorkflowByUsername: jest.Mock,
-        deleteWorkflow: jest.Mock
+        deleteWorkflow: jest.Mock,
+        saveWorkflow: jest.Mock
     };
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
@@ -50,7 +51,8 @@ describe("WorkflowPortAdapter", () => {
             getWorkflowByName: jest.fn(),
             addWorkflow: jest.fn(),
             getAllWorkflowByUsername: jest.fn(),
-            deleteWorkflow: jest.fn()
+            deleteWorkflow: jest.fn(),
+            saveWorkflow: jest.fn()
         };
         await createTestingModule();
     });
@@ -100,6 +102,18 @@ describe("WorkflowPortAdapter", () => {
         it("should return null if the user doesn't exist", async () => {
             workflowRepositoryMock.getAllWorkflowByUsername.mockResolvedValue(null);
             expect(await workflowPortAdapter.getAllWorkflowByUsername("username")).toEqual(null);
+        });
+    });
+
+    describe("saveWorkflow", () => {
+        it("should return the saved workflow", async () => {
+            workflowRepositoryMock.saveWorkflow.mockResolvedValue(workflowEntityMock);
+            expect(await workflowPortAdapter.saveWorkflow("username", workflowMock)).toEqual(workflowMock);
+        });
+
+        it("should return null if the workflow wasn't saved because not found", async () => {
+            workflowRepositoryMock.saveWorkflow.mockResolvedValue(null);
+            expect(await workflowPortAdapter.saveWorkflow("username", workflowMock)).toEqual(null);
         });
     });
 });
