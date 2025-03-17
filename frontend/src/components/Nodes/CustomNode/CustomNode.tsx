@@ -1,6 +1,5 @@
 import {
   Button,
-  IconButton,
   Dialog,
   DialogActions,
   DialogContent,
@@ -9,7 +8,6 @@ import {
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import "./CustomNode.css";
-import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 
 
@@ -104,9 +102,7 @@ export const CustomNode = ({
           <DialogContentText>{dialogContent}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <IconButton onClick={handleClose}>
-            <CloseIcon />
-          </IconButton>
+          <Button onClick={handleClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </>
