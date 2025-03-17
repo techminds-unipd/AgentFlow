@@ -27,8 +27,6 @@ interface AddWorkflowProps {
 
         try{
             const result = await createWorkflow(workflowName);
-            console.log(result?.name);
-            console.log(result);
             if (result && result.name) {
                 // Se la creazione ha successo
                 setSnackBarSetMessage(`Workflow "${result.name}" created successfully.`);
