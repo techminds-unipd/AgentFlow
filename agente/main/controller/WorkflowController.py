@@ -20,7 +20,7 @@ class WorkflowController:
         self.blueprint = Blueprint('workflowController', __name__)
         self.setup_routes()
 
-    def __check_request(self, request):
+    def __check_request(self, request: dict):
         schema = {
             "type": "object",
             "required": ["workflowNodes", "googleTokenFile"],
@@ -60,7 +60,7 @@ class WorkflowController:
         except Exception as e:
             raise BadRequest("Invalid request format.")
 
-    def __check_workflow(self, workflow):
+    def __check_workflow(self, workflow: list[ExecuteNode]):
         for i, node in enumerate(workflow):
             if i == len(workflow) - 1 and node.action != "":
                 raise BadRequest("The last node must not have an action")
@@ -70,7 +70,7 @@ class WorkflowController:
     def setup_routes(self):
         self.blueprint.add_url_rule('/execute', view_func=self.executeWorkflow, methods=['POST'])
 
-    def __create_token_file(self, google_token):
+    def __create_token_file(self, google_token: dict):
         if google_token:
             token_temp_file=tempfile.NamedTemporaryFile(mode='w', delete=False)
             token_temp_file.write(json.dumps(google_token))
