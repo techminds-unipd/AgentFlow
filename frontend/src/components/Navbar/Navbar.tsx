@@ -29,7 +29,7 @@ export const Navbar = () => {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box display={"flex"} flexDirection={"column"}>
             {/* per vedere loggato e non loggato scommentare questo codice. da togliere quando ci colleghiamo con il backend*/}
             <FormGroup>
                 <FormControlLabel
@@ -45,7 +45,7 @@ export const Navbar = () => {
             </FormGroup>
             
             <AppBar 
-                position="static"
+                position="relative"
                 sx={{
                     backgroundColor: "var(--maincolor)",
                     boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.2)",

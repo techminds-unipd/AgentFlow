@@ -9,9 +9,7 @@ export const Footer = () => {
       <Grid
         container
         textAlign={"center"}
-        bottom={0}
         width={"100%"}
-        position={"fixed"}
         padding={1.75}
         sx={{
           backgroundColor: "var(--maincolor)",
