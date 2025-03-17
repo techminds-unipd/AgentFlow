@@ -1,4 +1,3 @@
-import "../CustomNode/CustomNode.tsx";
 import { CustomNode, CustomNodeProps } from "../CustomNode/CustomNode.tsx";
 
 export const PastebinNode = ({
@@ -9,4 +8,4 @@ export const PastebinNode = ({
     draggable = false}: CustomNodeProps) => {
         
   return <CustomNode nodeTitle={nodeTitle} dialogContent={dialogContent} draggable={draggable} disabled={disabled} type={type}/>;
-};
+}

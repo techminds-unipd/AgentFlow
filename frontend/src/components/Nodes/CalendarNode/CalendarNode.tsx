@@ -1,4 +1,3 @@
-import "../CustomNode/CustomNode.tsx";
 import { CustomNode, CustomNodeProps } from "../CustomNode/CustomNode.tsx";
 
 export const CalendarNode = ({
@@ -7,6 +6,6 @@ export const CalendarNode = ({
     type = "in-out",
     disabled = false,
     draggable = false}: CustomNodeProps) => {
-        
+
   return <CustomNode nodeTitle={nodeTitle} dialogContent={dialogContent} draggable={draggable} disabled={disabled} type={type}/>;
-};
+}
