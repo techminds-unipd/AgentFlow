@@ -173,7 +173,6 @@ describe("Backend Controller (e2e)", () => {
             .then((response) => {
                 expect(response.body).toBeDefined();
                 expect(response.body).toHaveLength(3);
-                console.log(response.body);
                 expect(response.body[0]).toEqual(workflowDTOOrderedMock.name);
                 expect(response.body[1]).toEqual("workflow2");
                 expect(response.body[2]).toEqual("workflow3");
@@ -201,6 +200,13 @@ describe("Backend Controller (e2e)", () => {
         });
     });
 
-    
-    
+    // describe("google/auth", () => {
+    //     it("(GET) - should return http 302 for redirection", async () => {
+    //         return await request(app.getHttpServer())
+    //         .get("/google/auth")
+    //         .set("Authorization", `Bearer ${jwt}`)
+    //         .expect(302);
+    //     });
+    // });
+
 });
