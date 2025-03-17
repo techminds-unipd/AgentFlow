@@ -42,7 +42,7 @@ export const WorkflowItem = ( { name, setShouldReload }: WorkflowItemProps ) => 
                 alignItems: "center",
                 justifyContent: "space-between",
                 height: 35,
-                width: 717
+                width: 750
             }}
         >
           <Link 
