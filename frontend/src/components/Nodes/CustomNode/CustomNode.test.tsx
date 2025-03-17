@@ -24,19 +24,17 @@ describe("CustomNode", () => {
         });
     });
 
-    test("Test if a draggable custom node is draggable", async () => {
+    test("Test if a draggable custom node is draggable", () => {
         render(<CustomNode draggable/>);
-
+        
     const customNode = screen.getByRole("button");
-        expect(customNode.getAttribute("draggable"));
-    
+        expect(customNode).toHaveAttribute("draggable", "true");
     });
 
-    test("Test if a not draggable custom node is not draggable", async () => {
-        render(<CustomNode />);
+    test("Test if a not draggable custom node is not draggable", () => {
+        render(<CustomNode/>);
 
     const customNode = screen.getByRole("button");
-        expect(!customNode.getAttribute("draggable"));
-    
+    expect(customNode).toHaveAttribute("draggable", "false");
     });
 });

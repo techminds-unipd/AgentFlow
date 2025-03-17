@@ -28,7 +28,6 @@ export const CustomNode = ({
   disabled = false,
   draggable = false,
 }: CustomNodeProps) => {
-    console.log(draggable)
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
