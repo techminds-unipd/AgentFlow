@@ -1,4 +1,4 @@
-import { Body, Controller, HttpException, HttpStatus, Inject, Post, Request, UseGuards } from "@nestjs/common";
+import { Body, Controller, HttpException, HttpStatus, Inject, Put, Request, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth } from "@nestjs/swagger";
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { SAVE_WORKFLOW_USE_CASE, SaveWorkflowUseCase } from "src/workflow/service/port/input/SaveWorkflowUseCase";
@@ -55,7 +55,7 @@ class SaveWorkflowController {
     }
 
     @UseGuards(AuthGuard)
-    @Post("/save")
+    @Put("/save")
     async saveWorkflow(@Body() workflow: WorkflowDTO, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         this.workflowDTOValidator.validate(workflow);
         try {
