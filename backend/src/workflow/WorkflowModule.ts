@@ -1,11 +1,9 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
-import { UserEntity, userEntitySchema } from "src/user/adapter/output/UserEntity";
 import { DELETE_WORKFLOW_USE_CASE } from "./service/port/input/DeleteWorkflowUseCase";
 import { DeleteWorkflowService } from "./service/DeleteWorkflowService";
 import { DELETE_WORKFLOW_PORT } from "./service/port/output/DeleteWorkflowPort";
 import WorkflowPortAdapter from "./adapter/output/WorkflowPortAdapter";
-import { WorkflowRepository } from "./adapter/output/WorkflowRepository";
 import DeleteWorkflowController from "./adapter/input/DeleteWorkflowController";
 import CreateWorkflowController from "./adapter/input/CreateWorkflowController";
 import { CREATE_WORKFLOW_USE_CASE } from "./service/port/input/CreateWorkflowUseCase";
@@ -15,6 +13,13 @@ import GetWorkflowController from "./adapter/input/GetWorkflowController";
 import { GET_WORKFLOW_USE_CASE } from "./service/port/input/GetWorkflowUseCase";
 import { GET_WORKFLOW_PORT } from "./service/port/output/GetWorkflowPort";
 import { GetWorkflowService } from "./service/GetWorkflowService";
+import { WorkflowRepository } from "./adapter/output/WorkflowRepository";
+import { UserEntity, userEntitySchema } from "src/user/adapter/output/UserEntity";
+import { SAVE_WORKFLOW_PORT } from "./service/port/output/SaveWorkflowPort";
+import { SAVE_WORKFLOW_USE_CASE } from "./service/port/input/SaveWorkflowUseCase";
+import { SaveWorkflowService } from "./service/SaveWorkflowService";
+import SaveWorkflowController from "./adapter/input/SaveWorkflowController";
+import WorkflowDTOValidator from "./adapter/input/WorkflowDTOValidator";
 import { GET_USER_WORKFLOWS_PORT } from "./service/port/output/GetUserWorkflowsPort";
 import { WorkflowNameListService } from "./service/WorkflowNameListService";
 import WorkflowNameListController from "./adapter/input/WorkflowNameListController";
@@ -35,6 +40,7 @@ import { ConfigModule } from "@nestjs/config";
         GetWorkflowController,
         WorkflowNameListController,
         DeleteWorkflowController,
+        SaveWorkflowController,
         ExecuteWorkflowController
     ],
     providers: [
@@ -46,8 +52,11 @@ import { ConfigModule } from "@nestjs/config";
         { provide: GET_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: WORKFLOW_NAME_LIST_USE_CASE, useClass: WorkflowNameListService },
         { provide: GET_USER_WORKFLOWS_PORT, useClass: WorkflowPortAdapter },
+        { provide: SAVE_WORKFLOW_USE_CASE, useClass: SaveWorkflowService },
+        { provide: SAVE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
         { provide: EXECUTE_WORKFLOW_USE_CASE, useClass: ExecuteWorkflowService },
         { provide: EXECUTE_WORKFLOW_PORT, useClass: WorkflowAgentAdapter },
+        WorkflowDTOValidator,
         WorkflowRepository,
         AgentRepository
     ]
