@@ -30,6 +30,8 @@ export const AddWorkflow = () => {
                 // Se qualcosa non va con la creazione
                 setSnackBarSetMessage("Workflow with this name already exists.");
             }
+            // Dopo aver schiacciato il bottone, toglie il testo inserito
+            setWorkflowName(""); 
         } catch ( err ) {
             setSnackBarSetMessage(error || "Something went wrong.");
         }
