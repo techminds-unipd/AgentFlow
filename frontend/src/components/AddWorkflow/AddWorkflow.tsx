@@ -1,4 +1,4 @@
-import { Box, TextField, IconButton, Snackbar } from "@mui/material";
+import { Box, TextField, IconButton, Snackbar, Alert } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import CloseIcon from '@mui/icons-material/Close';
 import React from "react";
@@ -12,6 +12,7 @@ interface AddWorkflowProps {
   export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => {
     const [openSnackBar, setOpenSnackBar] = React.useState(false);
     const [snackBarMessage, setSnackBarSetMessage] = React.useState("");
+    const [alertColor, setAlertColor] =  React.useState<"success" | "error">("error");
     const [workflowName, setWorkflowName] = React.useState("");
 
     const { createWorkflow, isLoading, error } = useCreateWorkflow();
@@ -19,6 +20,7 @@ interface AddWorkflowProps {
     const handleClick = async () => {
         if(!workflowName) {
             setSnackBarSetMessage("Please enter a valid workflow name.");
+            setAlertColor("error");
             setOpenSnackBar(true);
             return;
         }
@@ -31,13 +33,16 @@ interface AddWorkflowProps {
                 // Se la creazione ha successo
                 setSnackBarSetMessage(`Workflow "${result.name}" created successfully.`);
                 setShouldReload(true); // Re-render di WorkflowList
+                setAlertColor("success");
                 setWorkflowName(""); 
             } else {
                 // Se qualcosa non va con la creazione
                 setSnackBarSetMessage("Workflow with this name already exists.");
+                setAlertColor("error");
             }
         } catch ( err ) {
             setSnackBarSetMessage(error || "Something went wrong.");
+            setAlertColor("error");
         }
 
         setOpenSnackBar(true);
@@ -97,7 +102,16 @@ interface AddWorkflowProps {
                         <CloseIcon fontSize="small" />
                     </IconButton>
                 }
-            />
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity={alertColor}
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    {snackBarMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };

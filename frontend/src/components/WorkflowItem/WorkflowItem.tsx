@@ -6,9 +6,10 @@ import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
 
 interface WorkflowItemProps {
   name: string;
+  setShouldReload: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const WorkflowItem = ( { name }: WorkflowItemProps ) => {
+export const WorkflowItem = ( { name, setShouldReload }: WorkflowItemProps ) => {
   const [open, setOpen] = React.useState(false);
   const { deleteWorkflow } = useDeleteWorkflow();
 
@@ -21,7 +22,12 @@ export const WorkflowItem = ( { name }: WorkflowItemProps ) => {
   };
 
   const handleDeleteWorkflow = () => {
-    deleteWorkflow(name);
+    try {
+      deleteWorkflow(name); 
+      setShouldReload(true); // Re-rendering della lista
+    } catch (error) {
+      console.error("Failed to delete workflow:", error);
+    }
     handleCloseDialog();
   };
   

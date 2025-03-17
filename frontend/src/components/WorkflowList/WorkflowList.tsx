@@ -56,7 +56,7 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
 
         {/*per visualizzare i WorkflowItem*/}
         {workflowList?.slice().reverse().map((workflowName, index) => (
-          <WorkflowItem key={index} name={workflowName} />
+          <WorkflowItem key={index} name={workflowName} setShouldReload={setShouldReload}/>
         ))}
       </Box>
     </Grid>
