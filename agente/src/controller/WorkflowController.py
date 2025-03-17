@@ -1,6 +1,6 @@
 from flask import Blueprint, request
-from service.WorkflowService import WorkflowService
-from model.WorkflowDTO import *
+from src.service.WorkflowService import WorkflowService
+from src.model.WorkflowDTO import *
 import json
 from jsonschema import validate
 from werkzeug.exceptions import BadRequest
@@ -33,14 +33,14 @@ class WorkflowController:
                     "required": ["token", "refreshToken", "tokenUri", "clientID", 
                         "clientSecret", "scopes", "universeDomain", "account"],
                     "properties": {
-                    "token": {"type": "string"},
-                    "refreshToken": {"type": "string"},
-                    "tokenUri": {"type": "string"},
-                    "clientID": {"type": "string"},
-                    "clientSecret": {"type": "string"},
-                    "scopes": {"type": "array", "items": {"type": "string"}},
-                    "universeDomain": {"type": "string"},
-                    "account": {"type": "string"}
+                        "token": {"type": "string"},
+                        "refreshToken": {"type": "string"},
+                        "tokenUri": {"type": "string"},
+                        "clientID": {"type": "string"},
+                        "clientSecret": {"type": "string"},
+                        "scopes": {"type": "array", "items": {"type": "string"}},
+                        "universeDomain": {"type": "string"},
+                        "account": {"type": "string"}
                     }
                 }
             }

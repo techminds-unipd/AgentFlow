@@ -2,7 +2,7 @@ from langchain_core.language_models import BaseLanguageModel
 from langchain_core.tools import BaseTool
 from langgraph.prebuilt import create_react_agent
 import datetime, time
-from model.WorkflowDTO import *
+from src.model.WorkflowDTO import *
 from langchain_core.messages import AIMessage
 import tempfile, json
 from langchain_google_community import GmailToolkit
@@ -10,9 +10,9 @@ from langchain_google_community.gmail.utils import(
     build_resource_service,
     get_gmail_credentials,
 )
-from model.tools.Pastebin import PastebinCreateBinTool
-from model.tools.GCalendarCreateEvent import GCalendarCreateEventTool
-from model.tools.GCalendarSearchEvent import GCalendarSearchEventTool
+from src.model.tools.Pastebin import PastebinCreateBinTool
+from src.model.tools.GCalendarCreateEvent import GCalendarCreateEventTool
+from src.model.tools.GCalendarSearchEvent import GCalendarSearchEventTool
 
 AgentResponse = str # type alias
 

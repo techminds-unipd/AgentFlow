@@ -1,6 +1,6 @@
 from flask import Flask
-from controller.WorkflowController import WorkflowController
-from service.WorkflowService import WorkflowService
+from src.controller.WorkflowController import WorkflowController
+from src.service.WorkflowService import WorkflowService
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 
