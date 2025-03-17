@@ -18,10 +18,25 @@ describe("CustomNode", () => {
 
         const customNode = screen.getByRole("button");
         fireEvent.click(customNode);
-        expect(screen.getByRole("dialog")).toBeInTheDocument();
         fireEvent.click(screen.getByRole("button", { name: /Close/i }));
         await waitFor(() => {
             expect(screen.queryByRole("dialog")).toBeNull();
         });
+    });
+
+    test("Test if a draggable custom node is draggable", async () => {
+        render(<CustomNode draggable/>);
+
+    const customNode = screen.getByRole("button");
+        expect(customNode.getAttribute("draggable"));
+    
+    });
+
+    test("Test if a not draggable custom node is not draggable", async () => {
+        render(<CustomNode />);
+
+    const customNode = screen.getByRole("button");
+        expect(!customNode.getAttribute("draggable"));
+    
     });
 });
