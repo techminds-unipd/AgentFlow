@@ -9,14 +9,15 @@ import ExecuteWorkflowCommand from "src/workflow/domain/ExecuteWorkflowCommand";
 import { isNotIn } from "class-validator";
 import { HttpService } from "@nestjs/axios";
 import { catchError, firstValueFrom } from "rxjs";
+import WorkflowDTOValidator from "./WorkflowDTOValidator";
 
-// manca la classe per la validazione della struttura del workflow
 @ApiBearerAuth()
 @Controller("workflow")
 class ExecuteWorkflowController {
     constructor(
         @Inject(EXECUTE_WORKFLOW_USE_CASE) private readonly executeWorkflowUseCase: ExecuteWorkflowUseCase,
-        private readonly httpService: HttpService
+        private readonly httpService: HttpService,
+        private readonly workflowDTOValidator: WorkflowDTOValidator
     ) {}
 
     // uguale ad altri
@@ -58,6 +59,7 @@ class ExecuteWorkflowController {
     @UseGuards(AuthGuard)
     @Post("/execute")
     async executeWorkflow(@Body() executeReq: ExecuteWorkflowDTO): Promise<string> {
+        this.workflowDTOValidator.validate(executeReq.workflow);
         await this.validate(executeReq.googleToken.token);
         const workflow = this.toDomain(executeReq.workflow);
         const cmd = new ExecuteWorkflowCommand(workflow, executeReq.googleToken);
