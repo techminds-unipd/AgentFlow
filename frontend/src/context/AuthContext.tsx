@@ -6,6 +6,7 @@ import { login } from "../services/loginAPI";
 
 interface User {
     username: string;
+    accessToken: string;
 }
 
 export interface AuthContextType {
@@ -42,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const data = await login(username, password);
             localStorage.setItem("accessToken", data.accessToken);
             localStorage.setItem("user", JSON.stringify({ username }));
-            setUser({ username });
+            setUser({ username, accessToken: data.accessToken });
             setError(null);
         } catch (err) {
             setError(err as string);
