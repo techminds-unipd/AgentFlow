@@ -12,7 +12,7 @@ describe("Login API > Login", () =>{
 
     test("Should return the received access token when one is received from backend", async () => {
         const mockResolveValue = {
-            status: 404,
+            status: 201,
             json: () => new Promise((resolve)=>resolve({accessToken: ["testToken"]}))
         };
     
