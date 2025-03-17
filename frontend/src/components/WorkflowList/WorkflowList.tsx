@@ -2,9 +2,23 @@ import Grid from "@mui/material/Grid2";
 import { Typography, Box, CircularProgress } from "@mui/material";
 import { WorkflowItem } from "../../components/WorkflowItem/WorkflowItem";
 import { useAllWorkflow } from "../../hooks/useAllWorkflow";
+import React, { useEffect } from "react";
 
-export const WorkflowList = () => {
-  const { workflowList, isLoading, error } = useAllWorkflow();
+interface WorkflowListProps {
+  shouldReload: boolean;
+  setShouldReload: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setShouldReload }) => {
+  const { workflowList, isLoading, error, refetch } = useAllWorkflow();
+  
+  useEffect(() => {
+    if (shouldReload) {
+        refetch(); // Ricarica i workflow
+        setShouldReload(false); // Reset dello stato
+    }
+}, [shouldReload, setShouldReload, refetch]);
+  
   return (
     <Grid
       container

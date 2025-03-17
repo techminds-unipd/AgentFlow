@@ -5,7 +5,11 @@ import React from "react";
 import "../../index.css";
 import { useCreateWorkflow } from "../../hooks/useCreateWorkflow";
 
-export const AddWorkflow = () => {
+interface AddWorkflowProps {
+    setShouldReload: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+
+  export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => {
     const [openSnackBar, setOpenSnackBar] = React.useState(false);
     const [snackBarMessage, setSnackBarSetMessage] = React.useState("");
     const [workflowName, setWorkflowName] = React.useState("");
@@ -26,12 +30,12 @@ export const AddWorkflow = () => {
             if (result && result.name) {
                 // Se la creazione ha successo
                 setSnackBarSetMessage(`Workflow "${result.name}" created successfully.`);
+                setShouldReload(true); // Re-render di WorkflowList
+                setWorkflowName(""); 
             } else {
                 // Se qualcosa non va con la creazione
                 setSnackBarSetMessage("Workflow with this name already exists.");
             }
-            // Dopo aver schiacciato il bottone, toglie il testo inserito
-            setWorkflowName(""); 
         } catch ( err ) {
             setSnackBarSetMessage(error || "Something went wrong.");
         }

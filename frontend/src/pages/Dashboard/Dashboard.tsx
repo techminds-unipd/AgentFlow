@@ -2,8 +2,11 @@ import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
 import { AddWorkflow } from "../../components/AddWorkflow/AddWorkflow";
 import { WorkflowList } from "../../components/WorkflowList/WorkflowList";
-
+import { useState } from "react";
+ 
 export const Dashboard = () => {
+  const [shouldReload, setShouldReload] = useState<boolean>(false);
+
   return (
     <main>
       <Grid container>
@@ -18,7 +21,7 @@ export const Dashboard = () => {
           <Typography component="h1" variant="h4" textAlign={"center"} sx= {{ marginBottom: 2 }}>
             Hello username!
           </Typography>
-          <AddWorkflow />
+          <AddWorkflow setShouldReload={setShouldReload} />
         </Grid>
         <Grid 
           size={12}
@@ -28,7 +31,7 @@ export const Dashboard = () => {
               flexDirection: "column",
               alignItems: "center"
           }}>
-          <WorkflowList />
+          <WorkflowList shouldReload={shouldReload} setShouldReload={setShouldReload} />
         </Grid>
       </Grid>
     </main>

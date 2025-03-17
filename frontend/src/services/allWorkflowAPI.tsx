@@ -1,6 +1,6 @@
 const API_BASE_URL = "http://localhost:3000";
 
-interface allWorkflowResponse extends Array<string> {}
+export interface allWorkflowResponse extends Array<string> {}
 
 export const allWorkflow = async (): Promise<allWorkflowResponse> => {
   try {
@@ -9,7 +9,7 @@ export const allWorkflow = async (): Promise<allWorkflowResponse> => {
       headers: {
         "Content-Type": "application/json",
         // quando ci sarà il login finito qua andrà l'accessoToken dato da useAuth (user.accessToken)
-        "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByb3ZhIiwiaWF0IjoxNzQyMjAxNjM1LCJleHAiOjE3NDIyMzc2MzV9.3Zi-JYFuiDwC0cc3RUG2z5nB8d6gjrXudc0VUD4MfaI`, 
+        "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByb3ZhIiwiaWF0IjoxNzQyMjI2MDM4LCJleHAiOjE3NDIyNjIwMzh9.ryI-4A1NhG1U6pi89sXAdSYD_gDHecErkjeJr3MeMyk`, 
       },
     });
 
