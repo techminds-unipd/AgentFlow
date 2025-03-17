@@ -37,7 +37,6 @@ export const CustomNode = ({
 
   const mainColor = !disabled ? "var(--maincolor)" : "var(--disabled-outline)";
   const backgroundColor = !disabled ? "white" : "var(--disabled-background)";
-
   return (
     <>
       <Button
@@ -46,7 +45,6 @@ export const CustomNode = ({
         size="large"
         draggable={draggable}
         sx={{
-          //borderRadius: "5px",
           margin: "10px",
           borderWidth: 2,
           borderColor: mainColor,
@@ -54,12 +52,7 @@ export const CustomNode = ({
           color: mainColor,
           textTransform: "none",
           fontSize: "1.2em",
-          //display: "flex",
-          //alignItems: "center",
-          //justifyContent: "center",
-          //position: "relative",
           overflow: "hidden",
-          //minWidth: "150px",
           minHeight: "3em",
 
           // Semicerchio sinistro (mostrato solo se type è "in" o "in-out")
@@ -100,11 +93,7 @@ export const CustomNode = ({
             position: "absolute",
             top: "-5px",
             right: "-5px",
-            borderRadius: "50%",
             padding: "5px",
-            margin: "0px 0px 10px 10px",
-            //lascio boxShadow?
-            //boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
           }}
         ></InfoOutlinedIcon>
       </Button>
