@@ -10,7 +10,7 @@ import { AccountConnectionModule } from "./accountConnection/AccountConnectionMo
         UserModule,
         WorkflowModule,
         AccountConnectionModule,
-        MongooseModule.forRoot("mongodb://root:password@localhost:27017/"),
+        MongooseModule.forRoot("mongodb://root:password@localhost:27017", { dbName: "agent-flow" }),
         JwtModule.register({ global: true, secret: "chiaveSegreta", signOptions: { expiresIn: "10h" } })
     ],
     controllers: [],

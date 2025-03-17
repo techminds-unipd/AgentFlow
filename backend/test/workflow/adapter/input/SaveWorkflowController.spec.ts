@@ -24,8 +24,8 @@ describe("SaveWorkflowController", () => {
         new NodeDTO(4, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
         new NodeDTO(7, new PositionDTO(2, 2), new NodeDataDTO("GMAIL"))
     ], [
-        new EdgeDTO("action2", 4, 7),
-        new EdgeDTO("action1", 7, 9)
+        new EdgeDTO("action2", 7, 9),
+        new EdgeDTO("action1", 4, 7)
     ]);
 
     const workflowDTOOrderedMock = new WorkflowDTO("prova", [
