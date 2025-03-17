@@ -1,10 +1,12 @@
 const API_BASE_URL = "http://localhost:3000";
 
-interface allWorkflowResponse extends Array<string> {}
+interface deleteWorkflowResponse {
+  name: string;
+}
 
-export const allWorkflow = async (): Promise<allWorkflowResponse> => {
+export const deleteWorkflowByName = async (name: string): Promise<deleteWorkflowResponse> => {
   try {
-    const response = await fetch(`${API_BASE_URL}/workflow/all`, {
+    const response = await fetch(`${API_BASE_URL}/workflow/delete/${name}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -13,15 +15,18 @@ export const allWorkflow = async (): Promise<allWorkflowResponse> => {
       },
     });
 
+    console.log("mi hann chiamata");
     if (response.status === 400) {
-      throw new Error("Something wrong");
+      throw new Error("Some error");
     } else if (response.status >= 500) {
       throw new Error("Server error");
     }
-
-    const data = await response.json();
+    console.log("mi hann chiamata");
+    const data= await response.json();
+    console.log("ciao", data);
     return data;
   } catch (error) {
+    console.error("Error:", error);
     throw new Error(error instanceof Error ? error.message : "Errore generico");
   }
 };

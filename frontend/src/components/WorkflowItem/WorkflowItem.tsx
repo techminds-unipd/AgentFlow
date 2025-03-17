@@ -2,6 +2,7 @@ import { Box, Link, IconButton, Dialog, DialogActions, DialogContent, DialogTitl
 import ClearIcon from "@mui/icons-material/Clear";
 import * as React from "react";
 import "../../index.css";
+import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
 
 interface WorkflowItemProps {
   name: string;
@@ -9,8 +10,7 @@ interface WorkflowItemProps {
 
 export const WorkflowItem = ( { name }: WorkflowItemProps ) => {
   const [open, setOpen] = React.useState(false);
-  console.log("ciao")
-  console.log("WorkflowItem received name:", name);
+  const { deleteWorkflow } = useDeleteWorkflow();
 
   const handleOpenDialog = () => {
       setOpen(true);
@@ -18,6 +18,11 @@ export const WorkflowItem = ( { name }: WorkflowItemProps ) => {
 
   const handleCloseDialog = () => {
       setOpen(false);
+  };
+
+  const handleDeleteWorkflow = () => {
+    deleteWorkflow(name);
+    handleCloseDialog();
   };
   
   return (
@@ -61,7 +66,7 @@ export const WorkflowItem = ( { name }: WorkflowItemProps ) => {
             </DialogContent>
             <DialogActions>
             <Button onClick={handleCloseDialog}>No</Button>
-            <Button autoFocus> {/*quando viene cliccato ci mettere l'eliminazione del workflow*/}
+            <Button onClick={handleDeleteWorkflow} autoFocus>
                 Yes
             </Button>
             </DialogActions>

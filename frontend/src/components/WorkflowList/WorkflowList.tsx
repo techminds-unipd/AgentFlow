@@ -5,8 +5,6 @@ import { useAllWorkflow } from "../../hooks/useAllWorkflow";
 
 export const WorkflowList = () => {
   const { workflowList, isLoading, error } = useAllWorkflow();
-  console.log("WorkflowList data:", workflowList);
-console.log("Type of names:", Array.isArray(workflowList));
   return (
     <Grid
       container
@@ -43,7 +41,7 @@ console.log("Type of names:", Array.isArray(workflowList));
         )}
 
         {/*per visualizzare i WorkflowItem*/}
-        {workflowList?.map((workflowName, index) => (
+        {workflowList?.slice().reverse().map((workflowName, index) => (
           <WorkflowItem key={index} name={workflowName} />
         ))}
       </Box>
