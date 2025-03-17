@@ -9,7 +9,7 @@ interface LogoutMenuItem {
   }
 
 export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
-    const { logoutUser } = useAuth(); // logoutUser definita dento l'hook useAuth()
+    const { logoutUser } = useAuth();
     let navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
@@ -25,7 +25,6 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
     const handleLogout = () => {
         logoutUser();
         handleCloseDialog();
-        navigate("/");
         handleCloseMenu();
     };
     

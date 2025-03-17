@@ -9,6 +9,7 @@ import { Services } from "./pages/Services/Services";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { Workflow } from "./pages/Workflow/Workflow";
 import { AuthProvider } from "./context/AuthContext";
+import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 
 function App() {
 
@@ -22,9 +23,15 @@ function App() {
           <Route path='/aboutus' element={<AboutUs/>} />
           <Route path='/signin' element={<SignIn/>} />
           <Route path='/signup' element={<SignUp/>} />
-          <Route path='/dashboard' element={<Dashboard/>} />
-          <Route path='/Workflow' element={<Workflow/>} />
-          <Route path='/services' element={<Services/>} />
+          <Route element={<PrivateRoute />}>
+            <Route path='/dashboard' element={<Dashboard/>} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path='/workflow' element={<Workflow/>} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path='/services' element={<Services/>} />
+          </Route>
         </Routes>
         <Footer />
         </BrowserRouter>
