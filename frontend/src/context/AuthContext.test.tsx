@@ -33,7 +33,6 @@ describe("AuthContext Login" , () => {
                     </button>
                 </>
             )
-             
         }
 
         const accessToken = "testToken";
@@ -75,7 +74,6 @@ describe("AuthContext Login" , () => {
                     </button>
                 </>
             )
-             
         }
 
         const accessToken = "testToken";
@@ -96,7 +94,7 @@ describe("AuthContext Login" , () => {
         })
     })
 
-    test("Writes username and accessToken in localStorage when login succeds", async () => {
+    test("Writes username and accessToken in localStorage with key 'user' when login succeds", async () => {
         interface CustomTestProps{
             username: string;
             password: string;
@@ -115,8 +113,7 @@ describe("AuthContext Login" , () => {
                         Login
                     </button>
                 </>
-            )
-             
+            ) 
         }
 
         const accessToken = "testToken";
@@ -135,6 +132,38 @@ describe("AuthContext Login" , () => {
         await waitFor(()=>{
             expect(localStorage.getItem("user")).toEqual(JSON.stringify(user));
         })
+    })
+
+    test("Sets user at boot when is saved in localStorage with key 'user'", async () => {
+        const CustomTest = () => {
+            const context = useContext(AuthContext);
+            if(!context) {
+                throw new Error("Context is undefined");
+            }
+            
+            const {user} = context;
+            return (
+                <>
+                    <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
+                    <div data-testid="user">{JSON.stringify(user?.username)}</div>
+                </>
+            ) 
+        }
+
+        const accessToken = "testToken";
+
+        const mockResolveValue = {
+            status: 201,
+            json: () => new Promise((resolve)=>resolve({accessToken}))
+        };
+        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+
+        const testUsername = "testUsername";
+        const user = {username: testUsername, accessToken} as User;
+        localStorage.setItem("user", JSON.stringify(user));
+        render(<AuthProvider><CustomTest/></AuthProvider>);    
+        expect(screen.getByTestId("user")).toHaveTextContent(testUsername);
+        expect(screen.getByTestId("token")).toHaveTextContent(accessToken);
     })
 
     test("Sets error to 'Wrong username or password' when login fails due to wrong credentials", async () => {
@@ -158,7 +187,6 @@ describe("AuthContext Login" , () => {
                     </button>
                 </>
             )
-             
         }
 
         const mockResolveValue = {
@@ -217,6 +245,145 @@ describe("AuthContext Login" , () => {
         await waitFor(()=>{
             expect(screen.getByTestId("user")).toBeEmptyDOMElement();
             expect(screen.getByTestId("token")).toBeEmptyDOMElement();
+        })
+    })
+})
+
+describe("AuthContext Logout", ()=>{
+    const fetchSpy = vi.spyOn(window, 'fetch');
+
+    beforeEach(() => {
+        fetchSpy.mockReset();
+        localStorage.clear();
+    })
+
+    test("Logout sets user to null", async ()=>{
+        interface CustomTestProps{
+            username: string;
+            password: string;
+        }
+
+        const CustomTest = ({username, password}: CustomTestProps) => {
+            const context = useContext(AuthContext);
+            if(!context) {
+                throw new Error("Context is undefined");
+            }
+            
+            const {user, loginUser, logoutUser} = context;
+            return (
+                <>
+                    <div data-testid="user">{JSON.stringify(user)}</div>
+                    <button onClick={() => loginUser(username, password)} aria-label="login">
+                        Login
+                    </button>
+                    <button onClick={() => logoutUser()} aria-label="logout">
+                        Logout
+                    </button>
+                </>
+            )
+        }
+
+        const accessToken = "testToken";
+
+        const mockResolveValue = {
+            status: 201,
+            json: () => new Promise((resolve)=>resolve({accessToken}))
+        };
+        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+
+        const testUsername = "testUsername";
+        const testPassword = "testPassword";
+        render(<AuthProvider><CustomTest username={testUsername} password={testPassword}/></AuthProvider>);
+        expect(screen.getByTestId("user")).toHaveTextContent(JSON.stringify(null));
+        fireEvent.click(screen.getByRole("button", {name: "login"}))
+        await waitFor(()=>{
+            expect(screen.getByTestId("user")).toHaveTextContent(testUsername);
+        })
+        fireEvent.click(screen.getByRole("button", {name: "logout"}))
+        await waitFor(()=>{
+            expect(screen.getByTestId("user")).toHaveTextContent(JSON.stringify(null));
+        })
+    })
+
+    test("Logout sets token to null", async ()=>{
+        interface CustomTestProps{
+            username: string;
+            password: string;
+        }
+
+        const CustomTest = ({username, password}: CustomTestProps) => {
+            const context = useContext(AuthContext);
+            if(!context) {
+                throw new Error("Context is undefined");
+            }
+            
+            const {user, loginUser, logoutUser} = context;
+            return (
+                <>
+                    <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
+                    <button onClick={() => loginUser(username, password)} aria-label="login">
+                        Login
+                    </button>
+                    <button onClick={() => logoutUser()} aria-label="logout">
+                        Logout
+                    </button>
+                </>
+            )
+        }
+
+        const accessToken = "testToken";
+
+        const mockResolveValue = {
+            status: 201,
+            json: () => new Promise((resolve)=>resolve({accessToken}))
+        };
+        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+
+        const testUsername = "testUsername";
+        const testPassword = "testPassword";
+        render(<AuthProvider><CustomTest username={testUsername} password={testPassword}/></AuthProvider>);
+        fireEvent.click(screen.getByRole("button", {name: "login"}))
+        await waitFor(()=>{
+            expect(screen.getByTestId("token")).toHaveTextContent(accessToken);
+        })
+        fireEvent.click(screen.getByRole("button", {name: "logout"}))
+        await waitFor(()=>{
+            expect(screen.getByTestId("token")).toBeEmptyDOMElement();
+        })
+    })
+
+    test("Logout clears localStorage with key 'user'", async () => {
+        const CustomTest = () => {
+            const context = useContext(AuthContext);
+            if(!context) {
+                throw new Error("Context is undefined");
+            }
+            
+            const {logoutUser} = context;
+            return (
+                <>
+                    <button onClick={() => logoutUser()} aria-label="logout">
+                        Logout
+                    </button>
+                </>
+            ) 
+        }
+
+        const accessToken = "testToken";
+
+        const mockResolveValue = {
+            status: 201,
+            json: () => new Promise((resolve)=>resolve({accessToken}))
+        };
+        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        const testUsername = "testUsername";
+        const user = {username: testUsername, accessToken} as User;
+        localStorage.setItem("user", JSON.stringify(user));
+        expect(localStorage.getItem("user")).toEqual(JSON.stringify(user));
+        render(<AuthProvider><CustomTest/></AuthProvider>);    
+        fireEvent.click(screen.getByRole("button", {name: "logout"}))
+        await waitFor(()=>{
+            expect(JSON.stringify(localStorage.getItem("user"))).toEqual(JSON.stringify(null));
         })
     })
 })
