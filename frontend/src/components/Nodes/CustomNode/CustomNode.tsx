@@ -12,7 +12,8 @@ import "./CustomNode.css";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 
-interface CustomNodeProps {
+
+export interface CustomNodeProps {
   dialogTitle?: string;
   dialogContent?: string;
   nodeTitle?: string;
@@ -23,7 +24,7 @@ interface CustomNodeProps {
 
 export const CustomNode = ({
   nodeTitle = "nodeTitle",
-  dialogTitle = "dialogTitle",
+  dialogTitle = "Descrizione",
   dialogContent = "dialogContent",
   type = "in-out",
   disabled = false,
