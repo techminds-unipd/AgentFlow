@@ -52,14 +52,17 @@ export const CustomNode = ({
           overflow: "hidden",
           minHeight: "3em",
 
+          "&:hover": {
+            backgroundColor: disabled ? "#f0f0f0" : "#f0f0f0", // Grigio chiaro quando passi sopra
+          },
           // Semicerchio sinistro (mostrato solo se type è "in" o "in-out")
           "&::before":
             type === "in" || type === "in-out"
               ? {
                   content: '""',
                   position: "absolute",
-                  width: ".4em",
-                  height: ".8em",
+                  width: ".35em",
+                  height: ".7em",
                   backgroundColor: mainColor,
                   left: 0,
                   borderRadius: "0 100px 100px 0",
@@ -72,8 +75,8 @@ export const CustomNode = ({
               ? {
                   content: '""',
                   position: "absolute",
-                  width: ".4em",
-                  height: ".8em",
+                  width: ".35em",
+                  height: ".7em",
                   backgroundColor: mainColor,
                   right: 0,
                   borderRadius: "100px 0 0 100px",
@@ -101,7 +104,7 @@ export const CustomNode = ({
           <DialogContentText>{dialogContent}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={handleClose} sx={{color: mainColor}} >Close</Button>
         </DialogActions>
       </Dialog>
     </>
