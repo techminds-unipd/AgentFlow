@@ -4,7 +4,7 @@ import { login } from "../services/loginAPI";
 // AuthProvider serve per garantire che tutte le info sull'autenticazione siano condivise in tutta l'app
 // fornisce i dati di autenticazione a tutti i componenti figli tramite il contesto Context
 
-interface User {
+export interface User {
     username: string;
     accessToken: string;
 }
@@ -41,9 +41,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const loginUser = async (username: string, password: string) => {
         try {
             const data = await login(username, password);
-            localStorage.setItem("accessToken", data.accessToken);
-            localStorage.setItem("user", JSON.stringify({ username }));
-            setUser({ username, accessToken: data.accessToken });
+            const user = {username, accessToken: data.accessToken} as User;
+            localStorage.setItem("user", JSON.stringify(user));
+            setUser(user);
             setError(null);
         } catch (err) {
             setError(err as string);

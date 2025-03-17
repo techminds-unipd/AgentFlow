@@ -2,7 +2,7 @@ import { expect, test, describe, vi, beforeEach } from "vitest";
 import { waitFor } from "@testing-library/react";
 import { login, API_BASE_URL } from "./loginAPI";
 
-describe("Login API > Login", () =>{
+describe("Login API", () =>{
     const fetchSpy = vi.spyOn(window, 'fetch');
 
     beforeEach(() => {
@@ -11,15 +11,15 @@ describe("Login API > Login", () =>{
 
 
     test("Should return the received access token when one is received from backend", async () => {
+        const accessToken = "testToken";
         const mockResolveValue = {
             status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken: ["testToken"]}))
+            json: () => new Promise((resolve)=>resolve({accessToken}))
         };
     
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
-        const accessToken = ["testToken"];
         login(username, password).then((loginResponse) => {
             expect(loginResponse).toEqual({accessToken});
             expect(fetchSpy).toBeCalledTimes(1);
