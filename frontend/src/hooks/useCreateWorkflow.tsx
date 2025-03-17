@@ -10,10 +10,7 @@ export const useCreateWorkflow = () => {
     setError(null);
 
     try {
-      console.log("ciao-prima");
       const result = await newWorkflow(name);
-      console.log("ciao");
-      console.log(result);
       return result;
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong.");

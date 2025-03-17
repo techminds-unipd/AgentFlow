@@ -3,8 +3,14 @@ import ClearIcon from "@mui/icons-material/Clear";
 import * as React from "react";
 import "../../index.css";
 
-export const WorkflowItem = () => {
+interface WorkflowItemProps {
+  name: string;
+}
+
+export const WorkflowItem = ( { name }: WorkflowItemProps ) => {
   const [open, setOpen] = React.useState(false);
+  console.log("ciao")
+  console.log("WorkflowItem received name:", name);
 
   const handleOpenDialog = () => {
       setOpen(true);
@@ -35,7 +41,7 @@ export const WorkflowItem = () => {
               textDecoration: "underline var(--black-text)",
               fontSize: 20
             }}>
-              Your first workflow
+              { name }
             </Link>
             <IconButton onClick={handleOpenDialog}>
               <ClearIcon color="inherit" fontSize="large" />
