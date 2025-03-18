@@ -166,7 +166,7 @@ describe("AuthContext Login" , () => {
         expect(screen.getByTestId("token")).toHaveTextContent(accessToken);
     })
 
-    test("Sets error to 'Wrong username or password' when login fails due to wrong credentials", async () => {
+    test("Sets an error containing 'wrong username or password' when login fails due to wrong credentials", async () => {
         interface CustomTestProps{
             username: string;
             password: string;
@@ -201,7 +201,7 @@ describe("AuthContext Login" , () => {
         expect(screen.getByTestId("error")).toBeEmptyDOMElement();
         fireEvent.click(screen.getByRole("button", {name: "login"}))
         await waitFor(()=>{
-            expect(screen.getByTestId("error")).toHaveTextContent(/Wrong username or password/);
+            expect(screen.getByTestId("error")).toHaveTextContent(/wrong username or password/);
         })
     })
 
