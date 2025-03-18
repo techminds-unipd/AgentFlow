@@ -21,7 +21,7 @@ describe("deleteWorkflowByName API", () => {
         await expect(deleteWorkflowByName(name, accessToken)).resolves.toEqual(mockResponse);
         expect(fetchSpy).toBeCalledTimes(1);
         expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/workflow/delete/${name}`, {
-            method: "GET",
+            method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${accessToken}`,

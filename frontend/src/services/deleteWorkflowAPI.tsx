@@ -23,7 +23,6 @@ export const deleteWorkflowByName = async (name: string, accessToken: string): P
     const data= await response.json();
     return data;
   } catch (error) {
-    console.error("Error:", error);
     throw new Error(error instanceof Error ? error.message : "Generic error");
   }
 };

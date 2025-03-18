@@ -58,9 +58,6 @@ export default function SignIn() {
   let navigate = useNavigate();
 
   React.useEffect(() => {
-    if (error) {
-      console.log(error);
-    } 
     if (!error && user) {
       navigate("/dashboard"); 
     }
