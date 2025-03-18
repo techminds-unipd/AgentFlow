@@ -1,9 +1,9 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
-import { renderHook, act } from "@testing-library/react";
-import { useAllWorkflow } from "./useAllWorkflow";
-import { AuthContext } from "../context/AuthContext";
-import { AuthContextType, providerPropsInit } from "../context/MockedAuthProvider";
+import { render, screen, waitFor, act } from "@testing-library/react";
+import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
 import { allWorkflow } from "../services/allWorkflowAPI";
+import { useAllWorkflow } from "./useAllWorkflow";
+import "@testing-library/jest-dom";
 
 vi.mock("../services/allWorkflowAPI", () => ({
     allWorkflow: vi.fn()
@@ -16,44 +16,45 @@ describe("useAllWorkflow hook", () => {
         providerProps = providerPropsInit();
     });
 
-    const Wrapper = ({ children }: { children: React.ReactNode }) => (
-        <AuthContext.Provider value={providerProps}>{children}</AuthContext.Provider>
-    );
+    const TestComponent = () => {
+        const { workflowList, isLoading, error, refetch } = useAllWorkflow();
+
+        return (
+            <div>
+                <p>Loading: {JSON.stringify(isLoading)}</p>
+                <p>Workflows: {JSON.stringify(workflowList)}</p>
+                <p>Error: {JSON.stringify(error)}</p>
+                <button onClick={refetch}>Fetch Workflows</button>
+            </div>
+        );
+    };
 
     test("Fetches workflow list when user is authenticated", async () => {
         const mockData = ["workflow1", "workflow2"];
         vi.mocked(allWorkflow).mockResolvedValue(mockData);
 
-        const { result } = renderHook(() => useAllWorkflow(), { wrapper: Wrapper });
+        authProviderRender(<TestComponent />, providerProps);
 
-        expect(result.current.isLoading).toBe(true);
-
-        await act(async () => {
-            await new Promise((resolve) => setTimeout(resolve, 0));
+        await waitFor(() => {
+            expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
+            expect(screen.getByText(/Workflows: \["workflow1","workflow2"\]/i)).toBeInTheDocument();
+            expect(screen.getByText(/Error: null/i)).toBeInTheDocument();
         });
-
-        expect(result.current.isLoading).toBe(false);
-        expect(result.current.workflowList).toEqual(mockData);
-        expect(result.current.error).toBeNull();
     });
 
     test("Handles errors when API call fails", async () => {
-        vi.mocked(allWorkflow).mockRejectedValue(new Error("API Error")); // Fix applied
+        vi.mocked(allWorkflow).mockRejectedValue(new Error("API Error"));
 
-        const { result } = renderHook(() => useAllWorkflow(), { wrapper: Wrapper });
+        authProviderRender(<TestComponent />, providerProps);
 
-        expect(result.current.isLoading).toBe(true);
-
-        await act(async () => {
-            await new Promise((resolve) => setTimeout(resolve, 0));
+        await waitFor(() => {
+            expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
+            expect(screen.getByText(/Workflows: null/i)).toBeInTheDocument();
+            expect(screen.getByText(/Error: "API Error"/i)).toBeInTheDocument();
         });
-
-        expect(result.current.isLoading).toBe(false);
-        expect(result.current.workflowList).toBeNull();
-        expect(result.current.error).toBe("API Error");
     });
 
     test("Throws an error when useAllWorkflow is used outside AuthProvider", () => {
-        expect(() => renderHook(() => useAllWorkflow())).toThrowError();
+        expect(() => render(<TestComponent />)).toThrowError();
     });
 });
