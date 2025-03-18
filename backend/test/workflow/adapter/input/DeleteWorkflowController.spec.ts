@@ -65,7 +65,7 @@ describe("DeleteWorkflowController", () => {
             });
             const result = deleteWorkflowController.deleteWorkflow("prova", { username: "username" });
             expect(result).rejects.toThrow(HttpException);
-            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.NOT_FOUND);
         });
 
     });

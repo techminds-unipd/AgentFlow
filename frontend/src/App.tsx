@@ -8,24 +8,27 @@ import { SignUp } from "./pages/SignUp/SignUp";
 import { Services } from "./pages/Services/Services";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import { Workflow } from "./pages/Workflow/Workflow";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
 
   return (
     <>
-      <BrowserRouter>
-      <Navbar />
-      <Routes>
-        <Route index element={<Home/>} />
-        <Route path='/aboutus' element={<AboutUs/>} />
-        <Route path='/signin' element={<SignIn/>} />
-        <Route path='/signup' element={<SignUp/>} />
-        <Route path='/dashboard' element={<Dashboard/>} />
-        <Route path='/Workflow' element={<Workflow/>} />
-        <Route path='/services' element={<Services/>} />
-      </Routes>
-      <Footer />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route index element={<Home/>} />
+          <Route path='/aboutus' element={<AboutUs/>} />
+          <Route path='/signin' element={<SignIn/>} />
+          <Route path='/signup' element={<SignUp/>} />
+          <Route path='/dashboard' element={<Dashboard/>} />
+          <Route path='/Workflow' element={<Workflow/>} />
+          <Route path='/services' element={<Services/>} />
+        </Routes>
+        <Footer />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   )
 }

@@ -24,15 +24,24 @@ import { GET_USER_WORKFLOWS_PORT } from "./service/port/output/GetUserWorkflowsP
 import { WorkflowNameListService } from "./service/WorkflowNameListService";
 import WorkflowNameListController from "./adapter/input/WorkflowNameListController";
 import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameListUseCase";
+import ExecuteWorkflowController from "./adapter/input/ExecuteWorkflowController";
+import { EXECUTE_WORKFLOW_USE_CASE } from "./service/port/input/ExecuteWorkflowUseCase";
+import ExecuteWorkflowService from "./service/ExecuteWorkflowService";
+import { EXECUTE_WORKFLOW_PORT } from "./service/port/output/ExecuteWorkflowPort";
+import WorkflowAgentAdapter from "./adapter/output/WorkflowAgentAdapter";
+import AgentRepository from "./adapter/output/AgentRepository";
+import { HttpModule } from "@nestjs/axios";
+import { ConfigModule } from "@nestjs/config";
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }])],
+    imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }]), HttpModule, ConfigModule],
     controllers: [
         CreateWorkflowController,
         GetWorkflowController,
         WorkflowNameListController,
         DeleteWorkflowController,
-        SaveWorkflowController
+        SaveWorkflowController,
+        ExecuteWorkflowController
     ],
     providers: [
         { provide: DELETE_WORKFLOW_USE_CASE, useClass: DeleteWorkflowService },
@@ -45,8 +54,11 @@ import { WORKFLOW_NAME_LIST_USE_CASE } from "./service/port/input/WorkflowNameLi
         { provide: GET_USER_WORKFLOWS_PORT, useClass: WorkflowPortAdapter },
         { provide: SAVE_WORKFLOW_USE_CASE, useClass: SaveWorkflowService },
         { provide: SAVE_WORKFLOW_PORT, useClass: WorkflowPortAdapter },
+        { provide: EXECUTE_WORKFLOW_USE_CASE, useClass: ExecuteWorkflowService },
+        { provide: EXECUTE_WORKFLOW_PORT, useClass: WorkflowAgentAdapter },
         WorkflowDTOValidator,
-        WorkflowRepository
+        WorkflowRepository,
+        AgentRepository
     ]
 })
 export class WorkflowModule {}
