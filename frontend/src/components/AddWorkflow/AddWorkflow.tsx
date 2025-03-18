@@ -34,8 +34,8 @@ interface AddWorkflowProps {
                 setAlertColor("success");
                 setWorkflowName(""); 
             } else {
-                // Se qualcosa non va con la creazione
-                setSnackBarSetMessage("Workflow with this name already exists.");
+                // Se qualcosa non va con la creazione, se il problema è perchè c'è il nome uguale verrà stampato in automatico l'errore definito in newWorkflowAPI
+                setSnackBarSetMessage(error || "Something went wrong.");
                 setAlertColor("error");
             }
         } catch ( err ) {

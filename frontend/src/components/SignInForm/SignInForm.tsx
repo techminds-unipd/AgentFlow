@@ -178,7 +178,7 @@ export default function SignIn() {
               <CustomLink
                 link="/signup"
                 name="Sign up"
-                color="main color"
+                color="main-color"
               >
               </CustomLink>
             </Typography>
