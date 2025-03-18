@@ -4,7 +4,7 @@ import { AuthGuard } from "./AuthGuard";
 import { Workflow } from "src/workflow/domain/Workflow";
 import { DeleteWorkflowUseCase, DELETE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/DeleteWorkflowUseCase";
 import DeleteWorkflowCommand from "src/workflow/domain/DeleteWorkflowCommand";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
 
 @ApiBearerAuth()
@@ -25,6 +25,9 @@ class DeleteWorkflowController {
 
     @UseGuards(AuthGuard)
     @Delete("/delete/:name")
+    @ApiResponse({ status: 200, description: "Workflow deleted successfully" })
+    @ApiResponse({ status: 404, description: "Workflow not found" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async deleteWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         try {
             const username = request.username;

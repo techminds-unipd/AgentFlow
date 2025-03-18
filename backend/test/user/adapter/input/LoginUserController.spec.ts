@@ -55,7 +55,7 @@ describe("LoginUserController", () => {
             });
             const result = loginUserController.login(userDTOMock);
             expect(result).rejects.toThrow(HttpException);
-            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.UNAUTHORIZED);
         });
 
         it("should throw HttpException because password doesn't match", async () => {
@@ -64,7 +64,7 @@ describe("LoginUserController", () => {
             });
             const result = loginUserController.login(userDTOMock);
             expect(result).rejects.toThrow(HttpException);
-            expect(result).rejects.toHaveProperty("status", HttpStatus.BAD_REQUEST);
+            expect(result).rejects.toHaveProperty("status", HttpStatus.UNAUTHORIZED);
         });
     });
 });

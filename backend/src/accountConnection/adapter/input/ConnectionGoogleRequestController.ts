@@ -1,12 +1,10 @@
-import { Controller, Get, HttpException, HttpStatus, Inject, Redirect, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "src/workflow/adapter/input/AuthGuard";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { Controller, Get, Inject, Redirect } from "@nestjs/common";
 import {
     CONNECTION_GOOGLE_REQUEST_USE_CASE,
     ConnectionGoogleRequestUseCase
 } from "src/accountConnection/service/port/input/ConnectionGoogleRequestUseCase";
 
-@ApiBearerAuth()
+
 @Controller("/google")
 class ConnectionGoogleRequestController {
     constructor(
@@ -14,7 +12,7 @@ class ConnectionGoogleRequestController {
         private readonly connectionGoogleRequestUseCase: ConnectionGoogleRequestUseCase
     ) {}
 
-    @UseGuards(AuthGuard)
+
     @Get("/auth")
     @Redirect()
     googleAuth(): { url: string } {

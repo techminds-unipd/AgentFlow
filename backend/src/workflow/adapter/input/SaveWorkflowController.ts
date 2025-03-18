@@ -1,5 +1,5 @@
 import { Body, Controller, HttpException, HttpStatus, Inject, Put, Request, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { SAVE_WORKFLOW_USE_CASE, SaveWorkflowUseCase } from "src/workflow/service/port/input/SaveWorkflowUseCase";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO } from "./WorkflowDTO";
@@ -56,6 +56,10 @@ class SaveWorkflowController {
 
     @UseGuards(AuthGuard)
     @Put("/save")
+    @ApiResponse({ status: 200, description: "Workflow saved successfully" })
+    @ApiResponse({ status: 404, description: "Workflow not found" })
+    @ApiResponse({ status: 412, description: "Invalid workflow" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async saveWorkflow(@Body() workflow: WorkflowDTO, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         this.workflowDTOValidator.validate(workflow);
         try {

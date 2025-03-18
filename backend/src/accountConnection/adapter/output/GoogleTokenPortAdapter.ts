@@ -7,7 +7,7 @@ import Token from "src/accountConnection/domain/Token";
 
 @Injectable()
 class GoogleTokenPortAdapter implements ConnectionGoogleRequestPort, ConnectionGoogleResponsePort {
-    constructor(private readonly googleRepository: GoogleAuthRepository) {}
+    constructor(private readonly googleAuthRepository: GoogleAuthRepository) {}
 
     private toDomain(googleToken: GoogleTokenEntity): Token {
         const token = new Token(googleToken.accessToken, googleToken.refreshToken, googleToken.expireDate);
@@ -15,11 +15,11 @@ class GoogleTokenPortAdapter implements ConnectionGoogleRequestPort, ConnectionG
     }
 
     async getAuthClientData(code: string): Promise<Token> {
-        return this.toDomain(await this.googleRepository.getAuthClientData(code));
+        return this.toDomain(await this.googleAuthRepository.getAuthClientData(code));
     }
 
     getOauth2ClientUrl(): string {
-        return this.googleRepository.getOAuth2ClientUrl();
+        return this.googleAuthRepository.getOAuth2ClientUrl();
     }
 }
 

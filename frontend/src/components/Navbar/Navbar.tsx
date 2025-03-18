@@ -1,22 +1,20 @@
-import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography, FormControlLabel, FormGroup, Switch } from "@mui/material";
+import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
 import { CustomLink } from "../CustomLink/CustomLink.tsx";
 import { CustomButton } from "../CustomButton/CustomButton.tsx";
 import { LogoutMenuItem } from "../LogoutMenuItem/LogoutMenuItem.tsx";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../hooks/useAuth.tsx";
 import * as React from "react";
 import logo from "../../assets/Logo.Tech-Minds-fe.png";
 import "../../index.css";
 
 export const Navbar = () => {
-    const [auth, setAuth] = React.useState(true);
+    const { user } = useAuth(); // per verificare se l'utente è loggato o no
     let navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setAuth(event.target.checked);
-    };
+
     const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -29,21 +27,6 @@ export const Navbar = () => {
     };
 
     return (
-        <Box display={"flex"} flexDirection={"column"}>
-            {/* per vedere loggato e non loggato scommentare questo codice. da togliere quando ci colleghiamo con il backend*/}
-            <FormGroup>
-                <FormControlLabel
-                    control={
-                    <Switch
-                        checked={auth}
-                        onChange={handleChange}
-                        aria-label="login switch"
-                />
-            }
-            label={auth ? "Logout" : "Login"}
-            />
-            </FormGroup>
-            
             <AppBar 
                 position="relative"
                 sx={{
@@ -69,13 +52,12 @@ export const Navbar = () => {
                     <Box display="flex" gap={2} alignItems="center">
                         <CustomLink name="Home" link="/" />
                         <CustomLink name="About Us" link="/aboutus" />
-                        {!auth && ( 
+                        {!user ? ( 
                             <>
                                 <CustomButton name="Sign In" link="/signin" variant="contained"/>
                                 <CustomButton name="Sign Up" link="/signup" variant="outlined" />
                             </>
-                        )}
-                        {auth && ( 
+                        ) : ( 
                             <>
                                 <CustomLink name="Dashboard" link="/dashboard" />
                                 <IconButton
@@ -102,6 +84,5 @@ export const Navbar = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
-        </Box>
     );
 };
