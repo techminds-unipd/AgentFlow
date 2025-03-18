@@ -2,7 +2,6 @@ export const API_BASE_URL = "http://localhost:3000";
 
 interface deleteWorkflowResponse {
   name: string;
-  accessToken: string;
 }
 
 export const deleteWorkflowByName = async (name: string, accessToken: string): Promise<deleteWorkflowResponse> => {
