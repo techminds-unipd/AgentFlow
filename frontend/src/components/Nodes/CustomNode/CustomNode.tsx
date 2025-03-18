@@ -5,15 +5,16 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Divider,
+  Typography,
 } from "@mui/material";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import "./CustomNode.css";
-import { useState } from "react";
-
+import { JSX, useState } from "react";
 
 export interface CustomNodeProps {
   dialogTitle?: string;
-  dialogContent?: string;
+  dialogContent?: string | JSX.Element;
   nodeTitle?: string;
   type?: "in" | "out" | "in-out";
   disabled?: boolean;
@@ -22,8 +23,20 @@ export interface CustomNodeProps {
 
 export const CustomNode = ({
   nodeTitle = "nodeTitle",
-  dialogTitle = "Descrizione",
-  dialogContent = "dialogContent",
+  dialogTitle = "Description",
+  dialogContent = (
+    <>
+      Breve descrizione blocco
+      <br />
+      <br />
+      <Divider />
+      <Typography variant="h6"> Available features:</Typography>
+      <ul style={{ listStylePosition: "inside"}}>
+        <li>Feature 1</li>
+        <li>Feature 2</li>
+      </ul>
+    </>
+  ),
   type = "in-out",
   disabled = false,
   draggable = false,
@@ -51,10 +64,12 @@ export const CustomNode = ({
           fontSize: "1.2em",
           overflow: "hidden",
           minHeight: "3em",
+          transition: "background-color 0.2s ease-in-out",
 
           "&:hover": {
             backgroundColor: disabled ? "#f0f0f0" : "#f0f0f0", // Grigio chiaro quando passi sopra
           },
+
           // Semicerchio sinistro (mostrato solo se type è "in" o "in-out")
           "&::before":
             type === "in" || type === "in-out"
@@ -104,7 +119,9 @@ export const CustomNode = ({
           <DialogContentText>{dialogContent}</DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} sx={{color: mainColor}} >Close</Button>
+          <Button onClick={handleClose} sx={{ color: mainColor }}>
+            Close
+          </Button>
         </DialogActions>
       </Dialog>
     </>
