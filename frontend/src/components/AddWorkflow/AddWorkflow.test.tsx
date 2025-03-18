@@ -51,18 +51,23 @@ describe("AddWorkflow Component", () => {
         expect(await screen.findByText("Workflow \"Test Workflow\" created successfully.")).toBeInTheDocument();
     });
 
-    test("Shows error message if workflow already exists", async () => {
-        mockCreateWorkflow.mockResolvedValue(null);
+    test("Shows if error message is displayed if workflow already exists", async () => {
+        const errorMessage = "Workflow with the same name already exists";
+
+        vi.mocked(useCreateWorkflow).mockReturnValue({
+            createWorkflow: vi.fn(),
+            isLoading: false,
+            error: errorMessage,
+        });
 
         render(<AddWorkflow setShouldReload={mockSetShouldReload} />);
+
         const input = screen.getByPlaceholderText("Insert workflow name");
         const button = screen.getByRole("button", { name: /add workflow/i });
 
-        await userEvent.type(input, "Existing Workflow");
+        await userEvent.type(input, "Prova");
         await userEvent.click(button);
 
-        expect(await screen.findByText((content, element) => 
-            content.includes("Workflow with the same name already exists")
-        )).toBeInTheDocument();
+        expect(await screen.findByText(errorMessage)).toBeInTheDocument();
     });
 });
