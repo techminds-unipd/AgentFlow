@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { WorkflowItem } from "./WorkflowItem";
 import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
 import { vi, describe, test, expect } from "vitest";
+import '@testing-library/jest-dom';
 
 // Mock the `useDeleteWorkflow` hook
 vi.mock("../../hooks/useDeleteWorkflow", () => ({
@@ -24,6 +25,9 @@ describe("WorkflowItem", () => {
 
   test("Closes the dialog when clicking the delete button", async () => {
     render(<WorkflowItem name="Test Workflow" setShouldReload={setShouldReload} />);
+    
+    const deleteButton = screen.getByRole("button");
+    fireEvent.click(deleteButton);
 
     const noButton = screen.getByText("No");
     fireEvent.click(noButton);
