@@ -3,9 +3,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Typography } from "@mui/material";
 import "./Home.css";
-import { GmailNode } from "../../components/Nodes/GmailNode/GmailNode";
-import { CalendarNode } from "../../components/Nodes/CalendarNode/CalendarNode";
-import { PastebinNode } from "../../components/Nodes/PastebinNode/PastebinNode";
 
 export const Home = () => {
   return (
@@ -15,9 +12,6 @@ export const Home = () => {
           <Typography variant="h1">Agent Flow</Typography>
           <Typography variant="h2">Your personal assistant.</Typography>
         </Grid>
-        <GmailNode draggable disabled/>
-        <CalendarNode/>
-        <PastebinNode/>
         <Grid container size={12} paddingTop={5}>
           <Grid size={4}>
             <Card variant="outlined" sx={{backgroundColor: "var(--maincolor)", color: "var(--white-text)"}}>
