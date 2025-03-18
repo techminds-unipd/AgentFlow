@@ -6,8 +6,8 @@ export const GmailNode = ({
   dialogTitle = "Gmail description",
   dialogContent = (
     <>
-      A node for integration with Gmail mailbox. It allows you to
-      manage emails directly without having to open webmail.
+      A node connected to the Gmail service. It allows you to
+      manage emails directly without having to open your webmail.
       <br/><br/>
       <Divider />
       <Typography variant="h6">Available features</Typography>
