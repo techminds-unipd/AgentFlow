@@ -3,6 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
 import { newWorkflow } from "../services/newWorkflowAPI";
 import { useCreateWorkflow } from "./useCreateWorkflow";
+import "@testing-library/jest-dom"
 
 vi.mock("../services/newWorkflowAPI", () => ({
     newWorkflow: vi.fn()
