@@ -8,10 +8,14 @@ export const CalendarNode = ({
     <>
       A node connected to the Google Calendar service that allows you to manage
       events, appointments and reminders.
-      <br /><br />
+      <br />
+      <br />
       <Divider />
-      <Typography variant="h6">Available features</Typography>
-      <ul style={{ listStylePosition: "inside"}}>
+      <Typography variant="h6" sx={{ margin: "16px 0", color: "black" }}>
+        {" "}
+        Available features
+      </Typography>
+      <ul style={{ listStylePosition: "inside" }}>
         <li>Create an event</li>
         <li>Search through created events</li>
       </ul>

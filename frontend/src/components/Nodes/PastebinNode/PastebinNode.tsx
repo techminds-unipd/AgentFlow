@@ -6,11 +6,16 @@ export const PastebinNode = ({
   dialogTitle = "Pastebin description",
   dialogContent = (
     <>
-      A node that lets you paste, save, and share text or code. Useful for quick notes, programming snippets, or temporary documents.
-      <br /><br />
+      A node that lets you paste, save, and share text or code. Useful for quick
+      notes, programming snippets, or temporary documents.
+      <br />
+      <br />
       <Divider />
-      <Typography variant="h6">Available features</Typography>
-      <ul style={{ listStylePosition: "inside"}}>
+      <Typography variant="h6" sx={{ margin: "16px 0", color: "black" }}>
+        {" "}
+        Available features
+      </Typography>
+      <ul style={{ listStylePosition: "inside" }}>
         <li>Create a document</li>
         <li>Write a document</li>
       </ul>
