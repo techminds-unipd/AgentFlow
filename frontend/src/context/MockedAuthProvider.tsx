@@ -15,17 +15,17 @@ return render(
 );
 };
 
-
-export const providerPropsInit = (testUsername: string = "testUsername", testToken: string = "testToken"):AuthContextType => {
+//Se initiallyLoggedIn è true, riempie l'user con l'username e il token passati. Quando viene effettuato il login, viene impostato l'accessToken passato. Error è impostato al valore passato
+export const providerPropsInit = (initiallyLoggedIn = true, testUsername: string = "testUsername", testToken: string = "testToken", testError: string | null = null):AuthContextType => {
     let providerProps = {
-      user: {username: testUsername, accessToken: testToken} as User,
-      loginUser: vi.fn((username: string, password: string) => {
-        providerProps.user = {username, accessToken: "testToken"};
+      user: initiallyLoggedIn? {username: testUsername, accessToken: testToken} as User: null,
+      loginUser: vi.fn((username: string, _: string) => {
+        providerProps.user = {username, accessToken: testToken};
       }),
       logoutUser: vi.fn(function () {
         providerProps.user = null;
       }),
-      error: null,
+      error: testError,
   } as AuthContextType
   return providerProps;
 }
