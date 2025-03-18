@@ -1,63 +1,63 @@
 import "@testing-library/jest-dom";
-import {render, screen} from "@testing-library/react";
-import {expect, test, describe} from "vitest";
+import {screen} from "@testing-library/react";
+import {expect, test, describe, beforeEach} from "vitest";
 import { Navbar } from "./Navbar";
 import { MemoryRouter } from "react-router";
-import { AuthProvider } from "../../context/AuthContext";
+import { AuthContextType, authProviderRender, providerPropsInit} from "../../context/MockedAuthProvider"
+
+
 
 describe("Navbar", () => {
   //TODO DA DIFFERENZIARE TRA QUANDO L'UTENTE E' LOGGATO E QUANDO NON LO E'
+  let providerProps: AuthContextType;
+  beforeEach(()=>{providerProps=providerPropsInit()})
+  
   test("Renders the navbar", () => {
-    render(
-      <AuthProvider>
+    authProviderRender(
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>
-      </AuthProvider>
+        </MemoryRouter>,
+        providerProps
     );
     expect(screen.getByRole("banner")).toBeInTheDocument()
   });
 
   test("Renders the home item", () => {
-    render(
-      <AuthProvider>
+    authProviderRender(
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>
-      </AuthProvider>
+        </MemoryRouter>,
+        providerProps
   );
       expect(screen.getByText("Home")).toBeInTheDocument()
   });
   
   test("Renders the about us item", () => {
-    render(
-      <AuthProvider>
+    authProviderRender(
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>
-      </AuthProvider>
+        </MemoryRouter>,
+        providerProps
     );
       expect(screen.getByText("About Us")).toBeInTheDocument()
   });
 
   test("Renders the Agent Flow item", () => {
-    render(
-      <AuthProvider>
+    authProviderRender(
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>
-      </AuthProvider>
+        </MemoryRouter>,
+        providerProps
     );
       expect(screen.getByText("Agent Flow")).toBeInTheDocument()
   });
 
   test("Renders the logo", () => {
-    render(
-      <AuthProvider>
+    authProviderRender(
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>
-      </AuthProvider>
+        </MemoryRouter>,
+        providerProps
     );
     expect(screen.getByRole("img")).toHaveAttribute(
       "alt",
