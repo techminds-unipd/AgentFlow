@@ -8,7 +8,7 @@ interface deleteWorkflowResponse {
 export const deleteWorkflowByName = async (name: string, accessToken: string): Promise<deleteWorkflowResponse> => {
   try {
     const response = await fetch(`${API_BASE_URL}/workflow/delete/${name}`, {
-      method: "GET",
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${accessToken}`, 
