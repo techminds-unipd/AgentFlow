@@ -9,7 +9,8 @@ import "../../index.css";
 
 interface CustomLinkProps {
     name: string,
-    link: string
+    link: string,
+    color: "black" | "white" | "main color",
 }
 
 /**
@@ -18,7 +19,14 @@ interface CustomLinkProps {
  * La funzione LinkBehaviour è stata presa da https://mui.com/material-ui/integrations/routing/
  */
 
-export const CustomLink=( {name, link}: CustomLinkProps) =>{
+export const CustomLink=( {name, link, color}: CustomLinkProps) =>{
+  if(color==="white"){
+    var varColor = "var(--white-text)"
+  }else if(color==="black"){
+    var varColor = "var(--black-text)"
+  }else{
+    var varColor = "var(--maincolor)"
+  }
     const {pathname} = useLocation();
     const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, "to">>(
         (props, ref) => (
@@ -31,13 +39,13 @@ export const CustomLink=( {name, link}: CustomLinkProps) =>{
       );
     return(
         <>
-            {pathname===link?<Typography sx={{ fontSize: 18 }}>{name}</Typography>:
+            {pathname===link?<Typography sx={{ fontSize: 18, color: varColor }}>{name}</Typography>:
             <Link 
                 component={LinkBehavior} 
                 underline="always" 
                 sx={{ 
-                    color: "var(--white-text)",
-                    textDecoration: "underline var(--white-text)",
+                    color: varColor,
+                    textDecoration: "underline "+varColor,
                     fontSize: 18
                 }}
             >
@@ -46,4 +54,8 @@ export const CustomLink=( {name, link}: CustomLinkProps) =>{
             }
         </>
     )
+}
+
+CustomLink.defaultProps = {
+  color: "white"
 }

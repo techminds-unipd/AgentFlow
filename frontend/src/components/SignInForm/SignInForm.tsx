@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+import { CustomLink } from '../CustomLink/CustomLink';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -178,13 +178,12 @@ export default function SignIn() {
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
-              <Link
-                href="/signup"
-                variant="body2"
-                sx={{ alignSelf: 'center', color: "var(--maincolor)"}}
+              <CustomLink
+                link="/signup"
+                name="Sign up"
+                color="main color"
               >
-                Sign up
-              </Link>
+              </CustomLink>
             </Typography>
           </Box>
         </Card>
