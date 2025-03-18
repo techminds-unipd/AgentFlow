@@ -7,6 +7,7 @@ import { WorkflowAlreadyExistsError, WorkflowNotAddedError } from "src/BusinessE
 import { AuthGuard } from "./AuthGuard";
 import { ApiBearerAuth } from "@nestjs/swagger";
 
+@ApiBearerAuth()
 @Controller("workflow")
 class CreateWorkflowController {
     constructor(@Inject(CREATE_WORKFLOW_USE_CASE) private readonly createWorkflowUseCase: CreateWorkflowUseCase) {}
@@ -19,7 +20,6 @@ class CreateWorkflowController {
         return new WorkflowDTO(workflow.name, [], []);
     }
 
-    @ApiBearerAuth()
     @UseGuards(AuthGuard)
     @Post("/create/:name")
     async createWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
