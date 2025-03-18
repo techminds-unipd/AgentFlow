@@ -1,5 +1,5 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
 import { newWorkflow } from "../services/newWorkflowAPI";
 import { useCreateWorkflow } from "./useCreateWorkflow";
@@ -38,9 +38,9 @@ describe("useCreateWorkflow hook", () => {
         authProviderRender(<TestComponent workflowName="Test Workflow" />, providerProps);
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
-
+        act(()=>{
         screen.getByText("Create Workflow").click();
-
+        })
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
             expect(screen.getByText(/Error: null/i)).toBeInTheDocument();
@@ -53,9 +53,9 @@ describe("useCreateWorkflow hook", () => {
         authProviderRender(<TestComponent workflowName="Failing Workflow" />, providerProps);
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
-
-        screen.getByText("Create Workflow").click();
-
+        act(()=>{
+            screen.getByText("Create Workflow").click();
+            })
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
             expect(screen.getByText(/Error: "API Error"/i)).toBeInTheDocument();
