@@ -2,7 +2,6 @@ export const API_BASE_URL = "http://localhost:3000";
 
 interface newWorkflowResponse {
   name: string;
-  accessToken: string;
 }
 
 export const newWorkflow = async (name: string, accessToken: string): Promise<newWorkflowResponse> => {

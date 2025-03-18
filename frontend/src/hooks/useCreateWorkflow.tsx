@@ -13,8 +13,10 @@ export const useCreateWorkflow = () => {
     
 
     try {
-      const result = await newWorkflow(name, user?.accessToken); 
-      return result;
+      if (user!==null){
+        const result = await newWorkflow(name, user?.accessToken); 
+        return result;
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong.");
     } finally {

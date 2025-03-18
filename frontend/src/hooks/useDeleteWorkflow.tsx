@@ -12,10 +12,10 @@ export const useDeleteWorkflow = () => {
     setError(null);
 
     try {
-    console.log("ciao");
-      const result = await deleteWorkflowByName(name, user?.accessToken); 
-      console.log("ciao-dopo");
-      return result;
+      if(user!==null){
+        const result = await deleteWorkflowByName(name, user?.accessToken); 
+        return result;
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong.");
     } finally {

@@ -1,5 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
 import { allWorkflow, API_BASE_URL } from "./allWorkflowAPI";
+import '@testing-library/jest-dom';
 
 describe("allWorkflow API", () => {
     const fetchSpy = vi.spyOn(window, 'fetch');
