@@ -118,7 +118,7 @@ export const CustomNode = ({
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{dialogContent}</DialogContentText>
+          {dialogContent}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} sx={{ color: mainColor }}>

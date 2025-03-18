@@ -1,6 +1,7 @@
 import * as React from "react";
 import { MenuItem, Dialog, DialogActions, DialogTitle, Button} from "@mui/material";
 import { useNavigate } from "react-router";
+import { useAuth } from "../../hooks/useAuth.tsx";
 import "../../index.css";
 
 interface LogoutMenuItem {
@@ -8,6 +9,7 @@ interface LogoutMenuItem {
   }
 
 export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
+    const { logoutUser } = useAuth(); // logoutUser definita dento l'hook useAuth()
     let navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
@@ -21,8 +23,8 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
     };
 
     const handleLogout = () => {
+        logoutUser();
         handleCloseDialog();
-        /* qui ci andrà la logica di logut */
         navigate("/");
         handleCloseMenu();
     };
