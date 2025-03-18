@@ -103,7 +103,7 @@ export const CustomNode = ({
         {/* Icona Info */}
         <InfoOutlinedIcon
           fontSize="small"
-          onClick={handleOpen}
+          
           sx={{
             position: "absolute",
             top: "-5px",
