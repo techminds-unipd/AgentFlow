@@ -24,6 +24,7 @@ export default tseslint.config(
             parserOptions: {
                 projectService: true,
                 tsconfigRootDir: "./",
+                project: "tsconfig.json"
             },
         },
         plugins: {
