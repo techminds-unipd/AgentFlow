@@ -5,7 +5,7 @@ import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO 
 import GetWorkflowCommand from "src/workflow/domain/GetWorkflowCommand";
 import { AuthGuard } from "./AuthGuard";
 import { Workflow } from "src/workflow/domain/Workflow";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 
 @ApiBearerAuth()
 @Controller("workflow")
@@ -25,6 +25,9 @@ class GetWorkflowController {
 
     @UseGuards(AuthGuard)
     @Get("/get/:name")
+    @ApiResponse({ status: 200, description: "Workflow retrieved successfully" })
+    @ApiResponse({ status: 404, description: "Workflow not found" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async getWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         try {
             const username = request.username;
