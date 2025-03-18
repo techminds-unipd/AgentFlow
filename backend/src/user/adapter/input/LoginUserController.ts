@@ -5,6 +5,7 @@ import UserDTO from "./UserDTO";
 import { JwtService } from "@nestjs/jwt";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
 import JWT from "./JWT";
+import { ApiResponse } from "@nestjs/swagger";
 
 @Controller("user")
 class LoginUserController {
@@ -22,6 +23,9 @@ class LoginUserController {
     }
 
     @Post("/login")
+    @ApiResponse({ status: 201, description: "User logged in successfully and JWT token returned" })
+    @ApiResponse({ status: 401, description: "Wrong credentials" })
+    @ApiResponse({ status: 500, description: "Internal server error"})
     async login(@Body() req: UserDTO): Promise<JWT> {
         const user = this.toDomain(req);
         try {
@@ -30,7 +34,7 @@ class LoginUserController {
             return { accessToken: await this.jwtService.signAsync(payload) };
         } catch (err) {
             if (err instanceof UserNotFoundError || err instanceof WrongPasswordError)
-                throw new HttpException("Wrong credentials", HttpStatus.BAD_REQUEST);
+                throw new HttpException("Wrong credentials", HttpStatus.UNAUTHORIZED);
 
             throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }

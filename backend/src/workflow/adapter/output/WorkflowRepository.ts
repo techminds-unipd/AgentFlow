@@ -2,7 +2,9 @@ import { Model } from "mongoose";
 import { WorkflowEntity } from "./WorkflowEntity";
 import { UserEntity } from "src/user/adapter/output/UserEntity";
 import { InjectModel } from "@nestjs/mongoose";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class WorkflowRepository {
     constructor(
         @InjectModel(UserEntity.name)

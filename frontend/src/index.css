@@ -15,3 +15,13 @@
 body{
   font-family: 'Roboto', 'Sans-serif';
 }
+
+#root{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer{
+  margin-top: auto;
+}

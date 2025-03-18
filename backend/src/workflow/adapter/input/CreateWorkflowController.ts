@@ -5,7 +5,7 @@ import { Workflow } from "src/workflow/domain/Workflow";
 import CreateWorkflowCommand from "src/workflow/domain/CreateWorkflowCommand";
 import { WorkflowAlreadyExistsError, WorkflowNotAddedError } from "src/BusinessErrors";
 import { AuthGuard } from "./AuthGuard";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 
 @ApiBearerAuth()
 @Controller("workflow")
@@ -22,6 +22,9 @@ class CreateWorkflowController {
 
     @UseGuards(AuthGuard)
     @Post("/create/:name")
+    @ApiResponse({ status: 201, description: "Workflow created successfully" })
+    @ApiResponse({ status: 400, description: "Workflow with the same name already exists" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async createWorkflow(@Param("name") workflowName: string, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         const cmd = this.toDomain(workflowName, request.username);
         try {
