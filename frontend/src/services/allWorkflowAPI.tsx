@@ -11,14 +11,16 @@ export const allWorkflow = async (accessToken: string): Promise<Array<string>> =
       },
     });
 
-    if (response.status === 400) {
-      throw new Error("Something wrong");
+    if(response.status == 201){
+      return await response.json();
+    }else if (response.status === 400) {
+      throw new Error("User not found");
     } else if (response.status >= 500) {
       throw new Error("Server error");
+    }else{
+      throw new Error("Generic error");
     }
-
-    const data = await response.json();
-    return data;
+    
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Errore generico");
   }

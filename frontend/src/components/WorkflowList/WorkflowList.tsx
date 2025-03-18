@@ -46,7 +46,7 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
           }}
         >
         {workflowList?.length === 0 ? (
-            <Typography component="h3" variant="h6" textAlign={"center"} sx={{ color: "var(--white-text)", padding: 2}}>
+          <Typography component="h3" variant="h6" textAlign={"center"} sx={{ color: "var(--white-text)", padding: 2}}>
             You don't have any workflow!
           </Typography>
         ) : (
