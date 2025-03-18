@@ -11,7 +11,7 @@ export const allWorkflow = async (accessToken: string): Promise<Array<string>> =
       },
     });
 
-    if(response.status == 201){
+    if(response.status == 200){
       return await response.json();
     }else if (response.status === 400) {
       throw new Error("User not found");

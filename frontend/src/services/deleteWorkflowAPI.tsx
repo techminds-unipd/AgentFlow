@@ -14,13 +14,16 @@ export const deleteWorkflowByName = async (name: string, accessToken: string): P
       },
     });
 
-    if (response.status === 400) {
-      throw new Error("Some error");
+    if(response.status == 200){
+      return await response.json();
+    }else if (response.status === 404) {
+      throw new Error("workflow not found");
     } else if (response.status >= 500) {
       throw new Error("Server error");
+    }else{
+      throw new Error("Generic error");
     }
-    const data= await response.json();
-    return data;
+
   } catch (error) {
     throw new Error(error instanceof Error ? error.message : "Generic error");
   }
