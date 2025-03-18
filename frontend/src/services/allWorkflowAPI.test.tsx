@@ -34,10 +34,10 @@ describe("allWorkflow API", () => {
         
         fetchSpy.mockResolvedValue({
             status: 400,
-            json: () => Promise.resolve("Something wrong")
+            json: () => Promise.resolve("User not found")
         } as Response);
         
-        await expect(allWorkflow(accessToken)).rejects.toThrowError("Something wrong");
+        await expect(allWorkflow(accessToken)).rejects.toThrowError("User not found");
     });
 
     test("Should throw an error with message 'Server error' if status 500 is received", async () => {

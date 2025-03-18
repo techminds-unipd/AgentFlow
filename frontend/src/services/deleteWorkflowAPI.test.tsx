@@ -29,16 +29,16 @@ describe("deleteWorkflowByName API", () => {
         });
     });
 
-    test("Should throw an error with message 'Some error' if status 400 is received", async () => {
+    test("Should throw an error with message 'Generic error' if status 404 is received", async () => {
         const name = "testWorkflow";
         const accessToken = "testToken";
         
         fetchSpy.mockResolvedValue({
             status: 400,
-            json: () => Promise.resolve("Some error")
+            json: () => Promise.resolve("Generic error")
         } as Response);
         
-        await expect(deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Some error");
+        await expect(deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Generic error");
     });
 
     test("Should throw an error with message 'Server error' if status 500 is received", async () => {

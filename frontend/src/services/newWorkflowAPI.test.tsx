@@ -30,16 +30,16 @@ describe("newWorkflow API", () => {
         });
     });
 
-    test("Should throw an error with message 'Workflow with this name already exists' if status 400 is received", async () => {
+    test("Should throw an error with message 'Workflow with the same name already exists' if status 400 is received", async () => {
         const name = "testWorkflow";
         const accessToken = "testToken";
         
         fetchSpy.mockResolvedValue({
             status: 400,
-            json: () => Promise.resolve("Workflow with this name already exists")
+            json: () => Promise.resolve("Workflow with the same name already exists")
         } as Response);
         
-        await expect(newWorkflow(name, accessToken)).rejects.toThrowError("Workflow with this name already exists");
+        await expect(newWorkflow(name, accessToken)).rejects.toThrowError("Workflow with the same name already exists");
     });
 
     test("Should throw an error with message 'Server error' if status 500 is received", async () => {
