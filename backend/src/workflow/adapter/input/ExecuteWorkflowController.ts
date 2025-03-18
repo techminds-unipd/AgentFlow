@@ -59,6 +59,7 @@ class ExecuteWorkflowController {
     @UseGuards(AuthGuard)
     @Post("/execute")
     @ApiResponse({ status: 201, description: "Workflow executed successfully" })
+    @ApiResponse({ status: 412, description: "Invalid workflow" })
     @ApiResponse({ status: 500, description: "Internal server error" })
     async executeWorkflow(@Body() executeReq: ExecuteWorkflowDTO): Promise<string> {
         this.workflowDTOValidator.validate(executeReq.workflow);

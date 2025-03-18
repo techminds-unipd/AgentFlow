@@ -58,6 +58,7 @@ class SaveWorkflowController {
     @Put("/save")
     @ApiResponse({ status: 200, description: "Workflow saved successfully" })
     @ApiResponse({ status: 404, description: "Workflow not found" })
+    @ApiResponse({ status: 412, description: "Invalid workflow" })
     @ApiResponse({ status: 500, description: "Internal server error" })
     async saveWorkflow(@Body() workflow: WorkflowDTO, @Request() request: RequestHeader): Promise<WorkflowDTO> {
         this.workflowDTOValidator.validate(workflow);
