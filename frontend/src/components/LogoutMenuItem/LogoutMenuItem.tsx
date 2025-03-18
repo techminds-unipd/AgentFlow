@@ -26,6 +26,7 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
         logoutUser();
         handleCloseDialog();
         handleCloseMenu();
+        navigate("/signin");
     };
     
     return(

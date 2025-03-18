@@ -83,14 +83,14 @@ describe("LogoutMenuItem", () => {
     });
   });
 
-  test("Renders navigate in home page if the 'yes' button is clicked", async () => {
+  test("Renders navigate in sign in page if the 'yes' button is clicked", async () => {
     const fn = vi.fn();
     render(
       <AuthProvider>
         <MemoryRouter initialEntries={["/test"]}> 
           <Routes>
             <Route path="/test" element={<LogoutMenuItem handleCloseMenu={fn}></LogoutMenuItem>} />
-            <Route path="/" element={<div>Test home page</div>} />
+            <Route path="/signin" element={<div>Test sign in</div>} />
           </Routes>
         </MemoryRouter>
       </AuthProvider>
@@ -103,7 +103,7 @@ describe("LogoutMenuItem", () => {
     expect(button).toBeDefined();
     await userEvent.click(screen.getByRole("button", { name: /yes/i }));
     await waitFor(() => {
-      expect(screen.getByText("Test home page")).toBeInTheDocument();
+      expect(screen.getByText("Test sign in")).toBeInTheDocument();
     });
 
   });

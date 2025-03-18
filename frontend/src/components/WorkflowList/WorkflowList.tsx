@@ -56,8 +56,8 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
 
               {/*per eventuali errori*/}
               {error && (
-                <Typography color="error" textAlign="center">
-                  {error}
+                <Typography textAlign="center">
+                  It's seems like something doesn't working
                 </Typography>
               )}
 

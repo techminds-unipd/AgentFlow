@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "http://localhost:3000";
 
 interface newWorkflowResponse {
   name: string;
@@ -24,6 +24,6 @@ export const newWorkflow = async (name: string, accessToken: string): Promise<ne
 
     return await response.json();
   } catch (error) {
-    throw new Error(error instanceof Error ? error.message : "Errore generico");
+    throw new Error(error instanceof Error ? error.message : "Generic Error");
   }
 };
