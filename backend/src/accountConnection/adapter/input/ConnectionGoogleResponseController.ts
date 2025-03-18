@@ -4,6 +4,7 @@ import {
     ConnectionGoogleResponseUseCase
 } from "src/accountConnection/service/port/input/ConnectionGoogleResponseUseCase";
 import TokenDTO from "./TokenDTO";
+import { ApiProperty, ApiResponse } from "@nestjs/swagger";
 
 @Controller("/google")
 class ConnectionGoogleResponseController {
@@ -13,6 +14,8 @@ class ConnectionGoogleResponseController {
     ) {}
 
     @Get("/redirect")
+    @ApiResponse({ status: 200, description: "Google authentication successful" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async googleAuthCallback(@Query("code") code: string): Promise<TokenDTO> {
         try {
             return await this.connectionGoogleResponseUseCase.getToken(code);
