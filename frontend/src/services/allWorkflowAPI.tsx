@@ -1,10 +1,7 @@
 export const API_BASE_URL = "http://localhost:3000";
 
-export interface allWorkflowResponse extends Array<string> {
-  accessToken: string;
-}
 
-export const allWorkflow = async (accessToken: string): Promise<allWorkflowResponse> => {
+export const allWorkflow = async (accessToken: string): Promise<Array<string>> => {
   try {
     const response = await fetch(`${API_BASE_URL}/workflow/all`, {
       method: "GET",
