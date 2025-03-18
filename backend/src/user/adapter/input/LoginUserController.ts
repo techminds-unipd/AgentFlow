@@ -4,7 +4,7 @@ import User from "src/user/domain/User";
 import UserDTO from "./UserDTO";
 import { JwtService } from "@nestjs/jwt";
 import { UserNotFoundError, WrongPasswordError } from "src/BusinessErrors";
-import JWT from "src/JWT";
+import JWT from "./JWT";
 import { ApiResponse } from "@nestjs/swagger";
 
 @Controller("user")
