@@ -7,7 +7,7 @@ import tseslint from "typescript-eslint";
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 export default tseslint.config(
-    { ignores: ["dist", "eslint.config.js"] },
+    { ignores: ["dist", "eslint.config.js", "vite.config.ts"] },
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
     eslintPluginPrettierRecommended,
@@ -49,11 +49,11 @@ export default tseslint.config(
                     leadingUnderscore: "allow"
                 },
                 {
-                    selector: ["class", "interface"],
+                    selector: ["function", "interface"],
                     format: ["PascalCase"]
                 },
                 {
-                    selector: ["function", "parameter", "classMethod", "classProperty"],
+                    selector: ["parameter", "classMethod", "classProperty"],
                     format: ["camelCase"]
                 }
             ],
