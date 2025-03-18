@@ -61,6 +61,6 @@ describe("AddWorkflow Component", () => {
         await userEvent.type(input, "Existing Workflow");
         await userEvent.click(button);
 
-        expect(await screen.findByText("Workflow with this name already exists.")).toBeInTheDocument();
+        expect(await screen.findByText("Workflow with the same name already exists")).toBeInTheDocument();
     });
 });
