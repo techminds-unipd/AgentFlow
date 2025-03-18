@@ -33,16 +33,16 @@ describe("Login API", () =>{
         });
     })
 
-    test("Should throw an error with message 'Wrong username or password' if receives error 400", async () => {
+    test("Should throw an error with message 'wrong username or password' if receives error 401", async () => {
         const mockResolveValue = {
-            status: 400,
+            status: 401,
             json: () => new Promise((resolve)=>resolve("Wrong credentials"))
         };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
-        await expect(()=> login(username, password)).rejects.toThrowError("Wrong username or password");
+        await expect(()=> login(username, password)).rejects.toThrowError("wrong username or password");
         waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
