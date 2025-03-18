@@ -15,7 +15,7 @@ export const login = async (username: string, password: string): Promise<LoginRe
     });
 
     if (response.status === 400) {
-      throw new Error("Wrong username or password");
+      throw new Error("wrong username or password");
     } else if (response.status >= 500) {
       throw new Error("Server error");
     }
