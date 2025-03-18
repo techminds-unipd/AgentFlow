@@ -112,5 +112,19 @@ describe("WorkflowRepository", () => {
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
         });
     });
+
+    describe("saveWorkflow", () => {
+        it("should return a workflow", async () => {
+            userEntityModelMock.findOneAndUpdate.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(UserEntityWithWorkflowListMock);
+            expect(await workflowRepository.saveWorkflow("username", workflowEntityMock)).toEqual(workflowEntityMock);
+        });
+        
+        it("should return null if the workflow doesn't exists", async () => {
+            userEntityModelMock.findOneAndUpdate.mockReturnThis();
+            userEntityModelMock.exec.mockResolvedValue(null);
+            expect(await workflowRepository.saveWorkflow("username", workflowEntityMock)).toEqual(null);
+        });    
+    });
 });
 

@@ -2,7 +2,9 @@ import { Model } from "mongoose";
 import { WorkflowEntity } from "./WorkflowEntity";
 import { UserEntity } from "src/user/adapter/output/UserEntity";
 import { InjectModel } from "@nestjs/mongoose";
+import { Injectable } from "@nestjs/common";
 
+@Injectable()
 export class WorkflowRepository {
     constructor(
         @InjectModel(UserEntity.name)
@@ -40,6 +42,21 @@ export class WorkflowRepository {
         const addedWorkflow = user.workflows.find((w) => w.name === workflow.name);
         if (!addedWorkflow) return null;
         return addedWorkflow;
+    }
+
+    async saveWorkflow(username: string, workflow: WorkflowEntity): Promise<WorkflowEntity | null> {
+        const user = await this.userEntityModel
+            .findOneAndUpdate(
+                { username: username, "workflows.name": workflow.name },
+                { $set: { "workflows.$": workflow } },
+                { new: true }
+            )
+            .exec();
+        if (!user) return null;
+        const savedWorkflow = user.workflows.find((w) => w.name === workflow.name);
+        //da guardare la projection per ritornare direttamente il workflow salvato
+        if (!savedWorkflow) return null;
+        return savedWorkflow;
     }
 
     async getAllWorkflowByUsername(username: string): Promise<WorkflowEntity[] | null> {
