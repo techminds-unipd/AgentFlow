@@ -27,7 +27,6 @@ export const Navbar = () => {
     };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
             <AppBar 
                 position="relative"
                 sx={{
@@ -85,6 +84,5 @@ export const Navbar = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
-        </Box>
     );
 };
