@@ -2,7 +2,7 @@ import { Controller, HttpException, HttpStatus, Inject, Post, UseGuards, Body } 
 import { WorkflowDTO } from "./WorkflowDTO";
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { AuthGuard } from "./AuthGuard";
-import { ApiBearerAuth } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import ExecuteWorkflowDTO from "./ExecuteWorkflowDTO";
 import { EXECUTE_WORKFLOW_USE_CASE, ExecuteWorkflowUseCase } from "src/workflow/service/port/input/ExecuteWorkflowUseCase";
 import ExecuteWorkflowCommand from "src/workflow/domain/ExecuteWorkflowCommand";
@@ -58,6 +58,8 @@ class ExecuteWorkflowController {
 
     @UseGuards(AuthGuard)
     @Post("/execute")
+    @ApiResponse({ status: 201, description: "Workflow executed successfully" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async executeWorkflow(@Body() executeReq: ExecuteWorkflowDTO): Promise<string> {
         this.workflowDTOValidator.validate(executeReq.workflow);
         await this.validate(executeReq.googleToken.token);
