@@ -4,14 +4,12 @@ import {
     ConnectionGoogleRequestUseCase
 } from "src/accountConnection/service/port/input/ConnectionGoogleRequestUseCase";
 
-
 @Controller("/google")
 class ConnectionGoogleRequestController {
     constructor(
         @Inject(CONNECTION_GOOGLE_REQUEST_USE_CASE)
         private readonly connectionGoogleRequestUseCase: ConnectionGoogleRequestUseCase
     ) {}
-
 
     @Get("/auth")
     @Redirect()

@@ -6,6 +6,10 @@ import { AppModule } from "./../src/app.module";
 import mongoose from "mongoose";
 import { MongooseModule } from "@nestjs/mongoose";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/workflow/adapter/input/WorkflowDTO";
+import ExecuteWorkflowDTO from "src/workflow/adapter/input/ExecuteWorkflowDTO";
+import { HttpService } from "@nestjs/axios";
+import { of } from "rxjs";
+import { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 
 jest.mock('googleapis', () => {
     return {
@@ -18,6 +22,14 @@ jest.mock('googleapis', () => {
 describe("Backend Controller (e2e)", () => {
     let app: INestApplication<App>;
     let jwt = "";
+    let httpServiceMock = { get: jest.fn(), post: jest.fn() };
+    const response: AxiosResponse<string> = {
+            data: "result",
+            status: 200,
+            statusText: "OK",
+            headers: {},
+            config: {} as InternalAxiosRequestConfig<any>
+    };
     const user = { username: "gianni", password: "Test1234!" };
     let workflowDTOMock = new WorkflowDTO("prova", [
             new NodeDTO(9, new PositionDTO(3, 3), new NodeDataDTO("PASTEBIN")),
@@ -35,14 +47,19 @@ describe("Backend Controller (e2e)", () => {
         new EdgeDTO("action1", 0, 1),
         new EdgeDTO("action2", 1, 2)
     ]);
+    let executeWorkflowDTOMock = new ExecuteWorkflowDTO(workflowDTOOrderedMock, { token: "", refreshToken: "", expireDate: new Date() });
+    let wrongExecuteWorkflowDTOMock = new ExecuteWorkflowDTO(new WorkflowDTO("newWorkflow", [], []), { token: "", refreshToken: "", expireDate: new Date() });
 
     beforeAll(async () => {
         const moduleFixture: TestingModule = await Test.createTestingModule({ 
             imports: [
                 MongooseModule.forRoot("mongodb://root:password@localhost:27017", { dbName: "e2e-test" }),
                 AppModule 
-            ] 
-        }).compile();
+            ]
+        })
+        .overrideProvider(HttpService)
+        .useValue(httpServiceMock)
+        .compile();
 
         app = moduleFixture.createNestApplication();
         await app.init();
@@ -92,7 +109,7 @@ describe("Backend Controller (e2e)", () => {
             return await request(app.getHttpServer())
             .post("/user/login")
             .send({ username: "wrongUsername", password: "wrongPassword" })
-            .expect(400);
+            .expect(401);
         });
     });
 
@@ -177,6 +194,26 @@ describe("Backend Controller (e2e)", () => {
                 expect(response.body[1]).toEqual("workflow2");
                 expect(response.body[2]).toEqual("workflow3");
             });
+        });
+    });
+
+    describe("/workflow/execute", () => {
+        it("(POST) - should execute the workflow", async () => {
+            httpServiceMock.get.mockReturnValue(of(response));
+            httpServiceMock.post.mockReturnValue(of(response));
+            return await request(app.getHttpServer())
+            .post("/workflow/execute")
+            .send(executeWorkflowDTOMock)
+            .set("Authorization", `Bearer ${jwt}`)
+            .expect(201)
+        });
+
+        it("(POST) - shouldn't execute the workflow because is not valid", async () => {
+            return await request(app.getHttpServer())
+            .post("/workflow/execute")
+            .send(wrongExecuteWorkflowDTOMock)
+            .set("Authorization", `Bearer ${jwt}`)
+            .expect(412);
         });
     });
 
