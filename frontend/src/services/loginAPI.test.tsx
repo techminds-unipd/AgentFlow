@@ -33,9 +33,9 @@ describe("Login API", () =>{
         });
     })
 
-    test("Should throw an error with message 'wrong username or password' if receives error 400", async () => {
+    test("Should throw an error with message 'wrong username or password' if receives error 401", async () => {
         const mockResolveValue = {
-            status: 400,
+            status: 401,
             json: () => new Promise((resolve)=>resolve("Wrong credentials"))
         };
 

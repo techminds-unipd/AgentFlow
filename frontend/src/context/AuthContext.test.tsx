@@ -190,7 +190,7 @@ describe("AuthContext Login" , () => {
         }
 
         const mockResolveValue = {
-            status: 400,
+            status: 401,
             json: () => new Promise((resolve)=>resolve("Wrong credentials"))
         };
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
@@ -231,7 +231,7 @@ describe("AuthContext Login" , () => {
         }
 
         const mockResolveValue = {
-            status: 400,
+            status: 401,
             json: () => new Promise((resolve)=>resolve("Wrong credentials"))
         };
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
