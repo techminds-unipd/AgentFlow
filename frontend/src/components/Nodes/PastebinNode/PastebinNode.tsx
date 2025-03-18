@@ -6,8 +6,7 @@ export const PastebinNode = ({
   dialogTitle = "Pastebin description",
   dialogContent = (
     <>
-      A node connected to the Google Calendar service that allows you to manage
-      events, appointments and reminders.
+      A node that lets you paste, save, and share text or code. Useful for quick notes, programming snippets, or temporary documents.
       <br /><br />
       <Divider />
       <Typography variant="h6">Available features</Typography>
