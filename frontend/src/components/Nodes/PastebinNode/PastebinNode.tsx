@@ -10,7 +10,7 @@ export const PastebinNode = ({
       events, appointments and reminders.
       <br /><br />
       <Divider />
-      <Typography variant="h6">Available features:</Typography>
+      <Typography variant="h6">Available features</Typography>
       <ul style={{ listStylePosition: "inside"}}>
         <li>Create a document</li>
         <li>Write a document</li>

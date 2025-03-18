@@ -10,7 +10,7 @@ export const GmailNode = ({
       manage emails directly without having to open webmail.
       <br/><br/>
       <Divider />
-      <Typography variant="h6">Available features:</Typography>
+      <Typography variant="h6">Available features</Typography>
       <ul style={{ listStylePosition: "inside"}}>
         <li>Search for an email</li>
         <li>Retrieve a specific email</li>

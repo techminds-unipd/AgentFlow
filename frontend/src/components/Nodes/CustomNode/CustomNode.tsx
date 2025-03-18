@@ -30,7 +30,7 @@ export const CustomNode = ({
       <br />
       <br />
       <Divider />
-      <Typography variant="h6"> Available features:</Typography>
+      <Typography variant="h6"> Available features</Typography>
       <ul style={{ listStylePosition: "inside"}}>
         <li>Feature 1</li>
         <li>Feature 2</li>

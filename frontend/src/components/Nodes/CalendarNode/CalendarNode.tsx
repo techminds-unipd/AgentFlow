@@ -10,7 +10,7 @@ export const CalendarNode = ({
       events, appointments and reminders.
       <br /><br />
       <Divider />
-      <Typography variant="h6">Available features:</Typography>
+      <Typography variant="h6">Available features</Typography>
       <ul style={{ listStylePosition: "inside"}}>
         <li>Create an event</li>
         <li>Search through created events</li>
