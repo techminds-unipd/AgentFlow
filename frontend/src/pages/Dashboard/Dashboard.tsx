@@ -3,10 +3,11 @@ import { Typography } from "@mui/material";
 import { AddWorkflow } from "../../components/AddWorkflow/AddWorkflow";
 import { WorkflowList } from "../../components/WorkflowList/WorkflowList";
 import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
  
 export const Dashboard = () => {
   const [shouldReload, setShouldReload] = useState<boolean>(false);
-
+  const {user} = useAuth();
   return (
     <main>
       <Grid container>
@@ -19,7 +20,7 @@ export const Dashboard = () => {
                 alignItems: "center"
             }}>
           <Typography component="h1" variant="h4" textAlign={"center"} sx= {{ marginBottom: 2 }}>
-            Hello username!
+            Hello {user?.username}!
           </Typography>
           <AddWorkflow setShouldReload={setShouldReload} />
         </Grid>
