@@ -24,17 +24,11 @@ function App() {
           <Route path='/aboutus' element={<AboutUs/>} />
           <Route element={<AnonymousRoute />}>
             <Route path='/signin' element={<SignIn/>} />
-          </Route>
-          <Route element={<AnonymousRoute />}>
             <Route path='/signup' element={<SignUp/>} />
           </Route>
           <Route element={<PrivateRoute />}>
             <Route path='/dashboard' element={<Dashboard/>} />
-          </Route>
-          <Route element={<PrivateRoute />}>
             <Route path='/workflow' element={<Workflow/>} />
-          </Route>
-          <Route element={<PrivateRoute />}>
             <Route path='/services' element={<Services/>} />
           </Route>
         </Routes>

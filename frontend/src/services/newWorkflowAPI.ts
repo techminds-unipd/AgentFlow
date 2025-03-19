@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000";
+import { API_BASE_URL } from "./constants";
 
 interface newWorkflowResponse {
   name: string;
@@ -15,7 +15,7 @@ export const newWorkflow = async (name: string, accessToken: string): Promise<ne
       body: JSON.stringify({ name }),
     });
 
-    if(response.status == 201){
+    if(response.status === 201){
       return await response.json();
     }else if (response.status === 400) {
       throw new Error("Workflow with the same name already exists");

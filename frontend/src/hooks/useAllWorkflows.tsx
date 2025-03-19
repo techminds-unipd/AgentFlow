@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { allWorkflow } from "../services/allWorkflowAPI";
-import { useAuth } from "../hooks/useAuth"; 
+import { allWorkflow } from "../services/allWorkflowsAPI";
+import { useAuth } from "./useAuth"
 
 export const useAllWorkflow = () => {
   const [workflowList, setData] = useState<Array<string> | null>(null);

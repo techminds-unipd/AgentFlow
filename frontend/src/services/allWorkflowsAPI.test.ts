@@ -1,27 +1,28 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { deleteWorkflowByName, API_BASE_URL } from "./deleteWorkflowAPI";
+import { allWorkflow } from "./allWorkflowsAPI";
+import { API_BASE_URL } from "./constants";
+import '@testing-library/jest-dom';
 
-describe("deleteWorkflowByName API", () => {
+describe("allWorkflow API", () => {
     const fetchSpy = vi.spyOn(window, 'fetch');
 
     beforeEach(() => {
         fetchSpy.mockReset();
     });
 
-    test("Should return the deleted workflow when successful", async () => {
-        const name = "testWorkflow";
+    test("Should return the list of workflows when successful", async () => {
         const accessToken = "testToken";
-        const mockResponse = { name, accessToken };
+        const mockResponse = ["workflow1", "workflow2"];
         
         fetchSpy.mockResolvedValue({
             status: 200,
             json: () => Promise.resolve(mockResponse)
         } as Response);
         
-        await expect(deleteWorkflowByName(name, accessToken)).resolves.toEqual(mockResponse);
+        await expect(allWorkflow(accessToken)).resolves.toEqual(mockResponse);
         expect(fetchSpy).toBeCalledTimes(1);
-        expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/workflow/delete/${name}`, {
-            method: "DELETE",
+        expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/workflow/all`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${accessToken}`,
@@ -29,20 +30,18 @@ describe("deleteWorkflowByName API", () => {
         });
     });
 
-    test("Should throw an error with message 'Generic error' if status 404 is received", async () => {
-        const name = "testWorkflow";
+    test("Should throw an error with message 'Something wrong' if status 400 is received", async () => {
         const accessToken = "testToken";
         
         fetchSpy.mockResolvedValue({
             status: 400,
-            json: () => Promise.resolve("Generic error")
+            json: () => Promise.resolve("User not found")
         } as Response);
         
-        await expect(deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Generic error");
+        await expect(allWorkflow(accessToken)).rejects.toThrowError("User not found");
     });
 
     test("Should throw an error with message 'Server error' if status 500 is received", async () => {
-        const name = "testWorkflow";
         const accessToken = "testToken";
         
         fetchSpy.mockResolvedValue({
@@ -50,15 +49,14 @@ describe("deleteWorkflowByName API", () => {
             json: () => Promise.resolve("Server error")
         } as Response);
         
-        await expect(deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Server error");
+        await expect(allWorkflow(accessToken)).rejects.toThrowError("Server error");
     });
 
     test("Should throw an error with message 'Generic error' if fetch fails", async () => {
-        const name = "testWorkflow";
         const accessToken = "testToken";
         
         fetchSpy.mockRejectedValue(new Error("Generic error"));
         
-        await expect(deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Generic error");
+        await expect(allWorkflow(accessToken)).rejects.toThrowError("Generic error");
     });
 });

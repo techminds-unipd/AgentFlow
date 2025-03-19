@@ -1,6 +1,7 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
 import { waitFor } from "@testing-library/react";
-import { login, API_BASE_URL } from "./loginAPI";
+import { login } from "./loginAPI";
+import { API_BASE_URL } from "./constants";
 
 describe("Login API", () =>{
     const fetchSpy = vi.spyOn(window, 'fetch');

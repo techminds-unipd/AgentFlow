@@ -1,8 +1,9 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { newWorkflow, API_BASE_URL } from "./newWorkflowAPI";
+import { newWorkflow } from "./newWorkflowAPI";
+import { API_BASE_URL } from "./constants";
 
 describe("newWorkflow API", () => {
-    const fetchSpy = vi.spyOn(window, 'fetch');
+    const fetchSpy = vi.spyOn(window, "fetch");
 
     beforeEach(() => {
         fetchSpy.mockReset();

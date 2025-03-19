@@ -1,5 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000";
-
+import { API_BASE_URL } from "./constants";
 
 export const allWorkflow = async (accessToken: string): Promise<Array<string>> => {
   try {
@@ -11,7 +10,7 @@ export const allWorkflow = async (accessToken: string): Promise<Array<string>> =
       },
     });
 
-    if(response.status == 200){
+    if(response.status === 200){
       return await response.json();
     }else if (response.status === 400) {
       throw new Error("User not found");

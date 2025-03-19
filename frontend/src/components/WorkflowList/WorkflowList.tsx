@@ -1,7 +1,7 @@
 import Grid from "@mui/material/Grid2";
 import { Typography, Box, CircularProgress } from "@mui/material";
 import { WorkflowItem } from "../../components/WorkflowItem/WorkflowItem";
-import { useAllWorkflow } from "../../hooks/useAllWorkflow";
+import { useAllWorkflow } from "../../hooks/useAllWorkflows";
 import React, { useEffect } from "react";
 
 interface WorkflowListProps {

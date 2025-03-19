@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { deleteWorkflowByName } from "../services/deleteWorkflowAPI";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "./useAuth";
 
 export const useDeleteWorkflow = () => {
   const [isLoading, setIsLoading] = useState(false);

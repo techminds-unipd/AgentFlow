@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { newWorkflow } from "../services/newWorkflowAPI";
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "./useAuth";
 
 export const useCreateWorkflow = () => {
   const [isLoading, setIsLoading] = useState(false);

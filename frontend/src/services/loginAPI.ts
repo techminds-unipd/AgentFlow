@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000";
+import { API_BASE_URL } from "./constants";
 
 interface LoginResponse {
   accessToken: string;
@@ -14,7 +14,7 @@ export const login = async (username: string, password: string): Promise<LoginRe
       body: JSON.stringify({ username, password }),
     });
 
-    if(response.status == 201){
+    if(response.status === 201){
       return await response.json();
     }else if (response.status === 401) {
       throw new Error("wrong username or password");

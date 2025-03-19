@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { WorkflowItem } from "./WorkflowItem";
 import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
 import { vi, describe, test, expect } from "vitest";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 
 // Mock the `useDeleteWorkflow` hook
 vi.mock("../../hooks/useDeleteWorkflow", () => ({

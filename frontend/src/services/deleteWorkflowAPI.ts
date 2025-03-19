@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:3000";
+import { API_BASE_URL } from "./constants";
 
 interface deleteWorkflowResponse {
   name: string;
@@ -14,7 +14,7 @@ export const deleteWorkflowByName = async (name: string, accessToken: string): P
       },
     });
 
-    if(response.status == 200){
+    if(response.status === 200){
       return await response.json();
     }else if (response.status === 404) {
       throw new Error("workflow not found");
