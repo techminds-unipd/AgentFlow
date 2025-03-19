@@ -23,27 +23,23 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
     <>
       <Grid
         container
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
+        display={"flex"}
+        flexDirection={"column"}
+        alignItems={"center"}
       >
         <Typography component="h2" variant="h5" textAlign={"center"} sx= {{ marginBottom: 2 }}>
           Your workflows
         </Typography>
         <Box
-          sx={{
-            p: 0.5,
-            borderRadius: 1,
-            backgroundColor: "var(--maincolor)",
-            width: 782,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-            gap: 0.5,
-          }}
+            p={0.5}
+            borderRadius={1}
+            width={782}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            flexDirection={"column"}
+            gap={0.5}
+            bgcolor={"var(--maincolor)"}
         >
         {workflowList?.length === 0 ? (
           <Typography component="h3" variant="h6" textAlign={"center"} sx={{ color: "var(--white-text)", padding: 2}}>

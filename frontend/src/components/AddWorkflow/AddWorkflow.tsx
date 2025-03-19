@@ -54,15 +54,13 @@ interface AddWorkflowProps {
         <>
             <Box
                 component="section"
-                sx={{
-                    p: 2,
-                    borderRadius: 1,
-                    backgroundColor: "var(--maincolor)",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    width: 750
-                }}
+                borderRadius={1}
+                p={2}
+                display={"flex"}
+                alignItems={"center"}
+                gap={1}
+                width={750}
+                bgcolor={"var(--maincolor)"}
             >
                 <TextField 
                     value={workflowName}

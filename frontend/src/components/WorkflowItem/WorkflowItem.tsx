@@ -34,23 +34,21 @@ export const WorkflowItem = ( { name, setShouldReload }: WorkflowItemProps ) => 
   return (
     <>
         <Box
-            sx={{
-                p: 2,
-                borderRadius: 1,
-                backgroundColor: "var(--white-text)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                height: 35,
-                width: 750
-            }}
+            p={2}
+            borderRadius={1}
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            height={35}
+            width={750}
+            bgcolor={"var(--white-text)"}
         >
           <Link 
             href="#" 
+            fontSize={20}
             sx={{ 
               color: "var(--black-text)",
               textDecoration: "underline var(--black-text)",
-              fontSize: 20
             }}>
               { name }
             </Link>
