@@ -5,9 +5,31 @@ import { CalendarNode } from "../../components/Nodes/CalendarNode/CalendarNode";
 import { PastebinNode } from "../../components/Nodes/PastebinNode/PastebinNode";
 import "../../index.css";
 import { API_BASE_URL } from "../../services/constants";
+import { useGoogleToken } from "../../hooks/useGoogleToken";
+import { useState, useEffect } from "react";
 
 export const Services = () => {
   const URL = API_BASE_URL + "/google/auth";
+  const {googleToken, removeGoogleAccount} = useGoogleToken();
+  const [buttonText, setButtonText] = useState("");
+  const [isNodeEnabled, setIsNodeEnabled] = useState(false)
+  useEffect(() => {
+    if (googleToken) {
+      setButtonText("Unlink your Google account");
+      setIsNodeEnabled(true)
+    } else {
+      setButtonText("Link your Google account");
+      setIsNodeEnabled(false)
+    }
+  }, [googleToken]);
+  const handleButtonClick = async()=>{
+    if(googleToken){
+      removeGoogleAccount();
+      setButtonText("Link your Google account")
+    }else{
+      window.open(URL)
+    }
+  }
   return (
     <main>
       <Grid container>
@@ -21,16 +43,16 @@ export const Services = () => {
         </Grid>
         <Grid size={12} container>
           <Grid size={4}>
-            <GmailNode disabled /> <br />
-            <CalendarNode disabled />
+            <GmailNode disabled={!isNodeEnabled}/> <br />
+            <CalendarNode disabled={!isNodeEnabled} />
           </Grid>
           <Grid size={8} alignContent={"center"}>
             <Button
               variant={"contained"}
               sx={{ backgroundColor: "var(--maincolor)" }}
-              href={URL}
+              onClick={handleButtonClick}
             >
-              Link your Google account
+              {buttonText}
             </Button>
           </Grid>
         </Grid>
