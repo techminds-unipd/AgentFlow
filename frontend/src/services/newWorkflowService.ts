@@ -11,7 +11,7 @@ export class NewWorkflowService {
         this.accessToken = accessToken;
     }
 
-    public newWorkflow = async (name: string): Promise<newWorkflowResponse> => {
+    public async newWorkflow(name: string): Promise<newWorkflowResponse> {
         try {
             const response = await fetch(`${API_BASE_URL}/workflow/create/${name}`, {
                 method: "POST",
@@ -21,19 +21,19 @@ export class NewWorkflowService {
                 },
                 body: JSON.stringify({ name }),
             });
-        
-            if(response.status === 201){
+
+            if (response.status === 201) {
                 return await response.json();
-            }else if (response.status === 400) {
+            } else if (response.status === 400) {
                 throw new Error("Workflow with the same name already exists");
             } else if (response.status >= 500) {
                 throw new Error("Server error");
-            }else{
+            } else {
                 throw new Error("Generic error");
             }
-        
-          } catch (error) {
-              throw new Error(error instanceof Error ? error.message : "Generic Error");
-          }
-    };
+        } catch (error) {
+            throw new Error(error instanceof Error ? error.message : "Generic Error");
+        }
+    }
+
 }
