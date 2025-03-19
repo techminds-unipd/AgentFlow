@@ -11,7 +11,7 @@ import "../../index.css";
 
 export const Navbar = () => {
     const { user } = useAuth(); // per verificare se l'utente è loggato o no
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -50,8 +50,8 @@ export const Navbar = () => {
                         Agent Flow
                     </Typography>
                     <Box display="flex" gap={2} alignItems="center">
-                        <CustomLink name="Home" link="/" />
-                        <CustomLink name="About Us" link="/aboutus" />
+                        <CustomLink name="Home" link="/" color="white"/>
+                        <CustomLink name="About Us" link="/aboutus" color="white"/>
                         {!user ? ( 
                             <>
                                 <CustomButton name="Sign In" link="/signin" variant="contained"/>
@@ -59,7 +59,7 @@ export const Navbar = () => {
                             </>
                         ) : ( 
                             <>
-                                <CustomLink name="Dashboard" link="/dashboard" />
+                                <CustomLink name="Dashboard" link="/dashboard" color="white"/>
                                 <IconButton
                                     size="large"
                                     aria-label="account of current user"

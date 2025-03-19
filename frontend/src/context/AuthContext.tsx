@@ -16,7 +16,7 @@ export interface AuthContextType {
     error: string | null;
 }
 
-// contenitore globale AuthCOntext che memorizza e condivide lo stato dell'utente tra i componenti
+// contenitore globale AuthContext che memorizza e condivide lo stato dell'utente tra i componenti
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // componente provider che avvolge l'App e fornisce i dati di autenticazione (i componenti children possono avere accesso al contenuto)
