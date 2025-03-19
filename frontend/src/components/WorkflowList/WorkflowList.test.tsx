@@ -5,9 +5,7 @@ import { useAllWorkflow } from "../../hooks/useAllWorkflows";
 import { AuthContextType, authProviderRender, providerPropsInit} from "../../context/MockedAuthProvider"
 import "@testing-library/jest-dom";
 
-
-// Mock the `useAllWorkflow` hook
-vi.mock("../../hooks/useAllWorkflow");
+vi.mock("../../hooks/useAllWorkflows");
 
 describe("WorkflowList Component", () => {
   const mockSetShouldReload = vi.fn();

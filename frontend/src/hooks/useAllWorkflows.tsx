@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { allWorkflow } from "../services/allWorkflowsAPI";
+import { allWorkflows } from "../services/allWorkflowsAPI";
 import { useAuth } from "./useAuth"
 
 export const useAllWorkflow = () => {
@@ -14,7 +14,7 @@ export const useAllWorkflow = () => {
 
     try {
       if(user!==null){
-        const result = await allWorkflow(user.accessToken); 
+        const result = await allWorkflows(user.accessToken); 
         setData(result);
       }
     } catch (error) {

@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "./constants";
 
-export const allWorkflow = async (accessToken: string): Promise<Array<string>> => {
+export const allWorkflows = async (accessToken: string): Promise<Array<string>> => {
   try {
     const response = await fetch(`${API_BASE_URL}/workflow/all`, {
       method: "GET",

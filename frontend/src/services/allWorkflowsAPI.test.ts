@@ -1,9 +1,9 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { allWorkflow } from "./allWorkflowsAPI";
+import { allWorkflows } from "./allWorkflowsAPI";
 import { API_BASE_URL } from "./constants";
 import '@testing-library/jest-dom';
 
-describe("allWorkflow API", () => {
+describe("allWorkflows API", () => {
     const fetchSpy = vi.spyOn(window, 'fetch');
 
     beforeEach(() => {
@@ -19,7 +19,7 @@ describe("allWorkflow API", () => {
             json: () => Promise.resolve(mockResponse)
         } as Response);
         
-        await expect(allWorkflow(accessToken)).resolves.toEqual(mockResponse);
+        await expect(allWorkflows(accessToken)).resolves.toEqual(mockResponse);
         expect(fetchSpy).toBeCalledTimes(1);
         expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/workflow/all`, {
             method: "GET",
@@ -38,7 +38,7 @@ describe("allWorkflow API", () => {
             json: () => Promise.resolve("User not found")
         } as Response);
         
-        await expect(allWorkflow(accessToken)).rejects.toThrowError("User not found");
+        await expect(allWorkflows(accessToken)).rejects.toThrowError("User not found");
     });
 
     test("Should throw an error with message 'Server error' if status 500 is received", async () => {
@@ -49,7 +49,7 @@ describe("allWorkflow API", () => {
             json: () => Promise.resolve("Server error")
         } as Response);
         
-        await expect(allWorkflow(accessToken)).rejects.toThrowError("Server error");
+        await expect(allWorkflows(accessToken)).rejects.toThrowError("Server error");
     });
 
     test("Should throw an error with message 'Generic error' if fetch fails", async () => {
@@ -57,6 +57,6 @@ describe("allWorkflow API", () => {
         
         fetchSpy.mockRejectedValue(new Error("Generic error"));
         
-        await expect(allWorkflow(accessToken)).rejects.toThrowError("Generic error");
+        await expect(allWorkflows(accessToken)).rejects.toThrowError("Generic error");
     });
 });
