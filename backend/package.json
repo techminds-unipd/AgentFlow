@@ -68,9 +68,7 @@
   },
   "jest": {
     "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
+      "js", "json", "ts"
     ],
     "rootDir": ".",
     "testRegex": ".*\\.spec\\.ts$",
@@ -78,7 +76,10 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.ts",
+      "!src/**/*.module.ts",
+      "!src/main.ts",
+      "!src/workflow/adapter/input/AuthGuard.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",

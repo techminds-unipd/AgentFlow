@@ -26,7 +26,7 @@ jobs:
             - name: Installazione dipendenze
               run: npm ci --prefix ./backend
             - name: Unit testing
-              run: npm test --prefix ./backend
+              run: npm run test:cov --prefix ./backend
 
     Frontend:
        runs-on: ubuntu-latest
