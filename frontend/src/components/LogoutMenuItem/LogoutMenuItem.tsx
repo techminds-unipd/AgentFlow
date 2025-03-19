@@ -1,7 +1,7 @@
 import * as React from "react";
 import { MenuItem, Dialog, DialogActions, DialogTitle, Button} from "@mui/material";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../hooks/useAuth.tsx";
+import { useAuth } from "../../hooks/useAuth";
 import "../../index.css";
 
 interface LogoutMenuItem {
