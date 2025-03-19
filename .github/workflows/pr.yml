@@ -59,4 +59,5 @@ jobs:
           - name: Unit testing
             run: |
               cd ./agente
-              coverage run -m pytest && coverage report -m
+              coverage run -m pytest
+              coverage report
