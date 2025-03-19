@@ -1,13 +1,11 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
-import { newWorkflow } from "../services/newWorkflowAPI";
+import { NewWorkflowService } from "../services/newWorkflowService";
 import { useCreateWorkflow } from "./useCreateWorkflow";
 import "@testing-library/jest-dom";
 
-vi.mock("../services/newWorkflowAPI", () => ({
-    newWorkflow: vi.fn()
-}));
+const newWorkflow = vi.spyOn(NewWorkflowService.prototype, "newWorkflow");
 
 describe("useCreateWorkflow hook", () => {
     let providerProps: AuthContextType;
