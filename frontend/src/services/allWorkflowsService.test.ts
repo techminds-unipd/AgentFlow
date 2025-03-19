@@ -1,5 +1,5 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { allWorkflows } from "./allWorkflowsAPI";
+import { AllWorkflowsService } from "./allWorkflowsService";
 import { API_BASE_URL } from "./constants";
 import '@testing-library/jest-dom';
 
@@ -10,8 +10,11 @@ describe("allWorkflows API", () => {
         fetchSpy.mockReset();
     });
 
+    const accessToken = "testToken";
+    const service = new AllWorkflowsService(accessToken);
+    
+
     test("Should return the list of workflows when successful", async () => {
-        const accessToken = "testToken";
         const mockResponse = ["workflow1", "workflow2"];
         
         fetchSpy.mockResolvedValue({
@@ -19,7 +22,7 @@ describe("allWorkflows API", () => {
             json: () => Promise.resolve(mockResponse)
         } as Response);
         
-        await expect(allWorkflows(accessToken)).resolves.toEqual(mockResponse);
+        await expect(service.allWorkflows()).resolves.toEqual(mockResponse);
         expect(fetchSpy).toBeCalledTimes(1);
         expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/workflow/all`, {
             method: "GET",
@@ -31,32 +34,26 @@ describe("allWorkflows API", () => {
     });
 
     test("Should throw an error with message 'Something wrong' if status 400 is received", async () => {
-        const accessToken = "testToken";
-        
         fetchSpy.mockResolvedValue({
             status: 400,
             json: () => Promise.resolve("User not found")
         } as Response);
         
-        await expect(allWorkflows(accessToken)).rejects.toThrowError("User not found");
+        await expect(service.allWorkflows()).rejects.toThrowError("User not found");
     });
 
     test("Should throw an error with message 'Server error' if status 500 is received", async () => {
-        const accessToken = "testToken";
-        
         fetchSpy.mockResolvedValue({
             status: 500,
             json: () => Promise.resolve("Server error")
         } as Response);
         
-        await expect(allWorkflows(accessToken)).rejects.toThrowError("Server error");
+        await expect(service.allWorkflows()).rejects.toThrowError("Server error");
     });
 
     test("Should throw an error with message 'Generic error' if fetch fails", async () => {
-        const accessToken = "testToken";
-        
         fetchSpy.mockRejectedValue(new Error("Generic error"));
         
-        await expect(allWorkflows(accessToken)).rejects.toThrowError("Generic error");
+        await expect(service.allWorkflows()).rejects.toThrowError("Generic error");
     });
 });
