@@ -57,4 +57,6 @@ jobs:
           - name: Installazione dipendenze
             run: pip install -r ./agente/requirements.txt
           - name: Unit testing
-            run: coverage run -m pytest ./agente && coverage report
+            run: |
+              cd ./agente
+              coverage run -m pytest && coverage report -m
