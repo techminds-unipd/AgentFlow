@@ -4,25 +4,10 @@ import { GmailNode } from "../../components/Nodes/GmailNode/GmailNode";
 import { CalendarNode } from "../../components/Nodes/CalendarNode/CalendarNode";
 import { PastebinNode } from "../../components/Nodes/PastebinNode/PastebinNode";
 import "../../index.css";
+import { API_BASE_URL } from "../../services/constants";
 
 export const Services = () => {
-    const URL = "http://localhost:3000/google/auth"
-  const ButtonClicked = () => {
-    fetch(URL, {
-      method: "GET",
-      headers: {"Access-Control-Allow-Origin" : "*",
-        "Access-Control-Allow-Credentials": "true",
-        "Access-Control-Allow-Methods":"POST, GET"
-      }
-    })
-      .then((response) => {
-        // HTTP 301 response
-        console.log(response);
-      })
-      .catch(function (err) {
-        console.info(err + " url: " + URL);
-      });
-  };
+  const URL = API_BASE_URL + "/google/auth";
   return (
     <main>
       <Grid container>
@@ -43,12 +28,10 @@ export const Services = () => {
             <Button
               variant={"contained"}
               sx={{ backgroundColor: "var(--maincolor)" }}
-              onClick={ButtonClicked}
               href={URL}
             >
               Link your Google account
             </Button>
-            
           </Grid>
         </Grid>
         <Grid size={12} marginTop={2} marginBottom={2}>
@@ -65,7 +48,7 @@ export const Services = () => {
             <PastebinNode />
           </Grid>
           <Grid size={8} alignContent={"center"}>
-            <Typography>This service is always available</Typography>
+            <Typography>This service is always available.</Typography>
           </Grid>
         </Grid>
       </Grid>
