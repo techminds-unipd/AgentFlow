@@ -27,7 +27,7 @@ export const Services = () => {
       removeGoogleAccount();
       setButtonText("Link your Google account")
     }else{
-      window.open(URL)
+      window.location.href=URL
     }
   }
   return (
