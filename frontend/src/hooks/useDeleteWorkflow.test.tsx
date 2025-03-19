@@ -5,14 +5,6 @@ import { useDeleteWorkflow } from "./useDeleteWorkflow";
 import { DeleteWorkflowService } from "../services/deleteWorkflowService";
 import "@testing-library/jest-dom";
 
-vi.mock("../services/allWorkflowAPI", () => ({
-    allWorkflow: vi.fn()
-}));
-
-vi.mock("../services/deleteWorkflowAPI", () => ({
-    deleteWorkflowByName: vi.fn()
-}));
-
 describe("useDeleteWorkflow hook", () => {
     let providerProps: AuthContextType;
 

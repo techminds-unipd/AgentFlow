@@ -1,13 +1,9 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
-import { allWorkflows } from "../services/allWorkflowsAPI";
+import { AllWorkflowsService } from "../services/allWorkflowsService";
 import { useAllWorkflow } from "./useAllWorkflows";
 import "@testing-library/jest-dom";
-
-vi.mock("../services/allWorkflowsAPI", () => ({
-    allWorkflows: vi.fn()
-}));
 
 describe("useAllWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -31,7 +27,7 @@ describe("useAllWorkflow hook", () => {
 
     test("Fetches workflow list when user is authenticated", async () => {
         const mockData = ["workflow1", "workflow2"];
-        vi.mocked(allWorkflows).mockResolvedValue(mockData);
+        vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockResolvedValue(mockData);
 
         authProviderRender(<TestComponent />, providerProps);
 
@@ -43,7 +39,7 @@ describe("useAllWorkflow hook", () => {
     });
 
     test("Handles errors when API call fails", async () => {
-        vi.mocked(allWorkflows).mockRejectedValue(new Error("API Error"));
+        vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockRejectedValue(new Error("API Error"));
 
         authProviderRender(<TestComponent />, providerProps);
 
