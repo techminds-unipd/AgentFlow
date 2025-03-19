@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { newWorkflow } from "../services/newWorkflowAPI";
+import { NewWorkflowService } from "../services/newWorkflowService";
 import { useAuth } from "./useAuth";
 
 export const useCreateWorkflow = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
-
+  
   const createWorkflow = async (name: string) => {
     setIsLoading(true);
     setError(null);
-    
 
     try {
       if (user!==null){
-        const result = await newWorkflow(name, user?.accessToken); 
+        const service = new NewWorkflowService(user?.accessToken);
+        const result = await service.newWorkflow(name); 
         return result;
       }
     } catch (error) {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { deleteWorkflowByName } from "../services/deleteWorkflowAPI";
+import { DeleteWorkflowService } from "../services/deleteWorkflowService";
 import { useAuth } from "./useAuth";
 
 export const useDeleteWorkflow = () => {
@@ -13,7 +13,8 @@ export const useDeleteWorkflow = () => {
 
     try {
       if(user!==null){
-        const result = await deleteWorkflowByName(name, user?.accessToken); 
+        const service = new DeleteWorkflowService(user?.accessToken);
+        const result = await service.deleteWorkflowByName(name); 
         return result;
       }
     } catch (error) {
