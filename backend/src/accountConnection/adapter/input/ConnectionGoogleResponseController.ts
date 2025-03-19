@@ -1,10 +1,10 @@
-import { Controller, Get, HttpException, HttpStatus, Inject, Query } from "@nestjs/common";
+import { Controller, Get, HttpException, HttpStatus, Inject, Query, Redirect } from "@nestjs/common";
 import {
     CONNECTION_GOOGLE_RESPONSE_USE_CASE,
     ConnectionGoogleResponseUseCase
 } from "src/accountConnection/service/port/input/ConnectionGoogleResponseUseCase";
-import TokenDTO from "./TokenDTO";
-import { ApiProperty, ApiResponse } from "@nestjs/swagger";
+import { ApiResponse } from "@nestjs/swagger";
+import { RedirectUrlDTO } from "./RedirectUrlDTO";
 
 @Controller("/google")
 class ConnectionGoogleResponseController {
@@ -14,11 +14,15 @@ class ConnectionGoogleResponseController {
     ) {}
 
     @Get("/redirect")
+    @Redirect()
     @ApiResponse({ status: 200, description: "Google authentication successful" })
     @ApiResponse({ status: 500, description: "Internal server error" })
-    async googleAuthCallback(@Query("code") code: string): Promise<TokenDTO> {
+    async googleAuthCallback(@Query("code") code: string): Promise<RedirectUrlDTO> {
         try {
-            return await this.connectionGoogleResponseUseCase.getToken(code);
+            const { token, refreshToken, expireDate } = await this.connectionGoogleResponseUseCase.getToken(code);
+            return {
+                url: `http://localhost:5173/services/addAccount?token=${token}&refreshToken=${refreshToken}&expireDate=${expireDate.toISOString()}`
+            };
         } catch {
             throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
