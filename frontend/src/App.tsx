@@ -11,6 +11,7 @@ import { Workflow } from "./pages/Workflow/Workflow";
 import { AuthProvider } from "./context/AuthContext";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { AnonymousRoute } from "./components/AnonymousRoute/AnonymousRoute";
+import { AddAccount } from "./pages/Services/AddAccount";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard/>} />
             <Route path='/workflow' element={<Workflow/>} />
             <Route path='/services' element={<Services/>} />
+            <Route path="/services/addAccount" element={<AddAccount/>} />
           </Route>
         </Routes>
         <Footer />
