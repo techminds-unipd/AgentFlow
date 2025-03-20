@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { RegisterService } from "../services/registerService";
-import { useAuth } from "./useAuth";
 
 export const useRegister = () => {
   const [error, setError] = useState<string | null>(null);

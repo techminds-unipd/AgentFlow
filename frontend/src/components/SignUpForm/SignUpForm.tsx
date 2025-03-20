@@ -60,11 +60,11 @@ export default function SignUp() {
   const [noEqualsPasswordMessage, setNoEqualsPasswordMessage] = React.useState('');
   let navigate = useNavigate();
 
-/*  React.useEffect(() => {
+  React.useEffect(() => {
     if (!error) {
       navigate("/signin"); 
     }
-  }, [error]);*/
+  }, [error]);
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
