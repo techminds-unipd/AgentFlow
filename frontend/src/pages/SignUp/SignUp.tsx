@@ -1,5 +1,9 @@
+import SignUpForm from "../../components/SignUpForm/SignUpForm";
+
 export const SignUp=()=>{
     return(
-        <>Ciao SignUp</>
+        <>
+            <SignUpForm/>
+        </>
     )
 }
