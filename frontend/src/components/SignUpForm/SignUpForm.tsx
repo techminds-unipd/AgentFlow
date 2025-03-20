@@ -60,11 +60,7 @@ export default function SignUp() {
   const [noEqualsPasswordMessage, setNoEqualsPasswordMessage] = React.useState('');
   let navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (!error) {
-      navigate("/signin"); 
-    }
-  }, [error]);
+  
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -133,14 +129,17 @@ export default function SignUp() {
           >
             Sign Up
           </Typography>
-          {error !== null && 
-          <Alert severity="error">
-            {error.toString()}
-          </Alert>}
+          
           {noEqualsPasswordMessage !== "" && 
           <Alert severity="error">
             {noEqualsPasswordMessage}
           </Alert>}
+          
+          {noEqualsPasswordMessage == "" && error !== null && 
+          <Alert severity="error">
+            {error.toString()}
+          </Alert>}
+          
           <Box
             component="form"
             onSubmit={handleSubmit}
