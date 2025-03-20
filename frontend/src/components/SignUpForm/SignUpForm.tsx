@@ -11,10 +11,8 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
-import { useAuth } from "../../hooks/useAuth"
+import { useRegister } from "../../hooks/useRegister"
 import { useNavigate } from "react-router";
-import GoogleIcon from '@mui/icons-material/Google';
-import FacebookIcon from '@mui/icons-material/Facebook';
 import "../../index.css";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -52,31 +50,34 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp() {
-  const { user, loginUser, error } = useAuth();
+  const { registerUser, error } = useRegister();
   const [usernameError, setUsernameError] = React.useState(false);
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [confirmPasswordError, setConfirmPasswordError] = React.useState(false);
   const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = React.useState('');
+  const [noEqualsPasswordMessage, setNoEqualsPasswordMessage] = React.useState('');
   let navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (!error && user) {
+/*  React.useEffect(() => {
+    if (!error) {
       navigate("/signin"); 
     }
-  }, [error, user]);
+  }, [error]);*/
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (usernameError || passwordError || confirmPasswordError) return;
+  
+    if (!validateInputs()) return;
   
     const data = new FormData(event.currentTarget);
     const username = data.get("username") as string;
     const password = data.get("password") as string;
   
-    await loginUser(username, password);
+    await registerUser(username, password);
   };
+  
 
   const validateInputs = () => {
     const username = document.getElementById('username') as HTMLInputElement;
@@ -96,12 +97,10 @@ export default function SignUp() {
 
     //  password.value.length < 6 --> per il sign up facciamo questo controllo
     if (password.value !== confirmPassword.value) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Passwords do not match.');
+      setNoEqualsPasswordMessage('Passwords do not match.');
       isValid = false;
     } else {
-      setPasswordError(false); 
-      setPasswordErrorMessage('');
+      setNoEqualsPasswordMessage('');
     }
 
     if (!confirmPassword.value) {
@@ -121,7 +120,6 @@ export default function SignUp() {
       setPasswordError(false);
       setPasswordErrorMessage('');
     }
-
     return isValid;
   };
 
@@ -138,6 +136,10 @@ export default function SignUp() {
           {error !== null && 
           <Alert severity="error">
             {error.toString()}
+          </Alert>}
+          {noEqualsPasswordMessage !== "" && 
+          <Alert severity="error">
+            {noEqualsPasswordMessage}
           </Alert>}
           <Box
             component="form"
@@ -205,7 +207,6 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={validateInputs}
               sx={{ backgroundColor: "var(--maincolor)"}}
             >
               Sign up
@@ -213,8 +214,6 @@ export default function SignUp() {
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Button variant='outlined' color="error"><GoogleIcon sx={{margin: "0px 10px"}}/>Accedi con Google</Button>
-            <Button variant='outlined'><FacebookIcon sx={{margin: "0px 10px"}}/>Accedi con Facebook</Button>
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
               <CustomLink
