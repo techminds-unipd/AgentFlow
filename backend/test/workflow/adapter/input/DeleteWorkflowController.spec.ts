@@ -7,10 +7,12 @@ import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/wor
 import DeleteWorkflowController from "src/workflow/adapter/input/DeleteWorkflowController";
 import { DELETE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/DeleteWorkflowUseCase";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
+import WorkflowAdapterImplementation from "src/workflow/adapter/input/WorkflowAdapterImplementation";
 
 describe("DeleteWorkflowController", () => {
     let deleteWorkflowController: DeleteWorkflowController;
     let deleteWorkflowUseCaseMock: { deleteWorkflow: jest.Mock };
+    let workflowAdapterImplementationMock: { toDTO: jest.Mock };
     let jwtService: { verifyAsync: jest.Mock };
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
@@ -31,6 +33,7 @@ describe("DeleteWorkflowController", () => {
             controllers: [DeleteWorkflowController],
             providers: [
                 { provide: DELETE_WORKFLOW_USE_CASE, useValue: deleteWorkflowUseCaseMock },
+                { provide: WorkflowAdapterImplementation, useValue: workflowAdapterImplementationMock },
                 { provide: JwtService, useValue: jwtService }
             ]
         }).compile();
@@ -39,12 +42,14 @@ describe("DeleteWorkflowController", () => {
 
     beforeEach(async () => {
         deleteWorkflowUseCaseMock = { deleteWorkflow: jest.fn() };
+        workflowAdapterImplementationMock = { toDTO: jest.fn() };
         jwtService = { verifyAsync: jest.fn() };
         await createTestingModule();
     });
 
     describe("deleteWorkflow", () => {
         it("should delete the workflow by its name", async () => {
+            workflowAdapterImplementationMock.toDTO.mockReturnValue(workflowDTOMock);
             deleteWorkflowUseCaseMock.deleteWorkflow.mockResolvedValue(workflowMock);
             expect(await deleteWorkflowController.deleteWorkflow("prova", { username: "username" })).toEqual(workflowDTOMock);
         });
