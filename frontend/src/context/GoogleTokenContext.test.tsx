@@ -12,7 +12,7 @@ describe("GoogleTokenContext test", () => {
     localStorage.clear();
   });
 
-  test("Sets GoogleAccountToken.token in context after addGoogleToken is called", async () => {
+  test("Sets googleToken.token in context after addGoogleToken is called", async () => {
     const TestComponent = () => {
       const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
       return (
@@ -44,7 +44,7 @@ describe("GoogleTokenContext test", () => {
     );
   });
 
-  test("Sets GoogleAccountToken.expireDate in context after addGoogleToken is called", async () => {
+  test("Sets googleToken.expireDate in context after addGoogleToken is called", async () => {
     const TestComponent = () => {
       const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
       return (
@@ -76,7 +76,7 @@ describe("GoogleTokenContext test", () => {
     );
   });
 
-  test("Saves GoogleAccountToken in local storage after addGoogleToken is called", async () => {
+  test("Saves googleToken in local storage after addGoogleToken is called", async () => {
     const TestComponent = () => {
       const { addGoogleToken } = useContext(GoogleTokenContext)!;
       return (
@@ -110,7 +110,7 @@ describe("GoogleTokenContext test", () => {
     );
   });
 
-  test("Removes GoogleAccountToken.token and GoogleAccountToken.expireDate from context after removeGoogleToken is called", async () => {
+  test("Removes googleToken.token and googleToken.expireDate from context after removeGoogleToken is called", async () => {
     const TestComponent = () => {
       const { googleToken, addGoogleToken, removeGoogleToken } =
         useContext(GoogleTokenContext)!;
@@ -152,7 +152,7 @@ describe("GoogleTokenContext test", () => {
     );
   });
 
-  test("Removes GoogleAccountToken from local storage after removeGoogleToken is called", async () => {
+  test("Removes googleToken from local storage after removeGoogleToken is called", async () => {
     const TestComponent = () => {
       const { addGoogleToken, removeGoogleToken } =
         useContext(GoogleTokenContext)!;
