@@ -4,7 +4,7 @@ import {
     ConnectionGoogleResponseUseCase
 } from "src/accountConnection/service/port/input/ConnectionGoogleResponseUseCase";
 import TokenDTO from "./TokenDTO";
-import { ApiProperty, ApiResponse } from "@nestjs/swagger";
+import { ApiResponse } from "@nestjs/swagger";
 
 @Controller("/google")
 class ConnectionGoogleResponseController {

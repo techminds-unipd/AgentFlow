@@ -10,7 +10,7 @@ import "../../index.css";
 interface CustomLinkProps {
     name: string,
     link: string,
-    color: "black" | "white" | "main color",
+    color?: "black" | "white" | "main-color",
 }
 
 /**
@@ -20,12 +20,13 @@ interface CustomLinkProps {
  */
 
 export const CustomLink=( {name, link, color}: CustomLinkProps) =>{
+  let varColor;
   if(color==="white"){
-    var varColor = "var(--white-text)"
-  }else if(color==="black"){
-    var varColor = "var(--black-text)"
+    varColor = "var(--white-text)"
+  }else if(color==="main-color"){
+    varColor = "var(--maincolor)"
   }else{
-    var varColor = "var(--maincolor)"
+    varColor = "var(--black-text)"
   }
     const {pathname} = useLocation();
     const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, "to">>(
@@ -54,8 +55,4 @@ export const CustomLink=( {name, link, color}: CustomLinkProps) =>{
             }
         </>
     )
-}
-
-CustomLink.defaultProps = {
-  color: "white"
 }

@@ -17,7 +17,7 @@ return render(
 
 //Se initiallyLoggedIn è true, riempie l'user con l'username e il token passati. Quando viene effettuato il login, viene impostato l'accessToken passato. Error è impostato al valore passato
 export const providerPropsInit = (initiallyLoggedIn = true, testUsername: string = "testUsername", testToken: string = "testToken", testError: string | null = null):AuthContextType => {
-    let providerProps = {
+    const providerProps = {
       user: initiallyLoggedIn? {username: testUsername, accessToken: testToken} as User: null,
       loginUser: vi.fn((username: string, _: string) => {
         providerProps.user = {username, accessToken: testToken};
