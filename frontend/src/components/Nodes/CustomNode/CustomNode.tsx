@@ -67,6 +67,7 @@ export const CustomNode = ({
           fontSize: "1.2em",
           overflow: "hidden",
           minHeight: "3em",
+          minWidth: "8em",
           transition: "background-color 0.2s ease-in-out",
 
           "&:hover": {
@@ -77,28 +78,28 @@ export const CustomNode = ({
           "&::before":
             type === "in" || type === "in-out"
               ? {
-                  content: '""',
-                  position: "absolute",
-                  width: ".35em",
-                  height: ".7em",
-                  backgroundColor: mainColor,
-                  left: 0,
-                  borderRadius: "0 100px 100px 0",
-                }
+                content: '""',
+                position: "absolute",
+                width: ".35em",
+                height: ".7em",
+                backgroundColor: mainColor,
+                left: 0,
+                borderRadius: "0 100px 100px 0",
+              }
               : {},
 
           // Semicerchio destro (mostrato solo se type è "out" o "in-out")
           "&::after":
             type === "out" || type === "in-out"
               ? {
-                  content: '""',
-                  position: "absolute",
-                  width: ".35em",
-                  height: ".7em",
-                  backgroundColor: mainColor,
-                  right: 0,
-                  borderRadius: "100px 0 0 100px",
-                }
+                content: '""',
+                position: "absolute",
+                width: ".35em",
+                height: ".7em",
+                backgroundColor: mainColor,
+                right: 0,
+                borderRadius: "100px 0 0 100px",
+              }
               : {},
         }}
       >

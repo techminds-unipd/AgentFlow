@@ -2,6 +2,7 @@ import { CalendarNode } from '../../Nodes/CalendarNode/CalendarNode';
 import { GmailNode } from '../../Nodes/GmailNode/GmailNode';
 import { PastebinNode } from '../../Nodes/PastebinNode/PastebinNode';
 import { useDnD } from '../DndContext/DnDContext';
+import { Box, Typography } from "@mui/material";
 import "./WorkflowSidebar.css";
 
 const WorkflowSidebar = () => {
@@ -13,18 +14,24 @@ const WorkflowSidebar = () => {
   };
 
   return (
-    <aside>
-      Available services
-      <div onDragStart={(event) => onDragStart(event, "Calendar")} draggable>
+      <Box
+      textAlign="center"
+      marginTop={8}
+      marginRight={5}>
+        <Typography
+          component="span"
+          sx={{ fontSize: "1.2em" }}
+        >Available services</Typography>
+      <Box onDragStart={(event) => onDragStart(event, "Calendar")} draggable>
         <CalendarNode />
-      </div>
-      <div onDragStart={(event) => onDragStart(event, "Gmail")} draggable>
+      </Box>
+      <Box onDragStart={(event) => onDragStart(event, "Gmail")} draggable>
         <GmailNode />
-      </div>
-      <div onDragStart={(event) => onDragStart(event, "Pastebin")} draggable>
+      </Box>
+      <Box onDragStart={(event) => onDragStart(event, "Pastebin")} draggable>
         <PastebinNode />
-      </div>
-    </aside>
+      </Box>
+    </Box>
   );
 };
 
