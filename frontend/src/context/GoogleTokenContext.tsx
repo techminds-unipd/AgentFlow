@@ -9,6 +9,7 @@ export interface GoogleAccountTokenType {
     googleToken: GoogleAccountToken | null;
     addGoogleAccount: (GoogleTokenObject: GoogleAccountToken) => Promise<void>;
     removeGoogleAccount: () => void;
+    isTokenExpired: () => boolean;
     error: string | null;
 }
 
@@ -50,9 +51,18 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
         setGoogleToken(null);
     };
 
+    const isTokenExpired = () => {
+        if (!googleToken) {
+            return true;
+        }
+        const currentDate = new Date();
+        const expireDate = new Date(googleToken.expireDate);
+        return currentDate > expireDate;
+    }
+
     // ritorniamo user, loginUser, logoutUser e error a tutti i children
     return (
-        <GoogleTokenContext.Provider value={{ googleToken, addGoogleAccount, removeGoogleAccount, error }}>
+        <GoogleTokenContext.Provider value={{ googleToken, addGoogleAccount, removeGoogleAccount, isTokenExpired, error }}>
             {children}
         </GoogleTokenContext.Provider>
     );

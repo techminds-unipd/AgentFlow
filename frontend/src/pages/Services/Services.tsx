@@ -10,26 +10,34 @@ import { useState, useEffect } from "react";
 
 export const Services = () => {
   const URL = API_BASE_URL + "/google/auth";
-  const {googleToken, removeGoogleAccount} = useGoogleToken();
+  const { googleToken, removeGoogleAccount, isTokenExpired } = useGoogleToken();
   const [buttonText, setButtonText] = useState("");
-  const [isNodeEnabled, setIsNodeEnabled] = useState(false)
+  const [isNodeEnabled, setIsNodeEnabled] = useState(false);
+  const [displayTokenExpired, setDisplayExpiredToken] = useState<
+    "none" | "block"
+  >("none");
   useEffect(() => {
     if (googleToken) {
       setButtonText("Unlink your Google account");
-      setIsNodeEnabled(true)
+      setIsNodeEnabled(true);
     } else {
       setButtonText("Link your Google account");
-      setIsNodeEnabled(false)
+      setIsNodeEnabled(false);
     }
-  }, [googleToken]);
-  const handleButtonClick = async()=>{
-    if(googleToken){
+    if (googleToken && isTokenExpired()) {
+      setDisplayExpiredToken("block");
+    } else {
+      setDisplayExpiredToken("none");
+    }
+  }, [googleToken, isTokenExpired]);
+  const handleButtonClick = async () => {
+    if (googleToken) {
       removeGoogleAccount();
-      setButtonText("Link your Google account")
-    }else{
-      window.location.href=URL
+      setButtonText("Link your Google account");
+    } else {
+      window.location.href = URL;
     }
-  }
+  };
   return (
     <main>
       <Grid container>
@@ -54,6 +62,9 @@ export const Services = () => {
             >
               {buttonText}
             </Button>
+            <Typography marginLeft={3} color="red" display={displayTokenExpired}>
+              Connection expired please link your account again.
+            </Typography>
           </Grid>
         </Grid>
         <Grid size={12} marginTop={2} marginBottom={2}>
