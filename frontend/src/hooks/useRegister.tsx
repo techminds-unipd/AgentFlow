@@ -10,10 +10,10 @@ export const useRegister = () => {
     try {
         const service = new RegisterService();
         const result = await service.register(username, password); 
-        console.log(result);
         return result;
     } catch (error) {
       setError(error instanceof Error ? error.message : "Something went wrong.");
+      return null;
     }
   };
 

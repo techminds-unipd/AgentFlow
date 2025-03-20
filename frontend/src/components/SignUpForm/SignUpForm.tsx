@@ -71,7 +71,14 @@ export default function SignUp() {
     const username = data.get("username") as string;
     const password = data.get("password") as string;
   
-    await registerUser(username, password);
+    try {
+      const result = await registerUser(username, password);
+      if (result) {
+        navigate("/signin"); // Reindirizza se la registrazione è avvenuta con successo
+      }
+    } catch (err) {
+      console.error("Registration failed:", err);
+    }
   };
   
 
@@ -79,9 +86,10 @@ export default function SignUp() {
     const username = document.getElementById('username') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
     const confirmPassword = document.getElementById('confirmPassword') as HTMLInputElement;
-
+  
     let isValid = true;
-
+  
+    // Controllo username
     if (!username.value) {
       setUsernameError(true);
       setUsernameErrorMessage('Please enter your username.');
@@ -90,15 +98,29 @@ export default function SignUp() {
       setUsernameError(false);
       setUsernameErrorMessage('');
     }
-
-    //  password.value.length < 6 --> per il sign up facciamo questo controllo
+  
+    // Controllo password sicura
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!passwordRegex.test(password.value)) {
+      setPasswordError(true);
+      setPasswordErrorMessage(
+        'Password must be at least 8 characters, include an uppercase, lowercase, number, and special character.'
+      );
+      isValid = false;
+    } else {
+      setPasswordError(false);
+      setPasswordErrorMessage('');
+    }
+  
+    // Controllo password uguali
     if (password.value !== confirmPassword.value) {
       setNoEqualsPasswordMessage('Passwords do not match.');
       isValid = false;
     } else {
       setNoEqualsPasswordMessage('');
     }
-
+  
+    // Controllo conferma password
     if (!confirmPassword.value) {
       setConfirmPasswordError(true);
       setConfirmPasswordErrorMessage('Please confirm your password.');
@@ -107,15 +129,7 @@ export default function SignUp() {
       setConfirmPasswordError(false);
       setConfirmPasswordErrorMessage('');
     }
-
-    if (!password.value) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Please enter your password.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
+  
     return isValid;
   };
 
@@ -129,7 +143,6 @@ export default function SignUp() {
           >
             Sign Up
           </Typography>
-          
           {noEqualsPasswordMessage !== "" && 
           <Alert severity="error">
             {noEqualsPasswordMessage}
