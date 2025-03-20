@@ -14,6 +14,8 @@ import { styled } from '@mui/material/styles';
 import { useAuth } from "../../hooks/useAuth"
 import { useNavigate } from "react-router";
 import "../../index.css";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -55,7 +57,7 @@ export default function SignIn() {
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
-  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false); // Stato per il messaggio di successo
+  const [openSnackbar, setOpenSnackbar] = React.useState(false); // Stato per lo Snackbar 
   let navigate = useNavigate();
 
   React.useEffect(() => {
@@ -63,12 +65,17 @@ export default function SignIn() {
       navigate("/dashboard");
     }
 
-    // Controlla se il SignUp è andato a buon fine
-    if (localStorage.getItem("signupSuccess")) {
-      setShowSuccessAlert(true);
-      localStorage.removeItem("signupSuccess"); // Lo rimuoviamo subito per evitare di mostrarlo sempre
-    }
-  }, [error, user]);
+   // Controlla se il SignUp ha avuto successo
+   if (localStorage.getItem("signupSuccess")) {
+    setOpenSnackbar(true);
+    localStorage.removeItem("signupSuccess"); // Lo rimuoviamo subito per evitare di mostrarlo sempre
+  }
+}, [error, user]);
+
+const handleCloseSnackbar = () => {
+  setOpenSnackbar(false);
+};
+
   
 
   
@@ -122,12 +129,18 @@ export default function SignIn() {
             Sign in
           </Typography>
 
-          {/* Mostra il messaggio di successo dopo il SignUp */}
-        {showSuccessAlert && (
-          <Alert variant="filled" severity="success">
+          {/* Snackbar per il successo del SignUp */}
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackbar}
+          anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <MuiAlert onClose={handleCloseSnackbar} severity="success" variant="filled">
             Account created successfully! You can now log in.
-          </Alert>
-        )}
+          </MuiAlert>
+        </Snackbar>
+
 
           {error !== null && 
           <Alert severity="error">
