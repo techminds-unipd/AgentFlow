@@ -9,24 +9,24 @@ describe("WorkflowAdapterImplementation", () => {
             new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
             new Node(NodeType.Gmail, "action2", new Point(2, 2)),
             new Node(NodeType.Pastebin, "", new Point(3, 3))
-        ]);
-        const workflowDTOMock = new WorkflowDTO("prova", [
-            new NodeDTO(9, new PositionDTO(3, 3), new NodeDataDTO("PASTEBIN")),
-            new NodeDTO(4, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
-            new NodeDTO(7, new PositionDTO(2, 2), new NodeDataDTO("GMAIL"))
-        ], [
-            new EdgeDTO("action2", 7, 9),
-            new EdgeDTO("action1", 4, 7)
-        ]);
+    ]);
+    const workflowDTOMock = new WorkflowDTO("prova", [
+        new NodeDTO(9, new PositionDTO(3, 3), new NodeDataDTO("PASTEBIN")),
+        new NodeDTO(4, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
+        new NodeDTO(7, new PositionDTO(2, 2), new NodeDataDTO("GMAIL"))
+    ], [
+        new EdgeDTO("action2", 7, 9),
+        new EdgeDTO("action1", 4, 7)
+    ]);
     
-        const workflowDTOOrderedMock = new WorkflowDTO("prova", [
-            new NodeDTO(0, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
-            new NodeDTO(1, new PositionDTO(2, 2), new NodeDataDTO("GMAIL")),
-            new NodeDTO(2, new PositionDTO(3, 3), new NodeDataDTO("PASTEBIN"))
-        ], [
-            new EdgeDTO("action1", 0, 1),
-            new EdgeDTO("action2", 1, 2)
-        ]);
+    const workflowDTOOrderedMock = new WorkflowDTO("prova", [
+        new NodeDTO(0, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
+        new NodeDTO(1, new PositionDTO(2, 2), new NodeDataDTO("GMAIL")),
+        new NodeDTO(2, new PositionDTO(3, 3), new NodeDataDTO("PASTEBIN"))
+    ], [
+        new EdgeDTO("action1", 0, 1),
+        new EdgeDTO("action2", 1, 2)
+    ]);
 
     describe("toDTO", () => {
         it("should adapt Workflow to WorkflowDTO", () => {
