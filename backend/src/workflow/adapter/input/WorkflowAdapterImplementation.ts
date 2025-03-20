@@ -5,7 +5,6 @@ import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export default class WorkflowAdapterImplementation {
-
     toDTO(workflow: Workflow): WorkflowDTO {
         const nodes: NodeDTO[] = workflow.nodes.map(
             (node, index) => new NodeDTO(index, new PositionDTO(node.position.x, node.position.y), new NodeDataDTO(node.type))

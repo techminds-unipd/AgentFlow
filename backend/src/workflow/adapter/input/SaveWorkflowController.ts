@@ -1,12 +1,10 @@
 import { Body, Controller, HttpException, HttpStatus, Inject, Put, Request, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
-import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { SAVE_WORKFLOW_USE_CASE, SaveWorkflowUseCase } from "src/workflow/service/port/input/SaveWorkflowUseCase";
-import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO } from "./WorkflowDTO";
+import { RequestHeader, WorkflowDTO } from "./WorkflowDTO";
 import { AuthGuard } from "./AuthGuard";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
 import SaveWorkflowCommand from "src/workflow/domain/SaveWorkflowCommand";
-import { isNotIn } from "class-validator";
 import WorkflowDTOValidator from "./WorkflowDTOValidator";
 import WorkflowAdapterImplementation from "./WorkflowAdapterImplementation";
 

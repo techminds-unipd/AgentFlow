@@ -1,10 +1,9 @@
 import { Controller, Get, HttpException, HttpStatus, Inject, Param, Request, UseGuards } from "@nestjs/common";
 import { WorkflowNotFoundError } from "src/BusinessErrors";
 import { GET_WORKFLOW_USE_CASE, GetWorkflowUseCase } from "src/workflow/service/port/input/GetWorkflowUseCase";
-import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, RequestHeader, WorkflowDTO } from "./WorkflowDTO";
+import { RequestHeader, WorkflowDTO } from "./WorkflowDTO";
 import GetWorkflowCommand from "src/workflow/domain/GetWorkflowCommand";
 import { AuthGuard } from "./AuthGuard";
-import { Workflow } from "src/workflow/domain/Workflow";
 import { ApiBearerAuth, ApiResponse } from "@nestjs/swagger";
 import WorkflowAdapterImplementation from "./WorkflowAdapterImplementation";
 
@@ -12,7 +11,7 @@ import WorkflowAdapterImplementation from "./WorkflowAdapterImplementation";
 @Controller("workflow")
 class GetWorkflowController {
     constructor(
-        @Inject(GET_WORKFLOW_USE_CASE) 
+        @Inject(GET_WORKFLOW_USE_CASE)
         private readonly getWorkflowUseCase: GetWorkflowUseCase,
         private readonly workflowAdapterImplementation: WorkflowAdapterImplementation
     ) {}
