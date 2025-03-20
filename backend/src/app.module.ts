@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
-import { UserModule } from "./user/UserModule";
+import { UserModule } from "./user/User.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { JwtModule } from "@nestjs/jwt";
-import { WorkflowModule } from "./workflow/WorkflowModule";
-import { AccountConnectionModule } from "./accountConnection/AccountConnectionModule";
+import { WorkflowModule } from "./workflow/Workflow.module";
+import { AccountConnectionModule } from "./accountConnection/AccountConnection.module";
 
 @Module({
     imports: [

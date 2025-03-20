@@ -30,6 +30,27 @@ class WorkflowControllerTest(unittest.TestCase):
                 "account": "user@example.com"
             }
         }
+
+        self.invalid_data = {
+            "workflowNodes": []
+        }
+
+        self.invalid_workflow = {
+            "workflowNodes": [
+                {"action": "", "type": "GMAIL"},
+                {"action": "", "type": "GCALENDAR"}
+            ],
+            "googleTokenFile": {
+                "token": "token123",
+                "refreshToken": "refreshToken123",
+                "tokenUri": "https://example.com/token",
+                "clientID": "client123",
+                "clientSecret": "secret123",
+                "scopes": ["scope1", "scope2"],
+                "universeDomain": "example.com",
+                "account": "user@example.com"
+            }
+        }
     
     def test_executeWorkflow(self):
         with self.app.test_request_context(
@@ -46,7 +67,29 @@ class WorkflowControllerTest(unittest.TestCase):
         with self.app.test_request_context(
             '/execute',
             method='POST',
-            json={"workflowNodes": []},
+            json=self.invalid_data,
+            content_type='application/json'
+        ):
+            with self.assertRaises(BadRequest):
+                self.workflowController.executeWorkflow()
+
+    def test_executeWorkflow_invalid_workflow_action(self):
+        with self.app.test_request_context(
+            '/execute',
+            method='POST',
+            json=self.invalid_workflow,
+            content_type='application/json'
+        ):
+            with self.assertRaises(BadRequest):
+                self.workflowController.executeWorkflow()
+
+    def test_executeWorkflow_invalid_workflow_last_action(self):
+        self.invalid_workflow["workflowNodes"][0]["action"] = "action1"
+        self.invalid_workflow["workflowNodes"][1]["action"] = "action2"
+        with self.app.test_request_context(
+            '/execute',
+            method='POST',
+            json=self.invalid_workflow,
             content_type='application/json'
         ):
             with self.assertRaises(BadRequest):
