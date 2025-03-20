@@ -55,13 +55,22 @@ export default function SignIn() {
   const [usernameErrorMessage, setUsernameErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [showSuccessAlert, setShowSuccessAlert] = React.useState(false); // Stato per il messaggio di successo
   let navigate = useNavigate();
 
   React.useEffect(() => {
     if (!error && user) {
-      navigate("/dashboard"); 
+      navigate("/dashboard");
+    }
+
+    // Controlla se il SignUp è andato a buon fine
+    if (localStorage.getItem("signupSuccess")) {
+      setShowSuccessAlert(true);
+      localStorage.removeItem("signupSuccess"); // Lo rimuoviamo subito per evitare di mostrarlo sempre
     }
   }, [error, user]);
+  
+
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -112,10 +121,21 @@ export default function SignIn() {
           >
             Sign in
           </Typography>
+
+          {/* Mostra il messaggio di successo dopo il SignUp */}
+        {showSuccessAlert && (
+          <Alert variant="filled" severity="success">
+            Account created successfully! You can now log in.
+          </Alert>
+        )}
+
           {error !== null && 
           <Alert severity="error">
             {error.toString()}
           </Alert>}
+
+
+          
           <Box
             component="form"
             onSubmit={handleSubmit}
