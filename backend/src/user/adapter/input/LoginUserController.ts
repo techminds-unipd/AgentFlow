@@ -18,10 +18,6 @@ class LoginUserController {
         return new User(userDTO.username, userDTO.password);
     }
 
-    private toDTO(user: User): UserDTO {
-        return new UserDTO(user.username, user.password);
-    }
-
     @Post("/login")
     @ApiResponse({ status: 201, description: "User logged in successfully and JWT token returned" })
     @ApiResponse({ status: 401, description: "Wrong credentials" })
