@@ -11,7 +11,7 @@ interface LogoutMenuItem {
 
 export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
     const { logoutUser } = useAuth();
-    const { removeGoogleAccount } = useGoogleToken()
+    const { removeGoogleToken } = useGoogleToken()
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
@@ -25,7 +25,7 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
     };
 
     const handleLogout = () => {
-        removeGoogleAccount()
+        removeGoogleToken()
         logoutUser();
         handleCloseDialog();
         handleCloseMenu();

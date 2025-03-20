@@ -7,11 +7,11 @@ export const AddAccount=()=>{
     const [searchParams] = useSearchParams();
     const tokenParam = searchParams.get("token");
     const expireDateParam = searchParams.get("expireDate");
-    const {addGoogleAccount, removeGoogleAccount} = useGoogleToken();
+    const {addGoogleToken, removeGoogleToken} = useGoogleToken();
     const navigate = useNavigate();
     if (tokenParam && expireDateParam){
-        removeGoogleAccount()
-        addGoogleAccount({
+        removeGoogleToken()
+        addGoogleToken({
             token: tokenParam,
             expireDate: expireDateParam
         })

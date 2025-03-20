@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from "react";
-//TODO: aggiungere controllo data di scadenza
 export interface GoogleAccountToken {
     token: string;
     expireDate: string;
@@ -7,8 +6,8 @@ export interface GoogleAccountToken {
 
 export interface GoogleAccountTokenType {
     googleToken: GoogleAccountToken | null;
-    addGoogleAccount: (GoogleTokenObject: GoogleAccountToken) => Promise<void>;
-    removeGoogleAccount: () => void;
+    addGoogleToken: (GoogleTokenObject: GoogleAccountToken) => Promise<void>;
+    removeGoogleToken: () => void;
     isTokenExpired: () => boolean;
     error: string | null;
 }
@@ -35,7 +34,7 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }, []);
 
     // chiama la funzione per aggiungere le informazioni dell'account e se avviene correttamente salva i dati in localStorage
-    const addGoogleAccount = async (GoogleTokenObject: GoogleAccountToken) => {
+    const addGoogleToken = async (GoogleTokenObject: GoogleAccountToken) => {
         try {
             localStorage.setItem("GoogleAccountToken", JSON.stringify(GoogleTokenObject));
             setGoogleToken(GoogleTokenObject);
@@ -46,7 +45,7 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
 
     // cancella i dati in localStorage
-    const removeGoogleAccount = () => {
+    const removeGoogleToken = () => {
         localStorage.removeItem("GoogleAccountToken");
         setGoogleToken(null);
     };
@@ -62,7 +61,7 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
 
     // ritorniamo user, loginUser, logoutUser e error a tutti i children
     return (
-        <GoogleTokenContext.Provider value={{ googleToken, addGoogleAccount, removeGoogleAccount, isTokenExpired, error }}>
+        <GoogleTokenContext.Provider value={{ googleToken, addGoogleToken, removeGoogleToken, isTokenExpired, error }}>
             {children}
         </GoogleTokenContext.Provider>
     );

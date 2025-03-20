@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 
 export const Services = () => {
   const URL = API_BASE_URL + "/google/auth";
-  const { googleToken, removeGoogleAccount, isTokenExpired } = useGoogleToken();
+  const { googleToken, removeGoogleToken, isTokenExpired } = useGoogleToken();
   const [buttonText, setButtonText] = useState("");
   const [isNodeEnabled, setIsNodeEnabled] = useState(false);
   const [displayTokenExpired, setDisplayExpiredToken] = useState<
@@ -32,7 +32,7 @@ export const Services = () => {
   }, [googleToken, isTokenExpired]);
   const handleButtonClick = async () => {
     if (googleToken) {
-      removeGoogleAccount();
+      removeGoogleToken();
       setButtonText("Link your Google account");
     } else {
       window.location.href = URL;
