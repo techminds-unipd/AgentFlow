@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from "react-router";
-import {Navbar} from './components/Navbar/Navbar'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
+import { Navbar } from './components/Navbar/Navbar'
 import { Footer } from "./components/Footer/Footer";
 import { Home } from "./pages/Home/Home";
 import { AboutUs } from "./pages/AboutUs/AboutUs";
@@ -18,21 +18,24 @@ function App() {
     <>
       <AuthProvider>
         <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route index element={<Home/>} />
-          <Route path='/aboutus' element={<AboutUs/>} />
-          <Route element={<AnonymousRoute />}>
-            <Route path='/signin' element={<SignIn/>} />
-            <Route path='/signup' element={<SignUp/>} />
-          </Route>
-          <Route element={<PrivateRoute />}>
-            <Route path='/dashboard' element={<Dashboard/>} />
-            <Route path='/workflow' element={<Workflow/>} />
-            <Route path='/services' element={<Services/>} />
-          </Route>
-        </Routes>
-        <Footer />
+          <Navbar />
+          <Routes>
+            <Route index element={<Home />} />
+            <Route path='/aboutus' element={<AboutUs />} />
+            <Route element={<AnonymousRoute />}>
+              <Route path='/signin' element={<SignIn />} />
+              <Route path='/signup' element={<SignUp />} />
+            </Route>
+            <Route element={<PrivateRoute />}>
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path="/workflow">
+                <Route index element={<Navigate to=".." replace />} />
+                <Route path=':name' element={<Workflow />} />
+              </Route>
+              <Route path='/services' element={<Services />} />
+            </Route>
+          </Routes>
+          <Footer />
         </BrowserRouter>
       </AuthProvider>
     </>
