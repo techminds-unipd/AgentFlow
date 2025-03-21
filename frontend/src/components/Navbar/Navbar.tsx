@@ -1,10 +1,10 @@
 import { Box, AppBar, Toolbar, Menu, MenuItem, IconButton, Typography } from "@mui/material";
 import { AccountCircle } from "@mui/icons-material";
-import { CustomLink } from "../CustomLink/CustomLink.tsx";
-import { CustomButton } from "../CustomButton/CustomButton.tsx";
-import { LogoutMenuItem } from "../LogoutMenuItem/LogoutMenuItem.tsx";
+import { CustomLink } from "../CustomLink/CustomLink";
+import { CustomButton } from "../CustomButton/CustomButton";
+import { LogoutMenuItem } from "../LogoutMenuItem/LogoutMenuItem";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../hooks/useAuth.tsx";
+import { useAuth } from "../../hooks/useAuth";
 import * as React from "react";
 import logo from "../../assets/Logo.Tech-Minds-fe.png";
 import "../../index.css";

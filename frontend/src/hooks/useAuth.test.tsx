@@ -1,7 +1,7 @@
 import { expect, test, describe, beforeEach } from "vitest";
 import {render} from "@testing-library/react"
 import { useAuth } from "./useAuth"
-import { AuthContextType, authProviderRender, providerPropsInit} from "../context/MockedAuthProvider"
+import { AuthContextType, MockedAuthProvider, providerPropsInit} from "../context/MockedAuthProvider"
 
 
 describe("useAuth hook" , () => {
@@ -16,7 +16,7 @@ describe("useAuth hook" , () => {
                 </div>
             )
         }
-        authProviderRender(<TestComponent></TestComponent>, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent/></MockedAuthProvider>);
     })
 
     test("Throws an error when a component that uses useAuth isn't wrapped with AuthProvider", async () => {
@@ -28,7 +28,7 @@ describe("useAuth hook" , () => {
                 </div>
             )
         }
-        expect(()=>render(<TestComponent></TestComponent>)).toThrowError();
+        expect(()=>render(<TestComponent/>)).toThrowError();
         
     })
 

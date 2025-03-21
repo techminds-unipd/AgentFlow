@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
-import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
+import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import { AllWorkflowsService } from "../services/allWorkflowsService";
 import { useAllWorkflow } from "./useAllWorkflows";
 import "@testing-library/jest-dom";
@@ -29,7 +29,7 @@ describe("useAllWorkflow hook", () => {
         const mockData = ["workflow1", "workflow2"];
         vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockResolvedValue(mockData);
 
-        authProviderRender(<TestComponent />, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent /></MockedAuthProvider>);
 
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe("useAllWorkflow hook", () => {
     test("Handles errors when API call fails", async () => {
         vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockRejectedValue(new Error("API Error"));
 
-        authProviderRender(<TestComponent />, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent /></MockedAuthProvider>);
 
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();

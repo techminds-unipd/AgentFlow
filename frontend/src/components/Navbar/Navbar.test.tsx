@@ -1,9 +1,9 @@
 import "@testing-library/jest-dom";
-import {screen} from "@testing-library/react";
+import {screen, render} from "@testing-library/react";
 import {expect, test, describe, beforeEach} from "vitest";
 import { Navbar } from "./Navbar";
 import { MemoryRouter } from "react-router";
-import { AuthContextType, authProviderRender, providerPropsInit} from "../../context/MockedAuthProvider"
+import { AuthContextType, MockedAuthProvider, providerPropsInit} from "../../context/MockedAuthProvider"
 
 
 
@@ -13,51 +13,50 @@ describe("Navbar", () => {
   beforeEach(()=>{providerProps=providerPropsInit()})
   
   test("Renders the navbar", () => {
-    authProviderRender(
+    render(
+      <MockedAuthProvider {...providerProps}>
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
     expect(screen.getByRole("banner")).toBeInTheDocument()
   });
 
   test("Renders the home item", () => {
-    authProviderRender(
+    render(<MockedAuthProvider {...providerProps}>
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter></MockedAuthProvider>
   );
       expect(screen.getByText("Home")).toBeInTheDocument()
   });
   
   test("Renders the about us item", () => {
-    authProviderRender(
+    render(<MockedAuthProvider {...providerProps}>
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter></MockedAuthProvider>
     );
       expect(screen.getByText("About Us")).toBeInTheDocument()
   });
 
   test("Renders the Agent Flow item", () => {
-    authProviderRender(
+    render(<MockedAuthProvider {...providerProps}>
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter></MockedAuthProvider>
     );
       expect(screen.getByText("Agent Flow")).toBeInTheDocument()
   });
 
   test("Renders the logo", () => {
-    authProviderRender(
+    render(
+    <MockedAuthProvider {...providerProps}>
         <MemoryRouter>
           <Navbar />
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
     expect(screen.getByRole("img")).toHaveAttribute(
       "alt",
