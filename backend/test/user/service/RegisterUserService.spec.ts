@@ -10,6 +10,7 @@ describe("RegisterUserService", () => {
     let registerUserPortMock: { registerUser: jest.Mock };
     let getUserPortMock: { getUserByUsername: jest.Mock };
     const userMock = new User("Gianni", "Testing1234");
+    const userMockHashed = new User("Gianni", "hashedPassword");
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -30,9 +31,9 @@ describe("RegisterUserService", () => {
 
     describe("registerUser", () => {
         it("should register the user", async () => {
-            registerUserPortMock.registerUser.mockResolvedValue(userMock);
+            registerUserPortMock.registerUser.mockResolvedValue(userMockHashed);
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
-            expect(await registerUserService.registerUser(userMock)).toEqual(userMock);
+            expect(await registerUserService.registerUser(userMock)).toEqual(userMockHashed);
         });
     });
 

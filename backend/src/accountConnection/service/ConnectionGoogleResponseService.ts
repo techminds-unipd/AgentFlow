@@ -1,9 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ConnectionGoogleResponseUseCase } from "./port/input/ConnectionGoogleResponseUseCase";
-import {
-    CONNECTION_GOOGLE_RESPONSE_PORT,
-    ConnectionGoogleResponsePort
-} from "./port/output/ConnectionGoogleResponsePort";
+import { CONNECTION_GOOGLE_RESPONSE_PORT, ConnectionGoogleResponsePort } from "./port/output/ConnectionGoogleResponsePort";
 import Token from "../domain/Token";
 
 @Injectable()

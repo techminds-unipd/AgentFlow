@@ -8,6 +8,7 @@ import TokenDTO from "src/accountConnection/adapter/input/TokenDTO";
 import ExecuteWorkflowController from "src/workflow/adapter/input/ExecuteWorkflowController";
 import { EXECUTE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/ExecuteWorkflowUseCase";
 import WorkflowDTOValidator from "src/workflow/adapter/input/WorkflowDTOValidator";
+import WorkflowAdapterImplementation from "src/workflow/adapter/input/WorkflowAdapterImplementation";
 
 describe("ExecuteWorkflowController", () => {
     let executeWorkflowController: ExecuteWorkflowController;
@@ -15,6 +16,7 @@ describe("ExecuteWorkflowController", () => {
     let jwtService: { verifyAsync: jest.Mock };
     let httpService: { get: jest.Mock };
     let workflowDTOValidatorMock: { validate: jest.Mock };
+    let workflowAdapterImplementationMock: { toDomain: jest.Mock };
     const googleTokenDTOMock = new TokenDTO("token", "refreshToken", new Date());
     const workflowDTOMock = new WorkflowDTO("prova", [
         new NodeDTO(9, new PositionDTO(3, 3), new NodeDataDTO("PASTEBIN")),
@@ -34,6 +36,7 @@ describe("ExecuteWorkflowController", () => {
                 { provide: EXECUTE_WORKFLOW_USE_CASE, useValue: executeWorkflowUseCaseMock },
                 { provide: JwtService, useValue: jwtService },
                 { provide: WorkflowDTOValidator, useValue: workflowDTOValidatorMock },
+                { provide: WorkflowAdapterImplementation, useValue: workflowAdapterImplementationMock },
                 { provide: HttpService, useValue: httpService }
             ]
         }).compile();
@@ -44,6 +47,7 @@ describe("ExecuteWorkflowController", () => {
         executeWorkflowUseCaseMock = { executeWorkflow: jest.fn() };
         jwtService = { verifyAsync: jest.fn() };
         workflowDTOValidatorMock = { validate: jest.fn() };
+        workflowAdapterImplementationMock = { toDomain: jest.fn() };
         httpService = { get: jest.fn() };
         await createTestingModule();
     });
@@ -51,6 +55,7 @@ describe("ExecuteWorkflowController", () => {
     describe("executeWorkflow", () => {
         it("should execute the workflow", async () => {
             workflowDTOValidatorMock.validate.mockImplementation(() => {});
+            workflowAdapterImplementationMock.toDomain.mockImplementation(() => {});
             executeWorkflowUseCaseMock.executeWorkflow.mockResolvedValue("result");
             expect(await executeWorkflowController.executeWorkflow(executeRequestMock)).toEqual("result");
         });
