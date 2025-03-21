@@ -4,7 +4,7 @@ import { GoogleTokenContext, GoogleAccountTokenType } from '../context/GoogleTok
 export const useGoogleToken = (): GoogleAccountTokenType => {
     const context = useContext(GoogleTokenContext);
     if (!context) {
-        throw new Error("useGoogleToken must be used within an AuthProvider");
+        throw new Error("useGoogleToken must be used within an GoogleTokenProvider");
     }
     return context;
 };

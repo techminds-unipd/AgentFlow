@@ -1,14 +1,34 @@
-import { renderHook, act } from "@testing-library/react";
 import { useGoogleToken } from "./useGoogleToken";
-import { describe, test, expect } from "vitest";
+import { render } from "@testing-library/react";
+import { describe, test, expect, beforeEach } from "vitest";
+import {
+  GoogleAccountTokenType,
+  MockedGoogleTokenProvider,
+  googleProviderPropsInit,
+} from "../context/MockedGoogleTokenProvider";
 
 describe("useGoogleToken hook tests", () => {
-    test("Adds a GoogleToken succesfully", () => {
-    });
+  let providerProps: GoogleAccountTokenType;
+  beforeEach(() => {
+    providerProps = googleProviderPropsInit();
+  });
+  test("A component that is wrapped with GoogleTokenProvider and invoked useGoogleToken can access context", () => {
+    const TestComponent = () => {
+      const context = useGoogleToken();
+      return <div>TestComponent {JSON.stringify(context)}</div>;
+    };
+    render(
+      <MockedGoogleTokenProvider {...providerProps}>
+        <TestComponent />
+      </MockedGoogleTokenProvider>
+    );
+  });
 
-    test("Deletes a googleToken", () => {
-    });
-
-    test("Test isTokenExpired function", () => {
-    });
+  test("Throws an error when a component that uses useGoogleToken isn't wrapped with GoogleTokenProvider", () => {
+    const TestComponent = () => {
+      const context = useGoogleToken();
+      return <div>TestComponent {JSON.stringify(context)}</div>;
+    };
+    expect(()=>render(<TestComponent />)).toThrowError();
+  });
 });
