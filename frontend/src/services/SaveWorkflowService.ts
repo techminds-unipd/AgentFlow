@@ -12,9 +12,14 @@ export class SaveWorkflowService {
       body: JSON.stringify(workflow)
     };
 
-    return fetch(`${API_BASE_URL}/workflow/save`, requestOptions)
-      .then(response => response.json())
-      .then(data => new WorkflowDTO(data.name, data.nodes, data.edges))
-      .catch(_ => { throw new Error() });
+    const response = await fetch(`${API_BASE_URL}/workflow/save`, requestOptions)
+    const data = await response.json();
+
+    if (response.status === 200) {
+      return new WorkflowDTO(data.name, data.nodes, data.edges);
+    } else {
+        throw new Error(data.message)
+    }
+
   }
 }

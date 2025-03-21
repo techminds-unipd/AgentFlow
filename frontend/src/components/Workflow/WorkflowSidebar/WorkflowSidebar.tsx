@@ -3,7 +3,6 @@ import { GmailNode } from '../../Nodes/GmailNode/GmailNode';
 import { PastebinNode } from '../../Nodes/PastebinNode/PastebinNode';
 import { useDnD } from '../DndContext/DnDContext';
 import { Box, Typography } from "@mui/material";
-import "./WorkflowSidebar.css";
 
 const WorkflowSidebar = () => {
   const [, setService] = useDnD();

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "./useAuth";
 import { WorkflowDTO } from "../services/dto/WorkflowDTO";
-import { ExecuteWorkflowService } from "./ExecuteWorkflowService";
+import { ExecuteWorkflowService } from "../services/ExecuteWorkflowService";
 
 export const useExecuteWorkflow = (executeWorkflowService: ExecuteWorkflowService) => {
   const [isLoading, setIsLoading] = useState(false);

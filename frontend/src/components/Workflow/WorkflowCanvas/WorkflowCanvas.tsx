@@ -28,7 +28,7 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
   const onConnect = useCallback(
     (params: any) => {
       const getEdgeId = () => edgeId++;
-      setEdges((eds) => addEdge({ ...params, markerEnd: { type: MarkerType.ArrowClosed }, type: 'editable', label: "Inserisci l'automazione che desideri", id: getEdgeId() }, eds))
+      setEdges((eds) => addEdge({ ...params, markerEnd: { type: MarkerType.ArrowClosed }, type: 'editable', label: "Insert your automation", id: getEdgeId() }, eds))
     },
     [edgeId, setEdges],
   );
