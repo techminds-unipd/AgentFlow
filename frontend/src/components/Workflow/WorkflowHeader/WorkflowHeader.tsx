@@ -4,6 +4,8 @@ import { useSaveWorkflow } from "../../../hooks/useSaveWorkflow";
 import { SaveWorkflowService } from "../../../services/SaveWorkflowService";
 import { EdgeDTO, NodeDTO, WorkflowDTO } from "../../../services/dto/WorkflowDTO";
 import { useReactFlow } from "@xyflow/react";
+import { useExecuteWorkflow } from "../../../hooks/useExecuteWorkflow";
+import { ExecuteWorkflowService } from "../../../services/ExecuteWorkflowService";
 
 interface WorkflowHeaderProps {
   name: string;
@@ -11,12 +13,19 @@ interface WorkflowHeaderProps {
 
 export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
   const { saveWorkflow } = useSaveWorkflow(new SaveWorkflowService());
+  const { executeWorkflow } = useExecuteWorkflow(new ExecuteWorkflowService())
   const { getNodes, getEdges } = useReactFlow();
 
   const handleSave = async () => {
     const edges = getEdges().map(edge => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)))
     const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: node.data.label as string }))
-    console.log(await saveWorkflow(new WorkflowDTO(name, nodes, edges)))
+    await saveWorkflow(new WorkflowDTO(name, nodes, edges))
+  }
+
+  const handleExecute = async () => {
+    const edges = getEdges().map(edge => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)))
+    const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: node.data.label as string }))
+    executeWorkflow(new WorkflowDTO(name, nodes, edges))
   }
 
   return (
@@ -46,6 +55,7 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
       <Button
         fullWidth
         variant="contained"
+        onClick={handleExecute}
         sx={{ backgroundColor: "var(--maincolor)" }}>
         Execute
       </Button>

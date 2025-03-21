@@ -1,4 +1,4 @@
-import { Node, Edge, OnEdgesChange, OnNodesChange, ReactFlow, MarkerType, addEdge, useReactFlow, Position, getOutgoers, ConnectionLineType, Controls, Background } from "@xyflow/react";
+import { Node, Edge, OnEdgesChange, OnNodesChange, ReactFlow, MarkerType, addEdge, useReactFlow, Position, getOutgoers, ConnectionLineType, Controls, Background, useNodeConnections, BackgroundVariant } from "@xyflow/react";
 import { useCallback, useRef } from "react";
 import { useDnD } from "../DndContext/DnDContext";
 import EditableEdge from "../EditableEdge/EditableEdge";
@@ -58,6 +58,7 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
         data: { label: nodeService },
         sourcePosition: 'right' as Position,
         targetPosition: 'left' as Position,
+        style: { backgroundColor: "var(--maincolor)", color: "white" }
       };
       if (newNode.data.label == 'Pastebin') newNode.type = 'output'
       setNodes((nds: Node[]) => nds.concat(newNode));
@@ -102,12 +103,13 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
         onDragOver={onDragOver}
         edgeTypes={edgeTypes}
         fitView
-        style={{ backgroundColor: "#F7F9FB" }}
+        style={{ backgroundColor: "white", border: "solid black 0.2em" }}
         connectionLineType={ConnectionLineType.Straight}
         isValidConnection={isValidConnection}
         minZoom={0.7}
         translateExtent={[[-10, -600], [2000, 600]]}
         nodeExtent={[[-10, -600], [2000, 600]]}>
+        <Background color="rgb(242,242,242)" variant={BackgroundVariant.Lines} />
         <Controls />
         <Background />
       </ReactFlow>

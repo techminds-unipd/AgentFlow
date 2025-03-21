@@ -46,14 +46,13 @@ export default function EditableEdge({
           style={{
             position: 'absolute',
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            borderRadius: 5,
-            fontSize: 12,
             fontWeight: 700,
             pointerEvents: 'all'
           }}
           className="nodrag nopan"
         >
-          <textarea onChange={handleTextChange} value={textInput} />
+          <textarea style={{borderRadius: "0.5em", border: "solid var(--maincolor) 0.1em", padding: "0.3em", fontSize: "0.8em"}}
+      onChange={handleTextChange} value={textInput} spellCheck="false" />
         </div>
       </EdgeLabelRenderer>
     </>
