@@ -27,9 +27,9 @@ describe("ConnectionGoogleResponseController", () => {
     });
 
     describe("googleAuthCallback", () => {
-        it("should return the TokenDTO acquired in the callback", async () => {
+        it("should return the Google data acquired in the callback using redirect", async () => {
             connectionGoogleResponseUseCaseMock.getToken.mockResolvedValue(tokenMock);
-            expect(await connectionGoogleResponseController.googleAuthCallback("code")).toEqual(tokenDTOMock);
+            expect(await connectionGoogleResponseController.googleAuthCallback("code")).toEqual({ url: `http://localhost:5173/services/addAccount?token=${tokenMock.token}&refreshToken=${tokenDTOMock.refreshToken}&expireDate=${tokenDTOMock.expireDate.toISOString()}` });
         });
 
         it("should throw HttpException because it cannot get the Token data", async () => {
