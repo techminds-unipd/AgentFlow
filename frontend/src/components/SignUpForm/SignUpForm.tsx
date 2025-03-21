@@ -105,7 +105,7 @@ export default function SignUp() {
     if (!passwordRegex.test(password.value)) {
       setPasswordError(true);
       setPasswordErrorMessage(
-        'Password must be at least 8 characters, include an uppercase, lowercase, number, and special character.'
+        'Password must be at least 8 characters, include an uppercase, lowercase, number and special character.'
       );
       isValid = false;
     } else {
