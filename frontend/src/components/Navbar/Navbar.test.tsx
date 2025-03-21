@@ -1,13 +1,11 @@
 import "@testing-library/jest-dom";
-import { screen } from "@testing-library/react";
-import { expect, test, describe, beforeEach } from "vitest";
+import {screen, render} from "@testing-library/react";
+import {expect, test, describe, beforeEach} from "vitest";
 import { Navbar } from "./Navbar";
 import { MemoryRouter } from "react-router";
-import {
-  AuthContextType,
-  authProviderRender,
-  providerPropsInit,
-} from "../../context/MockedAuthProvider";
+import { AuthContextType, MockedAuthProvider, providerPropsInit} from "../../context/MockedAuthProvider"
+
+
 
 describe("Navbar", () => {
   let providerProps: AuthContextType;
@@ -17,11 +15,12 @@ describe("Navbar", () => {
   });
 
   test("Renders the navbar", () => {
-    authProviderRender(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <Navbar />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
     expect(screen.getByRole("banner")).toBeInTheDocument();
   });
