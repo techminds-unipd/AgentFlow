@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
-import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
+import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import { useDeleteWorkflow } from "./useDeleteWorkflow";
 import { DeleteWorkflowService } from "../services/deleteWorkflowService";
 import "@testing-library/jest-dom";
@@ -31,7 +31,7 @@ describe("useDeleteWorkflow hook", () => {
     test("Deletes a workflow successfully when user is authenticated", async () => {
         vi.spyOn(DeleteWorkflowService.prototype, "deleteWorkflowByName").mockResolvedValue({ name: "Deleted Successfully" });
 
-        authProviderRender(<TestComponent workflowName="Test Workflow" />, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent workflowName="Test Workflow" /></MockedAuthProvider>);
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
         act(() => {
@@ -47,7 +47,7 @@ describe("useDeleteWorkflow hook", () => {
         vi.spyOn(DeleteWorkflowService.prototype, "deleteWorkflowByName").mockRejectedValue(new Error("API Error"));
         
 
-        authProviderRender(<TestComponent workflowName="Failing Workflow" />, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent workflowName="Failing Workflow" /></MockedAuthProvider>);
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
         act(() => {

@@ -1,8 +1,8 @@
-import { screen } from "@testing-library/react";
+import { screen, render } from "@testing-library/react";
 import { vi, describe, test, expect, beforeEach } from "vitest";
 import { WorkflowList } from "./WorkflowList";
 import { useAllWorkflow } from "../../hooks/useAllWorkflows";
-import { AuthContextType, authProviderRender, providerPropsInit} from "../../context/MockedAuthProvider"
+import { AuthContextType, MockedAuthProvider, providerPropsInit} from "../../context/MockedAuthProvider"
 import "@testing-library/jest-dom";
 
 vi.mock("../../hooks/useAllWorkflows");
@@ -27,7 +27,7 @@ describe("WorkflowList Component", () => {
       refetch: vi.fn(),
     });
 
-    authProviderRender(<WorkflowList shouldReload={false} setShouldReload={mockSetShouldReload} />, providerProps);
+    render(<MockedAuthProvider {...providerProps}><WorkflowList shouldReload={false} setShouldReload={mockSetShouldReload} /></MockedAuthProvider>);
 
     mockWorkflows.forEach((workflow) => {
       expect(screen.getByText(workflow)).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe("WorkflowList Component", () => {
       refetch: mockRefetch,
     });
 
-    authProviderRender(<WorkflowList shouldReload={true} setShouldReload={mockSetShouldReload} />, providerProps);
+    render(<MockedAuthProvider {...providerProps}><WorkflowList shouldReload={true} setShouldReload={mockSetShouldReload} /></MockedAuthProvider>);
 
     expect(mockRefetch).toHaveBeenCalled();
   });
