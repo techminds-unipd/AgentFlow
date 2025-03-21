@@ -1,4 +1,4 @@
-import { Edge, Node, ReactFlowProvider, useEdgesState, useNodesState } from "@xyflow/react";
+import { Edge, MarkerType, Node, Position, ReactFlowProvider, useEdgesState, useNodesState } from "@xyflow/react";
 import { WorkflowCanvas } from "../../components/Workflow/WorkflowCanvas/WorkflowCanvas"
 import WorkflowSidebar from "../../components/Workflow/WorkflowSidebar/WorkflowSidebar";
 import { DnDProvider } from "../../components/Workflow/DndContext/DnDContext";
@@ -17,11 +17,34 @@ export const Workflow = () => {
 
   useEffect(() => {
     const fetchWorkflow = async () => {
-        const workflow = await getWorkflow(name!);
-        console.log(workflow)
-        //setNodes(workflow!.nodes as Node[])
+      const workflow = await getWorkflow(name!);
+
+      const nodes = workflow?.nodes.map(node => {
+        return {
+          id: String(node.id),
+          position: { x: node.position.x, y: node.position.y },
+          data: { label: node.data.label },
+          sourcePosition: "right" as Position,
+          targetPosition: "left" as Position,
+          type: node.data.label == "Pastebin" ? "output" : undefined
+        }
+      })
+
+      const edges = workflow?.edges.map(edge => {
+        return {
+          id: `${String(edge.source)}-${String(edge.target)}`,
+          markerEnd: { type: MarkerType.ArrowClosed },
+          type: 'editable',
+          label: edge.label,
+          source: String(edge.source),
+          target: String(edge.target)
+        }
+      })
+
+      setNodes(nodes!)
+      setEdges(edges!)
     }
-      fetchWorkflow();
+    fetchWorkflow();
   }, [])
 
 

@@ -43,8 +43,8 @@ export const WorkflowItem = ( { name, setShouldReload }: WorkflowItemProps ) => 
             width={750}
             bgcolor={"var(--white-text)"}
         >
-          <Link 
-            href="#" 
+          <Link
+            href={`workflow/${name}`}
             fontSize={20}
             sx={{ 
               color: "var(--black-text)",
