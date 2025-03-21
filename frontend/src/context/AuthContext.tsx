@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { login } from "../services/loginAPI";
+import { LoginService } from "../services/loginService";
 
 // AuthProvider serve per garantire che tutte le info sull'autenticazione siano condivise in tutta l'app
 // fornisce i dati di autenticazione a tutti i componenti figli tramite il contesto Context
@@ -29,6 +29,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const [error, setError] = useState<string | null>(null);
 
+    const service = new LoginService();
+    
+
     // controlla se l'utente è già salvato in localStorage al momento dell'avvio
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
@@ -40,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // chiama la funzione di login e se avviene correttamente salva i dati in localStorage
     const loginUser = async (username: string, password: string) => {
         try {
-            const data = await login(username, password);
+            const data = await service.login(username, password);
             const user = {username, accessToken: data.accessToken} as User;
             localStorage.setItem("user", JSON.stringify(user));
             setUser(user);
@@ -52,7 +55,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // cancella i dati in localStorage
     const logoutUser = () => {
-        localStorage.removeItem("accessToken");
         localStorage.removeItem("user");
         setUser(null);
     };

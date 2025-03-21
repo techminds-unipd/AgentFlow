@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
 import { waitFor } from "@testing-library/react";
-import { login } from "./loginAPI";
+import { LoginService } from "./loginService";
 import { API_BASE_URL } from "./constants";
 
 describe("Login API", () =>{
@@ -10,6 +10,7 @@ describe("Login API", () =>{
         fetchSpy.mockReset();
     })
 
+    const service = new LoginService();
 
     test("Should return the received access token when one is received from backend", async () => {
         const accessToken = "testToken";
@@ -21,7 +22,7 @@ describe("Login API", () =>{
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
-        login(username, password).then((loginResponse) => {
+        service.login(username, password).then((loginResponse) => {
             expect(loginResponse).toEqual({accessToken});
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
@@ -43,7 +44,7 @@ describe("Login API", () =>{
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
-        await expect(()=> login(username, password)).rejects.toThrowError("wrong username or password");
+        await expect(()=> service.login(username, password)).rejects.toThrowError("wrong username or password");
         waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
@@ -65,7 +66,7 @@ describe("Login API", () =>{
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
-        await expect(()=> login(username, password)).rejects.toThrowError("Server error");
+        await expect(()=> service.login(username, password)).rejects.toThrowError("Server error");
         waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
@@ -83,7 +84,7 @@ describe("Login API", () =>{
         fetchSpy.mockRejectedValue(()=>{});
         const username = "testUsername";
         const password = "testPassword";
-        await expect(()=> login(username, password)).rejects.toThrowError("Generic error");
+        await expect(()=> service.login(username, password)).rejects.toThrowError("Generic error");
         waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {

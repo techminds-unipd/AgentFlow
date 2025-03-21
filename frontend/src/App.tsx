@@ -11,35 +11,39 @@ import { Workflow } from "./pages/Workflow/Workflow";
 import { AuthProvider } from "./context/AuthContext";
 import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
 import { AnonymousRoute } from "./components/AnonymousRoute/AnonymousRoute";
+import { AddAccount } from "./pages/Services/AddAccount";
+import { GoogleTokenProvider } from "./context/GoogleTokenContext";
 
 function App() {
-
   return (
     <>
       <AuthProvider>
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path='/aboutus' element={<AboutUs />} />
-            <Route element={<AnonymousRoute />}>
-              <Route path='/signin' element={<SignIn />} />
-              <Route path='/signup' element={<SignUp />} />
-            </Route>
-            <Route element={<PrivateRoute />}>
-              <Route path='/dashboard' element={<Dashboard />} />
-              <Route path="/workflow">
-                <Route index element={<Navigate to=".." replace />} />
-                <Route path=':name' element={<Workflow />} />
+        <GoogleTokenProvider>
+          <BrowserRouter>
+            <Navbar />
+            <Routes>
+              <Route index element={<Home />} />
+              <Route path="/aboutus" element={<AboutUs />} />
+              <Route element={<AnonymousRoute />}>
+                <Route path="/signin" element={<SignIn />} />
+                <Route path="/signup" element={<SignUp />} />
               </Route>
-              <Route path='/services' element={<Services />} />
-            </Route>
-          </Routes>
-          <Footer />
-        </BrowserRouter>
-      </AuthProvider>
+              <Route element={<PrivateRoute />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/workflow">
+                  <Route index element={<Navigate to=".." replace />} />
+                  <Route path=':name' element={<Workflow />} />
+                </Route>
+                <Route path="/services" element={<Services />} />
+                <Route path="/services/addAccount" element={<AddAccount />} />
+              </Route>
+            </Routes>
+            <Footer />
+          </BrowserRouter>
+        </GoogleTokenProvider>
+      </AuthProvider >
     </>
-  )
+  );
 }
 
-export default App
+export default App;

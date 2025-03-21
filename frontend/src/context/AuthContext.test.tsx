@@ -1,14 +1,12 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, act } from "@testing-library/react";
 import '@testing-library/jest-dom'
 import { AuthContext, AuthProvider, User } from "./AuthContext";
 import { useContext } from "react";
+import { LoginService } from "../services/loginService";
 
 describe("AuthContext Login" , () => {
-    const fetchSpy = vi.spyOn(window, 'fetch');
-
     beforeEach(() => {
-        fetchSpy.mockReset();
         localStorage.clear();
     })
 
@@ -35,13 +33,8 @@ describe("AuthContext Login" , () => {
             )
         }
 
-        const accessToken = "testToken";
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: "Token" });
 
-        const mockResolveValue = {
-            status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken}))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";
@@ -77,12 +70,7 @@ describe("AuthContext Login" , () => {
         }
 
         const accessToken = "testToken";
-
-        const mockResolveValue = {
-            status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken}))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";
@@ -117,12 +105,7 @@ describe("AuthContext Login" , () => {
         }
 
         const accessToken = "testToken";
-
-        const mockResolveValue = {
-            status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken}))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";
@@ -151,12 +134,7 @@ describe("AuthContext Login" , () => {
         }
 
         const accessToken = "testToken";
-
-        const mockResolveValue = {
-            status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken}))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
 
         const testUsername = "testUsername";
         const user = {username: testUsername, accessToken} as User;
@@ -189,17 +167,15 @@ describe("AuthContext Login" , () => {
             )
         }
 
-        const mockResolveValue = {
-            status: 401,
-            json: () => new Promise((resolve)=>resolve("Wrong credentials"))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockRejectedValue(new Error("wrong username or password"));
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";
         render(<AuthProvider><CustomTest username={testUsername} password={testPassword}/></AuthProvider>);
         expect(screen.getByTestId("error")).toBeEmptyDOMElement();
-        fireEvent.click(screen.getByRole("button", {name: "login"}))
+        act (() => {
+            fireEvent.click(screen.getByRole("button", {name: "login"}))
+        })
         await waitFor(()=>{
             expect(screen.getByTestId("error")).toHaveTextContent(/wrong username or password/);
         })
@@ -230,11 +206,7 @@ describe("AuthContext Login" , () => {
              
         }
 
-        const mockResolveValue = {
-            status: 401,
-            json: () => new Promise((resolve)=>resolve("Wrong credentials"))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockRejectedValue(new Error("wrong username or password"));
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";
@@ -284,12 +256,7 @@ describe("AuthContext Logout", ()=>{
         }
 
         const accessToken = "testToken";
-
-        const mockResolveValue = {
-            status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken}))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({accessToken: accessToken});
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";
@@ -332,12 +299,7 @@ describe("AuthContext Logout", ()=>{
         }
 
         const accessToken = "testToken";
-
-        const mockResolveValue = {
-            status: 201,
-            json: () => new Promise((resolve)=>resolve({accessToken}))
-        };
-        fetchSpy.mockResolvedValue(mockResolveValue as Response);
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({accessToken: accessToken});
 
         const testUsername = "testUsername";
         const testPassword = "testPassword";

@@ -1,17 +1,9 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
-import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
+import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import { useDeleteWorkflow } from "./useDeleteWorkflow";
-import { deleteWorkflowByName } from "../services/deleteWorkflowAPI";
+import { DeleteWorkflowService } from "../services/deleteWorkflowService";
 import "@testing-library/jest-dom";
-
-vi.mock("../services/allWorkflowAPI", () => ({
-    allWorkflow: vi.fn()
-}));
-
-vi.mock("../services/deleteWorkflowAPI", () => ({
-    deleteWorkflowByName: vi.fn()
-}));
 
 describe("useDeleteWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -37,9 +29,9 @@ describe("useDeleteWorkflow hook", () => {
     };
 
     test("Deletes a workflow successfully when user is authenticated", async () => {
-        vi.mocked(deleteWorkflowByName).mockResolvedValue({ name: "Deleted Successfully" });
+        vi.spyOn(DeleteWorkflowService.prototype, "deleteWorkflowByName").mockResolvedValue({ name: "Deleted Successfully" });
 
-        authProviderRender(<TestComponent workflowName="Test Workflow" />, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent workflowName="Test Workflow" /></MockedAuthProvider>);
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
         act(() => {
@@ -52,9 +44,10 @@ describe("useDeleteWorkflow hook", () => {
     });
 
     test("Handles errors when API call fails", async () => {
-        vi.mocked(deleteWorkflowByName).mockRejectedValue(new Error("API Error"));
+        vi.spyOn(DeleteWorkflowService.prototype, "deleteWorkflowByName").mockRejectedValue(new Error("API Error"));
+        
 
-        authProviderRender(<TestComponent workflowName="Failing Workflow" />, providerProps);
+        render(<MockedAuthProvider {...providerProps}><TestComponent workflowName="Failing Workflow" /></MockedAuthProvider>);
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
         act(() => {

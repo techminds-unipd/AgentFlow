@@ -32,6 +32,7 @@ import WorkflowAgentAdapter from "./adapter/output/WorkflowAgentAdapter";
 import AgentRepository from "./adapter/output/AgentRepository";
 import { HttpModule } from "@nestjs/axios";
 import { ConfigModule } from "@nestjs/config";
+import WorkflowAdapterImplementation from "./adapter/input/WorkflowAdapterImplementation";
 
 @Module({
     imports: [MongooseModule.forFeature([{ name: UserEntity.name, schema: userEntitySchema }]), HttpModule, ConfigModule],
@@ -57,6 +58,7 @@ import { ConfigModule } from "@nestjs/config";
         { provide: EXECUTE_WORKFLOW_USE_CASE, useClass: ExecuteWorkflowService },
         { provide: EXECUTE_WORKFLOW_PORT, useClass: WorkflowAgentAdapter },
         WorkflowDTOValidator,
+        WorkflowAdapterImplementation,
         WorkflowRepository,
         AgentRepository
     ]

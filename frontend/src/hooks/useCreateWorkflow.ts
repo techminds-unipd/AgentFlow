@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { deleteWorkflowByName } from "../services/deleteWorkflowAPI";
+import { NewWorkflowService } from "../services/newWorkflowService";
 import { useAuth } from "./useAuth";
 
-export const useDeleteWorkflow = () => {
+export const useCreateWorkflow = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
-
-  const deleteWorkflow = async (name: string) => {
+  
+  const createWorkflow = async (name: string) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      if(user!==null){
-        const result = await deleteWorkflowByName(name, user?.accessToken); 
+      if (user!==null){
+        const service = new NewWorkflowService(user?.accessToken);
+        const result = await service.newWorkflow(name); 
         return result;
       }
     } catch (error) {
@@ -23,5 +24,5 @@ export const useDeleteWorkflow = () => {
     }
   };
 
-  return { deleteWorkflow, isLoading, error };
+  return { createWorkflow, isLoading, error };
 };

@@ -8,11 +8,13 @@ import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/wor
 import SaveWorkflowController from "src/workflow/adapter/input/SaveWorkflowController";
 import WorkflowDTOValidator from "src/workflow/adapter/input/WorkflowDTOValidator";
 import { SAVE_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/SaveWorkflowUseCase";
+import WorkflowAdapterImplementation from "src/workflow/adapter/input/WorkflowAdapterImplementation";
 
 describe("SaveWorkflowController", () => {
     let saveWorkflowController: SaveWorkflowController;
     let saveWorkflowUseCaseMock: { saveWorkflow: jest.Mock };
     let workflowDTOValidatorMock: { validate: jest.Mock };
+    let workflowAdapterImplementationMock: { toDTO: jest.Mock, toDomain: jest.Mock };
     let jwtService: { verifyAsync: jest.Mock };
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
@@ -24,8 +26,8 @@ describe("SaveWorkflowController", () => {
         new NodeDTO(4, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
         new NodeDTO(7, new PositionDTO(2, 2), new NodeDataDTO("GMAIL"))
     ], [
-        new EdgeDTO("action2", 4, 7),
-        new EdgeDTO("action1", 7, 9)
+        new EdgeDTO("action2", 7, 9),
+        new EdgeDTO("action1", 4, 7)
     ]);
 
     const workflowDTOOrderedMock = new WorkflowDTO("prova", [
@@ -43,6 +45,7 @@ describe("SaveWorkflowController", () => {
             providers: [
                 { provide: SAVE_WORKFLOW_USE_CASE, useValue: saveWorkflowUseCaseMock },
                 { provide: WorkflowDTOValidator, useValue: workflowDTOValidatorMock },
+                { provide: WorkflowAdapterImplementation, useValue: workflowAdapterImplementationMock },
                 { provide: JwtService, useValue: jwtService }
             ]
         }).compile();
@@ -52,6 +55,7 @@ describe("SaveWorkflowController", () => {
     beforeEach(async () => {
         saveWorkflowUseCaseMock = { saveWorkflow: jest.fn() };
         workflowDTOValidatorMock = { validate: jest.fn() };
+        workflowAdapterImplementationMock = { toDTO: jest.fn(), toDomain: jest.fn() };
         jwtService = { verifyAsync: jest.fn() };
         await createTestingModule();
     });
@@ -59,6 +63,8 @@ describe("SaveWorkflowController", () => {
     describe("saveWorkflow", () => {
         it("should return the saved workflow", async () => {
             saveWorkflowUseCaseMock.saveWorkflow.mockResolvedValue(workflowMock);
+            workflowAdapterImplementationMock.toDTO.mockResolvedValue(workflowDTOOrderedMock);
+            workflowAdapterImplementationMock.toDomain.mockResolvedValue(workflowMock);
             workflowDTOValidatorMock.validate.mockImplementation(() => {});
             expect(await saveWorkflowController.saveWorkflow(workflowDTOMock, { username: "username" })).toEqual(workflowDTOOrderedMock);
         });

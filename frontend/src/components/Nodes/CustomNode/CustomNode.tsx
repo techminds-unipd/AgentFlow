@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Divider,
   Typography,
@@ -14,7 +13,7 @@ import { JSX, useState } from "react";
 
 export interface CustomNodeProps {
   dialogTitle?: string;
-  dialogContent?: string | JSX.Element;
+  dialogContent?: JSX.Element;
   nodeTitle?: string;
   type?: "in" | "out" | "in-out";
   disabled?: boolean;
@@ -26,12 +25,11 @@ export const CustomNode = ({
   dialogTitle = "Description",
   dialogContent = (
     <>
-      Breve descrizione blocco
+      Short description of the block
       <br />
       <br />
       <Divider />
       <Typography variant="h6" sx={{ margin: "16px 0", color: "black" }}>
-        {" "}
         Available features
       </Typography>
       <ul style={{ listStylePosition: "inside" }}>
