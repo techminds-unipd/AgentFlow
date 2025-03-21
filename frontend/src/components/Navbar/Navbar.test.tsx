@@ -26,32 +26,35 @@ describe("Navbar", () => {
   });
 
   test("Renders navigation links", () => {
-    authProviderRender(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <Navbar />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("About Us")).toBeInTheDocument();
   });
 
   test("Renders the logo", () => {
-    authProviderRender(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <Navbar />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
     expect(screen.getByRole("img")).toHaveAttribute("alt", "Logo Tech Minds");
   });
 
   test("Shows 'Sign In' and 'Sign Up' when user is not logged in", () => {
-    authProviderRender(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <Navbar />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
 
     expect(screen.getByText("Sign In")).toBeInTheDocument();
@@ -61,11 +64,12 @@ describe("Navbar", () => {
   test("Shows 'Dashboard' and user menu when user is logged in", () => {
     providerProps = providerPropsInit(true, "testUser", "testToken"); // utente loggato
 
-    authProviderRender(
-      <MemoryRouter>
-        <Navbar />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <Navbar />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
 
     expect(screen.getByText("Dashboard")).toBeInTheDocument();
