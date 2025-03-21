@@ -4,7 +4,7 @@ import { expect, test, describe, vi, beforeEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Routes, Route } from "react-router";
 import { LogoutMenuItem } from "./LogoutMenuItem";
-import { AuthContextType, authProviderRender, providerPropsInit} from "../../context/MockedAuthProvider"
+import { AuthContextType, MockedAuthProvider, providerPropsInit} from "../../context/MockedAuthProvider"
 
 describe("LogoutMenuItem", () => {
   let providerProps: AuthContextType;
@@ -21,11 +21,12 @@ describe("LogoutMenuItem", () => {
 
   test("Renders logout menu item", () => {
     const fn = vi.fn();
-    authProviderRender(
+    render(
+      <MockedAuthProvider {...providerProps}>
         <MemoryRouter>
           <LogoutMenuItem handleCloseMenu={fn} />
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
 
     expect(screen.getByRole("menuitem")).toBeInTheDocument();
@@ -33,11 +34,12 @@ describe("LogoutMenuItem", () => {
 
   test("Renders open dialog if logout menu item is clicked", () => {
     const fn = vi.fn();
-    authProviderRender(
-      <MemoryRouter>
-        <LogoutMenuItem handleCloseMenu={fn} />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+      </MockedAuthProvider>
   );
 
     const logoutMenuItem = screen.getByRole("menuitem");
@@ -49,11 +51,12 @@ describe("LogoutMenuItem", () => {
 
   test("Renders close dialog if 'no' button is clicked", async () => {
     const fn = vi.fn();
-    authProviderRender(
-      <MemoryRouter>
-        <LogoutMenuItem handleCloseMenu={fn} />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
 
     fireEvent.click(screen.getByRole("menuitem"));
@@ -66,11 +69,12 @@ describe("LogoutMenuItem", () => {
 
   test("Renders close dialog if 'yes' button is clicked", async () => {
     const fn = vi.fn();
-    authProviderRender(
-      <MemoryRouter>
-        <LogoutMenuItem handleCloseMenu={fn} />
-      </MemoryRouter>,
-      providerProps
+    render(
+      <MockedAuthProvider {...providerProps}>
+        <MemoryRouter>
+          <LogoutMenuItem handleCloseMenu={fn} />
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
 
     fireEvent.click(screen.getByRole("menuitem"));
@@ -83,14 +87,15 @@ describe("LogoutMenuItem", () => {
 
   test("Renders navigate in sign in page if the 'yes' button is clicked", async () => {
     const fn = vi.fn();
-    authProviderRender(
+    render(
+      <MockedAuthProvider {...providerProps}>
         <MemoryRouter initialEntries={["/test"]}> 
           <Routes>
             <Route path="/test" element={<LogoutMenuItem handleCloseMenu={fn}></LogoutMenuItem>} />
             <Route path="/signin" element={<div>Test sign in</div>} />
           </Routes>
-        </MemoryRouter>,
-        providerProps
+        </MemoryRouter>
+      </MockedAuthProvider>
     );
   
     expect(screen.queryByRole("dialog")).toBeNull();
