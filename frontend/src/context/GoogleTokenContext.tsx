@@ -6,7 +6,7 @@ export interface GoogleAccountToken {
 
 export interface GoogleAccountTokenType {
     googleToken: GoogleAccountToken | null;
-    addGoogleToken: (GoogleTokenObject: GoogleAccountToken) => Promise<void>;
+    addGoogleToken: (googleTokenObject: GoogleAccountToken) => Promise<void>;
     removeGoogleToken: () => void;
     isTokenExpired: () => boolean;
     error: string | null;
@@ -34,10 +34,10 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }, []);
 
     // chiama la funzione per aggiungere le informazioni dell'account e se avviene correttamente salva i dati in localStorage
-    const addGoogleToken = async (GoogleTokenObject: GoogleAccountToken) => {
+    const addGoogleToken = async (googleTokenObject: GoogleAccountToken) => {
         try {
-            localStorage.setItem("GoogleAccountToken", JSON.stringify(GoogleTokenObject));
-            setGoogleToken(GoogleTokenObject);
+            localStorage.setItem("GoogleAccountToken", JSON.stringify(googleTokenObject));
+            setGoogleToken(googleTokenObject);
             setError(null);
         } catch (err) {
             setError(err as string);

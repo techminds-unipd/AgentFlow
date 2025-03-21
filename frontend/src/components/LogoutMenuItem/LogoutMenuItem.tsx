@@ -25,7 +25,7 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
     };
 
     const handleLogout = () => {
-        removeGoogleToken()
+        removeGoogleToken();
         logoutUser();
         handleCloseDialog();
         handleCloseMenu();
