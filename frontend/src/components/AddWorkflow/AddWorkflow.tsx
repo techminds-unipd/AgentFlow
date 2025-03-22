@@ -61,7 +61,6 @@ interface AddWorkflowProps {
                 gap={1}
                 width={750}
                 bgcolor={"var(--maincolor)"}
-                marginBottom={5}
             >
                 <TextField 
                     value={workflowName}

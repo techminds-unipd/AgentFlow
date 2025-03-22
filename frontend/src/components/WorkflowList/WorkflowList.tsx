@@ -26,6 +26,7 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
         display={"flex"}
         flexDirection={"column"}
         alignItems={"center"}
+        marginBottom={5}
       >
         <Typography component="h2" variant="h5" textAlign={"center"} sx= {{ marginBottom: 2 }}>
           Your workflows
