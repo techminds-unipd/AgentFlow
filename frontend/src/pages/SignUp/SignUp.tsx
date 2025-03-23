@@ -1,5 +1,3 @@
-export const SignUp=()=>{
-    return(
-        <>Ciao SignUp</>
-    )
-}
+export const SignUp = () => {
+    return <>Ciao SignUp</>;
+};

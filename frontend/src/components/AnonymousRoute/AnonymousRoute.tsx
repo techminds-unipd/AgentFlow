@@ -3,7 +3,5 @@ import { useAuth } from "../../hooks/useAuth";
 
 export const AnonymousRoute = () => {
     const { user } = useAuth();
-    return user 
-        ? <Navigate to="/dashboard" replace />
-        : <Outlet />;
+    return user ? <Navigate to="/dashboard" replace /> : <Outlet />;
 };

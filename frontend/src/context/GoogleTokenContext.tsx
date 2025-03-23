@@ -28,9 +28,7 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     // controlla se il token è già salvato in localStorage al momento dell'avvio
     useEffect(() => {
         const storedToken = localStorage.getItem("GoogleAccountToken");
-        if (storedToken) {
-            setGoogleToken(JSON.parse(storedToken));
-        }
+        if (storedToken) setGoogleToken(JSON.parse(storedToken));
     }, []);
 
     // chiama la funzione per aggiungere le informazioni dell'account e se avviene correttamente salva i dati in localStorage
@@ -51,13 +49,12 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
 
     const isTokenExpired = () => {
-        if (!googleToken) {
-            return true;
-        }
+        if (!googleToken) return true;
+
         const currentDate = new Date();
         const expireDate = new Date(googleToken.expireDate);
         return currentDate > expireDate;
-    }
+    };
 
     // ritorniamo user, loginUser, logoutUser e error a tutti i children
     return (

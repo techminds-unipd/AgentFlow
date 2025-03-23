@@ -1,9 +1,9 @@
 import SignInForm from "../../components/SignInForm/SignInForm";
 
-export const SignIn=()=>{
-    return(
+export const SignIn = () => {
+    return (
         <>
-            <SignInForm/>
+            <SignInForm />
         </>
-    )
-}
+    );
+};

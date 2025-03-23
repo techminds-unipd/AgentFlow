@@ -1,5 +1,3 @@
-export const Workflow=()=>{
-    return(
-        <>Ciao Workflow</>
-    )
-}
+export const Workflow = () => {
+    return <>Ciao Workflow</>;
+};

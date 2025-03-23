@@ -29,7 +29,11 @@ describe("useAllWorkflow hook", () => {
         const mockData = ["workflow1", "workflow2"];
         vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockResolvedValue(mockData);
 
-        render(<MockedAuthProvider {...providerProps}><TestComponent /></MockedAuthProvider>);
+        render(
+            <MockedAuthProvider {...providerProps}>
+                <TestComponent />
+            </MockedAuthProvider>
+        );
 
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
@@ -41,7 +45,11 @@ describe("useAllWorkflow hook", () => {
     test("Handles errors when API call fails", async () => {
         vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockRejectedValue(new Error("API Error"));
 
-        render(<MockedAuthProvider {...providerProps}><TestComponent /></MockedAuthProvider>);
+        render(
+            <MockedAuthProvider {...providerProps}>
+                <TestComponent />
+            </MockedAuthProvider>
+        );
 
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();

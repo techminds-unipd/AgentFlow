@@ -1,26 +1,23 @@
 //Gestire il redirect del backend quando aggiungo un account Google
-import { useNavigate, useSearchParams } from "react-router"
-import { useGoogleToken } from "../../hooks/useGoogleToken"
+import { useNavigate, useSearchParams } from "react-router";
+import { useGoogleToken } from "../../hooks/useGoogleToken";
 import { Button } from "@mui/material";
 
-export const AddAccount=()=>{
+export const AddAccount = () => {
     const [searchParams] = useSearchParams();
     const tokenParam = searchParams.get("token");
     const expireDateParam = searchParams.get("expireDate");
-    const {addGoogleToken, removeGoogleToken} = useGoogleToken();
+    const { addGoogleToken, removeGoogleToken } = useGoogleToken();
     const navigate = useNavigate();
-    if (tokenParam && expireDateParam){
-        removeGoogleToken()
-        addGoogleToken({
-            token: tokenParam,
-            expireDate: expireDateParam
-        })
-        navigate("/services")
+    if (tokenParam && expireDateParam) {
+        removeGoogleToken();
+        addGoogleToken({ token: tokenParam, expireDate: expireDateParam });
+        navigate("/services");
     }
-    
+
     return (
         <div>
             <Button href="/services">If the automatic redirect isn't working, click here.</Button>
         </div>
-    )
-}
+    );
+};

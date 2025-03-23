@@ -30,21 +30,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const [error, setError] = useState<string | null>(null);
 
     const service = new LoginService();
-    
 
     // controlla se l'utente è già salvato in localStorage al momento dell'avvio
     useEffect(() => {
         const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
+        if (storedUser) setUser(JSON.parse(storedUser));
     }, []);
 
     // chiama la funzione di login e se avviene correttamente salva i dati in localStorage
     const loginUser = async (username: string, password: string) => {
         try {
             const data = await service.login(username, password);
-            const user = {username, accessToken: data.accessToken} as User;
+            const user = { username, accessToken: data.accessToken } as User;
             localStorage.setItem("user", JSON.stringify(user));
             setUser(user);
             setError(null);
@@ -60,9 +57,5 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     // ritorniamo user, loginUser, logoutUser e error a tutti i children
-    return (
-        <AuthContext.Provider value={{ user, loginUser, logoutUser, error }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    return <AuthContext.Provider value={{ user, loginUser, logoutUser, error }}>{children}</AuthContext.Provider>;
 };
