@@ -3,7 +3,7 @@ import {
     CONNECTION_GOOGLE_REQUEST_USE_CASE,
     ConnectionGoogleRequestUseCase
 } from "src/accountConnection/service/port/input/ConnectionGoogleRequestUseCase";
-
+import { RedirectUrlDTO } from "./RedirectUrlDTO";
 
 @Controller("/google")
 class ConnectionGoogleRequestController {
@@ -12,10 +12,9 @@ class ConnectionGoogleRequestController {
         private readonly connectionGoogleRequestUseCase: ConnectionGoogleRequestUseCase
     ) {}
 
-
     @Get("/auth")
     @Redirect()
-    googleAuth(): { url: string } {
+    googleAuth(): RedirectUrlDTO {
         const response = this.connectionGoogleRequestUseCase.googleAuth();
         return { url: response };
     }

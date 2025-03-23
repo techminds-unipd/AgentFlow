@@ -7,10 +7,12 @@ import GetWorkflowController from "src/workflow/adapter/input/GetWorkflowControl
 import { Node, NodeType, Point, Workflow } from "src/workflow/domain/Workflow";
 import { GET_WORKFLOW_USE_CASE } from "src/workflow/service/port/input/GetWorkflowUseCase";
 import { EdgeDTO, NodeDataDTO, NodeDTO, PositionDTO, WorkflowDTO } from "src/workflow/adapter/input/WorkflowDTO";
+import WorkflowAdapterImplementation from "src/workflow/adapter/input/WorkflowAdapterImplementation";
 
 describe("GetWorkflowController", () => {
     let getWorkflowController: GetWorkflowController;
     let getWorkflowUseCaseMock: { getWorkflow: jest.Mock };
+    let workflowAdapterImplementationMock: { toDTO: jest.Mock };
     let jwtService: { verifyAsync: jest.Mock };
     const workflowMock = new Workflow("prova", [
         new Node(NodeType.GCalendar, "action1", new Point(1, 1)),
@@ -31,6 +33,7 @@ describe("GetWorkflowController", () => {
             controllers: [GetWorkflowController],
             providers: [
                 { provide: GET_WORKFLOW_USE_CASE, useValue: getWorkflowUseCaseMock },
+                { provide: WorkflowAdapterImplementation, useValue: workflowAdapterImplementationMock },
                 { provide: JwtService, useValue: jwtService }
             ]
         }).compile();
@@ -39,12 +42,14 @@ describe("GetWorkflowController", () => {
 
     beforeEach(async () => {
         getWorkflowUseCaseMock = { getWorkflow: jest.fn() };
+        workflowAdapterImplementationMock = { toDTO: jest.fn() };
         jwtService = { verifyAsync: jest.fn() };
         await createTestingModule();
     });
 
     describe("getWorkflow", () => {
         it("should get the workflow by its name", async () => {
+            workflowAdapterImplementationMock.toDTO.mockResolvedValue(workflowDTOMock);
             getWorkflowUseCaseMock.getWorkflow.mockResolvedValue(workflowMock);
             expect(await getWorkflowController.getWorkflow("prova", { username: "username" })).toEqual(workflowDTOMock);
         });

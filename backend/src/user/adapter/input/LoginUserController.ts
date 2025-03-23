@@ -18,14 +18,10 @@ class LoginUserController {
         return new User(userDTO.username, userDTO.password);
     }
 
-    private toDTO(user: User): UserDTO {
-        return new UserDTO(user.username, user.password);
-    }
-
     @Post("/login")
     @ApiResponse({ status: 201, description: "User logged in successfully and JWT token returned" })
     @ApiResponse({ status: 401, description: "Wrong credentials" })
-    @ApiResponse({ status: 500, description: "Internal server error"})
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async login(@Body() req: UserDTO): Promise<JWT> {
         const user = this.toDomain(req);
         try {

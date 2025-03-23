@@ -1,16 +1,18 @@
 import * as React from "react";
 import { MenuItem, Dialog, DialogActions, DialogTitle, Button} from "@mui/material";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../hooks/useAuth.tsx";
+import { useAuth } from "../../hooks/useAuth";
 import "../../index.css";
+import { useGoogleToken } from "../../hooks/useGoogleToken";
 
 interface LogoutMenuItem {
     handleCloseMenu(): void
   }
 
 export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
-    const { logoutUser } = useAuth(); // logoutUser definita dento l'hook useAuth()
-    let navigate = useNavigate();
+    const { logoutUser } = useAuth();
+    const { removeGoogleToken } = useGoogleToken()
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
     const handleOpenDialog = () => {
@@ -23,10 +25,11 @@ export const LogoutMenuItem=({handleCloseMenu}: LogoutMenuItem) =>{
     };
 
     const handleLogout = () => {
+        removeGoogleToken();
         logoutUser();
         handleCloseDialog();
-        navigate("/");
         handleCloseMenu();
+        navigate("/signin");
     };
     
     return(
