@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "./constants";
 
-interface newWorkflowResponse {
+export interface NewWorkflowResponse {
     name: string;
 }
 
@@ -11,7 +11,7 @@ export class NewWorkflowService {
         this.accessToken = accessToken;
     }
 
-    public async newWorkflow(name: string): Promise<newWorkflowResponse> {
+    public async newWorkflow(name: string): Promise<NewWorkflowResponse> {
         try {
             const response = await fetch(`${API_BASE_URL}/workflow/create/${name}`, {
                 method: "POST",
@@ -19,7 +19,7 @@ export class NewWorkflowService {
                 body: JSON.stringify({ name })
             });
 
-            if (response.status === 201) return await response.json();
+            if (response.status === 201) return (await response.json()) as NewWorkflowResponse;
             else if (response.status === 400) throw new Error("Workflow with the same name already exists");
             else if (response.status >= 500) throw new Error("Server error");
             else throw new Error("Generic error");

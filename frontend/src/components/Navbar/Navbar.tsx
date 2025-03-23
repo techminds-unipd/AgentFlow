@@ -5,25 +5,25 @@ import { CustomButton } from "../CustomButton/CustomButton";
 import { LogoutMenuItem } from "../LogoutMenuItem/LogoutMenuItem";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
-import * as React from "react";
 import logo from "../../assets/Logo.Tech-Minds-fe.png";
 import "../../index.css";
+import React from "react";
 
-export const Navbar = () => {
+export const Navbar = (): React.JSX.Element => {
     const { user } = useAuth(); // per verificare se l'utente è loggato o no
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleMenu = (event: React.MouseEvent<HTMLButtonElement>): void => {
         setAnchorEl(event.currentTarget);
     };
-    const handleCloseMenu = () => {
+    const handleCloseMenu = (): void => {
         setAnchorEl(null);
     };
-    const handleNavigate = () => {
+    const handleNavigate = (): void => {
         handleCloseMenu();
-        navigate("/services");
+        void navigate("/services");
     };
 
     return (

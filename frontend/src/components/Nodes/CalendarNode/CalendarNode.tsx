@@ -1,5 +1,6 @@
 import { Divider, Typography } from "@mui/material";
 import { CustomNode, CustomNodeProps } from "../CustomNode/CustomNode.tsx";
+import { JSX } from "react";
 
 export const CalendarNode = ({
     nodeTitle = "Calendar",
@@ -23,7 +24,7 @@ export const CalendarNode = ({
     type = "in-out",
     disabled = false,
     draggable = false
-}: CustomNodeProps) => {
+}: CustomNodeProps): JSX.Element => {
     return (
         <CustomNode
             nodeTitle={nodeTitle}

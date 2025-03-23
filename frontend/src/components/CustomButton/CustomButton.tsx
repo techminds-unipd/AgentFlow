@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { Link as RouterButton, LinkProps as RouterButtonProps } from "react-router";
-import React from "react";
+import React, { JSX } from "react";
 import "../../index.css";
 
 interface CustomButtonProps {
@@ -9,8 +9,13 @@ interface CustomButtonProps {
     variant: "contained" | "outlined";
 }
 
-export const CustomButton = ({ name, link, variant = "contained" }: CustomButtonProps) => {
-    const getButtonStyles = (variant: string) => {
+interface ButtonStyles {
+    textColor: string;
+    backgroundColor: string;
+}
+
+export const CustomButton = ({ name, link, variant = "contained" }: CustomButtonProps): JSX.Element => {
+    const getButtonStyles = (variant: string): ButtonStyles => {
         if (variant === "outlined") return { textColor: "var(--white-text)", backgroundColor: "var(--maincolor)" };
         else return { textColor: "var(--maincolor)", backgroundColor: "var(--white-text)" };
     };

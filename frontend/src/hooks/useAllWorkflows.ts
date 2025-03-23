@@ -2,13 +2,20 @@ import { useState, useEffect } from "react";
 import { AllWorkflowsService } from "../services/allWorkflowsService";
 import { useAuth } from "./useAuth";
 
-export const useAllWorkflow = () => {
+interface IUseAllWorkflow {
+    workflowList: string[] | null;
+    isLoading: boolean;
+    error: string | null;
+    refetch: () => Promise<void>;
+}
+
+export const useAllWorkflow = (): IUseAllWorkflow => {
     const [workflowList, setData] = useState<Array<string> | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();
 
-    const fetchWorkflows = async () => {
+    const fetchWorkflows = async (): Promise<void> => {
         setIsLoading(true);
         setError(null);
 
@@ -26,7 +33,7 @@ export const useAllWorkflow = () => {
     };
 
     useEffect(() => {
-        fetchWorkflows();
+        void fetchWorkflows();
     }, []);
 
     return { workflowList, isLoading, error, refetch: fetchWorkflows };

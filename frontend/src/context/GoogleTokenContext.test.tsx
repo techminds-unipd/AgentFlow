@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "vitest";
 import { GoogleTokenContext, GoogleTokenProvider } from "./GoogleTokenContext";
-import { useContext } from "react";
+import { JSX, useContext } from "react";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 
@@ -10,11 +10,11 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("Sets googleToken.token in context after addGoogleToken is called", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
                         Add Google Account
                     </button>
                     <span>{googleToken?.token}</span>
@@ -33,11 +33,11 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("Sets googleToken.expireDate in context after addGoogleToken is called", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
                         Add Google Account
                     </button>
                     <span>{googleToken?.expireDate}</span>
@@ -56,10 +56,10 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("Saves googleToken in local storage after addGoogleToken is called", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
-                <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
+                <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
                     Add Google Account
                 </button>
             );
@@ -80,11 +80,11 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("Removes googleToken.token and googleToken.expireDate from context after removeGoogleToken is called", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken, removeGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
                         Add Google Account
                     </button>
                     <button onClick={removeGoogleToken}>Remove Google Account</button>
@@ -108,11 +108,11 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("Removes googleToken from local storage after removeGoogleToken is called", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { addGoogleToken, removeGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2023-12-31T23:59:59Z" })}>
                         Add Google Account
                     </button>
                     <button onClick={removeGoogleToken}>Remove Google Account</button>
@@ -137,11 +137,11 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("isTokenExpired returns true if token is expired", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { addGoogleToken, isTokenExpired } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2020-01-01T00:00:00Z" })}>
+                    <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2020-01-01T00:00:00Z" })}>
                         Add Expired Google Account
                     </button>
                     <span>{isTokenExpired() ? "Expired" : "Valid"}</span>
@@ -160,11 +160,11 @@ describe("GoogleTokenContext test", () => {
     });
 
     test("isTokenExpired returns false if token is not expired", async () => {
-        const TestComponent = () => {
+        const TestComponent = (): JSX.Element => {
             const { addGoogleToken, isTokenExpired } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={async () => addGoogleToken({ token: "test-token", expireDate: "2099-12-31T23:59:59Z" })}>
+                    <button onClick={() => void addGoogleToken({ token: "test-token", expireDate: "2099-12-31T23:59:59Z" })}>
                         Add Valid Google Account
                     </button>
                     <span>{isTokenExpired() ? "Expired" : "Valid"}</span>

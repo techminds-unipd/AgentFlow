@@ -2,17 +2,18 @@
 import { useNavigate, useSearchParams } from "react-router";
 import { useGoogleToken } from "../../hooks/useGoogleToken";
 import { Button } from "@mui/material";
+import { JSX } from "react";
 
-export const AddAccount = () => {
+export const AddAccount = (): JSX.Element => {
     const [searchParams] = useSearchParams();
     const tokenParam = searchParams.get("token");
     const expireDateParam = searchParams.get("expireDate");
     const { addGoogleToken, removeGoogleToken } = useGoogleToken();
     const navigate = useNavigate();
-    if (tokenParam && expireDateParam) {
+    if (tokenParam !== null && expireDateParam !== null) {
         removeGoogleToken();
         addGoogleToken({ token: tokenParam, expireDate: expireDateParam });
-        navigate("/services");
+        void navigate("/services");
     }
 
     return (

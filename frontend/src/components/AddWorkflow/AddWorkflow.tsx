@@ -17,7 +17,7 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
 
     const { createWorkflow, isLoading, error } = useCreateWorkflow();
 
-    const handleClick = async () => {
+    const handleClick = async (): Promise<void> => {
         if (!workflowName) {
             setSnackBarSetMessage("Please enter a valid workflow name.");
             setAlertColor("error");
@@ -35,18 +35,18 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                 setWorkflowName("");
             } else {
                 // Se qualcosa non va con la creazione, se il problema è perchè c'è il nome uguale verrà stampato in automatico l'errore definito in newWorkflowAPI
-                setSnackBarSetMessage(error || "Something went wrong.");
+                setSnackBarSetMessage(error ?? "Something went wrong");
                 setAlertColor("error");
             }
-        } catch (err) {
-            setSnackBarSetMessage(error || "Something went wrong.");
+        } catch {
+            setSnackBarSetMessage(error ?? "Something went wrong.");
             setAlertColor("error");
         }
 
         setOpenSnackBar(true);
     };
 
-    const handleClose = () => {
+    const handleClose = (): void => {
         setOpenSnackBar(false);
     };
 
@@ -79,7 +79,14 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                         }
                     }}
                 />
-                <IconButton aria-label="Add workflow" size="large" onClick={handleClick} disabled={isLoading}>
+                <IconButton
+                    aria-label="Add workflow"
+                    size="large"
+                    onClick={() => {
+                        void handleClick();
+                    }}
+                    disabled={isLoading}
+                >
                     <Add fontSize="large" />
                 </IconButton>
             </Box>

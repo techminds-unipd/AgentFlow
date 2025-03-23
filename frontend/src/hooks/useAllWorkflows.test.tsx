@@ -4,6 +4,7 @@ import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../conte
 import { AllWorkflowsService } from "../services/allWorkflowsService";
 import { useAllWorkflow } from "./useAllWorkflows";
 import "@testing-library/jest-dom";
+import { JSX } from "react";
 
 describe("useAllWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -12,7 +13,7 @@ describe("useAllWorkflow hook", () => {
         providerProps = providerPropsInit();
     });
 
-    const TestComponent = () => {
+    const TestComponent = (): JSX.Element => {
         const { workflowList, isLoading, error, refetch } = useAllWorkflow();
 
         return (
@@ -20,7 +21,7 @@ describe("useAllWorkflow hook", () => {
                 <p>Loading: {JSON.stringify(isLoading)}</p>
                 <p>Workflows: {JSON.stringify(workflowList)}</p>
                 <p>Error: {JSON.stringify(error)}</p>
-                <button onClick={refetch}>Fetch Workflows</button>
+                <button onClick={() => void refetch}>Fetch Workflows</button>
             </div>
         );
     };

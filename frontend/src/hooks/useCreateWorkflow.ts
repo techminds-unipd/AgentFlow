@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { NewWorkflowService } from "../services/newWorkflowService";
+import { NewWorkflowService, NewWorkflowResponse } from "../services/newWorkflowService";
 import { useAuth } from "./useAuth";
 
-export const useCreateWorkflow = () => {
+interface IUseCreateWorkflow {
+    createWorkflow: (name: string) => Promise<NewWorkflowResponse | undefined>;
+    isLoading: boolean;
+    error: string | null;
+}
+
+export const useCreateWorkflow = (): IUseCreateWorkflow => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();
 
-    const createWorkflow = async (name: string) => {
+    const createWorkflow = async (name: string): Promise<NewWorkflowResponse | undefined> => {
         setIsLoading(true);
         setError(null);
 

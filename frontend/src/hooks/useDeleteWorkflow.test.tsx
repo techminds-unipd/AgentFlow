@@ -4,6 +4,7 @@ import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../conte
 import { useDeleteWorkflow } from "./useDeleteWorkflow";
 import { DeleteWorkflowService } from "../services/deleteWorkflowService";
 import "@testing-library/jest-dom";
+import { JSX } from "react";
 
 describe("useDeleteWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -12,10 +13,10 @@ describe("useDeleteWorkflow hook", () => {
         providerProps = providerPropsInit();
     });
 
-    const TestComponent = ({ workflowName }: { workflowName: string }) => {
+    const TestComponent = ({ workflowName }: { workflowName: string }): JSX.Element => {
         const { deleteWorkflow, isLoading, error } = useDeleteWorkflow();
 
-        const handleDelete = async () => {
+        const handleDelete = async (): Promise<void> => {
             await deleteWorkflow(workflowName);
         };
 
@@ -23,7 +24,7 @@ describe("useDeleteWorkflow hook", () => {
             <div>
                 <p>Loading: {JSON.stringify(isLoading)}</p>
                 <p>Error: {JSON.stringify(error)}</p>
-                <button onClick={handleDelete}>Delete Workflow</button>
+                <button onClick={() => void handleDelete()}>Delete Workflow</button>
             </div>
         );
     };

@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -14,6 +13,7 @@ import { styled } from "@mui/material/styles";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router";
 import "../../index.css";
+import React, { JSX } from "react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -43,7 +43,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     }
 }));
 
-export default function SignIn() {
+export default function SignIn(): JSX.Element {
     const { user, loginUser, error } = useAuth();
     const [usernameError, setUsernameError] = React.useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = React.useState("");
@@ -52,10 +52,10 @@ export default function SignIn() {
     const navigate = useNavigate();
 
     React.useEffect(() => {
-        if (!error && user) navigate("/dashboard");
-    }, [error, user]);
+        if (error === null && user) void navigate("/dashboard");
+    }, [error, navigate, user]);
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
         if (usernameError || passwordError) return;
 
@@ -66,7 +66,7 @@ export default function SignIn() {
         await loginUser(username, password);
     };
 
-    const validateInputs = () => {
+    const validateInputs = (): boolean => {
         const username = document.getElementById("username") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
 
@@ -103,7 +103,9 @@ export default function SignIn() {
                 {error !== null && <Alert severity="error">{error.toString()}</Alert>}
                 <Box
                     component="form"
-                    onSubmit={handleSubmit}
+                    onSubmit={(event) => {
+                        void handleSubmit(event);
+                    }}
                     noValidate
                     sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}
                 >

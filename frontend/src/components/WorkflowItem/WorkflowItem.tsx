@@ -9,21 +9,21 @@ interface WorkflowItemProps {
     setShouldReload: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps) => {
+export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): React.JSX.Element => {
     const [open, setOpen] = React.useState(false);
     const { deleteWorkflow } = useDeleteWorkflow();
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (): void => {
         setOpen(true);
     };
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (): void => {
         setOpen(false);
     };
 
-    const handleDeleteWorkflow = () => {
+    const handleDeleteWorkflow = async (): Promise<void> => {
         try {
-            deleteWorkflow(name);
+            await deleteWorkflow(name);
             setShouldReload(true); // Re-rendering della lista
         } catch (error) {
             console.error("Failed to delete workflow:", error);
@@ -62,7 +62,12 @@ export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps) => {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseDialog}>No</Button>
-                    <Button onClick={handleDeleteWorkflow} autoFocus>
+                    <Button
+                        onClick={() => {
+                            void handleDeleteWorkflow();
+                        }}
+                        autoFocus
+                    >
                         Yes
                     </Button>
                 </DialogActions>

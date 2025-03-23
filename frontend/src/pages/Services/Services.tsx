@@ -6,9 +6,9 @@ import { PastebinNode } from "../../components/Nodes/PastebinNode/PastebinNode";
 import "../../index.css";
 import { API_BASE_URL } from "../../services/constants";
 import { useGoogleToken } from "../../hooks/useGoogleToken";
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 
-export const Services = () => {
+export const Services = (): JSX.Element => {
     const URL = API_BASE_URL + "/google/auth";
     const { googleToken, removeGoogleToken, isTokenExpired } = useGoogleToken();
     const [buttonText, setButtonText] = useState("");
@@ -25,7 +25,7 @@ export const Services = () => {
         if (googleToken && isTokenExpired()) setDisplayExpiredToken("block");
         else setDisplayExpiredToken("none");
     }, [googleToken, isTokenExpired]);
-    const handleButtonClick = async () => {
+    const handleButtonClick = (): void => {
         if (googleToken) {
             removeGoogleToken();
             setButtonText("Link your Google account");

@@ -33,10 +33,10 @@ export const CustomNode = ({
     type = "in-out",
     disabled = false,
     draggable = false
-}: CustomNodeProps) => {
+}: CustomNodeProps): JSX.Element => {
     const [open, setOpen] = useState(false);
-    const handleClose = () => setOpen(false);
-    const handleOpen = () => setOpen(true);
+    const handleClose = (): void => setOpen(false);
+    const handleOpen = (): void => setOpen(true);
 
     const mainColor = !disabled ? "var(--maincolor)" : "var(--disabled-outline)";
     const backgroundColor = !disabled ? "white" : "var(--disabled-background)";

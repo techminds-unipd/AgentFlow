@@ -1,7 +1,7 @@
 import { useLocation } from "react-router";
 import { Link, Typography } from "@mui/material";
 import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router";
-import React from "react";
+import React, { JSX } from "react";
 import "../../index.css";
 
 interface CustomLinkProps {
@@ -16,7 +16,7 @@ interface CustomLinkProps {
  * La funzione LinkBehaviour è stata presa da https://mui.com/material-ui/integrations/routing/
  */
 
-export const CustomLink = ({ name, link, color }: CustomLinkProps) => {
+export const CustomLink = ({ name, link, color }: CustomLinkProps): JSX.Element => {
     let varColor;
     if (color === "white") varColor = "var(--white-text)";
     else if (color === "main-color") varColor = "var(--maincolor)";

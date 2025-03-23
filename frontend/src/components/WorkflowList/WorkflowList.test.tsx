@@ -16,7 +16,7 @@ describe("WorkflowList Component", () => {
         providerProps = providerPropsInit();
     });
 
-    test("Displays workflows correctly", async () => {
+    test("Displays workflows correctly", () => {
         const mockWorkflows: string[] = ["Workflow 1", "Workflow 2", "Workflow 3"];
 
         vi.mocked(useAllWorkflow).mockReturnValue({

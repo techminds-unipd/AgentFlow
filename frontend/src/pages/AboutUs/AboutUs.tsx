@@ -2,8 +2,9 @@ import { PersonCard } from "../../components/PersonCard/PersonCard";
 import Grid from "@mui/material/Grid2";
 import { Typography, Link } from "@mui/material";
 import "./AboutUs.css";
+import { JSX } from "react";
 
-export const AboutUs = () => {
+export const AboutUs = (): JSX.Element => {
     return (
         <main>
             <Grid container>
@@ -12,25 +13,25 @@ export const AboutUs = () => {
                 </Grid>
                 <Grid container gap={6} alignItems="center" justifyContent="center" width={"100%"} marginTop={3}>
                     <Grid>
-                        <PersonCard name="Alessandro Bressan" GitHubUsername="T-brex" />
+                        <PersonCard name="Alessandro Bressan" gitHubUsername="T-brex" />
                     </Grid>
                     <Grid>
-                        <PersonCard name="Samuele Corradin" GitHubUsername="Jacky8703" />
+                        <PersonCard name="Samuele Corradin" gitHubUsername="Jacky8703" />
                     </Grid>
                     <Grid>
-                        <PersonCard name="Tommaso Lazzarin" GitHubUsername="tlazzarin" />
+                        <PersonCard name="Tommaso Lazzarin" gitHubUsername="tlazzarin" />
                     </Grid>
                     <Grid>
-                        <PersonCard name="Leonardo Salviato" GitHubUsername="leosalvi03" />
+                        <PersonCard name="Leonardo Salviato" gitHubUsername="leosalvi03" />
                     </Grid>
                     <Grid>
-                        <PersonCard name="Matteo Squarzoni" GitHubUsername="MatteoSquarz" />
+                        <PersonCard name="Matteo Squarzoni" gitHubUsername="MatteoSquarz" />
                     </Grid>
                     <Grid>
-                        <PersonCard name="Giuseppe Tutino" GitHubUsername="Giuseppe5000" />
+                        <PersonCard name="Giuseppe Tutino" gitHubUsername="Giuseppe5000" />
                     </Grid>
                     <Grid>
-                        <PersonCard name="Caterina Vallotto" GitHubUsername="cvallott" />
+                        <PersonCard name="Caterina Vallotto" gitHubUsername="cvallott" />
                     </Grid>
                 </Grid>
                 <Grid size={12} marginLeft={10} marginRight={10} paddingTop={7}>

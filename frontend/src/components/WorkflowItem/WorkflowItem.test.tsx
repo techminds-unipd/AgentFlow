@@ -10,7 +10,7 @@ vi.mock("../../hooks/useDeleteWorkflow", () => ({ useDeleteWorkflow: vi.fn().moc
 describe("WorkflowItem", () => {
     const setShouldReload = vi.fn();
 
-    test("Opens the dialog when clicking the delete button", async () => {
+    test("Opens the dialog when clicking the delete button", () => {
         render(<WorkflowItem name="Test Workflow" setShouldReload={setShouldReload} />);
 
         const deleteButton = screen.getByRole("button");

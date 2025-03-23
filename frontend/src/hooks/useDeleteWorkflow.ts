@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { DeleteWorkflowService } from "../services/deleteWorkflowService";
+import { DeleteWorkflowService, DeleteWorkflowResponse } from "../services/deleteWorkflowService";
 import { useAuth } from "./useAuth";
 
-export const useDeleteWorkflow = () => {
+interface IUseDeleteWorkflow {
+    deleteWorkflow: (name: string) => Promise<DeleteWorkflowResponse | undefined>;
+    isLoading: boolean;
+    error: string | null;
+}
+
+export const useDeleteWorkflow = (): IUseDeleteWorkflow => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();
 
-    const deleteWorkflow = async (name: string) => {
+    const deleteWorkflow = async (name: string): Promise<DeleteWorkflowResponse | undefined> => {
         setIsLoading(true);
         setError(null);
 

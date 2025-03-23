@@ -6,7 +6,7 @@ export interface GoogleAccountToken {
 
 export interface GoogleAccountTokenType {
     googleToken: GoogleAccountToken | null;
-    addGoogleToken: (googleTokenObject: GoogleAccountToken) => Promise<void>;
+    addGoogleToken: (googleTokenObject: GoogleAccountToken) => void;
     removeGoogleToken: () => void;
     isTokenExpired: () => boolean;
     error: string | null;
@@ -20,7 +20,8 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     // Se l'utente ha effettuato il login con Google si recuperano i dati dal localStorage, altrimenti ritorna null
     const [googleToken, setGoogleToken] = useState<GoogleAccountToken | null>(() => {
         const storedToken = localStorage.getItem("GoogleAccountToken");
-        return storedToken ? JSON.parse(storedToken) : null;
+        if (storedToken !== null) return JSON.parse(storedToken) as GoogleAccountToken;
+        else return null;
     });
 
     const [error, setError] = useState<string | null>(null);
@@ -28,11 +29,11 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     // controlla se il token è già salvato in localStorage al momento dell'avvio
     useEffect(() => {
         const storedToken = localStorage.getItem("GoogleAccountToken");
-        if (storedToken) setGoogleToken(JSON.parse(storedToken));
+        if (storedToken !== null) setGoogleToken(JSON.parse(storedToken) as GoogleAccountToken);
     }, []);
 
     // chiama la funzione per aggiungere le informazioni dell'account e se avviene correttamente salva i dati in localStorage
-    const addGoogleToken = async (googleTokenObject: GoogleAccountToken) => {
+    const addGoogleToken = (googleTokenObject: GoogleAccountToken): void => {
         try {
             localStorage.setItem("GoogleAccountToken", JSON.stringify(googleTokenObject));
             setGoogleToken(googleTokenObject);
@@ -43,12 +44,12 @@ export const GoogleTokenProvider: React.FC<{ children: React.ReactNode }> = ({ c
     };
 
     // cancella i dati in localStorage
-    const removeGoogleToken = () => {
+    const removeGoogleToken = (): void => {
         localStorage.removeItem("GoogleAccountToken");
         setGoogleToken(null);
     };
 
-    const isTokenExpired = () => {
+    const isTokenExpired = (): boolean => {
         if (!googleToken) return true;
 
         const currentDate = new Date();

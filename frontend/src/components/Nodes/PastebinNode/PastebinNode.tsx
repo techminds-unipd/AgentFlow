@@ -1,5 +1,6 @@
 import { Divider, Typography } from "@mui/material";
 import { CustomNode, CustomNodeProps } from "../CustomNode/CustomNode.tsx";
+import { JSX } from "react";
 
 export const PastebinNode = ({
     nodeTitle = "Pastebin",
@@ -24,7 +25,7 @@ export const PastebinNode = ({
     type = "in",
     disabled = false,
     draggable = false
-}: CustomNodeProps) => {
+}: CustomNodeProps): JSX.Element => {
     return (
         <CustomNode
             nodeTitle={nodeTitle}

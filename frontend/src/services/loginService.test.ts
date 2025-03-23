@@ -14,30 +14,35 @@ describe("Login API", () => {
 
     test("Should return the received access token when one is received from backend", async () => {
         const accessToken = "testToken";
-        const mockResolveValue = { status: 201, json: async () => new Promise((resolve) => resolve({ accessToken })) };
+        const mockResolveValue = {
+            status: 201,
+            json: async (): Promise<{ accessToken: string }> => new Promise((resolve) => resolve({ accessToken }))
+        };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
-        service.login(username, password).then((loginResponse) => {
-            expect(loginResponse).toEqual({ accessToken });
-            expect(fetchSpy).toBeCalledTimes(1);
-            expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
-            });
+        const loginResponse = await service.login(username, password);
+        expect(loginResponse).toEqual({ accessToken });
+        expect(fetchSpy).toBeCalledTimes(1);
+        expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
         });
     });
 
     test("Should throw an error with message 'wrong username or password' if receives error 401", async () => {
-        const mockResolveValue = { status: 401, json: async () => new Promise((resolve) => resolve("Wrong credentials")) };
+        const mockResolveValue = {
+            status: 401,
+            json: async (): Promise<string> => new Promise((resolve) => resolve("Wrong credentials"))
+        };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
         await expect(async () => service.login(username, password)).rejects.toThrowError("wrong username or password");
-        waitFor(() => {
+        await waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
                 method: "POST",
@@ -48,13 +53,16 @@ describe("Login API", () => {
     });
 
     test("Should throw an error with message 'Server error' if receives error 500", async () => {
-        const mockResolveValue = { status: 500, json: async () => new Promise((resolve) => resolve("Server error")) };
+        const mockResolveValue = {
+            status: 500,
+            json: async (): Promise<string> => new Promise((resolve) => resolve("Server error"))
+        };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const username = "testUsername";
         const password = "testPassword";
         await expect(async () => service.login(username, password)).rejects.toThrowError("Server error");
-        waitFor(() => {
+        await waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
                 method: "POST",
@@ -69,7 +77,7 @@ describe("Login API", () => {
         const username = "testUsername";
         const password = "testPassword";
         await expect(async () => service.login(username, password)).rejects.toThrowError("Generic error");
-        waitFor(() => {
+        await waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
                 method: "POST",

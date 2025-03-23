@@ -2,9 +2,10 @@ import Grid from "@mui/material/Grid2";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Typography } from "@mui/material";
+import { JSX } from "react";
 import "./Home.css";
 
-export const Home = () => {
+export const Home = (): JSX.Element => {
     return (
         <main>
             <Grid container spacing={5} p={10}>

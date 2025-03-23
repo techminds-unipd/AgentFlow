@@ -1,35 +1,36 @@
-import * as React from "react";
 import { MenuItem, Dialog, DialogActions, DialogTitle, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useAuth } from "../../hooks/useAuth";
 import "../../index.css";
 import { useGoogleToken } from "../../hooks/useGoogleToken";
+import { JSX } from "react";
+import React from "react";
 
 interface LogoutMenuItem {
     handleCloseMenu(): void;
 }
 
-export const LogoutMenuItem = ({ handleCloseMenu }: LogoutMenuItem) => {
+export const LogoutMenuItem = (logoutMenuItemRef: LogoutMenuItem): JSX.Element => {
     const { logoutUser } = useAuth();
     const { removeGoogleToken } = useGoogleToken();
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
 
-    const handleOpenDialog = () => {
+    const handleOpenDialog = (): void => {
         setOpen(true);
     };
 
-    const handleCloseDialog = () => {
+    const handleCloseDialog = (): void => {
         setOpen(false);
-        handleCloseMenu();
+        logoutMenuItemRef.handleCloseMenu();
     };
 
-    const handleLogout = () => {
+    const handleLogout = (): void => {
         removeGoogleToken();
         logoutUser();
         handleCloseDialog();
-        handleCloseMenu();
-        navigate("/signin");
+        logoutMenuItemRef.handleCloseMenu();
+        void navigate("/signin");
     };
 
     return (

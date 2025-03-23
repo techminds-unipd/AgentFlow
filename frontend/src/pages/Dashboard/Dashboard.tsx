@@ -2,10 +2,10 @@ import Grid from "@mui/material/Grid2";
 import { Typography } from "@mui/material";
 import { AddWorkflow } from "../../components/AddWorkflow/AddWorkflow";
 import { WorkflowList } from "../../components/WorkflowList/WorkflowList";
-import { useState } from "react";
+import { useState, JSX } from "react";
 import { useAuth } from "../../hooks/useAuth";
 
-export const Dashboard = () => {
+export const Dashboard = (): JSX.Element => {
     const [shouldReload, setShouldReload] = useState<boolean>(false);
     const { user } = useAuth();
     return (

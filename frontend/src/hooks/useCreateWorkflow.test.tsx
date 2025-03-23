@@ -4,6 +4,7 @@ import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../conte
 import { NewWorkflowService } from "../services/newWorkflowService";
 import { useCreateWorkflow } from "./useCreateWorkflow";
 import "@testing-library/jest-dom";
+import { JSX } from "react";
 
 describe("useCreateWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -13,10 +14,10 @@ describe("useCreateWorkflow hook", () => {
         vi.restoreAllMocks();
     });
 
-    const TestComponent = ({ workflowName }: { workflowName: string }) => {
+    const TestComponent = ({ workflowName }: { workflowName: string }): JSX.Element => {
         const { createWorkflow, isLoading, error } = useCreateWorkflow();
 
-        const handleCreate = async () => {
+        const handleCreate = async (): Promise<void> => {
             await createWorkflow(workflowName);
         };
 
@@ -24,7 +25,7 @@ describe("useCreateWorkflow hook", () => {
             <div>
                 <p>Loading: {JSON.stringify(isLoading)}</p>
                 <p>Error: {JSON.stringify(error)}</p>
-                <button onClick={handleCreate}>Create Workflow</button>
+                <button onClick={() => void handleCreate()}>Create Workflow</button>
             </div>
         );
     };

@@ -2,7 +2,7 @@ import { expect, test, describe, vi, beforeEach } from "vitest";
 import { fireEvent, render, screen, waitFor, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { AuthContext, AuthProvider, User } from "./AuthContext";
-import { useContext } from "react";
+import { JSX, useContext } from "react";
 import { LoginService } from "../services/loginService";
 
 describe("AuthContext Login", () => {
@@ -16,7 +16,7 @@ describe("AuthContext Login", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -24,7 +24,7 @@ describe("AuthContext Login", () => {
             return (
                 <>
                     <div data-testid="user">{JSON.stringify(user?.username)}</div>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -53,7 +53,7 @@ describe("AuthContext Login", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -61,7 +61,7 @@ describe("AuthContext Login", () => {
             return (
                 <>
                     <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -91,14 +91,14 @@ describe("AuthContext Login", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
             const { loginUser } = context;
             return (
                 <>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -122,8 +122,8 @@ describe("AuthContext Login", () => {
         });
     });
 
-    test("Sets user at boot when is saved in localStorage with key 'user'", async () => {
-        const CustomTest = () => {
+    test("Sets user at boot when is saved in localStorage with key 'user'", () => {
+        const CustomTest = (): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -157,7 +157,7 @@ describe("AuthContext Login", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -165,7 +165,7 @@ describe("AuthContext Login", () => {
             return (
                 <>
                     <div data-testid="error">{error?.toString()}</div>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -196,7 +196,7 @@ describe("AuthContext Login", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -205,7 +205,7 @@ describe("AuthContext Login", () => {
                 <>
                     <div data-testid="user">{JSON.stringify(user?.accessToken)}</div>
                     <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -245,7 +245,7 @@ describe("AuthContext Logout", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -253,7 +253,7 @@ describe("AuthContext Logout", () => {
             return (
                 <>
                     <div data-testid="user">{JSON.stringify(user)}</div>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                     <button onClick={() => logoutUser()} aria-label="logout">
@@ -290,7 +290,7 @@ describe("AuthContext Logout", () => {
             password: string;
         }
 
-        const CustomTest = ({ username, password }: CustomTestProps) => {
+        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -298,7 +298,7 @@ describe("AuthContext Logout", () => {
             return (
                 <>
                     <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
-                    <button onClick={async () => loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(username, password)} aria-label="login">
                         Login
                     </button>
                     <button onClick={() => logoutUser()} aria-label="logout">
@@ -329,7 +329,7 @@ describe("AuthContext Logout", () => {
     });
 
     test("Logout clears localStorage with key 'user'", async () => {
-        const CustomTest = () => {
+        const CustomTest = (): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -345,7 +345,10 @@ describe("AuthContext Logout", () => {
 
         const accessToken = "testToken";
 
-        const mockResolveValue = { status: 201, json: async () => new Promise((resolve) => resolve({ accessToken })) };
+        const mockResolveValue = {
+            status: 201,
+            json: async (): Promise<{ accessToken: string }> => new Promise((resolve) => resolve({ accessToken }))
+        };
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
         const testUsername = "testUsername";
         const user = { username: testUsername, accessToken } as User;
