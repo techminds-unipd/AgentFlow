@@ -1,9 +1,10 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
-import { AuthContextType, authProviderRender, providerPropsInit } from "../context/MockedAuthProvider";
+import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import { NewWorkflowService } from "../services/newWorkflowService";
 import { useCreateWorkflow } from "./useCreateWorkflow";
 import "@testing-library/jest-dom";
+import { JSX } from "react";
 
 describe("useCreateWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -13,10 +14,10 @@ describe("useCreateWorkflow hook", () => {
         vi.restoreAllMocks();
     });
 
-    const TestComponent = ({ workflowName }: { workflowName: string }) => {
+    const TestComponent = ({ workflowName }: { workflowName: string }): JSX.Element => {
         const { createWorkflow, isLoading, error } = useCreateWorkflow();
 
-        const handleCreate = async () => {
+        const handleCreate = async (): Promise<void> => {
             await createWorkflow(workflowName);
         };
 
@@ -24,7 +25,7 @@ describe("useCreateWorkflow hook", () => {
             <div>
                 <p>Loading: {JSON.stringify(isLoading)}</p>
                 <p>Error: {JSON.stringify(error)}</p>
-                <button onClick={handleCreate}>Create Workflow</button>
+                <button onClick={() => void handleCreate()}>Create Workflow</button>
             </div>
         );
     };
@@ -32,12 +33,16 @@ describe("useCreateWorkflow hook", () => {
     test("Creates workflow successfully when user is authenticated", async () => {
         vi.spyOn(NewWorkflowService.prototype, "newWorkflow").mockResolvedValue({ name: "Workflow Created" });
 
-        authProviderRender(<TestComponent workflowName="Test Workflow" />, providerProps);
+        render(
+            <MockedAuthProvider {...providerProps}>
+                <TestComponent workflowName="Test Workflow" />
+            </MockedAuthProvider>
+        );
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
-        act(()=>{
+        act(() => {
             screen.getByText("Create Workflow").click();
-        })
+        });
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
             expect(screen.getByText(/Error: null/i)).toBeInTheDocument();
@@ -47,12 +52,16 @@ describe("useCreateWorkflow hook", () => {
     test("Handles errors when API call fails", async () => {
         vi.spyOn(NewWorkflowService.prototype, "newWorkflow").mockRejectedValue(new Error("API Error"));
 
-        authProviderRender(<TestComponent workflowName="Failing Workflow" />, providerProps);
+        render(
+            <MockedAuthProvider {...providerProps}>
+                <TestComponent workflowName="Failing Workflow" />
+            </MockedAuthProvider>
+        );
 
         expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
-        act(()=>{
+        act(() => {
             screen.getByText("Create Workflow").click();
-        })
+        });
         await waitFor(() => {
             expect(screen.getByText(/Loading: false/i)).toBeInTheDocument();
             expect(screen.getByText(/Error: "API Error"/i)).toBeInTheDocument();

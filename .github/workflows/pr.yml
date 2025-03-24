@@ -26,7 +26,7 @@ jobs:
             - name: Installazione dipendenze
               run: npm ci --prefix ./backend
             - name: Unit testing
-              run: npm test --prefix ./backend
+              run: npm run test:cov --prefix ./backend
 
     Frontend:
        runs-on: ubuntu-latest
@@ -41,6 +41,8 @@ jobs:
                 cache-dependency-path: frontend/package-lock.json
             - name: Installazione dipendenze
               run: npm ci --prefix ./frontend
+            - name: Linting
+              run: npm run lint --prefix ./frontend
             - name: Unit testing
               run: npm run coverage --prefix ./frontend
         
@@ -57,4 +59,7 @@ jobs:
           - name: Installazione dipendenze
             run: pip install -r ./agente/requirements.txt
           - name: Unit testing
-            run: pytest ./agente
+            run: |
+              cd ./agente
+              coverage run -m pytest --disable-warnings
+              coverage report

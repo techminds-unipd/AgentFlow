@@ -5,7 +5,7 @@ import { CustomNode } from "./CustomNode";
 
 describe("CustomNode", () => {
     test("Renders open dialog if the custom button is clicked", () => {
-        render(<CustomNode/>);
+        render(<CustomNode />);
 
         const customNode = screen.getByRole("button");
         expect(screen.queryByRole("dialog")).toBeNull();
@@ -14,7 +14,7 @@ describe("CustomNode", () => {
     });
 
     test("Renders close dialog if 'Close' button is clicked", async () => {
-        render(<CustomNode/>);
+        render(<CustomNode />);
 
         const customNode = screen.getByRole("button");
         fireEvent.click(customNode);
@@ -25,16 +25,16 @@ describe("CustomNode", () => {
     });
 
     test("Test if a draggable custom node is draggable", () => {
-        render(<CustomNode draggable/>);
-        
-    const customNode = screen.getByRole("button");
+        render(<CustomNode draggable />);
+
+        const customNode = screen.getByRole("button");
         expect(customNode).toHaveAttribute("draggable", "true");
     });
 
     test("Test if a not draggable custom node is not draggable", () => {
-        render(<CustomNode/>);
+        render(<CustomNode />);
 
-    const customNode = screen.getByRole("button");
-    expect(customNode).toHaveAttribute("draggable", "false");
+        const customNode = screen.getByRole("button");
+        expect(customNode).toHaveAttribute("draggable", "false");
     });
 });
