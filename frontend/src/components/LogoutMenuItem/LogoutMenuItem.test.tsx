@@ -21,6 +21,7 @@ describe("LogoutMenuItem", () => {
 
     const mockPush = vi.fn();
     vi.mock("@hooks/useNavigation", () => {
+        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
         return { default: () => ({ push: mockPush }) };
     });
 

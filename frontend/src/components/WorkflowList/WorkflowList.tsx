@@ -51,7 +51,7 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
                             {isLoading && <CircularProgress sx={{ alignSelf: "center" }} />}
 
                             {/*per eventuali errori*/}
-                            {error && (
+                            {error !== null && (
                                 <Typography textAlign="center" sx={{ color: "white" }}>
                                     It seems like something isn't working correctly.
                                 </Typography>

@@ -26,6 +26,7 @@ export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): Reac
             await deleteWorkflow(name);
             setShouldReload(true); // Re-rendering della lista
         } catch (error) {
+            // eslint-disable-next-line no-console
             console.error("Failed to delete workflow:", error);
         }
         handleCloseDialog();

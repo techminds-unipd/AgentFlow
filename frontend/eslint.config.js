@@ -47,7 +47,7 @@ export default tseslint.config(
                     selector: ["variable"],
                     format: ["camelCase", "UPPER_CASE", "PascalCase"],
                     leadingUnderscore: "allow",
-                    trailingUnderscore: "allow"
+                    trailingUnderscore: "allow",
                 },
                 {
                     selector: ["function", "interface"],
@@ -60,7 +60,7 @@ export default tseslint.config(
             ],
             "@typescript-eslint/no-deprecated": "warn",
             "@typescript-eslint/no-for-in-array": "error",
-            "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+            "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "_" }],
             "@typescript-eslint/prefer-readonly": "error",
             "@typescript-eslint/promise-function-async": "error",
             "@typescript-eslint/require-await": "error",

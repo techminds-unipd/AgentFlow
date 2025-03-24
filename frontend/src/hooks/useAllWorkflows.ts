@@ -34,6 +34,7 @@ export const useAllWorkflow = (): IUseAllWorkflow => {
 
     useEffect(() => {
         void fetchWorkflows();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return { workflowList, isLoading, error, refetch: fetchWorkflows };

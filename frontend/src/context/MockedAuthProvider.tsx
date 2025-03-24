@@ -13,6 +13,7 @@ export const MockedAuthProvider: React.FC<{ children: React.ReactNode } & AuthCo
 };
 
 //Se initiallyLoggedIn è true, riempie l'user con l'username e il token passati. Quando viene effettuato il login, viene impostato l'accessToken passato. Error è impostato al valore passato
+// eslint-disable-next-line react-refresh/only-export-components
 export const providerPropsInit = (
     initiallyLoggedIn: boolean = true,
     testUsername: string = "testUsername",
@@ -21,6 +22,7 @@ export const providerPropsInit = (
 ): AuthContextType => {
     const providerProps = {
         user: initiallyLoggedIn ? ({ username: testUsername, accessToken: testToken } as User) : null,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         loginUser: vi.fn((username: string, _: string) => {
             providerProps.user = { username, accessToken: testToken };
         }),

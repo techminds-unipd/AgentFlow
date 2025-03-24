@@ -16,6 +16,7 @@ export const MockedGoogleTokenProvider: React.FC<{ children: React.ReactNode } &
     return <GoogleTokenContext.Provider value={providerProps}>{children}</GoogleTokenContext.Provider>;
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const googleProviderPropsInit = (): GoogleAccountTokenType => {
     const providerProps = {
         googleToken: { token: "test-token", expireDate: "2023-12-31T23:59:59Z" },

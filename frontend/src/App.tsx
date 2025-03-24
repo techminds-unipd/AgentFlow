@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { BrowserRouter, Routes, Route } from "react-router";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
@@ -14,7 +15,7 @@ import { AnonymousRoute } from "./components/AnonymousRoute/AnonymousRoute";
 import { AddAccount } from "./pages/Services/AddAccount";
 import { GoogleTokenProvider } from "./context/GoogleTokenContext";
 
-function App() {
+function App(): JSX.Element {
     return (
         <>
             <AuthProvider>

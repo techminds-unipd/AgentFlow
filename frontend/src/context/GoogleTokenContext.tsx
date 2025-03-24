@@ -13,6 +13,7 @@ export interface GoogleAccountTokenType {
 }
 
 // Memorizza e condivide lo stato tra i componenti
+// eslint-disable-next-line react-refresh/only-export-components
 export const GoogleTokenContext = createContext<GoogleAccountTokenType | undefined>(undefined);
 
 // componente provider che avvolge l'App e fornisce i dati di autenticazione (i componenti children possono avere accesso al contenuto)
