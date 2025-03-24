@@ -1,33 +1,41 @@
 import { useState, useEffect } from "react";
 import { AllWorkflowsService } from "../services/allWorkflowsService";
-import { useAuth } from "./useAuth"
+import { useAuth } from "./useAuth";
 
-export const useAllWorkflow = () => {
-  const [workflowList, setData] = useState<Array<string> | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
-  
-  const fetchWorkflows = async () => {
-    setIsLoading(true);
-    setError(null);
+interface IUseAllWorkflow {
+    workflowList: string[] | null;
+    isLoading: boolean;
+    error: string | null;
+    refetch: () => Promise<void>;
+}
 
-    try {
-      if(user!==null){
-        const service = new AllWorkflowsService(user?.accessToken);
-        const result = await service.allWorkflows(); 
-        setData(result);
-      }
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "Something went wrong.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+export const useAllWorkflow = (): IUseAllWorkflow => {
+    const [workflowList, setData] = useState<Array<string> | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
+    const { user } = useAuth();
 
-  useEffect(() => {
-    fetchWorkflows();
-  }, []);
+    const fetchWorkflows = async (): Promise<void> => {
+        setIsLoading(true);
+        setError(null);
 
-  return { workflowList, isLoading, error, refetch: fetchWorkflows, };
+        try {
+            if (user !== null) {
+                const service = new AllWorkflowsService(user?.accessToken);
+                const result = await service.allWorkflows();
+                setData(result);
+            }
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "Something went wrong.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        void fetchWorkflows();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return { workflowList, isLoading, error, refetch: fetchWorkflows };
 };

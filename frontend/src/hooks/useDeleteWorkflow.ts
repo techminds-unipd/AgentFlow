@@ -1,28 +1,34 @@
 import { useState } from "react";
-import { DeleteWorkflowService } from "../services/deleteWorkflowService";
+import { DeleteWorkflowService, DeleteWorkflowResponse } from "../services/deleteWorkflowService";
 import { useAuth } from "./useAuth";
 
-export const useDeleteWorkflow = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const { user } = useAuth();
+interface IUseDeleteWorkflow {
+    deleteWorkflow: (name: string) => Promise<DeleteWorkflowResponse | undefined>;
+    isLoading: boolean;
+    error: string | null;
+}
 
-  const deleteWorkflow = async (name: string) => {
-    setIsLoading(true);
-    setError(null);
+export const useDeleteWorkflow = (): IUseDeleteWorkflow => {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const { user } = useAuth();
 
-    try {
-      if(user!==null){
-        const service = new DeleteWorkflowService(user?.accessToken);
-        const result = await service.deleteWorkflowByName(name); 
-        return result;
-      }
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "Something went wrong.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const deleteWorkflow = async (name: string): Promise<DeleteWorkflowResponse | undefined> => {
+        setIsLoading(true);
+        setError(null);
 
-  return { deleteWorkflow, isLoading, error };
+        try {
+            if (user !== null) {
+                const service = new DeleteWorkflowService(user?.accessToken);
+                const result = await service.deleteWorkflowByName(name);
+                return result;
+            }
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "Something went wrong.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return { deleteWorkflow, isLoading, error };
 };

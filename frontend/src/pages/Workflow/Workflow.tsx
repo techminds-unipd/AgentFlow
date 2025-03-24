@@ -1,5 +1,5 @@
-export const Workflow=()=>{
-    return(
-        <>Ciao Workflow</>
-    )
-}
+import { JSX } from "react";
+
+export const Workflow = (): JSX.Element => {
+    return <>Ciao Workflow</>;
+};

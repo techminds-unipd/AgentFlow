@@ -1,6 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { vi, describe, test, beforeEach, expect } from "vitest";
-import userEvent from "@testing-library/user-event";
 import { AddWorkflow } from "./AddWorkflow";
 import { useCreateWorkflow } from "../../hooks/useCreateWorkflow";
 import "@testing-library/jest-dom";
@@ -13,27 +12,21 @@ describe("AddWorkflow Component", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        
-        vi.mocked(useCreateWorkflow).mockReturnValue({
-            createWorkflow: mockCreateWorkflow,
-            isLoading: false,
-            error: null,
-        });
+        vi.mocked(useCreateWorkflow).mockReturnValue({ createWorkflow: mockCreateWorkflow, isLoading: false, error: null });
     });
 
-    test("Handles input change", async () => {
+    test("Handles input change", () => {
         render(<AddWorkflow setShouldReload={mockSetShouldReload} />);
         const input = screen.getByPlaceholderText("Insert workflow name");
-        await userEvent.type(input, "Test Workflow");
+        fireEvent.change(input, { target: { value: "Test Workflow" } });
         expect(input).toHaveValue("Test Workflow");
     });
 
     test("Shows error message when trying to add an empty workflow", async () => {
         render(<AddWorkflow setShouldReload={mockSetShouldReload} />);
         const button = screen.getByRole("button", { name: /add workflow/i });
-        
-        await userEvent.click(button);
-        
+        fireEvent.click(button);
+        //await userEvent.click(button);
         expect(await screen.findByText("Please enter a valid workflow name.")).toBeInTheDocument();
     });
 
@@ -43,30 +36,25 @@ describe("AddWorkflow Component", () => {
         render(<AddWorkflow setShouldReload={mockSetShouldReload} />);
         const input = screen.getByPlaceholderText("Insert workflow name");
         const button = screen.getByRole("button", { name: /add workflow/i });
-
-        await userEvent.type(input, "Test Workflow");
-        await userEvent.click(button);
+        fireEvent.change(input, { target: { value: "Test Workflow" } });
+        fireEvent.click(button);
 
         expect(mockCreateWorkflow).toHaveBeenCalledWith("Test Workflow");
-        expect(await screen.findByText("Workflow \"Test Workflow\" created successfully.")).toBeInTheDocument();
+        expect(await screen.findByText('Workflow "Test Workflow" created successfully.')).toBeInTheDocument();
     });
 
     test("Shows if error message is displayed if workflow already exists", async () => {
         const errorMessage = "Workflow with the same name already exists";
 
-        vi.mocked(useCreateWorkflow).mockReturnValue({
-            createWorkflow: vi.fn(),
-            isLoading: false,
-            error: errorMessage,
-        });
+        vi.mocked(useCreateWorkflow).mockReturnValue({ createWorkflow: vi.fn(), isLoading: false, error: errorMessage });
 
         render(<AddWorkflow setShouldReload={mockSetShouldReload} />);
 
         const input = screen.getByPlaceholderText("Insert workflow name");
         const button = screen.getByRole("button", { name: /add workflow/i });
 
-        await userEvent.type(input, "Prova");
-        await userEvent.click(button);
+        fireEvent.change(input, { target: { value: "Prova" } });
+        fireEvent.click(button);
 
         expect(await screen.findByText(errorMessage)).toBeInTheDocument();
     });
