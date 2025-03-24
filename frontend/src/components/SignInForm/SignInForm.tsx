@@ -12,7 +12,7 @@ import MuiCard from '@mui/material/Card';
 import Alert from '@mui/material/Alert';
 import { styled } from '@mui/material/styles';
 import { useAuth } from "../../hooks/useAuth"
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import "../../index.css";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -64,13 +64,16 @@ export default function SignIn() {
     if (!error && user) {
       navigate("/dashboard");
     }
-
-   // Controlla se il SignUp ha avuto successo
-   if (localStorage.getItem("signupSuccess")) {
-    setOpenSnackbar(true);
-    localStorage.removeItem("signupSuccess"); // Lo rimuoviamo subito per evitare di mostrarlo sempre
-  }
 }, [error, user]);
+
+const location = useLocation();
+const signupSuccess = location.state?.signupSuccess;
+
+React.useEffect(() => {
+  if (signupSuccess) {
+    setOpenSnackbar(true);
+  }
+}, [signupSuccess]);
 
 const handleCloseSnackbar = () => {
   setOpenSnackbar(false);

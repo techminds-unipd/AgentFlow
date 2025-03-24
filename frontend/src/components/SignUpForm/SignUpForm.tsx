@@ -74,8 +74,7 @@ export default function SignUp() {
     try {
       const result = await registerUser(username, password);
       if (result) {
-        localStorage.setItem("signupSuccess", "true");
-        navigate("/signin"); // Reindirizza se la registrazione è avvenuta con successo
+        navigate("/signin", { state: { signupSuccess: true } });
       }
     } catch (err) {
       console.error("Registration failed:", err);
