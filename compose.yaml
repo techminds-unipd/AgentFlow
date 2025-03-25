@@ -19,13 +19,11 @@ services:
 
   frontend:
     container_name: frontend
-    image: mvp-frontend
     build: ./frontend
     network_mode: host
 
   agente:
     container_name: agente
-    image: mvp-agente
     build: ./agente
     network_mode: host
 
