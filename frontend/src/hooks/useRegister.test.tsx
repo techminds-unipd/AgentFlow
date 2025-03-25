@@ -12,17 +12,16 @@ describe("useRegister hook", () => {
     const username = "Test";
     const password = "Passoword.1";
 
-    const TestComponent = ({ username, password }: { username: string; password: string }) => {
+    const TestComponent: React.FC<{ username: string; password: string }> = ({ username, password }) => {
         const { registerUser, error } = useRegister();
 
-        const handleRegister = async () => {
+        const handleRegister = async (): Promise<void> => {
             await registerUser(username, password);
         };
-
         return (
             <div>
                 <p>Error: {JSON.stringify(error)}</p>
-                <button onClick={handleRegister}>Register</button>
+                <button onClick={() => void handleRegister()}>Register</button>
             </div>
         );
     };

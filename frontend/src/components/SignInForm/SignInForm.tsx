@@ -58,18 +58,19 @@ export default function SignIn(): JSX.Element {
         if (error === null && user) void navigate("/dashboard");
     }, [error, navigate, user]);
 
-    React.useEffect(() => {
-        if (!error && user) navigate("/dashboard");
-    }, [error, user]);
+    interface LocationState {
+        signupSuccess?: boolean;
+    }
 
     const location = useLocation();
-    const signupSuccess = location.state?.signupSuccess;
+    const state = location.state as LocationState | null;
+    const signupSuccess = state?.signupSuccess;
 
     React.useEffect(() => {
-        if (signupSuccess) setOpenSnackbar(true);
+        if (signupSuccess === true) setOpenSnackbar(true);
     }, [signupSuccess]);
 
-    const handleCloseSnackbar = () => {
+    const handleCloseSnackbar = (): void => {
         setOpenSnackbar(false);
     };
 

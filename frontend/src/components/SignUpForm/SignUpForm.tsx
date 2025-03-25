@@ -14,6 +14,7 @@ import { styled } from "@mui/material/styles";
 import { useRegister } from "../../hooks/useRegister";
 import { useNavigate } from "react-router";
 import "../../index.css";
+import { JSX } from "react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -43,7 +44,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
     }
 }));
 
-export default function SignUp() {
+export default function SignUp(): JSX.Element {
     const { registerUser, error } = useRegister();
     const [usernameError, setUsernameError] = React.useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = React.useState("");
@@ -54,24 +55,7 @@ export default function SignUp() {
     const [noEqualsPasswordMessage, setNoEqualsPasswordMessage] = React.useState("");
     const navigate = useNavigate();
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-
-        if (!validateInputs()) return;
-
-        const data = new FormData(event.currentTarget);
-        const username = data.get("username") as string;
-        const password = data.get("password") as string;
-
-        try {
-            const result = await registerUser(username, password);
-            if (result) navigate("/signin", { state: { signupSuccess: true } });
-        } catch (err) {
-            console.error("Registration failed:", err);
-        }
-    };
-
-    const validateInputs = () => {
+    const validateInputs = (): boolean => {
         const username = document.getElementById("username") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
         const confirmPassword = document.getElementById("confirmPassword") as HTMLInputElement;
@@ -120,6 +104,18 @@ export default function SignUp() {
         return isValid;
     };
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        event.preventDefault();
+
+        if (validateInputs() === false) return;
+
+        const data = new FormData(event.currentTarget);
+        const username = data.get("username") as string;
+        const password = data.get("password") as string;
+        const result = await registerUser(username, password);
+        if (result) await navigate("/signin", { state: { signupSuccess: true } });
+    };
+
     return (
         <SignUpContainer direction="column" justifyContent="space-between">
             <Card variant="elevation">
@@ -128,11 +124,11 @@ export default function SignUp() {
                 </Typography>
                 {noEqualsPasswordMessage !== "" && <Alert severity="error">{noEqualsPasswordMessage}</Alert>}
 
-                {noEqualsPasswordMessage == "" && error !== null && <Alert severity="error">{error.toString()}</Alert>}
+                {noEqualsPasswordMessage === "" && error !== null && <Alert severity="error">{error.toString()}</Alert>}
 
                 <Box
                     component="form"
-                    onSubmit={handleSubmit}
+                    onSubmit={(event) => void handleSubmit(event)}
                     noValidate
                     sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}
                 >

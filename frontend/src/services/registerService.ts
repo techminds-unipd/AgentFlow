@@ -13,8 +13,7 @@ export class RegisterService {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password })
             });
-
-            if (response.status === 201) return await response.json();
+            if (response.status === 201) return (await response.json()) as RegisterResponse;
             else if (response.status === 400) throw new Error("Username already exists");
             else if (response.status >= 500) throw new Error("Server error");
             else throw new Error("Generic error");
