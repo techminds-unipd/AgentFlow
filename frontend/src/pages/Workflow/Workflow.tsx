@@ -13,7 +13,7 @@ export const Workflow = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const { name } = useParams();
-  const { getWorkflow } = useGetWorkflow(new GetWorkflowService());
+  const getWorkflow = useGetWorkflow(new GetWorkflowService());
 
   useEffect(() => {
     const fetchWorkflow = async () => {
