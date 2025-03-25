@@ -21,6 +21,7 @@ describe("GoogleTokenContext test", () => {
             onClick={() =>
               addGoogleToken({
                 token: "test-token",
+                refreshToken: "refresh",
                 expireDate: "2023-12-31T23:59:59Z",
               })
             }
@@ -53,6 +54,7 @@ describe("GoogleTokenContext test", () => {
             onClick={() =>
               addGoogleToken({
                 token: "test-token",
+                refreshToken: "refresh",
                 expireDate: "2023-12-31T23:59:59Z",
               })
             }
@@ -84,6 +86,7 @@ describe("GoogleTokenContext test", () => {
           onClick={() =>
             addGoogleToken({
               token: "test-token",
+              refreshToken: "refresh",
               expireDate: "2023-12-31T23:59:59Z",
             })
           }
@@ -104,6 +107,7 @@ describe("GoogleTokenContext test", () => {
       expect(localStorage.getItem("GoogleAccountToken")).toBe(
         JSON.stringify({
           token: "test-token",
+          refreshToken: "refresh",
           expireDate: "2023-12-31T23:59:59Z",
         })
       )
@@ -120,6 +124,7 @@ describe("GoogleTokenContext test", () => {
             onClick={() =>
               addGoogleToken({
                 token: "test-token",
+                refreshToken: "refresh",
                 expireDate: "2023-12-31T23:59:59Z",
               })
             }
@@ -162,6 +167,7 @@ describe("GoogleTokenContext test", () => {
             onClick={() =>
               addGoogleToken({
                 token: "test-token",
+                refreshToken: "refresh",
                 expireDate: "2023-12-31T23:59:59Z",
               })
             }
@@ -184,6 +190,7 @@ describe("GoogleTokenContext test", () => {
       expect(localStorage.getItem("GoogleAccountToken")).toBe(
         JSON.stringify({
           token: "test-token",
+          refreshToken: "refresh",
           expireDate: "2023-12-31T23:59:59Z",
         })
       )
@@ -204,6 +211,7 @@ describe("GoogleTokenContext test", () => {
             onClick={() =>
               addGoogleToken({
                 token: "test-token",
+                refreshToken: "refresh",
                 expireDate: "2020-01-01T00:00:00Z",
               })
             }
@@ -237,6 +245,7 @@ describe("GoogleTokenContext test", () => {
             onClick={() =>
               addGoogleToken({
                 token: "test-token",
+                refreshToken: "refresh",
                 expireDate: "2099-12-31T23:59:59Z",
               })
             }

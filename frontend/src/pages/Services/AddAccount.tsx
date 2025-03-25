@@ -6,6 +6,7 @@ import { Button } from "@mui/material";
 export const AddAccount=()=>{
     const [searchParams] = useSearchParams();
     const tokenParam = searchParams.get("token");
+    const refreshTokenParam = searchParams.get("refreshToken");
     const expireDateParam = searchParams.get("expireDate");
     const {addGoogleToken, removeGoogleToken} = useGoogleToken();
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ export const AddAccount=()=>{
         removeGoogleToken()
         addGoogleToken({
             token: tokenParam,
+            refreshToken: refreshTokenParam!,
             expireDate: expireDateParam
         })
         navigate("/services")

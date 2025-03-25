@@ -6,7 +6,7 @@ import { EdgeDTO, NodeDTO, WorkflowDTO } from "../../../services/dto/WorkflowDTO
 import { useReactFlow } from "@xyflow/react";
 import { useExecuteWorkflow } from "../../../hooks/useExecuteWorkflow";
 import { ExecuteWorkflowService } from "../../../services/ExecuteWorkflowService";
-import { useState } from "react";
+import { useState, JSX } from "react";
 import CloseIcon from '@mui/icons-material/Close';
 
 interface WorkflowHeaderProps {
@@ -14,38 +14,54 @@ interface WorkflowHeaderProps {
 }
 
 export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
-  const saveWorkflowHook = useSaveWorkflow(new SaveWorkflowService());
-  const { executeWorkflow } = useExecuteWorkflow(new ExecuteWorkflowService())
+  const saveWorkflow = useSaveWorkflow(new SaveWorkflowService());
+  const executeWorkflow = useExecuteWorkflow(new ExecuteWorkflowService())
   const { getNodes, getEdges } = useReactFlow();
   const [openExecuteResultsDialog, setOpenExecuteResultsDialog] = useState(false);
-  const [executeResult, setExecuteResult] = useState("");
+  const [executeResult, setExecuteResult] = useState<JSX.Element>();
 
   const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [snackBarMessage, setSnackBarSetMessage] = useState("");
+  const [snackBarMessage, setSnackBarMessage] = useState("");
   const [alertColor, setAlertColor] = useState<"success" | "error">("error");
 
   const handleSave = async () => {
     const edges = getEdges().map(edge => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)))
-    const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: node.data.label as string }))
-    await saveWorkflowHook.saveWorkflow(new WorkflowDTO(name, nodes, edges))
-    if (saveWorkflowHook.error) {
-      setSnackBarSetMessage(`Cannot save the workflow: ${saveWorkflowHook.error}`);
-      setAlertColor("error")
-      setOpenSnackBar(true)
-    } else {
-      setSnackBarSetMessage("Workflow saved successfully");
+    const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: String(node.data.label) }))
+
+    try {
+      await saveWorkflow(new WorkflowDTO(name, nodes, edges))
+      setSnackBarMessage("Workflow saved successfully");
       setAlertColor("success")
+      setOpenSnackBar(true)
+    } catch (error) {
+      setSnackBarMessage(`Cannot save the workflow: ${error instanceof Error ? error.message : "Something went wrong."}`);
+      setAlertColor("error")
       setOpenSnackBar(true)
     }
   }
 
   const handleExecute = async () => {
     const edges = getEdges().map(edge => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)))
-    const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: node.data.label as string }))
-    const res = await executeWorkflow(new WorkflowDTO(name, nodes, edges))
-    if (res !== undefined) {
-      setExecuteResult(res)
-      setOpenExecuteResultsDialog(true)
+    const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: String(node.data.label).toUpperCase() }))
+
+    try {
+      const res = (await executeWorkflow(new WorkflowDTO(name, nodes, edges))).split(/(AI:)|(ACTION:)/).filter((x) => x !== undefined)
+      setExecuteResult(
+        <>
+          {
+            res.map((x, index) => {
+              if (index % 2 !== 0)
+                return <p><strong>{x}</strong></p>
+              else
+                return <p>{x}</p>
+            })
+          }
+        </>),
+        setOpenExecuteResultsDialog(true)
+    } catch (error) {
+      setSnackBarMessage(`Cannot execute the workflow: ${error instanceof Error ? error.message : "Something went wrong."}`);
+      setAlertColor("error")
+      setOpenSnackBar(true)
     }
   }
 

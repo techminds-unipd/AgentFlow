@@ -9,7 +9,7 @@ export class SaveWorkflowService {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(workflow)
+        body: JSON.stringify(workflow)
     };
 
     const response = await fetch(`${API_BASE_URL}/workflow/save`, requestOptions)
@@ -18,7 +18,7 @@ export class SaveWorkflowService {
     if (response.status === 200) {
       return new WorkflowDTO(data.name, data.nodes, data.edges);
     } else {
-        throw new Error(data.message)
+      throw new Error(data.message)
     }
 
   }

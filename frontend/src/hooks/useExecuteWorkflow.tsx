@@ -1,28 +1,19 @@
-import { useState } from "react";
 import { useAuth } from "./useAuth";
 import { WorkflowDTO } from "../services/dto/WorkflowDTO";
 import { ExecuteWorkflowService } from "../services/ExecuteWorkflowService";
+import { useGoogleToken } from "./useGoogleToken";
 
 export const useExecuteWorkflow = (executeWorkflowService: ExecuteWorkflowService) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
+  const google = useGoogleToken();
 
   const executeWorkflow = async (workflow: WorkflowDTO) => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      if (user !== null) {
-        const result = await executeWorkflowService.executeWorkflow(workflow, user!.accessToken);
+      if (user !== null && google.googleToken !== null) {
+        const result = await executeWorkflowService.executeWorkflow(workflow, user.accessToken, google.googleToken);
         return result;
       }
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "Something went wrong.");
-    } finally {
-      setIsLoading(false);
-    }
+      throw new Error("Connect you Google account first!");
   };
 
-  return { executeWorkflow, isLoading, error };
+  return executeWorkflow;
 };
