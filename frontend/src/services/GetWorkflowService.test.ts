@@ -3,7 +3,7 @@ import { API_BASE_URL } from "./constants";
 import { GetWorkflowService } from "./GetWorkflowService";
 import { WorkflowDTO } from "./dto/WorkflowDTO";
 
-describe("Login API", () => {
+describe("GetWorkflowService", () => {
   const fetchSpy = vi.spyOn(window, "fetch");
 
   beforeEach(() => {
