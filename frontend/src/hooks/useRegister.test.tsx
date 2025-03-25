@@ -30,7 +30,7 @@ describe("useRegister hook", () => {
     test("Registers user successfully", async () => {
         vi.spyOn(RegisterService.prototype, "register").mockResolvedValue({ username: username, password: password });
 
-        render(<TestComponent username={ username } password= { password } />);
+        render(<TestComponent username={username} password={password} />);
 
         act(() => {
             screen.getByText("Register").click();
@@ -44,7 +44,7 @@ describe("useRegister hook", () => {
     test("Handles error when username already exists", async () => {
         vi.spyOn(RegisterService.prototype, "register").mockRejectedValue(new Error("Username already exists"));
 
-        render(<TestComponent username={ username } password= { password } />);
+        render(<TestComponent username={username} password={password} />);
 
         act(() => {
             screen.getByText("Register").click();
@@ -58,7 +58,7 @@ describe("useRegister hook", () => {
     test("Handles server error", async () => {
         vi.spyOn(RegisterService.prototype, "register").mockRejectedValue(new Error("Server error"));
 
-        render(<TestComponent username={ username } password= { password } />);
+        render(<TestComponent username={username} password={password} />);
 
         act(() => {
             screen.getByText("Register").click();
@@ -72,7 +72,7 @@ describe("useRegister hook", () => {
     test("Handles generic error", async () => {
         vi.spyOn(RegisterService.prototype, "register").mockRejectedValue(new Error("Generic error"));
 
-        render(<TestComponent username={ username } password= { password } />);
+        render(<TestComponent username={username} password={password} />);
 
         act(() => {
             screen.getByText("Register").click();

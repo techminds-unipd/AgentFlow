@@ -58,24 +58,20 @@ export default function SignIn(): JSX.Element {
         if (error === null && user) void navigate("/dashboard");
     }, [error, navigate, user]);
 
-React.useEffect(() => {
-  if (!error && user) {
-    navigate("/dashboard");
-  }
-}, [error, user]);
+    React.useEffect(() => {
+        if (!error && user) navigate("/dashboard");
+    }, [error, user]);
 
-const location = useLocation();
-const signupSuccess = location.state?.signupSuccess;
+    const location = useLocation();
+    const signupSuccess = location.state?.signupSuccess;
 
-React.useEffect(() => {
-if (signupSuccess) {
-  setOpenSnackbar(true);
-}
-}, [signupSuccess]);
+    React.useEffect(() => {
+        if (signupSuccess) setOpenSnackbar(true);
+    }, [signupSuccess]);
 
-const handleCloseSnackbar = () => {
-setOpenSnackbar(false);
-};
+    const handleCloseSnackbar = () => {
+        setOpenSnackbar(false);
+    };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         event.preventDefault();
@@ -123,16 +119,16 @@ setOpenSnackbar(false);
                     Sign in
                 </Typography>
                 {/* Snackbar per il successo del SignUp */}
-              <Snackbar
-                open={openSnackbar}
-                autoHideDuration={6000}
-                onClose={handleCloseSnackbar}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-              >
-                <MuiAlert onClose={handleCloseSnackbar} severity="success" variant="filled">
-                  Account created successfully! You can now log in.
-                </MuiAlert>
-              </Snackbar>
+                <Snackbar
+                    open={openSnackbar}
+                    autoHideDuration={6000}
+                    onClose={handleCloseSnackbar}
+                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                    <MuiAlert onClose={handleCloseSnackbar} severity="success" variant="filled">
+                        Account created successfully! You can now log in.
+                    </MuiAlert>
+                </Snackbar>
                 {error !== null && <Alert severity="error">{error.toString()}</Alert>}
                 <Box
                     component="form"
