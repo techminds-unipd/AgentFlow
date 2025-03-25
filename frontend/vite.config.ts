@@ -20,9 +20,11 @@ export default defineConfig({
       reporter: ["text"],
       exclude: [
         "./src/main.tsx",
-        "./**.config.ts"
-
-      ]
+        "./*.config.*",
+        "./src/vite-env.d.ts",
+        "./src/App.tsx",
+        "./src/pages/**/*",
+      ],
     },
   }
 })
