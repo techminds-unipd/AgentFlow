@@ -2,7 +2,7 @@ import { API_BASE_URL } from "./constants";
 import { WorkflowDTO } from "./dto/WorkflowDTO";
 
 export class GetWorkflowService {
-    async getWorkflow(name: string, accessToken: string): Promise<WorkflowDTO> {
+  async getWorkflow(name: string, accessToken: string): Promise<WorkflowDTO> {
     const requestOptions = {
       method: 'GET',
       headers: {
@@ -10,11 +10,13 @@ export class GetWorkflowService {
         "Authorization": `Bearer ${accessToken}`,
       }
     };
+    const response = await fetch(`${API_BASE_URL}/workflow/get/${name}`, requestOptions)
+    const data = await response.json();
 
-    return fetch(`${API_BASE_URL}/workflow/get/${name}`, requestOptions)
-      .then(response => response.json())
-      .then(data => new WorkflowDTO(data.name, data.nodes, data.edges))
-      .catch(_ => { throw new Error()});
-
+    if (response.status === 200) {
+      return new WorkflowDTO(data.name, data.nodes, data.edges);
+    } else {
+      throw new Error(data.message)
+    }
   }
 }

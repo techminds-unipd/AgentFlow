@@ -43,7 +43,6 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
   const handleExecute = async () => {
     const edges = getEdges().map(edge => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)))
     const nodes = getNodes().map(node => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: String(node.data.label).toUpperCase() }))
-
     try {
       const res = (await executeWorkflow(new WorkflowDTO(name, nodes, edges))).split(/(AI:)|(ACTION:)/).filter((x) => x !== undefined)
       setExecuteResult(
