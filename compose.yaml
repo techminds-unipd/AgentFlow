@@ -2,8 +2,6 @@
 services:
   mongo:
     image: docker.io/mongo:8.0.0
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -23,50 +21,18 @@ services:
   backend:
     image: mvp-backend
     build: ./backend
-    #--DEBUG-- da tenere per swagger
     ports:
       - "3000:3000"
-    #-------
-    develop:
-      watch:
-        - action: sync
-          path: ./backend
-          target: /app
-        - action: rebuild
-          path: ./backend/package.json
-        - action: rebuild
-          path: ./backend/package-logck.json
 
   frontend:
     image: mvp-frontend
     build: ./frontend
     ports:
-      - "8080:5173"
-    develop:
-      watch:
-        - action: sync
-          path: ./frontend
-          target: /app
-        - action: rebuild
-          path: ./frontend/package.json
-        - action: rebuild
-          path: ./frontend/package-logck.json
+      - "8080:80"
 
   agente:
     image: mvp-agente
     build: ./agente
-    #--DEBUG--
-    ports:
-      - "5000:5000"
-    #---------
-    develop:
-      watch:
-        - action: sync
-          path: ./agente
-          target: /usr/src/app
-        - action: rebuild
-          path: ./agente/.venv
-        - action: rebuild
-          path: ./agente/requirements.txt
+
 volumes:
   mongo-data:
