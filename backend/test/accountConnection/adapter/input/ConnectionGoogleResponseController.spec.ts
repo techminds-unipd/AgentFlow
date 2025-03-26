@@ -10,6 +10,7 @@ describe("ConnectionGoogleResponseController", () => {
     let connectionGoogleResponseUseCaseMock: { getToken: jest.Mock };
     const tokenMock = new Token("token", "refresh", new Date())
     const tokenDTOMock = new TokenDTO("token", "refresh", tokenMock.expireDate);
+    const frontend_url = "http://localhost:5173";
 
     const createTestingModule = async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -28,8 +29,9 @@ describe("ConnectionGoogleResponseController", () => {
 
     describe("googleAuthCallback", () => {
         it("should return the Google data acquired in the callback using redirect", async () => {
+            process.env.FRONTEND_URL = frontend_url;
             connectionGoogleResponseUseCaseMock.getToken.mockResolvedValue(tokenMock);
-            expect(await connectionGoogleResponseController.googleAuthCallback("code")).toEqual({ url: `http://localhost:5173/services/addAccount?token=${tokenMock.token}&refreshToken=${tokenDTOMock.refreshToken}&expireDate=${tokenDTOMock.expireDate.toISOString()}` });
+            expect(await connectionGoogleResponseController.googleAuthCallback("code")).toEqual({ url: `${frontend_url}/services/addAccount?token=${tokenMock.token}&refreshToken=${tokenDTOMock.refreshToken}&expireDate=${tokenDTOMock.expireDate.toISOString()}` });
         });
 
         it("should throw HttpException because it cannot get the Token data", async () => {
