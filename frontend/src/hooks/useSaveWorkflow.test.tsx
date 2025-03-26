@@ -3,7 +3,7 @@ import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import "@testing-library/jest-dom";
 import { WorkflowDTO } from "../services/dto/WorkflowDTO";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { useSaveWorkflow } from "./useSaveWorkflow";
 
 describe("useSaveWorkflow hook", () => {
@@ -15,19 +15,19 @@ describe("useSaveWorkflow hook", () => {
         providerProps = providerPropsInit();
     });
 
-    const TestComponent = ({ workflowDto }: { workflowDto: WorkflowDTO }) => {
+    const TestComponent = ({ workflowDto }: { workflowDto: WorkflowDTO }): JSX.Element => {
         saveWorkflowService.saveWorkflow.mockResolvedValue(workflowMock);
         const saveWorkflow = useSaveWorkflow(saveWorkflowService);
         const [workflow, setWorkflow] = useState<WorkflowDTO>();
 
-        const handleGet = async () => {
+        const handleSave = async (): Promise<void> => {
             setWorkflow(await saveWorkflow(workflowDto));
         };
 
         return (
             <div>
                 <p>Saved Workflow: {JSON.stringify(workflow)}</p>
-                <button onClick={handleGet}>Save Workflow</button>
+                <button onClick={() => void handleSave()}>Save Workflow</button>
             </div>
         );
     };

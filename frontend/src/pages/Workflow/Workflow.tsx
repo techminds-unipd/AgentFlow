@@ -5,18 +5,20 @@ import { DnDProvider } from "../../components/Workflow/DndContext/DnDContext";
 import Grid from "@mui/material/Grid2";
 import { WorkflowHeader } from "../../components/Workflow/WorkflowHeader/WorkflowHeader";
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { JSX, useEffect } from "react";
 import { useGetWorkflow } from "../../hooks/useGetWorkflow";
 import { GetWorkflowService } from "../../services/GetWorkflowService";
 
-export const Workflow = () => {
+export const Workflow = (): JSX.Element => {
     const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
     const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
     const { name } = useParams();
     const getWorkflow = useGetWorkflow(new GetWorkflowService());
 
+    /*eslint-disable react-hooks/exhaustive-deps*/
+    /*eslint-disable @typescript-eslint/no-floating-promises*/
     useEffect(() => {
-        const fetchWorkflow = async () => {
+        const fetchWorkflow = async (): Promise<void> => {
             const workflow = await getWorkflow(name!);
 
             const nodes = workflow?.nodes.map((node) => {
@@ -26,7 +28,7 @@ export const Workflow = () => {
                     data: { label: node.data.label },
                     sourcePosition: "right" as Position,
                     targetPosition: "left" as Position,
-                    type: node.data.label == "Pastebin" ? "output" : undefined,
+                    type: node.data.label === "Pastebin" ? "output" : undefined,
                     style: { backgroundColor: "var(--maincolor)", color: "white" }
                 };
             });

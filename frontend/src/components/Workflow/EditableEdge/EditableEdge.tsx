@@ -1,5 +1,5 @@
 import { BaseEdge, Position, EdgeLabelRenderer, type EdgeProps, MarkerType, useReactFlow, getBezierPath } from "@xyflow/react";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 export default function EditableEdge({
     id,
@@ -10,7 +10,7 @@ export default function EditableEdge({
     markerEnd = MarkerType.ArrowClosed,
     style,
     label
-}: EdgeProps) {
+}: EdgeProps): JSX.Element {
     const { setEdges } = useReactFlow();
     const [edgePath, labelX, labelY] = getBezierPath({
         sourceX,
@@ -23,7 +23,10 @@ export default function EditableEdge({
 
     const [textInput, setTextInput] = useState<string>(label as string);
 
-    const handleTextChange = (e: any) => {
+    /*eslint-disable @typescript-eslint/no-explicit-any*/
+    /*eslint-disable @typescript-eslint/no-unsafe-assignment*/
+    /*eslint-disable @typescript-eslint/no-unsafe-member-access*/
+    const handleTextChange = (e: any): void => {
         setEdges((edges) => {
             const t = edges.filter((edge) => edge.id === id)[0];
             const allOtherEdges = edges.filter((edge) => edge.id !== id);

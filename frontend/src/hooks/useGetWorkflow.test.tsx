@@ -4,7 +4,7 @@ import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../conte
 import "@testing-library/jest-dom";
 import { useGetWorkflow } from "./useGetWorkflow";
 import { WorkflowDTO } from "../services/dto/WorkflowDTO";
-import { useState } from "react";
+import { JSX, useState } from "react";
 
 describe("useGetWorkflow hook", () => {
     let providerProps: AuthContextType;
@@ -15,19 +15,19 @@ describe("useGetWorkflow hook", () => {
         providerProps = providerPropsInit();
     });
 
-    const TestComponent = ({ workflowName }: { workflowName: string }) => {
+    const TestComponent = ({ workflowName }: { workflowName: string }): JSX.Element => {
         getWorkflowService.getWorkflow.mockResolvedValue(workflowMock);
         const getWorkflow = useGetWorkflow(getWorkflowService);
         const [workflow, setWorkflow] = useState<WorkflowDTO>();
 
-        const handleGet = async () => {
+        const handleGet = async (): Promise<void> => {
             setWorkflow(await getWorkflow(workflowName));
         };
 
         return (
             <div>
                 <p>Workflow: {JSON.stringify(workflow)}</p>
-                <button onClick={handleGet}>Get Workflow</button>
+                <button onClick={() => void handleGet()}>Get Workflow</button>
             </div>
         );
     };

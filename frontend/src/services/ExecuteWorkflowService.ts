@@ -21,6 +21,6 @@ export class ExecuteWorkflowService {
         if (response.status === 201) {
             const data = await response.text();
             return data;
-        } else throw new Error((await response.json()).message);
+        } else throw new Error(((await response.json()) as { message: string }).message);
     }
 }

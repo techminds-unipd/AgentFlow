@@ -1,3 +1,4 @@
+import { JSX } from "react";
 import { useGoogleToken } from "../../../hooks/useGoogleToken";
 import { CalendarNode } from "../../Nodes/CalendarNode/CalendarNode";
 import { GmailNode } from "../../Nodes/GmailNode/GmailNode";
@@ -5,11 +6,13 @@ import { PastebinNode } from "../../Nodes/PastebinNode/PastebinNode";
 import { useDnD } from "../DndContext/DnDContext";
 import { Box, Typography } from "@mui/material";
 
-const WorkflowSidebar = () => {
+const WorkflowSidebar = (): JSX.Element => {
     const [, setService] = useDnD();
     const google = useGoogleToken();
 
-    const onDragStart = (event: any, nodeType: string) => {
+    /*eslint-disable @typescript-eslint/no-explicit-any*/
+    /*eslint-disable @typescript-eslint/no-unsafe-member-access*/
+    const onDragStart = (event: any, nodeType: string): void => {
         setService!(nodeType);
         event.dataTransfer.effectAllowed = "move";
     };

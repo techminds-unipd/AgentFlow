@@ -10,7 +10,7 @@ export class SaveWorkflowService {
         };
 
         const response = await fetch(`${API_BASE_URL}/workflow/save`, requestOptions);
-        const data = await response.json();
+        const data = (await response.json()) as { name: string; nodes: []; edges: []; message: string };
 
         if (response.status === 200) return new WorkflowDTO(data.name, data.nodes, data.edges);
         else throw new Error(data.message);

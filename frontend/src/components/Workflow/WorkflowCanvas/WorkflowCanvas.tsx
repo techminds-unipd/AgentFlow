@@ -14,7 +14,7 @@ import {
     Background,
     BackgroundVariant
 } from "@xyflow/react";
-import { useCallback, useRef } from "react";
+import { JSX, useCallback, useRef } from "react";
 import { useDnD } from "../DndContext/DnDContext";
 import EditableEdge from "../EditableEdge/EditableEdge";
 import "@xyflow/react/dist/style.css";
@@ -30,7 +30,14 @@ interface WorkflowCanvasProps {
 
 const edgeTypes = { editable: EditableEdge };
 
-export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, setNodes, setEdges }: WorkflowCanvasProps) => {
+export const WorkflowCanvas = ({
+    nodes,
+    edges,
+    onNodesChange,
+    onEdgesChange,
+    setNodes,
+    setEdges
+}: WorkflowCanvasProps): JSX.Element => {
     const reactFlowWrapper = useRef(null);
     const { screenToFlowPosition } = useReactFlow();
     const [nodeService] = useDnD();
@@ -38,6 +45,9 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
     let nodeId = nodes.length;
     let edgeId = edges.length;
 
+    /*eslint-disable @typescript-eslint/explicit-function-return-type*/
+    /*eslint-disable @typescript-eslint/no-unsafe-return*/
+    /*eslint-disable @typescript-eslint/no-explicit-any*/
     const onConnect = useCallback(
         (params: any) => {
             const getEdgeId = () => edgeId++;
@@ -57,6 +67,9 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
         [edgeId, setEdges]
     );
 
+    /*eslint-disable @typescript-eslint/no-unsafe-call*/
+    /*eslint-disable @typescript-eslint/no-unsafe-member-access*/
+    /*eslint-disable @typescript-eslint/no-explicit-any*/
     const onDragOver = useCallback((event: any) => {
         event.preventDefault();
         event.dataTransfer.dropEffect = "move";
@@ -70,6 +83,7 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
             // check if the dropped element is valid
             if (!nodeService) return;
 
+            /*eslint-disable @typescript-eslint/no-unsafe-assignment*/
             const position = screenToFlowPosition({ x: event.clientX, y: event.clientY });
             const newNode: Node = {
                 id: String(getNodeId()),
@@ -79,10 +93,10 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
                 targetPosition: "left" as Position,
                 style: { backgroundColor: "var(--maincolor)", color: "white" }
             };
-            if (newNode.data.label == "Pastebin") newNode.type = "output";
+            if (newNode.data.label === "Pastebin") newNode.type = "output";
             setNodes((nds: Node[]) => nds.concat(newNode));
         },
-        [screenToFlowPosition, nodeService, getNodes, setNodes, nodeId]
+        [screenToFlowPosition, nodeService, setNodes, nodeId]
     );
 
     // https://reactflow.dev/examples/interaction/prevent-cycles
@@ -100,12 +114,12 @@ export const WorkflowCanvas = ({ nodes, edges, onNodesChange, onEdgesChange, set
 
                 for (const outgoer of getOutgoers(node, nodes, edges)) {
                     if (outgoer.id === connection.source) return true;
-                    if (hasCycle(outgoer, visited)) return true;
+                    if (hasCycle(outgoer, visited)!) return true;
                 }
             };
 
             if (target && target.id === connection.source) return false;
-            return !hasCycle(target as Node);
+            return !hasCycle(target as Node)!;
         },
         [getNodes, getEdges]
     );

@@ -3,7 +3,7 @@ import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import "@testing-library/jest-dom";
 import { WorkflowDTO } from "../services/dto/WorkflowDTO";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { useExecuteWorkflow } from "./useExecuteWorkflow";
 import { googleProviderPropsInit, MockedGoogleTokenProvider } from "../context/MockedGoogleTokenProvider";
 import { GoogleAccountTokenType } from "../context/GoogleTokenContext";
@@ -20,19 +20,19 @@ describe("useExecuteWorkflow hook", () => {
         providerGoogleProps = googleProviderPropsInit();
     });
 
-    const TestComponent = ({ workflowDto }: { workflowDto: WorkflowDTO }) => {
+    const TestComponent = ({ workflowDto }: { workflowDto: WorkflowDTO }): JSX.Element => {
         executeWorkflowService.executeWorkflow.mockResolvedValue("Ciao");
         const executeWorkflow = useExecuteWorkflow(executeWorkflowService);
         const [agentResponse, setAgentResponse] = useState<string>();
 
-        const handleGet = async () => {
+        const handleExecute = async (): Promise<void> => {
             setAgentResponse(await executeWorkflow(workflowDto));
         };
 
         return (
             <div>
                 <p>Agent response: {agentResponse}</p>
-                <button onClick={handleGet}>Execute Workflow</button>
+                <button onClick={() => void handleExecute()}>Execute Workflow</button>
             </div>
         );
     };

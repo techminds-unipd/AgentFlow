@@ -23,7 +23,7 @@ interface WorkflowHeaderProps {
     name: string;
 }
 
-export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
+export const WorkflowHeader = ({ name }: WorkflowHeaderProps): JSX.Element => {
     const saveWorkflow = useSaveWorkflow(new SaveWorkflowService());
     const executeWorkflow = useExecuteWorkflow(new ExecuteWorkflowService());
     const { getNodes, getEdges } = useReactFlow();
@@ -34,7 +34,7 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
     const [snackBarMessage, setSnackBarMessage] = useState("");
     const [alertColor, setAlertColor] = useState<"success" | "error">("error");
 
-    const handleSave = async () => {
+    const handleSave = async (): Promise<void> => {
         const edges = getEdges().map((edge) => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)));
         const nodes = getNodes().map(
             (node) => new NodeDTO(Number(node.id), { x: node.position.x, y: node.position.y }, { label: String(node.data.label) })
@@ -52,7 +52,7 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
         }
     };
 
-    const handleExecute = async () => {
+    const handleExecute = async (): Promise<void> => {
         const edges = getEdges().map((edge) => new EdgeDTO(edge.label as string, Number(edge.source), Number(edge.target)));
         const nodes = getNodes().map(
             (node) =>
@@ -78,8 +78,8 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
                         } else return <p>{x}</p>;
                     })}
                 </>
-            ),
-                setOpenExecuteResultsDialog(true);
+            );
+            setOpenExecuteResultsDialog(true);
         } catch (error) {
             setSnackBarMessage(
                 `Cannot execute the workflow: ${error instanceof Error ? error.message : "Something went wrong."}`
@@ -89,8 +89,8 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
         }
     };
 
-    const handleCloseExecuteResultDialog = () => setOpenExecuteResultsDialog(false);
-    const handleCloseSnackBar = () => {
+    const handleCloseExecuteResultDialog = (): void => setOpenExecuteResultsDialog(false);
+    const handleCloseSnackBar = (): void => {
         setOpenSnackBar(false);
     };
 
@@ -100,10 +100,20 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps) => {
                 <Typography component="h1" variant="h4" paddingRight="25em" sx={{ fontSize: "clamp(2rem, 10vw, 2.15rem)" }}>
                     {name}
                 </Typography>
-                <Button fullWidth variant="contained" onClick={handleSave} sx={{ backgroundColor: "var(--maincolor)" }}>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={() => void handleSave()}
+                    sx={{ backgroundColor: "var(--maincolor)" }}
+                >
                     Save
                 </Button>
-                <Button fullWidth variant="contained" onClick={handleExecute} sx={{ backgroundColor: "var(--maincolor)" }}>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={() => void handleExecute()}
+                    sx={{ backgroundColor: "var(--maincolor)" }}
+                >
                     Execute
                 </Button>
             </Grid>
