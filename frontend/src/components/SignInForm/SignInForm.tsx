@@ -130,7 +130,11 @@ export default function SignIn(): JSX.Element {
                         Account created successfully! You can now log in.
                     </MuiAlert>
                 </Snackbar>
-                {error !== null && <Alert severity="error">{error.toString()}</Alert>}
+                {error !== null && (
+                    <Alert severity="error" data-cy="signin-error-alert">
+                        {error.toString()}
+                    </Alert>
+                )}
                 <Box
                     component="form"
                     onSubmit={(event) => {
@@ -154,6 +158,7 @@ export default function SignIn(): JSX.Element {
                             fullWidth
                             variant="outlined"
                             color={usernameError ? "error" : "primary"}
+                            data-cy="signin-username-input"
                         />
                     </FormControl>
                     <FormControl>
@@ -171,6 +176,7 @@ export default function SignIn(): JSX.Element {
                             fullWidth
                             variant="outlined"
                             color={passwordError ? "error" : "primary"}
+                            data-cy="signin-password-input"
                         />
                     </FormControl>
                     <Button
