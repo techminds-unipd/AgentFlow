@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DeleteWorkflowService, DeleteWorkflowResponse } from "../services/DeleteWorkflowService";
+import { DeleteWorkflowService, DeleteWorkflowResponse } from "../services/deleteWorkflowService";
 import { useAuth } from "./useAuth";
 
 interface IUseDeleteWorkflow {

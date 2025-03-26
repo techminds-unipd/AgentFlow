@@ -15,6 +15,7 @@ import { useRegister } from "../../hooks/useRegister";
 import { useNavigate } from "react-router";
 import "../../index.css";
 import { JSX } from "react";
+import { RegisterService } from "../../services/registerService";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -45,7 +46,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp(): JSX.Element {
-    const { registerUser, error } = useRegister();
+    const { registerUser, error } = useRegister(new RegisterService());
     const [usernameError, setUsernameError] = React.useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = React.useState("");
     const [passwordError, setPasswordError] = React.useState(false);

@@ -6,15 +6,16 @@ interface UseRegister {
     error: string | null;
 }
 
-export const useRegister = (): UseRegister => {
+export const useRegister = (
+    registerService: RegisterService
+): UseRegister => {
     const [error, setError] = useState<string | null>(null);
 
     const registerUser = async (username: string, password: string): Promise<{ username: string; password: string } | null> => {
         setError(null);
 
         try {
-            const service = new RegisterService();
-            const result = await service.register(username, password);
+            const result = await registerService.register(username, password);
             return result;
         } catch (error) {
             setError(error instanceof Error ? error.message : "Something went wrong.");

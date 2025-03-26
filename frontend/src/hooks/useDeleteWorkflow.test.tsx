@@ -2,7 +2,7 @@ import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
 import { useDeleteWorkflow } from "./useDeleteWorkflow";
-import { DeleteWorkflowService } from "../services/DeleteWorkflowService";
+import { DeleteWorkflowService } from "../services/deleteWorkflowService";
 import "@testing-library/jest-dom";
 import { JSX } from "react";
 
