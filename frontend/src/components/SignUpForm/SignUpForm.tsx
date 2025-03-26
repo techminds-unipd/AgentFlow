@@ -16,6 +16,7 @@ import { useNavigate } from "react-router";
 import "../../index.css";
 import { JSX } from "react";
 import { RegisterService } from "../../services/registerService";
+import { UserDTO } from "../../services/dto/UserDto";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -111,9 +112,8 @@ export default function SignUp(): JSX.Element {
         if (validateInputs() === false) return;
 
         const data = new FormData(event.currentTarget);
-        const username = data.get("username") as string;
-        const password = data.get("password") as string;
-        const result = await registerUser(username, password);
+        const user = new UserDTO(data.get("username") as string, data.get("password") as string);
+        const result = await registerUser(user);
         if (result) await navigate("/signin", { state: { signupSuccess: true } });
     };
 
