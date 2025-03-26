@@ -35,7 +35,9 @@ export const LogoutMenuItem = (logoutMenuItemRef: LogoutMenuItem): JSX.Element =
 
     return (
         <>
-            <MenuItem onClick={handleOpenDialog}>Logout</MenuItem>
+            <MenuItem onClick={handleOpenDialog} data-cy="logout-navitem">
+                Logout
+            </MenuItem>
             <Dialog
                 open={open}
                 onClose={handleCloseDialog}
@@ -45,7 +47,7 @@ export const LogoutMenuItem = (logoutMenuItemRef: LogoutMenuItem): JSX.Element =
                 <DialogTitle id="alert-dialog-title">{"Are you sure you want to logout?"}</DialogTitle>
                 <DialogActions>
                     <Button onClick={handleCloseDialog}>No</Button>
-                    <Button onClick={handleLogout} autoFocus>
+                    <Button onClick={handleLogout} autoFocus data-cy="logout-confirm-button">
                         Yes
                     </Button>
                 </DialogActions>
