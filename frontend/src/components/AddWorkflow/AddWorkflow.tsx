@@ -4,6 +4,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import React from "react";
 import "../../index.css";
 import { useCreateWorkflow } from "../../hooks/useCreateWorkflow";
+import { CreateWorkflowService } from "../../services/CreateWorkflowService";
 
 interface AddWorkflowProps {
     setShouldReload: React.Dispatch<React.SetStateAction<boolean>>;
@@ -15,7 +16,7 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
     const [alertColor, setAlertColor] = React.useState<"success" | "error">("error");
     const [workflowName, setWorkflowName] = React.useState("");
 
-    const { createWorkflow, isLoading, error } = useCreateWorkflow();
+    const { createWorkflow, isLoading, error } = useCreateWorkflow(new CreateWorkflowService());
 
     const handleClick = async (): Promise<void> => {
         if (!workflowName) {
