@@ -5,7 +5,10 @@ declare global {
         interface Chainable {
             loginUI(username: string, password: string): Chainable<void>;
             loginUISession(username: string, password: string): Chainable<void>;
+            logout(): Chainable<void>;
             registerIfNotExistsAPI(username: string, password: string): Chainable<void>;
+            registerUI(username: string, password: string): Chainable<void>;
+            recreateWorkflow(name: string): Chainable<void>;
         }
     }
 }
@@ -42,4 +45,18 @@ Cypress.Commands.add("registerIfNotExistsAPI", (username: string, password: stri
         if (response.status !== 201 && response.body.message !== "Username already exists")
             throw new Error(response.body.message);
     });
+});
+
+Cypress.Commands.add("registerUI", (username: string, password: string) => {
+    cy.visit("/signup");
+    cy.get("[data-cy='signup-username-input']").type(username);
+    cy.get("[data-cy='signup-password-input']").type(password);
+    cy.get("[data-cy='signup-passwordConfirm-input']").type(password);
+    cy.get("[data-cy='signup-submit']").click();
+});
+
+Cypress.Commands.add("logout", () => {
+    cy.get("[data-cy='user-navicon']").click();
+    cy.get("[data-cy='logout-navitem']").click();
+    cy.get("[data-cy='logout-confirm-button']").click();
 });
