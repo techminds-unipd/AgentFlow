@@ -4,6 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import { Typography } from "@mui/material";
 import { JSX } from "react";
 import "./Home.css";
+import workflowExample from "../../assets/Workflow-Example.png";
 
 export const Home = (): JSX.Element => {
     return (
@@ -30,8 +31,10 @@ export const Home = (): JSX.Element => {
                     <Grid size={4}>
                         <Card variant="outlined" sx={{ backgroundColor: "var(--maincolor)", color: "var(--white-text)" }}>
                             <CardContent>
-                                <Typography variant="h3">Example of a workflow</Typography>
-                                <Typography fontSize={20}>This product executes workflows!! WOW</Typography>
+                                <Typography variant="h3" marginBottom={1}>
+                                    Example of a workflow
+                                </Typography>
+                                <img src={workflowExample} id="workflowExample" alt="Example of a workflow" />
                             </CardContent>
                         </Card>
                     </Grid>
