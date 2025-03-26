@@ -3,6 +3,7 @@ import { Typography, Box, CircularProgress } from "@mui/material";
 import { WorkflowItem } from "../../components/WorkflowItem/WorkflowItem";
 import { useAllWorkflow } from "../../hooks/useAllWorkflows";
 import React, { useEffect } from "react";
+import { AllWorkflowsService } from "../../services/allWorkflowsService";
 
 interface WorkflowListProps {
     shouldReload: boolean;
@@ -10,7 +11,7 @@ interface WorkflowListProps {
 }
 
 export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setShouldReload }) => {
-    const { workflowList, isLoading, error, refetch } = useAllWorkflow();
+    const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkflowsService());
 
     useEffect(() => {
         if (shouldReload) {
@@ -18,6 +19,7 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
             setShouldReload(false); // Reset dello stato
         }
     }, [shouldReload, setShouldReload, refetch]);
+    
 
     return (
         <>
