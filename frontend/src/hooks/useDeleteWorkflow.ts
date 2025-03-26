@@ -8,7 +8,9 @@ interface IUseDeleteWorkflow {
     error: string | null;
 }
 
-export const useDeleteWorkflow = (): IUseDeleteWorkflow => {
+export const useDeleteWorkflow = (
+    deleteWorkflowService: DeleteWorkflowService
+): IUseDeleteWorkflow => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();
@@ -19,8 +21,7 @@ export const useDeleteWorkflow = (): IUseDeleteWorkflow => {
 
         try {
             if (user !== null) {
-                const service = new DeleteWorkflowService(user?.accessToken);
-                const result = await service.deleteWorkflowByName(name);
+                const result = await deleteWorkflowService.deleteWorkflowByName(name, user.accessToken);
                 return result;
             }
         } catch (error) {
