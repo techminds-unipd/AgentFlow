@@ -1,6 +1,7 @@
 describe("Login interno TS1-TS4", () => {
     it("TS1 - L’utente non autenticato può effettuare il login interno.", () => {
-        cy.loginUI("test", "Test.1234");
+        cy.registerIfNotExistsAPI(Cypress.env("loginUsername"), Cypress.env("loginPassword"));
+        cy.loginUI(Cypress.env("loginUsername"), Cypress.env("loginPassword"));
         cy.window().its("localStorage.user").should("be.not.empty");
     });
 
