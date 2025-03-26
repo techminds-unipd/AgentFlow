@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { AllWorkflowsService } from "../services/allWorkflowsService";
+import { AllWorkflowsService } from "../services/AllWorkflowsService";
 import { useAuth } from "./useAuth";
 
 interface IUseAllWorkflow {

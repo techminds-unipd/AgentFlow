@@ -3,7 +3,7 @@ import { Typography, Box, CircularProgress } from "@mui/material";
 import { WorkflowItem } from "../../components/WorkflowItem/WorkflowItem";
 import { useAllWorkflow } from "../../hooks/useAllWorkflows";
 import React, { useEffect } from "react";
-import { AllWorkflowsService } from "../../services/allWorkflowsService";
+import { AllWorkflowsService } from "../../services/AllWorkflowsService";
 
 interface WorkflowListProps {
     shouldReload: boolean;
