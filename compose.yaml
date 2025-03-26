@@ -8,25 +8,27 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     volumes:
       - mongo-data:/etc/mongo:rw
-    network_mode: host
-
-
-  
+    networks:
+      - app-network
   backend:
     container_name: backend
     build: ./backend
-    network_mode: host
-
+    ports:
+      - 3000:3000
+    networks:
+      - app-network
   frontend:
     container_name: frontend
     build: ./frontend
-    network_mode: host
-
+    ports:
+      - 5173:5173
+    networks:
+      - app-network
   agente:
     container_name: agente
     build: ./agente
-    network_mode: host
-
+    networks:
+      - app-network
   mongo-express:
     container_name: mongo_express
     image: docker.io/mongo-express:1.0.2-20-alpine3.19
@@ -39,6 +41,12 @@ services:
       ME_CONFIG_BASICAUTH: false
     profiles:
       - dev
+    networks:
+      - app-network
 
 volumes:
   mongo-data:
+
+networks:
+  app-network:
+    driver: bridge
