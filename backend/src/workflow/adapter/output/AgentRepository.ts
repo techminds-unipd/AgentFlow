@@ -10,7 +10,7 @@ class AgentRepository {
 
     async executeRequest(executeData: ExecuteData): Promise<string> {
         const { data } = (await firstValueFrom(
-            this.httpService.post("http://127.0.0.1:5000/execute", executeData).pipe(
+            this.httpService.post(process.env.AGENT_URL + "/execute", executeData).pipe(
                 catchError(() => {
                     throw new Error("Cannot connect to the agent");
                 })
