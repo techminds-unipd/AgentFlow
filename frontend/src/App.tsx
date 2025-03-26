@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router";
-import { Navbar } from './components/Navbar/Navbar'
+import { JSX } from "react";
+import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import { Home } from "./pages/Home/Home";
 import { AboutUs } from "./pages/AboutUs/AboutUs";
@@ -14,7 +15,7 @@ import { AnonymousRoute } from "./components/AnonymousRoute/AnonymousRoute";
 import { AddAccount } from "./pages/Services/AddAccount";
 import { GoogleTokenProvider } from "./context/GoogleTokenContext";
 
-function App() {
+function App(): JSX.Element {
   return (
     <>
       <AuthProvider>
@@ -41,7 +42,7 @@ function App() {
             <Footer />
           </BrowserRouter>
         </GoogleTokenProvider>
-      </AuthProvider >
+      </AuthProvider>
     </>
   );
 }

@@ -1,3 +1,4 @@
+import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
@@ -10,12 +11,10 @@ import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import Alert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
-import { useAuth } from "../../hooks/useAuth";
-import { useNavigate, useLocation } from "react-router";
+import { useRegister } from "../../hooks/useRegister";
+import { useNavigate } from "react-router";
 import "../../index.css";
-import React, { JSX } from "react";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
+import { JSX } from "react";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -29,7 +28,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
     boxShadow: "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px"
 }));
 
-const SignInContainer = styled(Stack)(({ theme }) => ({
+const SignUpContainer = styled(Stack)(({ theme }) => ({
     //height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
     minHeight: "100%",
     padding: theme.spacing(2),
@@ -45,52 +44,25 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
     }
 }));
 
-export default function SignIn(): JSX.Element {
-    const { user, loginUser, error } = useAuth();
+export default function SignUp(): JSX.Element {
+    const { registerUser, error } = useRegister();
     const [usernameError, setUsernameError] = React.useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = React.useState("");
     const [passwordError, setPasswordError] = React.useState(false);
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
-    const [openSnackbar, setOpenSnackbar] = React.useState(false);
+    const [confirmPasswordError, setConfirmPasswordError] = React.useState(false);
+    const [confirmPasswordErrorMessage, setConfirmPasswordErrorMessage] = React.useState("");
+    const [noEqualsPasswordMessage, setNoEqualsPasswordMessage] = React.useState("");
     const navigate = useNavigate();
-
-    React.useEffect(() => {
-        if (error === null && user) void navigate("/dashboard");
-    }, [error, navigate, user]);
-
-    interface LocationState {
-        signupSuccess?: boolean;
-    }
-
-    const location = useLocation();
-    const state = location.state as LocationState | null;
-    const signupSuccess = state?.signupSuccess;
-
-    React.useEffect(() => {
-        if (signupSuccess === true) setOpenSnackbar(true);
-    }, [signupSuccess]);
-
-    const handleCloseSnackbar = (): void => {
-        setOpenSnackbar(false);
-    };
-
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
-        event.preventDefault();
-        if (usernameError || passwordError) return;
-
-        const data = new FormData(event.currentTarget);
-        const username = data.get("username") as string;
-        const password = data.get("password") as string;
-
-        await loginUser(username, password);
-    };
 
     const validateInputs = (): boolean => {
         const username = document.getElementById("username") as HTMLInputElement;
         const password = document.getElementById("password") as HTMLInputElement;
+        const confirmPassword = document.getElementById("confirmPassword") as HTMLInputElement;
 
         let isValid = true;
 
+        // Controllo username
         if (!username.value) {
             setUsernameError(true);
             setUsernameErrorMessage("Please enter your username.");
@@ -100,42 +72,63 @@ export default function SignIn(): JSX.Element {
             setUsernameErrorMessage("");
         }
 
-        //  password.value.length < 6 --> per il sign up facciamo questo controllo
-        if (!password.value) {
+        // Controllo password sicura
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+        if (!passwordRegex.test(password.value)) {
             setPasswordError(true);
-            setPasswordErrorMessage("Please enter your password.");
+            setPasswordErrorMessage(
+                "Password must be at least 8 characters, include an uppercase, lowercase, number and special character."
+            );
             isValid = false;
         } else {
             setPasswordError(false);
             setPasswordErrorMessage("");
         }
 
+        // Controllo password uguali
+        if (password.value !== confirmPassword.value) {
+            setNoEqualsPasswordMessage("Passwords do not match.");
+            isValid = false;
+        } else setNoEqualsPasswordMessage("");
+
+        // Controllo conferma password
+        if (!confirmPassword.value) {
+            setConfirmPasswordError(true);
+            setConfirmPasswordErrorMessage("Please confirm your password.");
+            isValid = false;
+        } else {
+            setConfirmPasswordError(false);
+            setConfirmPasswordErrorMessage("");
+        }
+
         return isValid;
     };
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
+        event.preventDefault();
+
+        if (validateInputs() === false) return;
+
+        const data = new FormData(event.currentTarget);
+        const username = data.get("username") as string;
+        const password = data.get("password") as string;
+        const result = await registerUser(username, password);
+        if (result) await navigate("/signin", { state: { signupSuccess: true } });
+    };
+
     return (
-        <SignInContainer direction="column" justifyContent="space-between">
+        <SignUpContainer direction="column" justifyContent="space-between">
             <Card variant="elevation">
                 <Typography component="h1" variant="h4" sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}>
-                    Sign in
+                    Sign Up
                 </Typography>
-                {/* Snackbar per il successo del SignUp */}
-                <Snackbar
-                    open={openSnackbar}
-                    autoHideDuration={6000}
-                    onClose={handleCloseSnackbar}
-                    anchorOrigin={{ vertical: "top", horizontal: "center" }}
-                >
-                    <MuiAlert onClose={handleCloseSnackbar} severity="success" variant="filled">
-                        Account created successfully! You can now log in.
-                    </MuiAlert>
-                </Snackbar>
-                {error !== null && <Alert severity="error">{error.toString()}</Alert>}
+                {noEqualsPasswordMessage !== "" && <Alert severity="error">{noEqualsPasswordMessage}</Alert>}
+
+                {noEqualsPasswordMessage === "" && error !== null && <Alert severity="error">{error.toString()}</Alert>}
+
                 <Box
                     component="form"
-                    onSubmit={(event) => {
-                        void handleSubmit(event);
-                    }}
+                    onSubmit={(event) => void handleSubmit(event)}
                     noValidate
                     sx={{ display: "flex", flexDirection: "column", width: "100%", gap: 2 }}
                 >
@@ -173,23 +166,34 @@ export default function SignIn(): JSX.Element {
                             color={passwordError ? "error" : "primary"}
                         />
                     </FormControl>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        onClick={validateInputs}
-                        sx={{ backgroundColor: "var(--maincolor)" }}
-                    >
-                        Sign in
+                    <FormControl>
+                        <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
+                        <TextField
+                            error={confirmPasswordError}
+                            helperText={confirmPasswordErrorMessage}
+                            name="confirmPassword"
+                            placeholder="••••••"
+                            type="password"
+                            id="confirmPassword"
+                            autoComplete="current-password"
+                            autoFocus
+                            required
+                            fullWidth
+                            variant="outlined"
+                            color={confirmPasswordError ? "error" : "primary"}
+                        />
+                    </FormControl>
+                    <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: "var(--maincolor)" }}>
+                        Sign up
                     </Button>
                 </Box>
                 <Divider>or</Divider>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                     <Typography sx={{ textAlign: "center" }}>
-                        Don&apos;t have an account? <CustomLink link="/signup" name="Sign up" color="main-color"></CustomLink>
+                        Already have an account? <CustomLink link="/signin" name="Sign in" color="main-color"></CustomLink>
                     </Typography>
                 </Box>
             </Card>
-        </SignInContainer>
+        </SignUpContainer>
     );
 }
