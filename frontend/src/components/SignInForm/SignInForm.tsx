@@ -16,6 +16,7 @@ import "../../index.css";
 import React, { JSX } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { UserDTO } from "../../services/dto/UserDto";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -79,10 +80,9 @@ export default function SignIn(): JSX.Element {
         if (usernameError || passwordError) return;
 
         const data = new FormData(event.currentTarget);
-        const username = data.get("username") as string;
-        const password = data.get("password") as string;
+        const user = new UserDTO(data.get("username") as string, data.get("password") as string);
 
-        await loginUser(username, password);
+        await loginUser(user);
     };
 
     const validateInputs = (): boolean => {

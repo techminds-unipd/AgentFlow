@@ -4,19 +4,15 @@ import "@testing-library/jest-dom";
 import { AuthContext, AuthProvider, User } from "./AuthContext";
 import { JSX, useContext } from "react";
 import { LoginService } from "../services/loginService";
+import { UserDTO } from "../services/dto/UserDto";
 
 describe("AuthContext Login", () => {
     beforeEach(() => {
         localStorage.clear();
     });
 
-    test("Sets user.username when login succeds", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
-
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+    test("Sets user.username when login succeeds", async () => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -24,7 +20,7 @@ describe("AuthContext Login", () => {
             return (
                 <>
                     <div data-testid="user">{JSON.stringify(user?.username)}</div>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(userDTO)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -33,27 +29,22 @@ describe("AuthContext Login", () => {
 
         vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: "Token" });
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
+        const userDTO = new UserDTO("testUsername", "testPassword");
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
+
         expect(screen.getByTestId("user")).toBeEmptyDOMElement();
         fireEvent.click(screen.getByRole("button", { name: "login" }));
         await waitFor(() => {
-            expect(screen.getByTestId("user")).toHaveTextContent(testUsername);
+            expect(screen.getByTestId("user")).toHaveTextContent(userDTO.username);
         });
     });
 
-    test("Sets user.accessToken when login succeds", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
-
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+    test("Sets user.accessToken when login succeeds", async () => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -61,7 +52,7 @@ describe("AuthContext Login", () => {
             return (
                 <>
                     <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(userDTO)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -69,15 +60,15 @@ describe("AuthContext Login", () => {
         };
 
         const accessToken = "testToken";
-        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken });
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
+        const userDTO = new UserDTO("testUsername", "testPassword");
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
+
         expect(screen.getByTestId("token")).toBeEmptyDOMElement();
         fireEvent.click(screen.getByRole("button", { name: "login" }));
         await waitFor(() => {
@@ -85,44 +76,35 @@ describe("AuthContext Login", () => {
         });
     });
 
-    test("Writes username and accessToken in localStorage with key 'user' when login succeds", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
 
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+    test("Writes username and accessToken in localStorage with key 'user' when login succeeds", async () => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
             const { loginUser } = context;
-            return (
-                <>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
-                        Login
-                    </button>
-                </>
-            );
+            return <button onClick={() => void loginUser(userDTO)} aria-label="login">Login</button>;
         };
 
         const accessToken = "testToken";
-        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
+        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken });
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
-        const user = { username: testUsername, accessToken } as User;
+        const userDTO = new UserDTO("testUsername", "testPassword");
+        const user = { username: userDTO.username, accessToken };
+
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
+
         fireEvent.click(screen.getByRole("button", { name: "login" }));
         await waitFor(() => {
             expect(localStorage.getItem("user")).toEqual(JSON.stringify(user));
         });
     });
 
-    test("Sets user at boot when is saved in localStorage with key 'user'", () => {
+    test("Sets user at boot when saved in localStorage", () => {
         const CustomTest = (): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -130,34 +112,29 @@ describe("AuthContext Login", () => {
             const { user } = context;
             return (
                 <>
-                    <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
                     <div data-testid="user">{JSON.stringify(user?.username)}</div>
+                    <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
                 </>
             );
         };
 
+        const userDTO = new UserDTO("testUsername", "testPassword");
         const accessToken = "testToken";
-        vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
-
-        const testUsername = "testUsername";
-        const user = { username: testUsername, accessToken } as User;
+        const user = { username: userDTO.username, accessToken };
         localStorage.setItem("user", JSON.stringify(user));
+
         render(
             <AuthProvider>
                 <CustomTest />
             </AuthProvider>
         );
-        expect(screen.getByTestId("user")).toHaveTextContent(testUsername);
-        expect(screen.getByTestId("token")).toHaveTextContent(accessToken);
+
+        expect(screen.getByTestId("user")).toHaveTextContent(user.username);
+        expect(screen.getByTestId("token")).toHaveTextContent(user.accessToken);
     });
 
     test("Sets an error containing 'wrong username or password' when login fails due to wrong credentials", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
-
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -165,7 +142,7 @@ describe("AuthContext Login", () => {
             return (
                 <>
                     <div data-testid="error">{error?.toString()}</div>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(userDTO)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -174,11 +151,10 @@ describe("AuthContext Login", () => {
 
         vi.spyOn(LoginService.prototype, "login").mockRejectedValue(new Error("wrong username or password"));
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
+        const userDTO = new UserDTO("testUsername", "testPassword");
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
         expect(screen.getByTestId("error")).toBeEmptyDOMElement();
@@ -191,12 +167,7 @@ describe("AuthContext Login", () => {
     });
 
     test("Sets empty user.username and user.accessToken when login fails due to wrong credentials", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
-
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -205,7 +176,7 @@ describe("AuthContext Login", () => {
                 <>
                     <div data-testid="user">{JSON.stringify(user?.accessToken)}</div>
                     <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(userDTO)} aria-label="login">
                         Login
                     </button>
                 </>
@@ -214,11 +185,10 @@ describe("AuthContext Login", () => {
 
         vi.spyOn(LoginService.prototype, "login").mockRejectedValue(new Error("wrong username or password"));
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
+        const userDTO = new UserDTO("testUsername", "testPassword");
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
         expect(screen.getByTestId("user")).toBeEmptyDOMElement();
@@ -240,12 +210,7 @@ describe("AuthContext Logout", () => {
     });
 
     test("Logout sets user to null", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
-
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -253,7 +218,7 @@ describe("AuthContext Logout", () => {
             return (
                 <>
                     <div data-testid="user">{JSON.stringify(user)}</div>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(userDTO)} aria-label="login">
                         Login
                     </button>
                     <button onClick={() => logoutUser()} aria-label="logout">
@@ -266,17 +231,16 @@ describe("AuthContext Logout", () => {
         const accessToken = "testToken";
         vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
+        const userDTO = new UserDTO("testUsername", "testPassword");
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
         expect(screen.getByTestId("user")).toHaveTextContent(JSON.stringify(null));
         fireEvent.click(screen.getByRole("button", { name: "login" }));
         await waitFor(() => {
-            expect(screen.getByTestId("user")).toHaveTextContent(testUsername);
+            expect(screen.getByTestId("user")).toHaveTextContent(userDTO.username);
         });
         fireEvent.click(screen.getByRole("button", { name: "logout" }));
         await waitFor(() => {
@@ -285,12 +249,7 @@ describe("AuthContext Logout", () => {
     });
 
     test("Logout sets token to null", async () => {
-        interface CustomTestProps {
-            username: string;
-            password: string;
-        }
-
-        const CustomTest = ({ username, password }: CustomTestProps): JSX.Element => {
+        const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
@@ -298,7 +257,7 @@ describe("AuthContext Logout", () => {
             return (
                 <>
                     <div data-testid="token">{JSON.stringify(user?.accessToken)}</div>
-                    <button onClick={() => void loginUser(username, password)} aria-label="login">
+                    <button onClick={() => void loginUser(userDTO)} aria-label="login">
                         Login
                     </button>
                     <button onClick={() => logoutUser()} aria-label="logout">
@@ -311,11 +270,10 @@ describe("AuthContext Logout", () => {
         const accessToken = "testToken";
         vi.spyOn(LoginService.prototype, "login").mockResolvedValue({ accessToken: accessToken });
 
-        const testUsername = "testUsername";
-        const testPassword = "testPassword";
+        const userDTO = new UserDTO("testUsername", "testPassword");
         render(
             <AuthProvider>
-                <CustomTest username={testUsername} password={testPassword} />
+                <CustomTest userDTO={userDTO} />
             </AuthProvider>
         );
         fireEvent.click(screen.getByRole("button", { name: "login" }));
@@ -350,8 +308,8 @@ describe("AuthContext Logout", () => {
             json: async (): Promise<{ accessToken: string }> => new Promise((resolve) => resolve({ accessToken }))
         };
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
-        const testUsername = "testUsername";
-        const user = { username: testUsername, accessToken } as User;
+        const userDTO = new UserDTO("testUsername", "testPassword");
+        const user = { username: userDTO.username, accessToken } as User;
         localStorage.setItem("user", JSON.stringify(user));
         expect(localStorage.getItem("user")).toEqual(JSON.stringify(user));
         render(

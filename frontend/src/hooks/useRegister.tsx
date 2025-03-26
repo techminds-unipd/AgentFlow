@@ -17,7 +17,6 @@ export const useRegister = (
 
         try {
             const result = await registerService.register(user);
-            console.log(user.username);
             return { user: result };
         } catch (error) {
             setError(error instanceof Error ? error.message : "Something went wrong.");

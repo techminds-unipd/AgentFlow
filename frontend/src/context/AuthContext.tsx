@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { LoginService } from "../services/loginService";
+import { UserDTO } from "../services/dto/UserDto";
+ 
 
 // AuthProvider serve per garantire che tutte le info sull'autenticazione siano condivise in tutta l'app
 // fornisce i dati di autenticazione a tutti i componenti figli tramite il contesto Context
@@ -11,7 +13,7 @@ export interface User {
 
 export interface AuthContextType {
     user: User | null;
-    loginUser: (username: string, password: string) => Promise<void>;
+    loginUser: (userDTO: UserDTO) => Promise<void>;
     logoutUser: () => void;
     error: string | null;
 }
@@ -40,10 +42,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     // chiama la funzione di login e se avviene correttamente salva i dati in localStorage
-    const loginUser = async (username: string, password: string): Promise<void> => {
+    const loginUser = async (userDTO: UserDTO): Promise<void> => {
         try {
-            const data = await service.login(username, password);
-            const user = { username, accessToken: data.accessToken } as User;
+            const data = await service.login(userDTO);
+            const user = { username: userDTO.username, accessToken: data.accessToken } as User;
             localStorage.setItem("user", JSON.stringify(user));
             setUser(user);
             setError(null);
