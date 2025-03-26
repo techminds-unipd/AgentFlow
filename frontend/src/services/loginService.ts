@@ -14,7 +14,7 @@ export class LoginService {
             });
 
             if (response.status === 201) return (await response.json()) as LoginResponse;
-            else if (response.status === 401) throw new Error("wrong username or password");
+            else if (response.status === 400 || response.status === 401) throw new Error("wrong username or password");
             else if (response.status >= 500) throw new Error("Server error");
             else throw new Error("Generic error");
         } catch (error) {
