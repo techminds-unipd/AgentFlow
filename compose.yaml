@@ -15,6 +15,10 @@ services:
     build: ./backend
     ports:
       - 3000:3000
+    environment:
+      MONGO_URL: mongodb://root:password@mongo:27017
+      AGENT_URL: http://agente:5000
+      FRONTEND_URL: http://localhost:5173
     networks:
       - app-network
   frontend:
