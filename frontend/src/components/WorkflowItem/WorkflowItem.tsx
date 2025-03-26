@@ -44,7 +44,11 @@ export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): Reac
                 width={750}
                 bgcolor={"var(--white-text)"}
             >
-                <Link href={`workflow/${name}`} fontSize={20} sx={{ color: "var(--black-text)", textDecoration: "underline var(--black-text)" }}>
+                <Link
+                    href={`workflow/${name}`}
+                    fontSize={20}
+                    sx={{ color: "var(--black-text)", textDecoration: "underline var(--black-text)" }}
+                >
                     {name}
                 </Link>
                 <IconButton onClick={handleOpenDialog}>

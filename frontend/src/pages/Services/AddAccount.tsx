@@ -13,11 +13,7 @@ export const AddAccount = (): JSX.Element => {
     const navigate = useNavigate();
     if (tokenParam !== null && expireDateParam !== null) {
         removeGoogleToken();
-        addGoogleToken({
-            token: tokenParam,
-            refreshToken: refreshTokenParam!,
-            expireDate: expireDateParam
-        });
+        addGoogleToken({ token: tokenParam, refreshToken: refreshTokenParam!, expireDate: expireDateParam });
         void navigate("/services");
     }
 

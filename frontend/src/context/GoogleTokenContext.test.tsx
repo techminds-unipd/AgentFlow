@@ -14,7 +14,15 @@ describe("GoogleTokenContext test", () => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button
+                        onClick={() =>
+                            void addGoogleToken({
+                                token: "test-token",
+                                refreshToken: "refresh",
+                                expireDate: "2023-12-31T23:59:59Z"
+                            })
+                        }
+                    >
                         Add Google Account
                     </button>
                     <span>{googleToken?.token}</span>
@@ -37,7 +45,15 @@ describe("GoogleTokenContext test", () => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button
+                        onClick={() =>
+                            void addGoogleToken({
+                                token: "test-token",
+                                refreshToken: "refresh",
+                                expireDate: "2023-12-31T23:59:59Z"
+                            })
+                        }
+                    >
                         Add Google Account
                     </button>
                     <span>{googleToken?.expireDate}</span>
@@ -59,7 +75,11 @@ describe("GoogleTokenContext test", () => {
         const TestComponent = (): JSX.Element => {
             const { addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
-                <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2023-12-31T23:59:59Z" })}>
+                <button
+                    onClick={() =>
+                        void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2023-12-31T23:59:59Z" })
+                    }
+                >
                     Add Google Account
                 </button>
             );
@@ -84,7 +104,15 @@ describe("GoogleTokenContext test", () => {
             const { googleToken, addGoogleToken, removeGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button
+                        onClick={() =>
+                            void addGoogleToken({
+                                token: "test-token",
+                                refreshToken: "refresh",
+                                expireDate: "2023-12-31T23:59:59Z"
+                            })
+                        }
+                    >
                         Add Google Account
                     </button>
                     <button onClick={removeGoogleToken}>Remove Google Account</button>
@@ -112,7 +140,15 @@ describe("GoogleTokenContext test", () => {
             const { addGoogleToken, removeGoogleToken } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2023-12-31T23:59:59Z" })}>
+                    <button
+                        onClick={() =>
+                            void addGoogleToken({
+                                token: "test-token",
+                                refreshToken: "refresh",
+                                expireDate: "2023-12-31T23:59:59Z"
+                            })
+                        }
+                    >
                         Add Google Account
                     </button>
                     <button onClick={removeGoogleToken}>Remove Google Account</button>
@@ -141,7 +177,15 @@ describe("GoogleTokenContext test", () => {
             const { addGoogleToken, isTokenExpired } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2020-01-01T00:00:00Z" })}>
+                    <button
+                        onClick={() =>
+                            void addGoogleToken({
+                                token: "test-token",
+                                refreshToken: "refresh",
+                                expireDate: "2020-01-01T00:00:00Z"
+                            })
+                        }
+                    >
                         Add Expired Google Account
                     </button>
                     <span>{isTokenExpired() ? "Expired" : "Valid"}</span>
@@ -164,7 +208,15 @@ describe("GoogleTokenContext test", () => {
             const { addGoogleToken, isTokenExpired } = useContext(GoogleTokenContext)!;
             return (
                 <div>
-                    <button onClick={() => void addGoogleToken({ token: "test-token", refreshToken: "refresh", expireDate: "2099-12-31T23:59:59Z" })}>
+                    <button
+                        onClick={() =>
+                            void addGoogleToken({
+                                token: "test-token",
+                                refreshToken: "refresh",
+                                expireDate: "2099-12-31T23:59:59Z"
+                            })
+                        }
+                    >
                         Add Valid Google Account
                     </button>
                     <span>{isTokenExpired() ? "Expired" : "Valid"}</span>
