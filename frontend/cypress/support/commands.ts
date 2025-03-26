@@ -39,8 +39,7 @@ Cypress.Commands.add("registerIfNotExistsAPI", (username: string, password: stri
         body: JSON.stringify({ username, password }),
         failOnStatusCode: false
     }).then((response) => {
-        if (response.status != 201 && response.body.message != "Username already exists") {
+        if (response.status !== 201 && response.body.message !== "Username already exists")
             throw new Error(response.body.message);
-        }
     });
 });
