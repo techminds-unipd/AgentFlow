@@ -13,7 +13,13 @@ interface WorkflowItemProps {
     setOpenSnackBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const WorkflowItem = ({ name, setShouldReload, setSnackBarSetMessage, setAlertColor, setOpenSnackBar }: WorkflowItemProps): React.JSX.Element => {
+export const WorkflowItem = ({
+    name,
+    setShouldReload,
+    setSnackBarSetMessage,
+    setAlertColor,
+    setOpenSnackBar
+}: WorkflowItemProps): React.JSX.Element => {
     const [open, setOpen] = React.useState(false);
     const { deleteWorkflow } = useDeleteWorkflow(new DeleteWorkflowService());
 
@@ -28,16 +34,15 @@ export const WorkflowItem = ({ name, setShouldReload, setSnackBarSetMessage, set
     const handleDeleteWorkflow = async (): Promise<void> => {
         try {
             const result = await deleteWorkflow(name);
-            if(result){
+            if (result) {
                 setAlertColor("success");
                 setSnackBarSetMessage(`Workflow "${name}" deleted successfully.`);
                 setShouldReload(true); // Re-rendering della lista
-            }
-            else {
+            } else {
                 setSnackBarSetMessage("Failed to delete workflow.");
                 setAlertColor("error");
             }
-        } catch (error) {
+        } catch {
             setSnackBarSetMessage("Failed to delete workflow.");
             setAlertColor("error");
         }

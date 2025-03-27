@@ -12,7 +12,7 @@ interface WorkflowListProps {
 }
 
 export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setShouldReload }) => {
-const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkflowsService());
+    const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkflowsService());
     const [snackBarMessage, setSnackBarSetMessage] = React.useState("");
     const [alertColor, setAlertColor] = React.useState<"success" | "error">("error");
     const [openSnackBar, setOpenSnackBar] = React.useState(false);
@@ -27,8 +27,6 @@ const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkfl
             setShouldReload(false); // Reset dello stato
         }
     }, [shouldReload, setShouldReload, refetch]);
-
-
 
     return (
         <>
@@ -73,7 +71,14 @@ const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkfl
                                 ?.slice()
                                 .reverse()
                                 .map((workflowName, index) => (
-                                    <WorkflowItem key={index} name={workflowName} setShouldReload={setShouldReload} setSnackBarSetMessage={setSnackBarSetMessage} setAlertColor={setAlertColor} setOpenSnackBar={setOpenSnackBar} />
+                                    <WorkflowItem
+                                        key={index}
+                                        name={workflowName}
+                                        setShouldReload={setShouldReload}
+                                        setSnackBarSetMessage={setSnackBarSetMessage}
+                                        setAlertColor={setAlertColor}
+                                        setOpenSnackBar={setOpenSnackBar}
+                                    />
                                 ))}
                         </>
                     )}
