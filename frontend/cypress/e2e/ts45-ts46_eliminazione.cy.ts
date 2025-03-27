@@ -19,7 +19,7 @@ describe("Eliminazione workflow TS45-TS46", () => {
             'DELETE',
             'http://localhost:3000/workflow/delete/prova',
             { statusCode: 500 }
-          ).as('getServerFailure')
+        ).as('getServerFailure')
         cy.deleteWorkflowUI("prova");
         cy.get("[data-cy='delete-workflow-snackbar-message']").should("contain", "Failed to delete workflow.");
 

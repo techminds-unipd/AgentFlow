@@ -31,6 +31,7 @@ export const CustomButton = ({ name, link, variant = "contained" }: CustomButton
             component={ButtonBehavior}
             href={link}
             variant={variant}
+            data-cy={"error-google-button"}
             sx={{
                 backgroundColor: backgroundColor,
                 color: textColor,
