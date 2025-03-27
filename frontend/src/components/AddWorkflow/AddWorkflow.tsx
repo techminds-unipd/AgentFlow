@@ -103,7 +103,13 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                     </IconButton>
                 }
             >
-                <Alert onClose={handleClose} severity={alertColor} variant="filled" sx={{ width: "100%" }} data-cy="add-workflow-snackbar-message">
+                <Alert
+                    onClose={handleClose}
+                    severity={alertColor}
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                    data-cy="add-workflow-snackbar-message"
+                >
                     {snackBarMessage}
                 </Alert>
             </Snackbar>
