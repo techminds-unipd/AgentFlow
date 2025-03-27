@@ -3,6 +3,7 @@
 declare global {
     namespace Cypress {
         interface Chainable {
+            loginByGoogleApi(): Chainable<void>;
             loginUI(username: string, password: string): Chainable<void>;
             loginUISession(username: string, password: string): Chainable<void>;
             logout(): Chainable<void>;
@@ -15,6 +16,28 @@ declare global {
         }
     }
 }
+
+Cypress.Commands.add('loginByGoogleApi', () => {
+    cy.log('Logging in to Google')
+    cy.request({
+      method: 'POST',
+      url: 'https://www.googleapis.com/oauth2/v4/token',
+      body: {
+        grant_type: 'refresh_token',
+        client_id: Cypress.env('googleClientId'),
+        client_secret: Cypress.env('googleClientSecret'),
+        // il refresh token dura 24 ore
+        refresh_token: Cypress.env('googleRefreshToken'),
+      },
+    }).then(({ body }) => {
+        const { access_token, expires_in } = body
+        const googleAccountToken = {
+            token: access_token,
+            expireDate: new Date(new Date().getTime() + expires_in * 1000)
+        }
+        window.localStorage.setItem('GoogleAccountToken', JSON.stringify(googleAccountToken))
+    })
+});
 
 Cypress.Commands.add("loginUI", (username: string, password: string) => {
     cy.visit("/signin");
