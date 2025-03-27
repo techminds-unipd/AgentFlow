@@ -143,15 +143,7 @@ export const WorkflowCanvas = ({
                 style={{ backgroundColor: "white", border: "solid black 0.2em" }}
                 connectionLineType={ConnectionLineType.Bezier}
                 isValidConnection={isValidConnection}
-                minZoom={0.7}
-                translateExtent={[
-                    [-10, -600],
-                    [2000, 600]
-                ]}
-                nodeExtent={[
-                    [-10, -600],
-                    [2000, 600]
-                ]}
+                minZoom={0.5}
             >
                 <Background color="rgb(242,242,242)" variant={BackgroundVariant.Lines} />
                 <Controls />
