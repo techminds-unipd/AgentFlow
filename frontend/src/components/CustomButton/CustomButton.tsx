@@ -6,7 +6,7 @@ import "../../index.css";
 interface CustomButtonProps {
     name: string;
     link: string;
-    variant: "contained" | "outlined";
+    variant?: "contained" | "outlined";
 }
 
 interface ButtonStyles {

@@ -1,9 +1,14 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
 import { waitFor } from "@testing-library/react";
-import { LoginService } from "./loginService";
-import { API_BASE_URL } from "./constants";
+import { LoginService } from "./LoginService";
+import { API_BASE_URL } from "./Constants";
+import { UserDTO } from "./dto/userDTO";
 
 describe("Login API", () => {
+    const username = "testUsername";
+    const password = "testPassword";
+    const user = new UserDTO(username, password);
+
     const fetchSpy = vi.spyOn(window, "fetch");
 
     beforeEach(() => {
@@ -20,15 +25,13 @@ describe("Login API", () => {
         };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
-        const username = "testUsername";
-        const password = "testPassword";
-        const loginResponse = await service.login(username, password);
+        const loginResponse = await service.login(user);
         expect(loginResponse).toEqual({ accessToken });
         expect(fetchSpy).toBeCalledTimes(1);
         expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify(user)
         });
     });
 
@@ -39,15 +42,13 @@ describe("Login API", () => {
         };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
-        const username = "testUsername";
-        const password = "testPassword";
-        await expect(async () => service.login(username, password)).rejects.toThrowError("wrong username or password");
+        await expect(async () => service.login(user)).rejects.toThrowError("wrong username or password");
         await waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(user)
             });
         });
     });
@@ -59,30 +60,26 @@ describe("Login API", () => {
         };
 
         fetchSpy.mockResolvedValue(mockResolveValue as Response);
-        const username = "testUsername";
-        const password = "testPassword";
-        await expect(async () => service.login(username, password)).rejects.toThrowError("Server error");
+        await expect(async () => service.login(user)).rejects.toThrowError("Server error");
         await waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(user)
             });
         });
     });
 
     test("Should throw an error with message 'Generic error' if fetch fails", async () => {
         fetchSpy.mockRejectedValue(() => {});
-        const username = "testUsername";
-        const password = "testPassword";
-        await expect(async () => service.login(username, password)).rejects.toThrowError("Generic error");
+        await expect(async () => service.login(user)).rejects.toThrowError("Generic error");
         await waitFor(() => {
             expect(fetchSpy).toBeCalledTimes(1);
             expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(user)
             });
         });
     });

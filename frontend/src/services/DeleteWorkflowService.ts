@@ -1,21 +1,15 @@
-import { API_BASE_URL } from "./constants";
+import { API_BASE_URL } from "./Constants";
 
 export interface DeleteWorkflowResponse {
     name: string;
 }
 
 export class DeleteWorkflowService {
-    private readonly accessToken: string;
-
-    public constructor(accessToken: string) {
-        this.accessToken = accessToken;
-    }
-
-    public async deleteWorkflowByName(name: string): Promise<DeleteWorkflowResponse> {
+    public async deleteWorkflowByName(name: string, accessToken: string): Promise<DeleteWorkflowResponse> {
         try {
             const response = await fetch(`${API_BASE_URL}/workflow/delete/${name}`, {
                 method: "DELETE",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.accessToken}` }
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
             });
 
             if (response.status === 200) return (await response.json()) as DeleteWorkflowResponse;
