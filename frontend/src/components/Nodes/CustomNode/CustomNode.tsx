@@ -47,6 +47,7 @@ export const CustomNode = ({
                 variant="outlined"
                 size="large"
                 draggable={draggable}
+                data-cy={`button-${nodeTitle}`}
                 sx={{
                     margin: "10px",
                     borderWidth: 2,

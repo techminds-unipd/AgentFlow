@@ -1,5 +1,5 @@
-describe("Visualizzazione, creazione, eliminazione workflow TS15-TS21", () => {
-    
+describe("Visualizzazione, creazione workflow TS15-TS21", () => {
+
     beforeEach(() => {
         cy.registerIfNotExistsAPI(Cypress.env("loginUsername"), Cypress.env("loginPassword"));
         cy.loginUISession(Cypress.env("loginUsername"), Cypress.env("loginPassword"));

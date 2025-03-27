@@ -4,7 +4,7 @@ import { GmailNode } from "../../components/Nodes/GmailNode/GmailNode";
 import { CalendarNode } from "../../components/Nodes/CalendarNode/CalendarNode";
 import { PastebinNode } from "../../components/Nodes/PastebinNode/PastebinNode";
 import "../../index.css";
-import { API_BASE_URL } from "../../services/constants";
+import { API_BASE_URL } from "../../services/Constants";
 import { useGoogleToken } from "../../hooks/useGoogleToken";
 import { useState, useEffect, JSX } from "react";
 

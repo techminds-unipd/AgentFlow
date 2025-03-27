@@ -4,6 +4,7 @@ import * as React from "react";
 import "../../index.css";
 import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
 import { CustomLink } from "../CustomLink/CustomLink";
+import { DeleteWorkflowService } from "../../services/DeleteWorkflowService";
 
 interface WorkflowItemProps {
     name: string;
@@ -12,7 +13,7 @@ interface WorkflowItemProps {
 
 export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): React.JSX.Element => {
     const [open, setOpen] = React.useState(false);
-    const { deleteWorkflow } = useDeleteWorkflow();
+    const { deleteWorkflow } = useDeleteWorkflow(new DeleteWorkflowService());
 
     const handleOpenDialog = (): void => {
         setOpen(true);
