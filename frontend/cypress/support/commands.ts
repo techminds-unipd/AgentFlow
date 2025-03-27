@@ -11,6 +11,7 @@ declare global {
             createWorkflowAPI(name: string): Chainable<void>;
             deleteWorkflowAPI(name: string): Chainable<void>;
             deleteAllWorkflowAPI(): Chainable<void>;
+            createWorkflowUI(workflowName: string): Chainable<void>;
         }
     }
 }
@@ -106,4 +107,10 @@ Cypress.Commands.add("deleteAllWorkflowAPI", () => {
                 cy.deleteWorkflowAPI(element);
             });
         });
+});
+
+Cypress.Commands.add("createWorkflowUI", (workflowName: string) => {
+    cy.visit("/dashboard");
+    cy.get("[data-cy='workflow-name-input']").type(workflowName);
+    cy.get("[data-cy='add-workflow-button']").click();
 });

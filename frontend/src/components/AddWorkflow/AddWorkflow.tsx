@@ -35,7 +35,7 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                 setWorkflowName("");
             } else {
                 // Se qualcosa non va con la creazione, se il problema è perchè c'è il nome uguale verrà stampato in automatico l'errore definito in newWorkflowAPI
-                setSnackBarSetMessage(error ?? "Something went wrong");
+                setSnackBarSetMessage(error ?? "Something went wrong.");
                 setAlertColor("error");
             }
         } catch {
@@ -78,6 +78,7 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                             "&:hover": { backgroundColor: "var(--white-text)" }
                         }
                     }}
+                    data-cy="workflow-name-input"
                 />
                 <IconButton
                     aria-label="Add workflow"
@@ -86,6 +87,7 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                         void handleClick();
                     }}
                     disabled={isLoading}
+                    data-cy="add-workflow-button"
                 >
                     <Add fontSize="large" />
                 </IconButton>
@@ -101,7 +103,7 @@ export const AddWorkflow: React.FC<AddWorkflowProps> = ({ setShouldReload }) => 
                     </IconButton>
                 }
             >
-                <Alert onClose={handleClose} severity={alertColor} variant="filled" sx={{ width: "100%" }}>
+                <Alert onClose={handleClose} severity={alertColor} variant="filled" sx={{ width: "100%" }} data-cy="add-workflow-snackbar-message">
                     {snackBarMessage}
                 </Alert>
             </Snackbar>
