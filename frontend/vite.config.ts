@@ -24,6 +24,7 @@ export default defineConfig({
         "./src/vite-env.d.ts",
         "./src/App.tsx",
         "./src/pages/**/*",
+        "./src/components/**/*",
       ],
     },
   }
