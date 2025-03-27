@@ -15,7 +15,15 @@ describe("WorkflowItem", () => {
     const setOpenSnackBar = vi.fn();
 
     test("Opens the dialog when clicking the delete button", () => {
-        render(<WorkflowItem name="Test Workflow" setShouldReload={setShouldReload} setAlertColor={setAlertColor} setSnackBarSetMessage={setSnackBarSetMessage} setOpenSnackBar={setOpenSnackBar}/>);
+        render(
+            <WorkflowItem
+                name="Test Workflow"
+                setShouldReload={setShouldReload}
+                setAlertColor={setAlertColor}
+                setSnackBarSetMessage={setSnackBarSetMessage}
+                setOpenSnackBar={setOpenSnackBar}
+            />
+        );
 
         const deleteButton = screen.getByRole("button");
         fireEvent.click(deleteButton);
@@ -24,7 +32,15 @@ describe("WorkflowItem", () => {
     });
 
     test("Closes the dialog when clicking the delete button", async () => {
-        render(<WorkflowItem name="Test Workflow" setShouldReload={setShouldReload} setAlertColor={setAlertColor} setSnackBarSetMessage={setSnackBarSetMessage} setOpenSnackBar={setOpenSnackBar}/>);
+        render(
+            <WorkflowItem
+                name="Test Workflow"
+                setShouldReload={setShouldReload}
+                setAlertColor={setAlertColor}
+                setSnackBarSetMessage={setSnackBarSetMessage}
+                setOpenSnackBar={setOpenSnackBar}
+            />
+        );
 
         const deleteButton = screen.getByRole("button");
         fireEvent.click(deleteButton);
@@ -40,7 +56,15 @@ describe("WorkflowItem", () => {
     test("Calls deleteWorkflow when clicking 'Yes' on the dialog", async () => {
         const { deleteWorkflow } = useDeleteWorkflow(new DeleteWorkflowService());
 
-        render(<WorkflowItem name="Test Workflow" setShouldReload={setShouldReload} setAlertColor={setAlertColor} setSnackBarSetMessage={setSnackBarSetMessage} setOpenSnackBar={setOpenSnackBar}/>);
+        render(
+            <WorkflowItem
+                name="Test Workflow"
+                setShouldReload={setShouldReload}
+                setAlertColor={setAlertColor}
+                setSnackBarSetMessage={setSnackBarSetMessage}
+                setOpenSnackBar={setOpenSnackBar}
+            />
+        );
 
         const deleteButton = screen.getByRole("button");
         fireEvent.click(deleteButton);
