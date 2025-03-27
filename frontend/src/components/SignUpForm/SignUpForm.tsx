@@ -147,6 +147,7 @@ export default function SignUp(): JSX.Element {
                             fullWidth
                             variant="outlined"
                             color={usernameError ? "error" : "primary"}
+                            data-cy="signup-username-input"
                         />
                     </FormControl>
                     <FormControl>
@@ -164,6 +165,7 @@ export default function SignUp(): JSX.Element {
                             fullWidth
                             variant="outlined"
                             color={passwordError ? "error" : "primary"}
+                            data-cy="signup-password-input"
                         />
                     </FormControl>
                     <FormControl>
@@ -181,9 +183,16 @@ export default function SignUp(): JSX.Element {
                             fullWidth
                             variant="outlined"
                             color={confirmPasswordError ? "error" : "primary"}
+                            data-cy="signup-passwordConfirm-input"
                         />
                     </FormControl>
-                    <Button type="submit" fullWidth variant="contained" sx={{ backgroundColor: "var(--maincolor)" }}>
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ backgroundColor: "var(--maincolor)" }}
+                        data-cy="signup-submit"
+                    >
                         Sign up
                     </Button>
                 </Box>

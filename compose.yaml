@@ -1,16 +1,42 @@
-#!Questo file serve solo per avviare tutti i servizi contemporaneamente (dev).
+#!Questo file serve solo per avviare tutti i servizi contemporaneamente.
 services:
   mongo:
+    container_name: mongo
     image: docker.io/mongo:8.0.0
-    ports:
-      - 27017:27017
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27017:27017
     volumes:
       - mongo-data:/etc/mongo:rw
-
+    networks:
+      - app-network
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - 3000:3000
+    environment:
+      MONGO_URL: mongodb://root:password@mongo:27017
+      AGENT_URL: http://agente:5000
+      FRONTEND_URL: http://localhost:5173
+    networks:
+      - app-network
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    ports:
+      - 5173:5173
+    networks:
+      - app-network
+  agente:
+    container_name: agente
+    build: ./agente
+    networks:
+      - app-network
   mongo-express:
+    container_name: mongo_express
     image: docker.io/mongo-express:1.0.2-20-alpine3.19
     ports:
       - 8081:8081
@@ -19,54 +45,14 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
       ME_CONFIG_MONGODB_URL: mongodb://root:password@mongo:27017/
       ME_CONFIG_BASICAUTH: false
-  
-  backend:
-    image: mvp-backend
-    build: ./backend
-    #--DEBUG-- da tenere per swagger
-    ports:
-      - "3000:3000"
-    #-------
-    develop:
-      watch:
-        - action: sync
-          path: ./backend
-          target: /app
-        - action: rebuild
-          path: ./backend/package.json
-        - action: rebuild
-          path: ./backend/package-logck.json
+    profiles:
+      - dev
+    networks:
+      - app-network
 
-  frontend:
-    image: mvp-frontend
-    build: ./frontend
-    ports:
-      - "8080:5173"
-    develop:
-      watch:
-        - action: sync
-          path: ./frontend
-          target: /app
-        - action: rebuild
-          path: ./frontend/package.json
-        - action: rebuild
-          path: ./frontend/package-logck.json
-
-  agente:
-    image: mvp-agente
-    build: ./agente
-    #--DEBUG--
-    ports:
-      - "5000:5000"
-    #---------
-    develop:
-      watch:
-        - action: sync
-          path: ./agente
-          target: /usr/src/app
-        - action: rebuild
-          path: ./agente/.venv
-        - action: rebuild
-          path: ./agente/requirements.txt
 volumes:
   mongo-data:
+
+networks:
+  app-network:
+    driver: bridge

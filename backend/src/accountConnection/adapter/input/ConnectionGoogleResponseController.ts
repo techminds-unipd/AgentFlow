@@ -21,7 +21,7 @@ class ConnectionGoogleResponseController {
         try {
             const { token, refreshToken, expireDate } = await this.connectionGoogleResponseUseCase.getToken(code);
             return {
-                url: `http://localhost:5173/services/addAccount?token=${token}&refreshToken=${refreshToken}&expireDate=${expireDate.toISOString()}`
+                url: `${process.env.FRONTEND_URL}/services/addAccount?token=${token}&refreshToken=${refreshToken}&expireDate=${expireDate.toISOString()}`
             };
         } catch {
             throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);

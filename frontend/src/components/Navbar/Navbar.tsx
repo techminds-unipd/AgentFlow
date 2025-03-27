@@ -54,6 +54,7 @@ export const Navbar = (): React.JSX.Element => {
                                 aria-haspopup="true"
                                 onClick={handleMenu}
                                 color="inherit"
+                                data-cy="user-navicon"
                             >
                                 <AccountCircle />
                             </IconButton>
