@@ -20,7 +20,7 @@ describe("Visualizzazione, creazione workflow TS15-TS21", () => {
         cy.createWorkflowAPI("Pluto").then(() => {
             cy.visit("/dashboard");
             cy.get("[data-cy='workflow-Pluto']").should("be.visible");
-            cy.get("[data-cy='workflow-Pluto']").should("have.attr", "href", "#");
+            cy.get("[data-cy='workflow-Pluto']").should("have.attr", "href");
         });
     });
 

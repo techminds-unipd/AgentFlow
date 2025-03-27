@@ -12,7 +12,7 @@ describe("Visualizzazione informazioni blocchi TS26-TS31", () => {
         });
     });
 
-    it("TS27 - L'utente autenticato possa visualizzare le funzioni offerte dal blocco Gmail." , () => {
+    it("TS27 - L'utente autenticato può visualizzare le funzioni offerte dal blocco Gmail." , () => {
         cy.visit("/services");
         cy.get("[data-cy='button-Gmail']").click().then(() => {;
             cy.get("[data-cy='Gmail-node-features']").should("be.visible");
@@ -26,7 +26,7 @@ describe("Visualizzazione informazioni blocchi TS26-TS31", () => {
         });
     });
 
-    it("TS29 - L'utente autenticato possa visualizzare le funzioni offerte dal blocco Pastebin." , () => {
+    it("TS29 - L'utente autenticato può visualizzare le funzioni offerte dal blocco Pastebin." , () => {
         cy.visit("/services");
         cy.get("[data-cy='button-Pastebin']").click().then(() => {;
             cy.get("[data-cy='Pastebin-node-features']").should("be.visible");
@@ -35,15 +35,15 @@ describe("Visualizzazione informazioni blocchi TS26-TS31", () => {
 
     it("TS30 - L'utente autenticato può visualizzare una breve descrizione relativa al blocco Calendar.", () => {
         cy.visit("/services");
-        cy.get("[data-cy='button-Calendar']").click().then(() => {;
-            cy.get("[data-cy='Calendar-info']").should("be.visible");
+        cy.get("[data-cy='button-GCalendar']").click().then(() => {;
+            cy.get("[data-cy='GCalendar-info']").should("be.visible");
         });
     });
 
-    it("TS31 - L'utente autenticato possa visualizzare le funzioni offerte dal blocco Calendar." , () => {
+    it("TS31 - L'utente autenticato può visualizzare le funzioni offerte dal blocco Calendar." , () => {
         cy.visit("/services");
-        cy.get("[data-cy='button-Calendar']").click().then(() => {;
-            cy.get("[data-cy='Calendar-node-features']").should("be.visible");
+        cy.get("[data-cy='button-GCalendar']").click().then(() => {;
+            cy.get("[data-cy='GCalendar-node-features']").should("be.visible");
         });
     });
 
