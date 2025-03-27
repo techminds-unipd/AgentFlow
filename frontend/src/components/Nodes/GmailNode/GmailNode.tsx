@@ -7,7 +7,10 @@ export const GmailNode = ({
     dialogTitle = "Gmail description",
     dialogContent = (
         <>
-            A node connected to the Gmail service. It allows you to manage emails directly without having to open your webmail.
+            <span data-cy="Gmail-info">
+                A node connected to the Gmail service. It allows you to manage emails directly without having to open your
+                webmail.
+            </span>
             <br />
             <br />
             <Divider />
@@ -15,7 +18,7 @@ export const GmailNode = ({
                 {" "}
                 Available features
             </Typography>
-            <ul style={{ listStylePosition: "inside" }}>
+            <ul style={{ listStylePosition: "inside" }} data-cy="Gmail-node-features">
                 <li>Search for an email</li>
                 <li>Retrieve a specific email</li>
                 <li>Create a draft</li>
