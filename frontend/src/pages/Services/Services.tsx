@@ -48,7 +48,12 @@ export const Services = (): JSX.Element => {
                         <CalendarNode disabled={!isNodeEnabled} />
                     </Grid>
                     <Grid size={8} alignContent={"center"}>
-                        <Button variant={"contained"} sx={{ backgroundColor: "var(--maincolor)" }} onClick={handleButtonClick}>
+                        <Button
+                            variant={"contained"}
+                            sx={{ backgroundColor: "var(--maincolor)" }}
+                            onClick={handleButtonClick}
+                            data-cy="services-google-button"
+                        >
                             {buttonText}
                         </Button>
                         <Typography marginLeft={3} color="red" display={displayTokenExpired}>
