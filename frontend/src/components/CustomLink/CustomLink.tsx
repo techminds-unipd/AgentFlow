@@ -36,6 +36,7 @@ export const CustomLink = ({ name, link, color, fontSize = 18 }: CustomLinkProps
                     component={LinkBehavior}
                     underline="always"
                     sx={{ color: varColor, textDecoration: "underline " + varColor, fontSize: { fontSize } }}
+                    data-cy={`workflow-${name}`}
                 >
                     {name}
                 </Link>

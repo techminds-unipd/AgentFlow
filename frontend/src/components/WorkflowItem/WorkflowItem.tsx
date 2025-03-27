@@ -64,7 +64,7 @@ export const WorkflowItem = ({
                 bgcolor={"var(--white-text)"}
             >
                 <CustomLink link={`/workflow/${name}`} name={name} fontSize={20} />
-                <IconButton onClick={handleOpenDialog}>
+                <IconButton onClick={handleOpenDialog} data-cy={`workflow-${name}-delete`}>
                     <ClearIcon color="inherit" fontSize="large" />
                 </IconButton>
             </Box>
