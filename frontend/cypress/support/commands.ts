@@ -13,6 +13,7 @@ declare global {
             deleteWorkflowAPI(name: string): Chainable<void>;
             deleteAllWorkflowAPI(): Chainable<void>;
             createWorkflowUI(workflowName: string): Chainable<void>;
+            deleteWorkflowUI(workflowName: string): Chainable<void>;
         }
     }
 }
@@ -109,7 +110,8 @@ Cypress.Commands.add("deleteWorkflowAPI", (name) => {
             cy.request({
                 url: `http://localhost:3000/workflow/delete/${name}`,
                 method: "DELETE",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.accessToken}` }
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.accessToken}` },
+                failOnStatusCode: false
             });
         });
 });
@@ -137,4 +139,10 @@ Cypress.Commands.add("createWorkflowUI", (workflowName: string) => {
     cy.visit("/dashboard");
     cy.get("[data-cy='workflow-name-input']").type(workflowName);
     cy.get("[data-cy='add-workflow-button']").click();
+});
+
+Cypress.Commands.add("deleteWorkflowUI", (workflowName: string) => {
+    cy.visit("/dashboard");
+    cy.get(`[data-cy='workflow-${workflowName}-delete']`).click();
+    cy.get("[data-cy='workflow-delete-confirm']").click();
 });
