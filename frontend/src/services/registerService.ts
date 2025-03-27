@@ -9,7 +9,7 @@ export class RegisterService {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user)
             });
-            
+
             if (response.status === 201) return (await response.json()) as UserDTO;
             else if (response.status === 400) throw new Error("Username already exists");
             else if (response.status >= 500) throw new Error("Server error");

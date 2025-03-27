@@ -25,7 +25,7 @@ describe("register API", () => {
         expect(fetchSpy).toBeCalledWith(`${API_BASE_URL}/user/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify( user )
+            body: JSON.stringify(user)
         });
     });
 

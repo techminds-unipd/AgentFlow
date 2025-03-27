@@ -24,7 +24,7 @@ export const providerPropsInit = (
     const userDTO = new UserDTO(testUsername, "testPassword");
     const providerProps = {
         user: initiallyLoggedIn ? ({ username: userDTO.username, accessToken: testToken } as User) : null,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
+
         loginUser: vi.fn((userDTO: UserDTO) => {
             providerProps.user = { username: userDTO.username, accessToken: testToken };
         }),

@@ -9,9 +9,7 @@ interface IUseAllWorkflow {
     refetch: () => Promise<void>;
 }
 
-export const useAllWorkflow = (
-    allWorkflowsService: AllWorkflowsService
-): IUseAllWorkflow => {
+export const useAllWorkflow = (allWorkflowsService: AllWorkflowsService): IUseAllWorkflow => {
     const [workflowList, setData] = useState<Array<string> | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);

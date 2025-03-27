@@ -7,9 +7,7 @@ interface UseRegister {
     error: string | null;
 }
 
-export const useRegister = (
-    registerService: RegisterService
-): UseRegister => {
+export const useRegister = (registerService: RegisterService): UseRegister => {
     const [error, setError] = useState<string | null>(null);
 
     const registerUser = async (user: UserDTO): Promise<{ user: UserDTO } | null> => {

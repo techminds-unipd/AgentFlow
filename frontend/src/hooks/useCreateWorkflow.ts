@@ -8,9 +8,7 @@ interface IUseCreateWorkflow {
     error: string | null;
 }
 
-export const useCreateWorkflow = (
-    createWorkflowsService: CreateWorkflowService
-): IUseCreateWorkflow => {
+export const useCreateWorkflow = (createWorkflowsService: CreateWorkflowService): IUseCreateWorkflow => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const { user } = useAuth();

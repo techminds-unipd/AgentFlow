@@ -9,17 +9,16 @@ import { JSX } from "react";
 describe("useDeleteWorkflow hook", () => {
     let providerProps: AuthContextType;
     let mockDeleteWorkflowService: DeleteWorkflowService;
-    
 
     beforeEach(() => {
         providerProps = providerPropsInit();
 
         mockDeleteWorkflowService = {
-            deleteWorkflowByName: vi.fn().mockResolvedValue("Deleted Successfully"),
+            deleteWorkflowByName: vi.fn().mockResolvedValue("Deleted Successfully")
         } as unknown as DeleteWorkflowService;
     });
 
-    const TestComponent = ({ workflowName, service }: { workflowName: string, service: DeleteWorkflowService }): JSX.Element => {
+    const TestComponent = ({ workflowName, service }: { workflowName: string; service: DeleteWorkflowService }): JSX.Element => {
         const { deleteWorkflow, isLoading, error } = useDeleteWorkflow(service);
 
         const handleDelete = async (): Promise<void> => {
@@ -74,6 +73,8 @@ describe("useDeleteWorkflow hook", () => {
     });
 
     test("Throws an error when useDeleteWorkflow is used outside AuthProvider", () => {
-        expect(() => render(<TestComponent workflowName="Outside Workflow" service={mockDeleteWorkflowService}/>)).toThrowError();
+        expect(() =>
+            render(<TestComponent workflowName="Outside Workflow" service={mockDeleteWorkflowService} />)
+        ).toThrowError();
     });
 });

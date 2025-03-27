@@ -14,7 +14,7 @@ describe("useAllWorkflow hook", () => {
         providerProps = providerPropsInit();
 
         mockAllWorkflowsService = {
-            allWorkflows: vi.fn().mockResolvedValue(["workflow1", "workflow2"]),
+            allWorkflows: vi.fn().mockResolvedValue(["workflow1", "workflow2"])
         } as unknown as AllWorkflowsService;
     });
 
@@ -34,7 +34,7 @@ describe("useAllWorkflow hook", () => {
     test("Fetches workflow list when user is authenticated", async () => {
         const mockData = ["workflow1", "workflow2"];
         mockAllWorkflowsService.allWorkflows = vi.fn().mockResolvedValue(mockData);
-        
+
         render(
             <MockedAuthProvider {...providerProps}>
                 <TestComponent service={mockAllWorkflowsService} />

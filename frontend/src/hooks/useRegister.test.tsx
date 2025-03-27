@@ -8,15 +8,13 @@ import { UserDTO } from "../services/dto/UserDto";
 describe("useRegister hook", () => {
     let mockRegisterService: RegisterService;
     const username = "Test";
-    const password = "Passoword.1";  
+    const password = "Passoword.1";
     const user = new UserDTO(username, password);
 
     beforeEach(() => {
         vi.restoreAllMocks();
 
-        mockRegisterService = {
-            register: vi.fn().mockResolvedValue(user),
-        } as unknown as RegisterService;
+        mockRegisterService = { register: vi.fn().mockResolvedValue(user) } as unknown as RegisterService;
     });
 
     const TestComponent: React.FC<{ user: UserDTO; service: RegisterService }> = ({ user, service }) => {

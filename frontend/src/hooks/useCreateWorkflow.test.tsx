@@ -9,18 +9,17 @@ import { JSX } from "react";
 describe("useCreateWorkflow hook", () => {
     let providerProps: AuthContextType;
     let mockCreateWorkflowService: CreateWorkflowService;
-    
 
     beforeEach(() => {
         providerProps = providerPropsInit();
         vi.restoreAllMocks();
 
         mockCreateWorkflowService = {
-            newWorkflow: vi.fn().mockResolvedValue("Workflow Created"),
+            newWorkflow: vi.fn().mockResolvedValue("Workflow Created")
         } as unknown as CreateWorkflowService;
     });
 
-    const TestComponent = ({ workflowName, service }: { workflowName: string, service: CreateWorkflowService }): JSX.Element => {
+    const TestComponent = ({ workflowName, service }: { workflowName: string; service: CreateWorkflowService }): JSX.Element => {
         const { createWorkflow, isLoading, error } = useCreateWorkflow(service);
 
         const handleCreate = async (): Promise<void> => {
@@ -75,6 +74,8 @@ describe("useCreateWorkflow hook", () => {
     });
 
     test("Throws an error when useCreateWorkflow is used outside AuthProvider", () => {
-        expect(() => render(<TestComponent workflowName="Outside Workflow" service={mockCreateWorkflowService} />)).toThrowError();
+        expect(() =>
+            render(<TestComponent workflowName="Outside Workflow" service={mockCreateWorkflowService} />)
+        ).toThrowError();
     });
 });

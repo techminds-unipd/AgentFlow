@@ -19,7 +19,6 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
             setShouldReload(false); // Reset dello stato
         }
     }, [shouldReload, setShouldReload, refetch]);
-    
 
     return (
         <>

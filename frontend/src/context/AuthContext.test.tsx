@@ -76,14 +76,17 @@ describe("AuthContext Login", () => {
         });
     });
 
-
     test("Writes username and accessToken in localStorage with key 'user' when login succeeds", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
 
             const { loginUser } = context;
-            return <button onClick={() => void loginUser(userDTO)} aria-label="login">Login</button>;
+            return (
+                <button onClick={() => void loginUser(userDTO)} aria-label="login">
+                    Login
+                </button>
+            );
         };
 
         const accessToken = "testToken";

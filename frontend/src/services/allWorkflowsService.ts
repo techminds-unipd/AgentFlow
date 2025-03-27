@@ -7,7 +7,7 @@ export class AllWorkflowsService {
                 method: "GET",
                 headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
             });
-            
+
             if (response.status === 200) return (await response.json()) as Array<string>;
             else if (response.status === 400) throw new Error("User not found");
             else if (response.status >= 500) throw new Error("Server error");
