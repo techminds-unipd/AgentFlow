@@ -3,8 +3,8 @@ import { CustomNode, CustomNodeProps } from "../CustomNode/CustomNode.tsx";
 import { JSX } from "react";
 
 export const CalendarNode = ({
-    nodeTitle = "Calendar",
-    dialogTitle = "Calendar description",
+    nodeTitle = "GCalendar",
+    dialogTitle = "GCalendar description",
     dialogContent = (
         <>
             <span data-cy="Calendar-info">

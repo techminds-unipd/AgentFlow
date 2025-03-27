@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 export interface GoogleAccountToken {
     token: string;
+    refreshToken: string;
     expireDate: string;
 }
 
