@@ -28,8 +28,7 @@ export const Workflow = (): JSX.Element => {
                     data: { label: node.data.label },
                     sourcePosition: "right" as Position,
                     targetPosition: "left" as Position,
-                    type: node.data.label === "Pastebin" ? "output" : undefined,
-                    style: { backgroundColor: "var(--maincolor)", color: "white" }
+                    type: node.data.label === "Pastebin" ? "deletableOutput" : "deletable",
                 };
             });
 
