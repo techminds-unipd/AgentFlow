@@ -7,8 +7,10 @@ export const PastebinNode = ({
     dialogTitle = "Pastebin description",
     dialogContent = (
         <>
-            A node that lets you paste, save, and share text or code. Useful for quick notes, programming snippets, or temporary
-            documents.
+            <span data-cy="Pastebin-info">
+                A node that lets you paste, save, and share text or code. Useful for quick notes, programming snippets, or
+                temporary documents.
+            </span>
             <br />
             <br />
             <Divider />
@@ -16,7 +18,7 @@ export const PastebinNode = ({
                 {" "}
                 Available features
             </Typography>
-            <ul style={{ listStylePosition: "inside" }}>
+            <ul style={{ listStylePosition: "inside" }} data-cy="Pastebin-node-features">
                 <li>Create a document</li>
                 <li>Write a document</li>
             </ul>
