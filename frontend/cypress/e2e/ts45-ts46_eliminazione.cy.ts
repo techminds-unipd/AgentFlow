@@ -7,13 +7,13 @@ describe("Eliminazione workflow TS45-TS46", () => {
         cy.createWorkflowAPI("prova");
     });
 
-    it("TS45 - L'utente autenticato possa cancellare un workflow.", () => {
+    it("TS45 - L'utente autenticato può cancellare un workflow.", () => {
         cy.deleteWorkflowUI("prova");
         cy.get("[data-cy='workflow-prova']").should("not.exist");
         cy.get("[data-cy='delete-workflow-snackbar-message']").should("have.css", "background-color", "rgb(46, 125, 50)");
     });
 
-    it("TS46 - L'utente autenticato visualizzi un messaggio di avviso che informa del fallimento nell'eliminazione del workflow.", () => {
+    it("TS46 - L'utente autenticato visualizza un messaggio di avviso che informa del fallimento nell'eliminazione del workflow.", () => {
         cy.visit("/dashboard");
         cy.intercept(
             'DELETE',
