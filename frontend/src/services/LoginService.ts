@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "./Constants";
-import { UserDTO } from "./dto/UserDto";
+import { UserDTO } from "./dto/userDTO";
 
 interface LoginResponse {
     accessToken: string;
