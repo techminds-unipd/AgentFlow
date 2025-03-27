@@ -33,7 +33,8 @@ Cypress.Commands.add('loginByGoogleApi', () => {
         const { access_token, expires_in } = body
         const googleAccountToken = {
             token: access_token,
-            expireDate: new Date(new Date().getTime() + expires_in * 1000)
+            expireDate: new Date(new Date().getTime() + expires_in * 1000),
+            refreshToken: Cypress.env('googleRefreshToken'),
         }
         window.localStorage.setItem('GoogleAccountToken', JSON.stringify(googleAccountToken))
     })

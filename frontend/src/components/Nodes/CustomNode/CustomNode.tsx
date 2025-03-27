@@ -47,6 +47,7 @@ export const CustomNode = ({
                 variant="outlined"
                 size="large"
                 draggable={draggable}
+                data-cy={`services-button-${nodeTitle}`}
                 sx={{
                     margin: "10px",
                     borderWidth: 2,
@@ -97,6 +98,7 @@ export const CustomNode = ({
                 <InfoOutlinedIcon
                     fontSize="small"
                     sx={{ position: "absolute", top: "-5px", right: "-5px", padding: "5px" }}
+                    data-cy={`services-button-${nodeTitle}-info`}
                 ></InfoOutlinedIcon>
             </Button>
             {/* Dialog */}
