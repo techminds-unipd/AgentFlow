@@ -1,7 +1,8 @@
 import Grid from "@mui/material/Grid2";
-import { Typography, Box, CircularProgress } from "@mui/material";
+import { Typography, Box, CircularProgress, Snackbar, Alert, IconButton } from "@mui/material";
 import { WorkflowItem } from "../../components/WorkflowItem/WorkflowItem";
 import { useAllWorkflow } from "../../hooks/useAllWorkflows";
+import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect } from "react";
 import { AllWorkflowsService } from "../../services/AllWorkflowsService";
 
@@ -12,6 +13,13 @@ interface WorkflowListProps {
 
 export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setShouldReload }) => {
     const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkflowsService());
+    const [snackBarMessage, setSnackBarSetMessage] = React.useState("");
+    const [alertColor, setAlertColor] = React.useState<"success" | "error">("error");
+    const [openSnackBar, setOpenSnackBar] = React.useState(false);
+
+    const handleClose = (): void => {
+        setOpenSnackBar(false);
+    };
 
     useEffect(() => {
         if (shouldReload) {
@@ -63,12 +71,39 @@ export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setSho
                                 ?.slice()
                                 .reverse()
                                 .map((workflowName, index) => (
-                                    <WorkflowItem key={index} name={workflowName} setShouldReload={setShouldReload} />
+                                    <WorkflowItem
+                                        key={index}
+                                        name={workflowName}
+                                        setShouldReload={setShouldReload}
+                                        setSnackBarSetMessage={setSnackBarSetMessage}
+                                        setAlertColor={setAlertColor}
+                                        setOpenSnackBar={setOpenSnackBar}
+                                    />
                                 ))}
                         </>
                     )}
                 </Box>
             </Grid>
+            <Snackbar
+                open={openSnackBar}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                action={
+                    <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                        <CloseIcon fontSize="small" />
+                    </IconButton>
+                }
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity={alertColor}
+                    variant="filled"
+                    sx={{ width: "100%" }}
+                    data-cy="delete-workflow-snackbar-message"
+                >
+                    {snackBarMessage}
+                </Alert>
+            </Snackbar>
         </>
     );
 };
