@@ -7,9 +7,12 @@ import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
 interface WorkflowItemProps {
     name: string;
     setShouldReload: React.Dispatch<React.SetStateAction<boolean>>;
+    setSnackBarSetMessage: React.Dispatch<React.SetStateAction<string>>;
+    setAlertColor: React.Dispatch<React.SetStateAction<"success" | "error">>;
+    setOpenSnackBar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): React.JSX.Element => {
+export const WorkflowItem = ({ name, setShouldReload, setSnackBarSetMessage, setAlertColor, setOpenSnackBar }: WorkflowItemProps): React.JSX.Element => {
     const [open, setOpen] = React.useState(false);
     const { deleteWorkflow } = useDeleteWorkflow();
 
@@ -23,12 +26,21 @@ export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): Reac
 
     const handleDeleteWorkflow = async (): Promise<void> => {
         try {
-            await deleteWorkflow(name);
-            setShouldReload(true); // Re-rendering della lista
+            const result = await deleteWorkflow(name);
+            if(result){
+                setAlertColor("success");
+                setSnackBarSetMessage(`Workflow "${name}" deleted successfully.`);
+                setShouldReload(true); // Re-rendering della lista
+            }
+            else {
+                setSnackBarSetMessage("Failed to delete workflow.");
+                setAlertColor("error");
+            }
         } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error("Failed to delete workflow:", error);
+            setSnackBarSetMessage("Failed to delete workflow.");
+            setAlertColor("error");
         }
+        setOpenSnackBar(true);
         handleCloseDialog();
     };
 
@@ -73,6 +85,7 @@ export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): Reac
                             void handleDeleteWorkflow();
                         }}
                         autoFocus
+                        data-cy="workflow-delete-confirm"
                     >
                         Yes
                     </Button>
