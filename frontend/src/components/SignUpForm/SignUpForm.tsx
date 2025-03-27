@@ -15,6 +15,8 @@ import { useRegister } from "../../hooks/useRegister";
 import { useNavigate } from "react-router";
 import "../../index.css";
 import { JSX } from "react";
+import { RegisterService } from "../../services/RegisterService";
+import { UserDTO } from "../../services/dto/userDTO";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",
@@ -45,7 +47,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 }));
 
 export default function SignUp(): JSX.Element {
-    const { registerUser, error } = useRegister();
+    const { registerUser, error } = useRegister(new RegisterService());
     const [usernameError, setUsernameError] = React.useState(false);
     const [usernameErrorMessage, setUsernameErrorMessage] = React.useState("");
     const [passwordError, setPasswordError] = React.useState(false);
@@ -110,9 +112,8 @@ export default function SignUp(): JSX.Element {
         if (validateInputs() === false) return;
 
         const data = new FormData(event.currentTarget);
-        const username = data.get("username") as string;
-        const password = data.get("password") as string;
-        const result = await registerUser(username, password);
+        const user = new UserDTO(data.get("username") as string, data.get("password") as string);
+        const result = await registerUser(user);
         if (result) await navigate("/signin", { state: { signupSuccess: true } });
     };
 

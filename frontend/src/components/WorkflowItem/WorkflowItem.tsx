@@ -1,8 +1,10 @@
-import { Box, Link, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography } from "@mui/material";
+import { Box, IconButton, Dialog, DialogActions, DialogContent, DialogTitle, Button, Typography } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
 import * as React from "react";
 import "../../index.css";
 import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
+import { CustomLink } from "../CustomLink/CustomLink";
+import { DeleteWorkflowService } from "../../services/DeleteWorkflowService";
 
 interface WorkflowItemProps {
     name: string;
@@ -11,7 +13,7 @@ interface WorkflowItemProps {
 
 export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): React.JSX.Element => {
     const [open, setOpen] = React.useState(false);
-    const { deleteWorkflow } = useDeleteWorkflow();
+    const { deleteWorkflow } = useDeleteWorkflow(new DeleteWorkflowService());
 
     const handleOpenDialog = (): void => {
         setOpen(true);
@@ -44,15 +46,8 @@ export const WorkflowItem = ({ name, setShouldReload }: WorkflowItemProps): Reac
                 width={750}
                 bgcolor={"var(--white-text)"}
             >
-                <Link
-                    href="#"
-                    fontSize={20}
-                    sx={{ color: "var(--black-text)", textDecoration: "underline var(--black-text)" }}
-                    data-cy={`workflow-${name}`}
-                >
-                    {name}
-                </Link>
-                <IconButton onClick={handleOpenDialog} data-cy={`workflow-${name}-delete`}>
+                <CustomLink link={`/workflow/${name}`} name={name} fontSize={20} />
+                <IconButton onClick={handleOpenDialog}>
                     <ClearIcon color="inherit" fontSize="large" />
                 </IconButton>
             </Box>

@@ -47,7 +47,7 @@ export const CustomNode = ({
                 variant="outlined"
                 size="large"
                 draggable={draggable}
-                data-cy={`services-button-${nodeTitle}`}
+                data-cy={`button-${nodeTitle}`}
                 sx={{
                     margin: "10px",
                     borderWidth: 2,
@@ -58,13 +58,13 @@ export const CustomNode = ({
                     fontSize: "1.2em",
                     overflow: "hidden",
                     minHeight: "3em",
+                    minWidth: "8em",
                     transition: "background-color 0.2s ease-in-out",
 
                     "&:hover": {
                         backgroundColor: disabled ? "#f0f0f0" : "#f0f0f0" // Grigio chiaro quando passi sopra
                     },
 
-                    // Semicerchio sinistro (mostrato solo se type è "in" o "in-out")
                     "&::before":
                         type === "in" || type === "in-out"
                             ? {

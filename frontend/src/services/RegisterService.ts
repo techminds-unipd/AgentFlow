@@ -1,19 +1,16 @@
-import { API_BASE_URL } from "./constants";
-
-interface RegisterResponse {
-    username: string;
-    password: string;
-}
+import { API_BASE_URL } from "./Constants";
+import { UserDTO } from "./dto/userDTO";
 
 export class RegisterService {
-    public async register(username: string, password: string): Promise<RegisterResponse> {
+    public async register(user: UserDTO): Promise<UserDTO> {
         try {
             const response = await fetch(`${API_BASE_URL}/user/register`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(user)
             });
-            if (response.status === 201) return (await response.json()) as RegisterResponse;
+
+            if (response.status === 201) return (await response.json()) as UserDTO;
             else if (response.status === 400) throw new Error("Username already exists");
             else if (response.status >= 500) throw new Error("Server error");
             else throw new Error("Generic error");

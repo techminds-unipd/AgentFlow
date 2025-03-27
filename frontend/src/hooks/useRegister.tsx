@@ -1,21 +1,21 @@
 import { useState } from "react";
-import { RegisterService } from "../services/registerService";
+import { RegisterService } from "../services/RegisterService";
+import { UserDTO } from "../services/dto/userDTO";
 
 interface UseRegister {
-    registerUser: (username: string, password: string) => Promise<{ username: string; password: string } | null>;
+    registerUser: (user: UserDTO) => Promise<{ user: UserDTO } | null>;
     error: string | null;
 }
 
-export const useRegister = (): UseRegister => {
+export const useRegister = (registerService: RegisterService): UseRegister => {
     const [error, setError] = useState<string | null>(null);
 
-    const registerUser = async (username: string, password: string): Promise<{ username: string; password: string } | null> => {
+    const registerUser = async (user: UserDTO): Promise<{ user: UserDTO } | null> => {
         setError(null);
 
         try {
-            const service = new RegisterService();
-            const result = await service.register(username, password);
-            return result;
+            const result = await registerService.register(user);
+            return { user: result };
         } catch (error) {
             setError(error instanceof Error ? error.message : "Something went wrong.");
             return null;

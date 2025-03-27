@@ -1,20 +1,25 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
-import { AllWorkflowsService } from "../services/allWorkflowsService";
+import { AllWorkflowsService } from "../services/AllWorkflowsService";
 import { useAllWorkflow } from "./useAllWorkflows";
 import "@testing-library/jest-dom";
 import { JSX } from "react";
 
 describe("useAllWorkflow hook", () => {
     let providerProps: AuthContextType;
+    let mockAllWorkflowsService: AllWorkflowsService;
 
     beforeEach(() => {
         providerProps = providerPropsInit();
+
+        mockAllWorkflowsService = {
+            allWorkflows: vi.fn().mockResolvedValue(["workflow1", "workflow2"])
+        } as unknown as AllWorkflowsService;
     });
 
-    const TestComponent = (): JSX.Element => {
-        const { workflowList, isLoading, error, refetch } = useAllWorkflow();
+    const TestComponent = ({ service }: { service: AllWorkflowsService }): JSX.Element => {
+        const { workflowList, isLoading, error, refetch } = useAllWorkflow(service);
 
         return (
             <div>
@@ -28,11 +33,11 @@ describe("useAllWorkflow hook", () => {
 
     test("Fetches workflow list when user is authenticated", async () => {
         const mockData = ["workflow1", "workflow2"];
-        vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockResolvedValue(mockData);
+        mockAllWorkflowsService.allWorkflows = vi.fn().mockResolvedValue(mockData);
 
         render(
             <MockedAuthProvider {...providerProps}>
-                <TestComponent />
+                <TestComponent service={mockAllWorkflowsService} />
             </MockedAuthProvider>
         );
 
@@ -44,11 +49,11 @@ describe("useAllWorkflow hook", () => {
     });
 
     test("Handles errors when API call fails", async () => {
-        vi.spyOn(AllWorkflowsService.prototype, "allWorkflows").mockRejectedValue(new Error("API Error"));
+        mockAllWorkflowsService.allWorkflows = vi.fn().mockRejectedValue(new Error("API Error"));
 
         render(
             <MockedAuthProvider {...providerProps}>
-                <TestComponent />
+                <TestComponent service={mockAllWorkflowsService} />
             </MockedAuthProvider>
         );
 
@@ -60,6 +65,6 @@ describe("useAllWorkflow hook", () => {
     });
 
     test("Throws an error when useAllWorkflow is used outside AuthProvider", () => {
-        expect(() => render(<TestComponent />)).toThrowError();
+        expect(() => render(<TestComponent service={mockAllWorkflowsService} />)).toThrowError();
     });
 });
