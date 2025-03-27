@@ -3,7 +3,7 @@ import { render, screen, waitFor, act } from "@testing-library/react";
 import { RegisterService } from "../services/registerService";
 import { useRegister } from "./useRegister";
 import "@testing-library/jest-dom";
-import { UserDTO } from "../services/dto/UserDto";
+import { UserDTO } from "../services/dto/userDTO";
 
 describe("useRegister hook", () => {
     let mockRegisterService: RegisterService;

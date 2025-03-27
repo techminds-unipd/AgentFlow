@@ -3,7 +3,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import * as React from "react";
 import "../../index.css";
 import { useDeleteWorkflow } from "../../hooks/useDeleteWorkflow";
-import { DeleteWorkflowService } from "../../services/DeleteWorkflowService";
+import { DeleteWorkflowService } from "../../services/deleteWorkflowService";
 
 interface WorkflowItemProps {
     name: string;

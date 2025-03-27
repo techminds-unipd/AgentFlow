@@ -16,7 +16,7 @@ import "../../index.css";
 import React, { JSX } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { UserDTO } from "../../services/dto/UserDto";
+import { UserDTO } from "../../services/dto/userDTO";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",

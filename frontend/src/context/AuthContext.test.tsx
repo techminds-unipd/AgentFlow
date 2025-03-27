@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { AuthContext, AuthProvider, User } from "./AuthContext";
 import { JSX, useContext } from "react";
 import { LoginService } from "../services/loginService";
-import { UserDTO } from "../services/dto/UserDto";
+import { UserDTO } from "../services/dto/userDTO";
 
 describe("AuthContext Login", () => {
     beforeEach(() => {

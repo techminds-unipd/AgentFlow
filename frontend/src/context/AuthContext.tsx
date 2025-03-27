@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { LoginService } from "../services/loginService";
-import { UserDTO } from "../services/dto/UserDto";
+import { UserDTO } from "../services/dto/userDTO";
 
 // AuthProvider serve per garantire che tutte le info sull'autenticazione siano condivise in tutta l'app
 // fornisce i dati di autenticazione a tutti i componenti figli tramite il contesto Context

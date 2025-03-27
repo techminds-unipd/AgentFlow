@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "./constants";
-import { UserDTO } from "./dto/UserDto";
+import { UserDTO } from "./dto/userDTO";
 
 export class RegisterService {
     public async register(user: UserDTO): Promise<UserDTO> {

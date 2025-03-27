@@ -2,7 +2,7 @@ import { expect, test, describe, vi, beforeEach } from "vitest";
 import { waitFor } from "@testing-library/react";
 import { LoginService } from "./loginService";
 import { API_BASE_URL } from "./constants";
-import { UserDTO } from "./dto/UserDto";
+import { UserDTO } from "./dto/userDTO";
 
 describe("Login API", () => {
     const username = "testUsername";

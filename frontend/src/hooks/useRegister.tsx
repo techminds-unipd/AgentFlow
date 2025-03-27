@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { RegisterService } from "../services/registerService";
-import { UserDTO } from "../services/dto/UserDto";
+import { UserDTO } from "../services/dto/userDTO";
 
 interface UseRegister {
     registerUser: (user: UserDTO) => Promise<{ user: UserDTO } | null>;

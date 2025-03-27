@@ -16,7 +16,7 @@ import { useNavigate } from "react-router";
 import "../../index.css";
 import { JSX } from "react";
 import { RegisterService } from "../../services/registerService";
-import { UserDTO } from "../../services/dto/UserDto";
+import { UserDTO } from "../../services/dto/userDTO";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: "flex",

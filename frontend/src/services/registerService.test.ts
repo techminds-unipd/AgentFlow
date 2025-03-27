@@ -1,7 +1,7 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
 import { RegisterService } from "./registerService";
 import { API_BASE_URL } from "./constants";
-import { UserDTO } from "./dto/UserDto";
+import { UserDTO } from "./dto/userDTO";
 
 describe("register API", () => {
     const fetchSpy = vi.spyOn(window, "fetch");

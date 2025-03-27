@@ -1,6 +1,6 @@
 import { AuthContext, User } from "./AuthContext";
 import { vi, Mock } from "vitest";
-import { UserDTO } from "../services/dto/UserDto";
+import { UserDTO } from "../services/dto/userDTO";
 
 export interface AuthContextType {
     user: User | null;
