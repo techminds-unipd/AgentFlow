@@ -4,6 +4,7 @@ import { WorkflowItem } from "../../components/WorkflowItem/WorkflowItem";
 import { useAllWorkflow } from "../../hooks/useAllWorkflows";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect } from "react";
+import { AllWorkflowsService } from "../../services/AllWorkflowsService";
 
 interface WorkflowListProps {
     shouldReload: boolean;
@@ -11,7 +12,7 @@ interface WorkflowListProps {
 }
 
 export const WorkflowList: React.FC<WorkflowListProps> = ({ shouldReload, setShouldReload }) => {
-    const { workflowList, isLoading, error, refetch } = useAllWorkflow();
+const { workflowList, isLoading, error, refetch } = useAllWorkflow(new AllWorkflowsService());
     const [snackBarMessage, setSnackBarSetMessage] = React.useState("");
     const [alertColor, setAlertColor] = React.useState<"success" | "error">("error");
     const [openSnackBar, setOpenSnackBar] = React.useState(false);

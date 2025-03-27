@@ -1,17 +1,11 @@
-import { API_BASE_URL } from "./constants";
+import { API_BASE_URL } from "./Constants";
 
 export class AllWorkflowsService {
-    private readonly accessToken: string;
-
-    public constructor(accessToken: string) {
-        this.accessToken = accessToken;
-    }
-
-    public async allWorkflows(): Promise<Array<string>> {
+    public async allWorkflows(accessToken: string): Promise<Array<string>> {
         try {
             const response = await fetch(`${API_BASE_URL}/workflow/all`, {
                 method: "GET",
-                headers: { "Content-Type": "application/json", Authorization: `Bearer ${this.accessToken}` }
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${accessToken}` }
             });
 
             if (response.status === 200) return (await response.json()) as Array<string>;

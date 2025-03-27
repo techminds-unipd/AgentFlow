@@ -1,9 +1,10 @@
 import { AuthContext, User } from "./AuthContext";
 import { vi, Mock } from "vitest";
+import { UserDTO } from "../services/dto/userDTO";
 
 export interface AuthContextType {
     user: User | null;
-    loginUser: Mock<(username: string, password: string) => Promise<void>>;
+    loginUser: Mock<(userDTO: UserDTO) => Promise<void>>;
     logoutUser: Mock<() => void>;
     error: string | null;
 }
@@ -20,11 +21,12 @@ export const providerPropsInit = (
     testToken: string = "testToken",
     testError: string | null = null
 ): AuthContextType => {
+    const userDTO = new UserDTO(testUsername, "testPassword");
     const providerProps = {
-        user: initiallyLoggedIn ? ({ username: testUsername, accessToken: testToken } as User) : null,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        loginUser: vi.fn((username: string, _: string) => {
-            providerProps.user = { username, accessToken: testToken };
+        user: initiallyLoggedIn ? ({ username: userDTO.username, accessToken: testToken } as User) : null,
+
+        loginUser: vi.fn((userDTO: UserDTO) => {
+            providerProps.user = { username: userDTO.username, accessToken: testToken };
         }),
         logoutUser: vi.fn(function () {
             providerProps.user = null;
