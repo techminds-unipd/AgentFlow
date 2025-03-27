@@ -15,7 +15,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    coverage:{
+    include: [
+      "./src/hooks/**/*.test.*",
+      "./src/services/**/*.test.*",
+      "./src/context/**/*.test.*",
+    ],
+    coverage: {
       provider: "v8",
       reporter: ["text"],
       exclude: [
@@ -25,11 +30,11 @@ export default defineConfig({
         "./src/App.tsx",
         "./src/pages/**/*",
         "./src/components/**/*",
-        "./cypress/**/*",
+        "./cypress/**"
       ],
     },
   }
 })
 
 
-  
+

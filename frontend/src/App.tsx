@@ -1,5 +1,5 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { JSX } from "react";
-import { BrowserRouter, Routes, Route } from "react-router";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Footer } from "./components/Footer/Footer";
 import { Home } from "./pages/Home/Home";
@@ -31,7 +31,10 @@ function App(): JSX.Element {
                             </Route>
                             <Route element={<PrivateRoute />}>
                                 <Route path="/dashboard" element={<Dashboard />} />
-                                <Route path="/workflow" element={<Workflow />} />
+                                <Route path="/workflow">
+                                    <Route index element={<Navigate to=".." replace />} />
+                                    <Route path=":name" element={<Workflow />} />
+                                </Route>
                                 <Route path="/services" element={<Services />} />
                                 <Route path="/services/addAccount" element={<AddAccount />} />
                             </Route>
