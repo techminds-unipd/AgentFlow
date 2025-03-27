@@ -22,7 +22,7 @@ describe("useExecuteWorkflow hook", () => {
 
     const TestComponent = ({ workflowDto }: { workflowDto: WorkflowDTO }): JSX.Element => {
         executeWorkflowService.executeWorkflow.mockResolvedValue("Ciao");
-        const executeWorkflow = useExecuteWorkflow(executeWorkflowService);
+        const { executeWorkflow } = useExecuteWorkflow(executeWorkflowService);
         const [agentResponse, setAgentResponse] = useState<string>();
 
         const handleExecute = async (): Promise<void> => {

@@ -14,9 +14,9 @@ export const AddAccount = (): JSX.Element => {
     const { addGoogleToken, removeGoogleToken } = useGoogleToken();
     const navigate = useNavigate();
     let error: string | null = null;
-    if (tokenParam !== null && expireDateParam !== null) {
+    if (tokenParam !== null && refreshTokenParam !== null && expireDateParam !== null) {
         removeGoogleToken();
-        addGoogleToken({ token: tokenParam, refreshToken: refreshTokenParam!, expireDate: expireDateParam });
+        addGoogleToken({ token: tokenParam, refreshToken: refreshTokenParam, expireDate: expireDateParam });
         void navigate("/services");
     } else error = "There was an error while adding your Google account";
 

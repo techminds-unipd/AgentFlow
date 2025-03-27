@@ -28,7 +28,7 @@ export const Workflow = (): JSX.Element => {
                     data: { label: node.data.label },
                     sourcePosition: "right" as Position,
                     targetPosition: "left" as Position,
-                    type: node.data.label === "Pastebin" ? "deletableOutput" : "deletable",
+                    type: node.data.label === "Pastebin" ? "deletableOutput" : "deletable"
                 };
             });
 

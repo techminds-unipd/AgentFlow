@@ -8,7 +8,7 @@ interface CustomLinkProps {
     name: string;
     link: string;
     color?: "black" | "white" | "main-color";
-    fontSize?: number
+    fontSize?: number;
 }
 
 /**
@@ -17,7 +17,7 @@ interface CustomLinkProps {
  * La funzione LinkBehaviour è stata presa da https://mui.com/material-ui/integrations/routing/
  */
 
-export const CustomLink = ({ name, link, color, fontSize=18 }: CustomLinkProps): JSX.Element => {
+export const CustomLink = ({ name, link, color, fontSize = 18 }: CustomLinkProps): JSX.Element => {
     let varColor;
     if (color === "white") varColor = "var(--white-text)";
     else if (color === "main-color") varColor = "var(--maincolor)";
@@ -30,12 +30,12 @@ export const CustomLink = ({ name, link, color, fontSize=18 }: CustomLinkProps):
     return (
         <>
             {pathname === link ? (
-                <Typography sx={{ fontSize: {fontSize}, color: varColor }}>{name}</Typography>
+                <Typography sx={{ fontSize: { fontSize }, color: varColor }}>{name}</Typography>
             ) : (
                 <Link
                     component={LinkBehavior}
                     underline="always"
-                sx={{ color: varColor, textDecoration: "underline " + varColor, fontSize: {fontSize} }}
+                    sx={{ color: varColor, textDecoration: "underline " + varColor, fontSize: { fontSize } }}
                 >
                     {name}
                 </Link>
