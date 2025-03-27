@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor, act } from "@testing-library/react"
 import "@testing-library/jest-dom";
 import { AuthContext, AuthProvider, User } from "./AuthContext";
 import { JSX, useContext } from "react";
-import { LoginService } from "../services/loginService";
+import { LoginService } from "../services/LoginService";
 import { UserDTO } from "../services/dto/userDTO";
 
 describe("AuthContext Login", () => {

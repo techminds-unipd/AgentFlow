@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { DeleteWorkflowService } from "./deleteWorkflowService";
-import { API_BASE_URL } from "./constants";
+import { DeleteWorkflowService } from "./DeleteWorkflowService";
+import { API_BASE_URL } from "./Constants";
 
 describe("deleteWorkflowByName API", () => {
     const fetchSpy = vi.spyOn(window, "fetch");

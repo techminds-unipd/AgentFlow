@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
 import { CreateWorkflowService } from "./CreateWorkflowService";
-import { API_BASE_URL } from "./constants";
+import { API_BASE_URL } from "./Constants";
 
 describe("newWorkflow API", () => {
     const fetchSpy = vi.spyOn(window, "fetch");

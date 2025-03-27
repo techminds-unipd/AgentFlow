@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./constants";
+import { API_BASE_URL } from "./Constants";
 
 export class AllWorkflowsService {
     public async allWorkflows(accessToken: string): Promise<Array<string>> {

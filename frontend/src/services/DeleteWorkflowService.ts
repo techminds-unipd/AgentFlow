@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "./constants";
+import { API_BASE_URL } from "./Constants";
 
 export interface DeleteWorkflowResponse {
     name: string;

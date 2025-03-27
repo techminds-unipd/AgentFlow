@@ -1,7 +1,7 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { AuthContextType, MockedAuthProvider, providerPropsInit } from "../context/MockedAuthProvider";
-import { AllWorkflowsService } from "../services/allWorkflowsService";
+import { AllWorkflowsService } from "../services/AllWorkflowsService";
 import { useAllWorkflow } from "./useAllWorkflows";
 import "@testing-library/jest-dom";
 import { JSX } from "react";

@@ -15,7 +15,7 @@ import { useRegister } from "../../hooks/useRegister";
 import { useNavigate } from "react-router";
 import "../../index.css";
 import { JSX } from "react";
-import { RegisterService } from "../../services/registerService";
+import { RegisterService } from "../../services/RegisterService";
 import { UserDTO } from "../../services/dto/userDTO";
 
 const Card = styled(MuiCard)(({ theme }) => ({

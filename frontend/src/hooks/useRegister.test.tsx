@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeEach, vi } from "vitest";
 import { render, screen, waitFor, act } from "@testing-library/react";
-import { RegisterService } from "../services/registerService";
+import { RegisterService } from "../services/RegisterService";
 import { useRegister } from "./useRegister";
 import "@testing-library/jest-dom";
 import { UserDTO } from "../services/dto/userDTO";

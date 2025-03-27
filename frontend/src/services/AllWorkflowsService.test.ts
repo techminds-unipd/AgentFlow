@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { AllWorkflowsService } from "./allWorkflowsService";
-import { API_BASE_URL } from "./constants";
+import { AllWorkflowsService } from "./AllWorkflowsService";
+import { API_BASE_URL } from "./Constants";
 import "@testing-library/jest-dom";
 
 describe("allWorkflows API", () => {

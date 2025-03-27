@@ -1,6 +1,6 @@
 import { expect, test, describe, vi, beforeEach } from "vitest";
-import { RegisterService } from "./registerService";
-import { API_BASE_URL } from "./constants";
+import { RegisterService } from "./RegisterService";
+import { API_BASE_URL } from "./Constants";
 import { UserDTO } from "./dto/userDTO";
 
 describe("register API", () => {

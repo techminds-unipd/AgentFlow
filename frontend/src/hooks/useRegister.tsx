@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { RegisterService } from "../services/registerService";
+import { RegisterService } from "../services/RegisterService";
 import { UserDTO } from "../services/dto/userDTO";
 
 interface UseRegister {
