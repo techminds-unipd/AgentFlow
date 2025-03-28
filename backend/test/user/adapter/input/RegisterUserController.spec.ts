@@ -27,12 +27,12 @@ describe("RegisterUserController", () => {
     });
 
     describe("registerUser", () => {
-        it("should register the user", async () => {
+        it("TUB1 - should register the user", async () => {
             registerUseCaseMock.registerUser.mockResolvedValue(userMock);
             expect(await registerUserController.registerUser(userDTOMock)).toEqual(userDTOMock);
         });
 
-        it("should throw HttpException because the database throws an exception", async () => {
+        it("TUB2 - should throw HttpException because the database throws an exception", async () => {
             registerUseCaseMock.registerUser.mockImplementation(() => {
                 throw new MongooseError("");
             });
@@ -41,7 +41,7 @@ describe("RegisterUserController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
-        it("should throw HttpException because username already exists", async () => {
+        it("TUB3 - should throw HttpException because username already exists", async () => {
             registerUseCaseMock.registerUser.mockImplementation(() => {
                 throw new UserAlreadyExistsError();
             });
