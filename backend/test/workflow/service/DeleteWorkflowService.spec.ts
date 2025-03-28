@@ -24,12 +24,12 @@ describe("GetWorkflowService", () => {
     });
 
     describe("deleteWorkflow", () => {
-        it("should delete the workflow by its name", async () => {
+        it("TUB38 - should delete the workflow by its name", async () => {
             deleteWorkflowPortMock.deleteWorkflow.mockResolvedValue(workflowMock);
             expect(await deleteWorkflowService.deleteWorkflow(deleteWorkflowCommandMock)).toEqual(workflowMock);
         });
 
-        it("shouldn't find the workflow in the database", async () => {
+        it("TUB39 - shouldn't find the workflow in the database", async () => {
             deleteWorkflowPortMock.deleteWorkflow.mockResolvedValue(null);
             expect(deleteWorkflowService.deleteWorkflow(deleteWorkflowCommandMock)).rejects.toThrow(WorkflowNotFoundError);
         });

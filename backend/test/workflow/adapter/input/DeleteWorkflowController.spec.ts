@@ -48,13 +48,13 @@ describe("DeleteWorkflowController", () => {
     });
 
     describe("deleteWorkflow", () => {
-        it("should delete the workflow by its name", async () => {
+        it("TUB35 - should delete the workflow by its name", async () => {
             workflowAdapterImplementationMock.toDTO.mockReturnValue(workflowDTOMock);
             deleteWorkflowUseCaseMock.deleteWorkflow.mockResolvedValue(workflowMock);
             expect(await deleteWorkflowController.deleteWorkflow("prova", { username: "username" })).toEqual(workflowDTOMock);
         });
 
-        it("should throw HttpException because the database throws an exception", async () => {
+        it("TUB36 - should throw HttpException because the database throws an exception", async () => {
             deleteWorkflowUseCaseMock.deleteWorkflow.mockImplementation(() => {
                 throw new MongooseError("");
             });
@@ -64,7 +64,7 @@ describe("DeleteWorkflowController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
-        it("should throw HttpException because the workflow was not found in the database", async () => {
+        it("TUB37 - should throw HttpException because the workflow was not found in the database", async () => {
             deleteWorkflowUseCaseMock.deleteWorkflow.mockImplementation(() => {
                 throw new WorkflowNotFoundError;
             });
