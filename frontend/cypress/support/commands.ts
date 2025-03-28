@@ -1,4 +1,7 @@
 /// <reference types="cypress" />
+
+import { EdgeDTO, NodeDataDTO, NodeDTO, WorkflowDTO } from "../../src/services/dto/WorkflowDTO";
+
 require('@4tw/cypress-drag-drop')
 
 declare global {
@@ -15,6 +18,7 @@ declare global {
             deleteAllWorkflowAPI(): Chainable<void>;
             createWorkflowUI(workflowName: string): Chainable<void>;
             deleteWorkflowUI(workflowName: string): Chainable<void>;
+            saveWorkflowAPI(workflowName: string): Chainable<void>;
         }
     }
 }
@@ -146,4 +150,19 @@ Cypress.Commands.add("deleteWorkflowUI", (workflowName: string) => {
     cy.visit("/dashboard");
     cy.get(`[data-cy='workflow-${workflowName}-delete']`).click();
     cy.get("[data-cy='workflow-delete-confirm']").click();
+});
+
+Cypress.Commands.add("saveWorkflowAPI", (workflowName: string) => {
+    const workflow = new WorkflowDTO("test", [new NodeDTO(0, { x: -200, y: 1 }, new NodeDataDTO("GMAIL")), new NodeDTO(1, { x: 200, y: 1 }, new NodeDataDTO("GCALENDAR"))], [new EdgeDTO("automate", 0, 1)]);
+    cy.window()
+        .its("localStorage.user")
+        .then((result) => {
+            let user = JSON.parse(result);
+            cy.request({
+                url: `http://localhost:3000/workflow/save`,
+                method: "PUT",
+                body: JSON.stringify(workflow),
+                headers: { "Content-Type": "application/json", Authorization: `Bearer ${user.accessToken}` }
+            });
+        });
 });

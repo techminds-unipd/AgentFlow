@@ -25,17 +25,19 @@ export function DeletableNode({ id, data }: DeletableNodeInterface): JSX.Element
                     backgroundColor: "var(--maincolor)",
                     color: "white"
                 }}
+                data-cy={`canvas-node-${id}`}
             >
                 {data.label}
                 <IconButton
                     onClick={handleDelete}
                     sx={{ position: "absolute", top: "0", right: "0", padding: "0", margin: "0.1em" }}
+                    data-cy={`delete-button-node-${id}`}
                 >
                     <ClearIcon style={{ fontSize: "small", padding: "0", margin: "0", color: "black" }} />
                 </IconButton>
             </div>
-            <Handle type="source" position={Position.Right} />
-            <Handle type="target" position={Position.Left} />
+            <Handle type="source" position={Position.Right} data-cy={`source-button-node-${id}`}/>
+            <Handle type="target" position={Position.Left} data-cy={`target-button-node-${id}`}/>
         </>
     );
 }

@@ -25,6 +25,7 @@ export function DeletableOutputNode({ id, data }: DeletableOutputNodeInterface):
                     backgroundColor: "var(--maincolor)",
                     color: "white"
                 }}
+                data-cy={`canvas-node-${id}`}
             >
                 {data.label}
                 <IconButton

@@ -128,7 +128,7 @@ export const WorkflowCanvas = ({
     );
 
     return (
-        <div ref={reactFlowWrapper} style={{ width: "100%", height: "75vh" }}>
+        <div ref={reactFlowWrapper} style={{ width: "100%", height: "75vh" }} data-cy="workflow-canvas">
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
@@ -144,7 +144,6 @@ export const WorkflowCanvas = ({
                 connectionLineType={ConnectionLineType.Bezier}
                 isValidConnection={isValidConnection}
                 minZoom={0.5}
-                data-cy="workflow-canvas"
             >
                 <Background color="rgb(242,242,242)" variant={BackgroundVariant.Lines} />
                 <Controls />

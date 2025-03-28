@@ -6,41 +6,77 @@ describe("Operazioni blocchi workflow TS32-TS37", () => {
         cy.loginUISession(Cypress.env("loginUsername"), Cypress.env("loginPassword"));
         cy.deleteAllWorkflowAPI();
         cy.createWorkflowAPI("test");
+        cy.saveWorkflowAPI("test");
         cy.loginByGoogleApi();
         cy.visit("/workflow/test");
     });
 
-    it("TS26 - L'utente autenticato può aggiungere un blocco in un workflow", () => {
-        
+    it("TS32 - L'utente autenticato può aggiungere un blocco in un workflow", () => {
+        const dataTransfer = new DataTransfer();
+
         cy.get('[data-cy=Pastebin-draggable]')
-            .trigger('mousedown')
-            .trigger('mousemove', {pageX: 300, pageY: 100})
-            .trigger('mouseup')
+            .trigger('dragstart', { dataTransfer })
+            .wait(200);
 
-        // cy.get("[data-cy='button-Gmail']").drag("[data-cy='workflow-canvas']", {
-        //     source: { x: 100, y: 100 },
-        //     target: { x: 100, y: 100 },
-        //     force: true,
-        // });
-        // cy.get("[data-cy='Pastebin-draggable']").drag("[data-cy='workflow-canvas']", {
-        //     target: { x: 200, y: 200 },
-        //     force: true,
-        // });
+        cy.get('[data-cy=workflow-canvas]')
+            .trigger('dragover', { dataTransfer })
+            .wait(200)
+            .trigger('drop', { dataTransfer })
+            .wait(500);
 
-        // cy.get('[data-cy=button-Gmail]').trigger("mousemove")
-        // .trigger("mousedown", { which: 1 })
-        // .trigger("mousemove", {
-        //     clientX: 300,
-        //     clientY: 30,
-        //     screenX: 300,
-        //     screenY: 30,
-        //     pageX: 800,
-        //     pageY: 130,
-        // })
-        // .trigger("mouseup", { force: true });
+        cy.get('[data-cy=Pastebin-draggable]')
+            .trigger('dragend');
 
+        //id del prossimo nodo aggiunto è 2
+        cy.get("[data-cy='canvas-node-2']").should("exist");
     });
 
-    
+    it("TS33 - L'utente autenticato, per poter aggiungere un blocco in un workflow, lo deve trascinare nell'area drag and drop", () => {
+        const dataTransfer = new DataTransfer();
+
+        cy.get('[data-cy=Pastebin-draggable]')
+            .trigger('dragstart', { dataTransfer })
+            .wait(200);
+
+        cy.get('[data-cy=workflow-canvas]')
+            .trigger('dragover', { dataTransfer })
+            .wait(200)
+            .trigger('drop', { dataTransfer })
+            .wait(500);
+
+        cy.get('[data-cy=Pastebin-draggable]')
+            .trigger('dragend');
+
+        //id del prossimo nodo aggiunto è 2
+        cy.get("[data-cy='canvas-node-2']").should("exist");
+    });
+
+    it("TS34 - L'utente autenticato può eliminare un blocco in un workflow.", () => {
+        cy.get("[data-cy='delete-button-node-1']").click();
+        cy.get("[data-cy='canvas-node-1']").should("not.exist");       
+    });
+
+    it("TS35 - L'utente autenticato può collegare due blocchi in un workflow." , () => {
+        cy.get("[data-cy='delete-source-target-node-0-1']").click();
+        cy.get("[data-cy='source-target-node-0-1']").should("not.exist");
+        cy.wait(500);
+        cy.get("[data-cy='source-button-node-0']").click();
+        cy.wait(500);
+        cy.get("[data-cy='target-button-node-1']").click();
+        cy.wait(500);
+        cy.get("[data-cy='source-target-node-0-1']").should("exist");
+    });
+
+    it("TS36 - L'utente autenticato può scollegare due blocchi in un workflow." , () => {
+        cy.get("[data-cy='delete-source-target-node-0-1']").click();
+        cy.get("[data-cy='source-target-node-0-1']").should("not.exist");
+    });
+
+    it("TS37 - L'utente autenticato può inserire una descrizione dell'automazione in linguaggio naturale tra due blocchi collegati.", () => {
+        for(let i = 0; i < 15; i++)
+            cy.get("[data-cy='source-target-node-0-1']").type("{backspace}");
+        cy.get("[data-cy='source-target-node-0-1']").type("Test descrizione");
+        cy.get("[data-cy='source-target-node-0-1']").should("have.value", "Test descrizione");
+    });
 
 });
