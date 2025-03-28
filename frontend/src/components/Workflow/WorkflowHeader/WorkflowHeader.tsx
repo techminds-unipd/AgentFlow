@@ -119,7 +119,7 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps): JSX.Element => {
 
             <Dialog open={openExecuteResultsDialog} onClose={handleCloseExecuteResultDialog} data-cy="execute-result-dialog">
                 <DialogTitle>Execute results</DialogTitle>
-                <DialogContent>{executeResult}</DialogContent>
+                <DialogContent data-cy="execute-result-dialog-content">{executeResult}</DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseExecuteResultDialog} sx={{ color: "var(--maincolor)" }}>
                         Close

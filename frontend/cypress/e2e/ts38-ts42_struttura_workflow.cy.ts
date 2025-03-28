@@ -1,5 +1,5 @@
 import { EdgeDTO, NodeDataDTO, NodeDTO, WorkflowDTO } from "../../src/services/dto/WorkflowDTO";
-describe("Operazioni blocchi workflow TS32-TS37", () => {
+describe("Struttura workflow TS38-TS42", () => {
     const workflow = new WorkflowDTO("test", [new NodeDTO(0, { x: -200, y: 1 }, new NodeDataDTO("Gmail")), new NodeDTO(1, { x: 200, y: 1 }, new NodeDataDTO("GCalendar"))], [new EdgeDTO("automate", 0, 1)]);
     beforeEach(() => {
         cy.registerIfNotExistsAPI(Cypress.env("loginUsername"), Cypress.env("loginPassword"));
