@@ -171,7 +171,6 @@ export default function SignIn(): JSX.Element {
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            autoFocus
                             required
                             fullWidth
                             variant="outlined"

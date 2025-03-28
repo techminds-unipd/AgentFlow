@@ -15,7 +15,7 @@ import {
     BackgroundVariant
 } from "@xyflow/react";
 import { JSX, useCallback, useRef } from "react";
-import { useDnD } from "../DndContext/DnDContext";
+import { useDnD } from "../../../context/DnDContext";
 import EditableEdge from "../EditableEdge/EditableEdge";
 import "@xyflow/react/dist/style.css";
 import { DeletableNode } from "../DeletableNode/DeletableNode";

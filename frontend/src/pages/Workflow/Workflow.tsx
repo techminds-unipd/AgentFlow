@@ -1,7 +1,7 @@
 import { Edge, MarkerType, Node, Position, ReactFlowProvider, useEdgesState, useNodesState } from "@xyflow/react";
 import { WorkflowCanvas } from "../../components/Workflow/WorkflowCanvas/WorkflowCanvas";
 import WorkflowSidebar from "../../components/Workflow/WorkflowSidebar/WorkflowSidebar";
-import { DnDProvider } from "../../components/Workflow/DndContext/DnDContext";
+import { DnDProvider } from "../../context/DnDContext";
 import Grid from "@mui/material/Grid2";
 import { WorkflowHeader } from "../../components/Workflow/WorkflowHeader/WorkflowHeader";
 import { useParams } from "react-router";

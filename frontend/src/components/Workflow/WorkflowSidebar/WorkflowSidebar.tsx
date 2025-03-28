@@ -3,7 +3,7 @@ import { useGoogleToken } from "../../../hooks/useGoogleToken";
 import { CalendarNode } from "../../Nodes/CalendarNode/CalendarNode";
 import { GmailNode } from "../../Nodes/GmailNode/GmailNode";
 import { PastebinNode } from "../../Nodes/PastebinNode/PastebinNode";
-import { useDnD } from "../DndContext/DnDContext";
+import { useDnD } from "../../../context/DnDContext";
 import { Box, Typography } from "@mui/material";
 
 const WorkflowSidebar = (): JSX.Element => {
