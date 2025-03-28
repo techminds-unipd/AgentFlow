@@ -37,7 +37,7 @@ const WorkflowSidebar = (): JSX.Element => {
             </Box>
             {!google.googleToken && (
                 <>
-                    <Typography component="span" sx={{ fontSize: "1.2em" }}>
+                    <Typography component="span" sx={{ fontSize: "1.2em" }} data-cy="typo-unavailable-services-workflow">
                         Unavailable services
                     </Typography>
 
