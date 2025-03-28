@@ -46,28 +46,26 @@ export const WorkflowCanvas = ({
     const [nodeService] = useDnD();
     const { getNodes, getEdges } = useReactFlow();
     let nodeId = nodes.length;
-    let edgeId = edges.length;
 
     /*eslint-disable @typescript-eslint/explicit-function-return-type*/
     /*eslint-disable @typescript-eslint/no-unsafe-return*/
     /*eslint-disable @typescript-eslint/no-explicit-any*/
     const onConnect = useCallback(
         (params: any) => {
-            const getEdgeId = () => edgeId++;
-            setEdges((eds) =>
+            setEdges((edges) => 
                 addEdge(
                     {
                         ...params,
                         markerEnd: { type: MarkerType.ArrowClosed },
                         type: "editable",
                         label: "Insert your automation",
-                        id: getEdgeId()
+                        id: `${String(params.source)}-${String(params.target)}`
                     },
-                    eds
+                    edges
                 )
             );
         },
-        [edgeId, setEdges]
+        [setEdges]
     );
 
     /*eslint-disable @typescript-eslint/no-unsafe-call*/

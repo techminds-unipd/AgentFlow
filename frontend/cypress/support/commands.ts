@@ -18,7 +18,7 @@ declare global {
             deleteAllWorkflowAPI(): Chainable<void>;
             createWorkflowUI(workflowName: string): Chainable<void>;
             deleteWorkflowUI(workflowName: string): Chainable<void>;
-            saveWorkflowAPI(workflowName: string): Chainable<void>;
+            saveWorkflowAPI(workflow: WorkflowDTO): Chainable<void>;
         }
     }
 }
@@ -152,8 +152,7 @@ Cypress.Commands.add("deleteWorkflowUI", (workflowName: string) => {
     cy.get("[data-cy='workflow-delete-confirm']").click();
 });
 
-Cypress.Commands.add("saveWorkflowAPI", (workflowName: string) => {
-    const workflow = new WorkflowDTO("test", [new NodeDTO(0, { x: -200, y: 1 }, new NodeDataDTO("GMAIL")), new NodeDTO(1, { x: 200, y: 1 }, new NodeDataDTO("GCALENDAR"))], [new EdgeDTO("automate", 0, 1)]);
+Cypress.Commands.add("saveWorkflowAPI", (workflow: WorkflowDTO) => {
     cy.window()
         .its("localStorage.user")
         .then((result) => {
