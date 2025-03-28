@@ -31,7 +31,7 @@ describe("GetWorkflowService - integration", () => {
   let saveWorkflowService: SaveWorkflowService;
   let deleteWorkflowService: DeleteWorkflowService;
 
-  test("Should return the received workflow when one is received from backend", async () => {
+  test("TIF7 - Should return the received workflow when one is received from backend", async () => {
     await createWorkflowService.newWorkflow(workflow.name, accessToken);
     await saveWorkflowService.saveWorkflow(workflow, accessToken);
 
@@ -39,7 +39,7 @@ describe("GetWorkflowService - integration", () => {
     await deleteWorkflowService.deleteWorkflowByName(workflow.name, accessToken);
   });
 
-  test("Should throw an error with a message if status != 200 is received", async () => {
+    test("TIF8 - Should throw an error with a message if status != 200 is received", async () => {
     await deleteWorkflowService.deleteWorkflowByName(workflow.name, accessToken).catch(() => {});
     await expect(getWorkflowService.getWorkflow(workflow.name, accessToken)).rejects.toThrowError("Workflow not found");
   });

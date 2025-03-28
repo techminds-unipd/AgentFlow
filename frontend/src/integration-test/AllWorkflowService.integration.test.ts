@@ -27,13 +27,13 @@ describe("AllWorkflowService - integration", () => {
   let deleteWorkflowService: DeleteWorkflowService;
   let allworkflowsService: AllWorkflowsService;
 
-  test("Should return the list of workflows when successful", async () => {
+  test("TIF1 - Should return the list of workflows when successful", async () => {
     await createWorkflowService.newWorkflow(workflowName, accessToken)
     await expect(allworkflowsService.allWorkflows(accessToken)).resolves.toEqual([workflowName]);
     await deleteWorkflowService.deleteWorkflowByName(workflowName, accessToken);
   });
 
-  test("Should throw an error if status != 200 is received", async () => {
+  test("TIF2 - Should throw an error if status != 200 is received", async () => {
     const invalidAccessToken = "invalid";
     await expect(allworkflowsService.allWorkflows(invalidAccessToken)).rejects.toThrowError("Generic error");
   });

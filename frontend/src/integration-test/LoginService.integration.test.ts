@@ -13,12 +13,12 @@ describe("LoginService - integration", () => {
 
   let user: UserDTO;
 
-  test("Should return the received access token when one is received from backend", async () => {
+  test("TIF9 - Should return the received access token when one is received from backend", async () => {
     const loginService = new LoginService();
     await expect(loginService.login(user)).resolves.toHaveProperty("accessToken");
   });
 
-  test("Should throw an error with message 'wrong username or password' if receives error 401", async () => {
+  test("TIF10 - Should throw an error with message 'wrong username or password' if receives error 401", async () => {
     const loginService = new LoginService();
     await expect(async () => loginService.login(new UserDTO(user.username, "wrong"))).rejects.toThrowError("wrong username or password");
   });

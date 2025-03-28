@@ -14,7 +14,7 @@ describe("RegisterService - integration", () => {
     await expect(result).resolves.toHaveProperty("password");
   });
 
-  test("Should throw an error with message 'Username already exists' if status 400 is received", async () => {
+  test("TIF11 - Should throw an error with message 'Username already exists' if status 400 is received", async () => {
     const registerService = new RegisterService();
     const username = new Date().toISOString().replace(/[-:.]/g, "");
     const user = new UserDTO(username, "Ciao1234$");

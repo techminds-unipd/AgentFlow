@@ -28,13 +28,13 @@ describe("SaveWorkflowService - integration", () => {
   let saveWorkflowService: SaveWorkflowService;
   let deleteWorkflowService: DeleteWorkflowService;
 
-  test("Should return the just saved workflow", async () => {
+  test("TIF12 - Should return the just saved workflow", async () => {
     await createWorkflowService.newWorkflow(workflow.name, accessToken);
     await expect(saveWorkflowService.saveWorkflow(workflow, accessToken)).resolves.toEqual(workflow);
     await deleteWorkflowService.deleteWorkflowByName(workflow.name, accessToken);
   });
 
-  test("Should throw an error with a message if status != 200 is received", async () => {
+  test("TIF13 - Should throw an error with a message if status != 200 is received", async () => {
     await deleteWorkflowService.deleteWorkflowByName(workflow.name, accessToken).catch(() => {});
     await expect(saveWorkflowService.saveWorkflow(workflow, accessToken)).rejects.toThrowError("Workflow not found");
   });

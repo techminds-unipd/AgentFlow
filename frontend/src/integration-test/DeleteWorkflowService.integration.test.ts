@@ -25,13 +25,13 @@ describe("DeleteWorkflowService - integration", () => {
   let createWorkflowService: CreateWorkflowService;
   let deleteWorkflowService: DeleteWorkflowService;
 
-  test("Should return the deleted workflow when successful", async () => {
+  test("TIF5 - Should return the deleted workflow when successful", async () => {
     const workflow = new WorkflowDTO(workflowName, [], []);
     await createWorkflowService.newWorkflow(workflowName, accessToken);
     await expect(deleteWorkflowService.deleteWorkflowByName(workflowName, accessToken)).resolves.toEqual(workflow);
   });
 
-  test("Should throw an error with a message if status 404 is received", async () => {
+  test("TIF6 - Should throw an error with a message if status 404 is received", async () => {
     await expect(deleteWorkflowService.deleteWorkflowByName(workflowName, accessToken)).rejects.toThrowError("workflow not found");
   });
 });

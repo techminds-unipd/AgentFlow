@@ -25,13 +25,13 @@ describe("CreateWorkflowService - integration", () => {
   let createWorkflowService: CreateWorkflowService;
   let deleteWorkflowService: DeleteWorkflowService;
 
-  test("Should return the created workflow when successful", async () => {
+  test("TIF3 - Should return the created workflow when successful", async () => {
     const workflow = new WorkflowDTO(workflowName, [], []);
     await expect(createWorkflowService.newWorkflow(workflowName, accessToken)).resolves.toEqual(workflow);
     await deleteWorkflowService.deleteWorkflowByName(workflowName, accessToken);
   });
 
-  test("Should throw an error with message 'Workflow with the same name already exists' if status 400 is received", async () => {
+  test("TIF4 - Should throw an error with message 'Workflow with the same name already exists' if status 400 is received", async () => {
     await createWorkflowService.newWorkflow(workflowName, accessToken)
     await expect(createWorkflowService.newWorkflow(workflowName, accessToken)).rejects.toThrowError("Workflow with the same name already exists");
     await deleteWorkflowService.deleteWorkflowByName(workflowName, accessToken);
