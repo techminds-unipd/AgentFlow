@@ -52,7 +52,7 @@ class WorkflowControllerTest(unittest.TestCase):
             }
         }
     
-    def test_executeWorkflow(self):
+    def test_executeWorkflow_TUA1(self):
         with self.app.test_request_context(
             '/execute',
             method='POST',
@@ -63,7 +63,7 @@ class WorkflowControllerTest(unittest.TestCase):
             
             self.assertEqual(response, "test response")
 
-    def test_executeWorkflow_invalid_request(self):
+    def test_executeWorkflow_invalid_request_TUA2(self):
         with self.app.test_request_context(
             '/execute',
             method='POST',
@@ -73,7 +73,7 @@ class WorkflowControllerTest(unittest.TestCase):
             with self.assertRaises(BadRequest):
                 self.workflowController.executeWorkflow()
 
-    def test_executeWorkflow_invalid_workflow_action(self):
+    def test_executeWorkflow_invalid_workflow_action_TUA3(self):
         with self.app.test_request_context(
             '/execute',
             method='POST',
@@ -83,7 +83,7 @@ class WorkflowControllerTest(unittest.TestCase):
             with self.assertRaises(BadRequest):
                 self.workflowController.executeWorkflow()
 
-    def test_executeWorkflow_invalid_workflow_last_action(self):
+    def test_executeWorkflow_invalid_workflow_last_action_TUA4(self):
         self.invalid_workflow["workflowNodes"][0]["action"] = "action1"
         self.invalid_workflow["workflowNodes"][1]["action"] = "action2"
         with self.app.test_request_context(
