@@ -31,7 +31,7 @@ describe("useAllWorkflow hook", () => {
         );
     };
 
-    test("Fetches workflow list when user is authenticated", async () => {
+    test("TUF38 - Fetches workflow list when user is authenticated", async () => {
         const mockData = ["workflow1", "workflow2"];
         mockAllWorkflowsService.allWorkflows = vi.fn().mockResolvedValue(mockData);
 
@@ -48,7 +48,7 @@ describe("useAllWorkflow hook", () => {
         });
     });
 
-    test("Handles errors when API call fails", async () => {
+    test("TUF39 - Handles errors when API call fails", async () => {
         mockAllWorkflowsService.allWorkflows = vi.fn().mockRejectedValue(new Error("API Error"));
 
         render(
@@ -64,7 +64,7 @@ describe("useAllWorkflow hook", () => {
         });
     });
 
-    test("Throws an error when useAllWorkflow is used outside AuthProvider", () => {
+    test("TUF40 - Throws an error when useAllWorkflow is used outside AuthProvider", () => {
         expect(() => render(<TestComponent service={mockAllWorkflowsService} />)).toThrowError();
     });
 });

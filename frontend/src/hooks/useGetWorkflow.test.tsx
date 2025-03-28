@@ -32,7 +32,7 @@ describe("useGetWorkflow hook", () => {
         );
     };
 
-    test("Get a workflow successfully when user is authenticated", async () => {
+    test("TUF63 - Get a workflow successfully when user is authenticated", async () => {
         render(
             <MockedAuthProvider {...providerProps}>
                 <TestComponent workflowName="Test Workflow" />

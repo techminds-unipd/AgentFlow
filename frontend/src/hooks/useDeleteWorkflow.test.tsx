@@ -34,7 +34,7 @@ describe("useDeleteWorkflow hook", () => {
         );
     };
 
-    test("Deletes a workflow successfully when user is authenticated", async () => {
+    test("TUF46 - Deletes a workflow successfully when user is authenticated", async () => {
         mockDeleteWorkflowService.deleteWorkflowByName = vi.fn().mockResolvedValue("Deleted Successfully");
 
         render(
@@ -53,7 +53,7 @@ describe("useDeleteWorkflow hook", () => {
         });
     });
 
-    test("Handles errors when API call fails", async () => {
+    test("TUF47 - Handles errors when API call fails", async () => {
         mockDeleteWorkflowService.deleteWorkflowByName = vi.fn().mockRejectedValue(new Error("API Error"));
 
         render(
@@ -72,7 +72,7 @@ describe("useDeleteWorkflow hook", () => {
         });
     });
 
-    test("Throws an error when useDeleteWorkflow is used outside AuthProvider", () => {
+    test("TUF48 - Throws an error when useDeleteWorkflow is used outside AuthProvider", () => {
         expect(() =>
             render(<TestComponent workflowName="Outside Workflow" service={mockDeleteWorkflowService} />)
         ).toThrowError();

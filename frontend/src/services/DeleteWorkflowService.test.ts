@@ -13,7 +13,7 @@ describe("deleteWorkflowByName API", () => {
     const accessToken = "testToken";
     const service = new DeleteWorkflowService();
 
-    test("Should return the deleted workflow when successful", async () => {
+    test("TUF9 - Should return the deleted workflow when successful", async () => {
         const mockResponse = { name };
 
         fetchSpy.mockResolvedValue({ status: 200, json: async () => Promise.resolve(mockResponse) } as Response);
@@ -26,19 +26,19 @@ describe("deleteWorkflowByName API", () => {
         });
     });
 
-    test("Should throw an error with message 'Generic error' if status 404 is received", async () => {
+    test("TUF10 - Should throw an error with message 'Generic error' if status 404 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 400, json: async () => Promise.resolve("Generic error") } as Response);
 
         await expect(service.deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Generic error");
     });
 
-    test("Should throw an error with message 'Server error' if status 500 is received", async () => {
+    test("TUF11 - Should throw an error with message 'Server error' if status 500 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 500, json: async () => Promise.resolve("Server error") } as Response);
 
         await expect(service.deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Server error");
     });
 
-    test("Should throw an error with message 'Generic error' if fetch fails", async () => {
+    test("TUF12 - Should throw an error with message 'Generic error' if fetch fails", async () => {
         fetchSpy.mockRejectedValue(new Error("Generic error"));
 
         await expect(service.deleteWorkflowByName(name, accessToken)).rejects.toThrowError("Generic error");

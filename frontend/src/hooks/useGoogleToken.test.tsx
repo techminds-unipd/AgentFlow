@@ -9,7 +9,7 @@ describe("useGoogleToken hook tests", () => {
     beforeEach(() => {
         providerProps = googleProviderPropsInit();
     });
-    test("A component that is wrapped with GoogleTokenProvider and invoked useGoogleToken can access context", () => {
+    test("TUF49 - A component that is wrapped with GoogleTokenProvider and invoked useGoogleToken can access context", () => {
         const TestComponent = (): JSX.Element => {
             const context = useGoogleToken();
             return <div>TestComponent {JSON.stringify(context)}</div>;
@@ -21,7 +21,7 @@ describe("useGoogleToken hook tests", () => {
         );
     });
 
-    test("Throws an error when a component that uses useGoogleToken isn't wrapped with GoogleTokenProvider", () => {
+    test("TUF50 - Throws an error when a component that uses useGoogleToken isn't wrapped with GoogleTokenProvider", () => {
         const TestComponent = (): JSX.Element => {
             const context = useGoogleToken();
             return <div>TestComponent {JSON.stringify(context)}</div>;

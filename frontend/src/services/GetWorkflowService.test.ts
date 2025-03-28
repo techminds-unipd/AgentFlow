@@ -14,7 +14,7 @@ describe("GetWorkflowService", () => {
     const workflowName = "workflow";
     const accessToken = "testToken";
 
-    test("Should return the received workflow when one is received from backend", async () => {
+    test("TUF61 - Should return the received workflow when one is received from backend", async () => {
         const mockResponse = { name: "workflow", nodes: [], edges: [] };
         const workflow = new WorkflowDTO("workflow", [], []);
 
@@ -28,7 +28,7 @@ describe("GetWorkflowService", () => {
         });
     });
 
-    test("Should throw an error with a message if status != 200 is received", async () => {
+    test("TUF62 - Should throw an error with a message if status != 200 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 400, json: async () => Promise.resolve({ message: "Generic error" }) } as Response);
 
         await expect(service.getWorkflow(workflowName, accessToken)).rejects.toThrowError("Generic error");

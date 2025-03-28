@@ -9,7 +9,7 @@ describe("useAuth hook", () => {
     beforeEach(() => {
         providerProps = providerPropsInit();
     });
-    test("A component that is wrapped with AuthProvider and invokes useAuth can access context", () => {
+    test("TUF41 - A component that is wrapped with AuthProvider and invokes useAuth can access context", () => {
         const TestComponent = (): JSX.Element => {
             const context = useAuth();
             return <div>TestComponent {JSON.stringify(context)}</div>;
@@ -21,7 +21,7 @@ describe("useAuth hook", () => {
         );
     });
 
-    test("Throws an error when a component that uses useAuth isn't wrapped with AuthProvider", () => {
+    test("TUF42 - Throws an error when a component that uses useAuth isn't wrapped with AuthProvider", () => {
         const TestComponent = (): JSX.Element => {
             const context = useAuth();
             return <div>TestComponent {JSON.stringify(context)}</div>;

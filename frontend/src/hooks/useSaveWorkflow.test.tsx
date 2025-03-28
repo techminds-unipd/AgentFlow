@@ -32,7 +32,7 @@ describe("useSaveWorkflow hook", () => {
         );
     };
 
-    test("Get a workflow successfully after saving", async () => {
+    test("TUF60 - Get a workflow successfully after saving", async () => {
         render(
             <MockedAuthProvider {...providerProps}>
                 <TestComponent workflowDto={workflowMock} />

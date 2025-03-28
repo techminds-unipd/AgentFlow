@@ -13,7 +13,7 @@ describe("newWorkflow API", () => {
     const accessToken = "testToken";
     const service = new CreateWorkflowService();
 
-    test("Should return the created workflow when successful", async () => {
+    test("TUF5 - Should return the created workflow when successful", async () => {
         const mockResponse = { name };
 
         fetchSpy.mockResolvedValue({ status: 201, json: async () => Promise.resolve(mockResponse) } as Response);
@@ -27,7 +27,7 @@ describe("newWorkflow API", () => {
         });
     });
 
-    test("Should throw an error with message 'Workflow with the same name already exists' if status 400 is received", async () => {
+    test("TUF6 - Should throw an error with message 'Workflow with the same name already exists' if status 400 is received", async () => {
         fetchSpy.mockResolvedValue({
             status: 400,
             json: async () => Promise.resolve("Workflow with the same name already exists")
@@ -36,13 +36,13 @@ describe("newWorkflow API", () => {
         await expect(service.newWorkflow(name, accessToken)).rejects.toThrowError("Workflow with the same name already exists");
     });
 
-    test("Should throw an error with message 'Server error' if status 500 is received", async () => {
+    test("TUF7 - Should throw an error with message 'Server error' if status 500 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 500, json: async () => Promise.resolve("Server error") } as Response);
 
         await expect(service.newWorkflow(name, accessToken)).rejects.toThrowError("Server error");
     });
 
-    test("Should throw an error with message 'Generic Error' if fetch fails", async () => {
+    test("TUF8 - Should throw an error with message 'Generic Error' if fetch fails", async () => {
         fetchSpy.mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.newWorkflow(name, accessToken)).rejects.toThrowError("Generic Error");

@@ -16,7 +16,7 @@ describe("ExecuteWorkflowService", () => {
     const googleToken: GoogleAccountToken = { token: "token", refreshToken: "refresh", expireDate: "" };
     const workflow = new WorkflowDTO("workflow", [], []);
 
-    test("Should return the execution result from the AI agent", async () => {
+    test("TUF55 - Should return the execution result from the AI agent", async () => {
         fetchSpy.mockResolvedValue({ status: 201, text: async () => Promise.resolve("Execution result") } as Response);
 
         await expect(service.executeWorkflow(workflow, accessToken, googleToken)).resolves.toEqual("Execution result");
@@ -35,7 +35,7 @@ describe("ExecuteWorkflowService", () => {
         });
     });
 
-    test("Should throw an error with a message if status != 200 is received", async () => {
+    test("TUF56 - Should throw an error with a message if status != 200 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 400, json: async () => Promise.resolve({ message: "Generic error" }) } as Response);
 
         await expect(service.executeWorkflow(workflow, accessToken, googleToken)).rejects.toThrowError("Generic error");
