@@ -1,8 +1,7 @@
 /// <reference types="cypress" />
 
-import { EdgeDTO, NodeDataDTO, NodeDTO, WorkflowDTO } from "../../src/services/dto/WorkflowDTO";
+import { WorkflowDTO } from "../../src/services/dto/WorkflowDTO";
 
-require('@4tw/cypress-drag-drop')
 
 declare global {
     namespace Cypress {
