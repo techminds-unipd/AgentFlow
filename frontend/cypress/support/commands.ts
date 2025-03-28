@@ -2,7 +2,6 @@
 
 import { WorkflowDTO } from "../../src/services/dto/WorkflowDTO";
 
-
 declare global {
     namespace Cypress {
         interface Chainable {

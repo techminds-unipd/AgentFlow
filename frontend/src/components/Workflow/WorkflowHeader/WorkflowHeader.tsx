@@ -106,6 +106,7 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps): JSX.Element => {
                         variant="contained"
                         onClick={() => void handleSave()}
                         sx={{ backgroundColor: "var(--maincolor)", marginRight: "1em" }}
+                        data-cy="button-save-workflow"
                     >
                         Save
                     </Button>
@@ -136,6 +137,7 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps): JSX.Element => {
                         <CloseIcon fontSize="small" />
                     </IconButton>
                 }
+                data-cy="snackbar-workflow"
             >
                 <Alert onClose={handleCloseSnackBar} severity={alertColor} variant="filled" sx={{ width: "100%" }}>
                     {snackBarMessage}
