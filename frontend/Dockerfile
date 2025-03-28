@@ -1,6 +1,6 @@
 FROM docker.io/node:22.14.0-alpine3.21 AS build
 WORKDIR /app
-COPY package*.json .
+COPY package*.json ./
 RUN npm install
 COPY . .
 EXPOSE 5173
