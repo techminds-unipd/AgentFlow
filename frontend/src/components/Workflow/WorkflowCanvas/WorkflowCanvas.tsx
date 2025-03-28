@@ -144,6 +144,7 @@ export const WorkflowCanvas = ({
                 connectionLineType={ConnectionLineType.Bezier}
                 isValidConnection={isValidConnection}
                 minZoom={0.5}
+                data-cy="workflow-canvas"
             >
                 <Background color="rgb(242,242,242)" variant={BackgroundVariant.Lines} />
                 <Controls />

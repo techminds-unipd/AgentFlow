@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+require('@4tw/cypress-drag-drop')
 
 declare global {
     namespace Cypress {
