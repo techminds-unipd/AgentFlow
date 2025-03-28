@@ -48,13 +48,13 @@ describe("GetWorkflowController", () => {
     });
 
     describe("getWorkflow", () => {
-        it("should get the workflow by its name", async () => {
+        it("TUB40 - should get the workflow by its name", async () => {
             workflowAdapterImplementationMock.toDTO.mockResolvedValue(workflowDTOMock);
             getWorkflowUseCaseMock.getWorkflow.mockResolvedValue(workflowMock);
             expect(await getWorkflowController.getWorkflow("prova", { username: "username" })).toEqual(workflowDTOMock);
         });
         
-        it("should throw HttpException because the database throws an exception", async () => {
+        it("TUB41 - should throw HttpException because the database throws an exception", async () => {
             getWorkflowUseCaseMock.getWorkflow.mockImplementation(() => {
                 throw new MongooseError("");
             });
@@ -63,7 +63,7 @@ describe("GetWorkflowController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
-        it("should throw HttpException because the workflow was not found in the database", async () => {
+        it("TUB42 - should throw HttpException because the workflow was not found in the database", async () => {
             getWorkflowUseCaseMock.getWorkflow.mockImplementation(() => {
                 throw new WorkflowNotFoundError;
             });
