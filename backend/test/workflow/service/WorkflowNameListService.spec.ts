@@ -32,17 +32,17 @@ describe("WorkflowNameListService", () => {
     });
 
     describe("getWorkflowNameList", () => {
-        it("should get all the workflow names of a user", async () => {
+        it("TUB54 - should get all the workflow names of a user", async () => {
             getUserWorkflowsPortMock.getAllWorkflowByUsername.mockResolvedValue(workflowMock);
             expect(await workflowNameListService.getWorkflowNameList("username")).toEqual(workflowNameListMock);
         });
 
-        it("should get an empty list if there isn't any workflows", async () => {
+        it("TUB55 - should get an empty list if there isn't any workflows", async () => {
             getUserWorkflowsPortMock.getAllWorkflowByUsername.mockResolvedValue([] as Workflow[]);
             expect(await workflowNameListService.getWorkflowNameList("username")).toEqual([] as string[]);
         });
 
-        it("shouldn't find the workflow names because user doesn't exist", async () => {
+        it("TUB56 - shouldn't find the workflow names because user doesn't exist", async () => {
             getUserWorkflowsPortMock.getAllWorkflowByUsername.mockResolvedValue(null);
             expect(workflowNameListService.getWorkflowNameList("username")).rejects.toThrow(UserNotFoundError);
         });

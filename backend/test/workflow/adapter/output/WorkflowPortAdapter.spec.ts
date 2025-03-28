@@ -58,60 +58,60 @@ describe("WorkflowPortAdapter", () => {
     });
 
     describe("getWorkflowByName", () => {
-        it("should return the workflow of the user", async () => {
+        it("TUB57 - should return the workflow of the user", async () => {
             workflowRepositoryMock.getWorkflowByName.mockResolvedValue(workflowEntityMock);
             expect(await workflowPortAdapter.getWorkflowByName("username", "prova")).toEqual(workflowMock);
         });
 
-        it("should return null if the workflow doesn't exists", async () => {
+        it("TUB58 - should return null if the workflow doesn't exists", async () => {
             workflowRepositoryMock.getWorkflowByName.mockResolvedValue(null);
             expect(await workflowPortAdapter.getWorkflowByName("username", "prova")).toEqual(null);
         });
     });
 
     describe("addWorkflow", () => {
-        it("should add the workflow to the user", async () => {
+        it("TUB59 - should add the workflow to the user", async () => {
             workflowRepositoryMock.addWorkflow.mockResolvedValue(workflowEntityEmptyMock);
             expect(await workflowPortAdapter.addWorkflow("prova", workflowEmptyMock)).toEqual(workflowEmptyMock);
         });
 
-        it("should return null if the workflow wasn't added", async () => {
+        it("TUB60 - should return null if the workflow wasn't added", async () => {
             workflowRepositoryMock.addWorkflow.mockResolvedValue(null);
             expect(await workflowPortAdapter.addWorkflow("prova", workflowEmptyMock)).toEqual(null);
         });
     })
 
     describe("deleteWorkflow", () => {
-        it("should return the workflow of the user", async () => {
+        it("TUB61 - should return the workflow of the user", async () => {
             workflowRepositoryMock.deleteWorkflow.mockResolvedValue(workflowEntityMock);
             expect(await workflowPortAdapter.deleteWorkflow("username", "prova")).toEqual(workflowMock);
         });
 
-        it("should return null if the workflow doesn't exists", async () => {
+        it("TUB62 - should return null if the workflow doesn't exists", async () => {
             workflowRepositoryMock.deleteWorkflow.mockResolvedValue(null);
             expect(await workflowPortAdapter.deleteWorkflow("username", "prova")).toEqual(null);
         });
     });
 
     describe("getAllWorkflowByUsername", () => {
-        it("should return all the workflows of the user", async () => {
+        it("TUB63 - should return all the workflows of the user", async () => {
             workflowRepositoryMock.getAllWorkflowByUsername.mockResolvedValue(workflowEntityListMock);
             expect(await workflowPortAdapter.getAllWorkflowByUsername("username")).toEqual(workflowListMock);
         });
 
-        it("should return null if the user doesn't exist", async () => {
+        it("TUB64 - should return null if the user doesn't exist", async () => {
             workflowRepositoryMock.getAllWorkflowByUsername.mockResolvedValue(null);
             expect(await workflowPortAdapter.getAllWorkflowByUsername("username")).toEqual(null);
         });
     });
 
     describe("saveWorkflow", () => {
-        it("should return the saved workflow", async () => {
+        it("TUB65 - should return the saved workflow", async () => {
             workflowRepositoryMock.saveWorkflow.mockResolvedValue(workflowEntityMock);
             expect(await workflowPortAdapter.saveWorkflow("username", workflowMock)).toEqual(workflowMock);
         });
 
-        it("should return null if the workflow wasn't saved because not found", async () => {
+        it("TUB66 - should return null if the workflow wasn't saved because not found", async () => {
             workflowRepositoryMock.saveWorkflow.mockResolvedValue(null);
             expect(await workflowPortAdapter.saveWorkflow("username", workflowMock)).toEqual(null);
         });

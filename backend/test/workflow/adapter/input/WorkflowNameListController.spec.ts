@@ -30,12 +30,12 @@ describe("WorkflowNameListController", () => {
     });
 
     describe("getWorkflowNameList", () => {
-        it("should get all the workflow names of the user", async () => {
+        it("TUB51 - should get all the workflow names of the user", async () => {
             workflowNameListUseCaseMock.getWorkflowNameList.mockResolvedValue(workflowNameListMock);
             expect(await workflowNameListController.getWorkflowNameList({ username: "username" })).toEqual(workflowNameListMock);
         });
         
-        it("should throw HttpException because the database throws an exception", async () => {
+        it("TUB52 - should throw HttpException because the database throws an exception", async () => {
             workflowNameListUseCaseMock.getWorkflowNameList.mockImplementation(() => {
                 throw new MongooseError("");
             });
@@ -44,7 +44,7 @@ describe("WorkflowNameListController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
-        it("should throw HttpException because the user was not found so neither the workflows", async () => {
+        it("TUB53 - should throw HttpException because the user was not found so neither the workflows", async () => {
             workflowNameListUseCaseMock.getWorkflowNameList.mockImplementation(() => {
                 throw new UserNotFoundError;
             });
