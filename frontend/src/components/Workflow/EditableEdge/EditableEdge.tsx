@@ -43,7 +43,7 @@ export default function EditableEdge({
 
     return (
         <>
-            <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style}/>
+            <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} />
             <EdgeLabelRenderer>
                 <div
                     style={{
@@ -61,7 +61,7 @@ export default function EditableEdge({
                             padding: "0.3em",
                             paddingTop: "1.2em",
                             fontSize: "0.8em",
-                            scrollbarWidth: "thin",
+                            scrollbarWidth: "thin"
                         }}
                         onChange={handleTextChange}
                         value={textInput}
@@ -69,9 +69,9 @@ export default function EditableEdge({
                         data-cy={`source-target-node-${id}`}
                     />
                     <IconButton
-                    onClick={handleDelete}
-                    sx={{ position: "absolute", top: "0", left: "0", padding: "0", margin: "0.1em" }}
-                    data-cy={`delete-source-target-node-${id}`}
+                        onClick={handleDelete}
+                        sx={{ position: "absolute", top: "0", left: "0", padding: "0", margin: "0.1em" }}
+                        data-cy={`delete-source-target-node-${id}`}
                     >
                         <ClearIcon style={{ fontSize: "small", padding: "0", margin: "0", color: "black" }} />
                     </IconButton>

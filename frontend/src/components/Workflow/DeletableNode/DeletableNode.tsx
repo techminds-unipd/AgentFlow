@@ -36,8 +36,8 @@ export function DeletableNode({ id, data }: DeletableNodeInterface): JSX.Element
                     <ClearIcon style={{ fontSize: "small", padding: "0", margin: "0", color: "black" }} />
                 </IconButton>
             </div>
-            <Handle type="source" position={Position.Right} data-cy={`source-button-node-${id}`}/>
-            <Handle type="target" position={Position.Left} data-cy={`target-button-node-${id}`}/>
+            <Handle type="source" position={Position.Right} data-cy={`source-button-node-${id}`} />
+            <Handle type="target" position={Position.Left} data-cy={`target-button-node-${id}`} />
         </>
     );
 }

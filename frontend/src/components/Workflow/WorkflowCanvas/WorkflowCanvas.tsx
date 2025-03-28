@@ -50,9 +50,10 @@ export const WorkflowCanvas = ({
     /*eslint-disable @typescript-eslint/explicit-function-return-type*/
     /*eslint-disable @typescript-eslint/no-unsafe-return*/
     /*eslint-disable @typescript-eslint/no-explicit-any*/
+    /*eslint-disable @typescript-eslint/no-unsafe-member-access*/
     const onConnect = useCallback(
         (params: any) => {
-            setEdges((edges) => 
+            setEdges((edges) =>
                 addEdge(
                     {
                         ...params,
