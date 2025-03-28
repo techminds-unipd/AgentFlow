@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import { Typography } from "@mui/material";
 import { JSX } from "react";
 import "./Home.css";
-import workflowExample from "../../assets/Workflow-Example.png";
+import workflowExample from "../../assets/workflow-example.png";
 
 export const Home = (): JSX.Element => {
     return (
