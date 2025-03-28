@@ -30,7 +30,7 @@ export function DeletableNode({ id, data }: DeletableNodeInterface): JSX.Element
                 {data.label}
                 <IconButton
                     onClick={handleDelete}
-                    sx={{ position: "absolute", top: "0", right: "0", padding: "0", margin: "0.1em" }}
+                    sx={{ position: "absolute", top: "0", left: "0", padding: "0", margin: "0.1em" }}
                     data-cy={`delete-button-node-${id}`}
                 >
                     <ClearIcon style={{ fontSize: "small", padding: "0", margin: "0", color: "black" }} />
