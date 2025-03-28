@@ -110,7 +110,12 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps): JSX.Element => {
                     >
                         Save
                     </Button>
-                    <Button variant="contained" onClick={() => void handleExecute()} sx={{ backgroundColor: "var(--maincolor)" }} data-cy="execute-button">
+                    <Button
+                        variant="contained"
+                        onClick={() => void handleExecute()}
+                        sx={{ backgroundColor: "var(--maincolor)" }}
+                        data-cy="execute-button"
+                    >
                         Execute
                         {isLoading && <CircularProgress size={20} sx={{ alignSelf: "center", marginLeft: "0.4em" }} />}
                     </Button>
