@@ -19,6 +19,7 @@ export default defineConfig({
       "./src/hooks/**/*.test.*",
       "./src/services/**/*.test.*",
       "./src/context/**/*.test.*",
+      "./src/integration-test/**/*.test.*",
     ],
     coverage: {
       provider: "v8",
