@@ -11,7 +11,7 @@ describe("Operazioni blocchi workflow TS32-TS37", () => {
         cy.visit("/workflow/test");
     });
 
-    it("TS32 - L'utente autenticato può aggiungere un blocco in un workflow", () => {
+    it("TS32-TS33 - L'utente autenticato può aggiungere un blocco in un workflow, trascinandolo nell'area drag and drop", () => {
         const dataTransfer = new DataTransfer();
 
         cy.get('[data-cy=Pastebin-draggable]')
@@ -28,21 +28,6 @@ describe("Operazioni blocchi workflow TS32-TS37", () => {
             .trigger('dragend');
 
         //id del prossimo nodo aggiunto è 2
-        cy.get("[data-cy='canvas-node-2']").should("exist");
-    });
-
-    it("TS33 - L'utente autenticato, per poter aggiungere un blocco in un workflow, lo deve trascinare nell'area drag and drop", () => {
-        const dataTransfer = new DataTransfer();
-        cy.get('[data-cy=Pastebin-draggable]')
-            .trigger('dragstart', { dataTransfer })
-            .wait(200);
-        cy.get('[data-cy=workflow-canvas]')
-            .trigger('dragover', { dataTransfer })
-            .wait(200)
-            .trigger('drop', { dataTransfer })
-            .wait(500);
-        cy.get('[data-cy=Pastebin-draggable]')
-            .trigger('dragend');
         cy.get("[data-cy='canvas-node-2']").should("exist");
     });
 
