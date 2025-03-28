@@ -53,14 +53,14 @@ describe("ExecuteWorkflowController", () => {
     });
 
     describe("executeWorkflow", () => {
-        it("should execute the workflow", async () => {
+        it("TUB79 - should execute the workflow", async () => {
             workflowDTOValidatorMock.validate.mockImplementation(() => {});
             workflowAdapterImplementationMock.toDomain.mockImplementation(() => {});
             executeWorkflowUseCaseMock.executeWorkflow.mockResolvedValue("result");
             expect(await executeWorkflowController.executeWorkflow(executeRequestMock)).toEqual("result");
         });
 
-        it("should throw HttpException because the workflowDTO is invalid", async () => {
+        it("TUB80 - should throw HttpException because the workflowDTO is invalid", async () => {
             workflowDTOValidatorMock.validate.mockImplementation(() => {
                 throw new HttpException("", HttpStatus.PRECONDITION_FAILED);
             });
@@ -69,7 +69,7 @@ describe("ExecuteWorkflowController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.PRECONDITION_FAILED);
         });
 
-        it("should throw an exception because the execution had a problem", async () => {
+        it("TUB81 - should throw an exception because the execution had a problem", async () => {
             executeWorkflowUseCaseMock.executeWorkflow.mockImplementation(() => {
                 throw new Error();
             });

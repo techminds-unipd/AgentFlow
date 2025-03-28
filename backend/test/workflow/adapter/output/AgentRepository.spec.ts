@@ -49,12 +49,12 @@ describe("AgentRepository", () => {
     });
 
     describe("executeRequest", () => {
-        it("should submit the request to the Agent who executes it", async () => {
+        it("TUB84 - should submit the request to the Agent who executes it", async () => {
             httpService.post.mockReturnValue(of(response));
             expect(await agentRepository.executeRequest(executeDataMock)).toEqual("result");
         });
 
-        it("should throw an error because it can't connect to the Agent", async () => {
+        it("TUB85 - should throw an error because it can't connect to the Agent", async () => {
             httpService.post.mockImplementation(() => {
                 throw new Error("Cannot connect to the agent");
             });
