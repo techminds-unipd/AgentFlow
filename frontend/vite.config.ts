@@ -19,6 +19,7 @@ export default defineConfig({
       "./src/hooks/**/*.test.*",
       "./src/services/**/*.test.*",
       "./src/context/**/*.test.*",
+      // "./src/integration-test/**/*.test.*",
     ],
     coverage: {
       provider: "v8",
@@ -30,11 +31,10 @@ export default defineConfig({
         "./src/App.tsx",
         "./src/pages/**/*",
         "./src/components/**/*",
-        "./cypress/**"
+        "./cypress/**",
+        "./**/*.test.*",
+        "src/services/dto/*.ts"
       ],
     },
   }
 })
-
-
-
