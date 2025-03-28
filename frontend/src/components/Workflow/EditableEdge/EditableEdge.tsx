@@ -43,7 +43,7 @@ export default function EditableEdge({
 
     return (
         <>
-            <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} />
+            <BaseEdge id={id} path={edgePath} markerEnd={markerEnd} style={style} data-cy={`edge-${id}`} />
             <EdgeLabelRenderer>
                 <div
                     style={{
