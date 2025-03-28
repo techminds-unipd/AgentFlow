@@ -24,15 +24,15 @@ const WorkflowSidebar = (): JSX.Element => {
             </Typography>
             {google.googleToken && (
                 <>
-                    <Box onDragStart={(event) => onDragStart(event, "GCalendar")} draggable>
+                    <Box onDragStart={(event) => onDragStart(event, "GCalendar")} draggable data-cy="GCalendar-draggable">
                         <CalendarNode />
                     </Box>
-                    <Box onDragStart={(event) => onDragStart(event, "Gmail")} draggable>
+                    <Box onDragStart={(event) => onDragStart(event, "Gmail")} draggable data-cy="Gmail-draggable">
                         <GmailNode />
                     </Box>
                 </>
             )}
-            <Box onDragStart={(event) => onDragStart(event, "Pastebin")} draggable>
+            <Box onDragStart={(event) => onDragStart(event, "Pastebin")} draggable data-cy="Pastebin-draggable">
                 <PastebinNode />
             </Box>
             {!google.googleToken && (

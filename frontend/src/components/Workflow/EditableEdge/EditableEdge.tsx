@@ -1,5 +1,7 @@
 import { BaseEdge, Position, EdgeLabelRenderer, type EdgeProps, MarkerType, useReactFlow, getBezierPath } from "@xyflow/react";
 import { JSX, useState } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
+import { IconButton } from "@mui/material";
 
 export default function EditableEdge({
     id,
@@ -20,6 +22,9 @@ export default function EditableEdge({
         targetY,
         targetPosition: Position.Left
     });
+    const handleDelete = (): void => {
+        setEdges((edges) => edges.filter((edge) => edge.id !== id));
+    };
 
     const [textInput, setTextInput] = useState<string>(label as string);
 
@@ -54,12 +59,22 @@ export default function EditableEdge({
                             borderRadius: "0.5em",
                             border: "solid var(--maincolor) 0.1em",
                             padding: "0.3em",
-                            fontSize: "0.8em"
+                            paddingTop: "1.2em",
+                            fontSize: "0.8em",
+                            scrollbarWidth: "thin"
                         }}
                         onChange={handleTextChange}
                         value={textInput}
                         spellCheck="false"
+                        data-cy={`source-target-node-${id}`}
                     />
+                    <IconButton
+                        onClick={handleDelete}
+                        sx={{ position: "absolute", top: "0", left: "0", padding: "0", margin: "0.1em" }}
+                        data-cy={`delete-source-target-node-${id}`}
+                    >
+                        <ClearIcon style={{ fontSize: "small", padding: "0", margin: "0", color: "black" }} />
+                    </IconButton>
                 </div>
             </EdgeLabelRenderer>
         </>

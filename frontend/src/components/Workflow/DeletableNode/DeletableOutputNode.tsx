@@ -25,11 +25,12 @@ export function DeletableOutputNode({ id, data }: DeletableOutputNodeInterface):
                     backgroundColor: "var(--maincolor)",
                     color: "white"
                 }}
+                data-cy={`canvas-node-${id}`}
             >
                 {data.label}
                 <IconButton
                     onClick={handleDelete}
-                    sx={{ position: "absolute", top: "0", right: "0", padding: "0", margin: "0.1em" }}
+                    sx={{ position: "absolute", top: "0", left: "0", padding: "0", margin: "0.1em" }}
                 >
                     <ClearIcon style={{ fontSize: "small", padding: "0", margin: "0", color: "black" }} />
                 </IconButton>
