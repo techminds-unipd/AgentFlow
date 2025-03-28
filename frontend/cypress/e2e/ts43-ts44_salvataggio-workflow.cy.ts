@@ -17,7 +17,6 @@ describe("Salvataggio workflow TS43-TS44", () => {
         cy.createWorkflowAPI("test");
         cy.saveWorkflowAPI(workflow);
         cy.loginByGoogleApi();
-        cy.visit("/workflow/test");
     });
 
     it("TS43 - L'utente può salvare un workflow", () => {
@@ -38,6 +37,7 @@ describe("Salvataggio workflow TS43-TS44", () => {
     });
 
     it("TS44 - L'utente può visualizzare un messaggio di avviso che informa del fallimento nel salvataggio del workflow", () => {
+        cy.visit("/workflow/test");
         //Genera un workflow con un nodo e quindi non valido
         cy.get("[data-cy='delete-button-node-2']").click();
         cy.get("[data-cy='delete-button-node-1']").click();
