@@ -24,14 +24,12 @@ describe("Salvataggio workflow TS43-TS44", () => {
             cy.get("[data-cy='delete-button-node-2']")
                 .click()
                 .then(() => {
-                    cy.get("[data-cy='button-save-workflow']")
-                        .click()
-                        .then(() => {
-                            cy.visit("/workflow/test");
-                            cy.get("[data-cy='canvas-node-0']").should("exist");
-                            cy.get("[data-cy='canvas-node-1']").should("exist");
-                            cy.get("[data-cy='canvas-node-2']").should("not.exist");
-                        });
+                    cy.get("[data-cy='button-save-workflow']").click()
+                    cy.get("[data-cy='snackbar-workflow'").should("contain", "Workflow saved successfully");
+                    cy.visit("/workflow/test");
+                    cy.get("[data-cy='canvas-node-0']").should("exist");
+                    cy.get("[data-cy='canvas-node-1']").should("exist");
+                    cy.get("[data-cy='canvas-node-2']").should("not.exist");
                 });
         });
     });
