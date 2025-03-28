@@ -73,7 +73,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/user/register", () => {
-        it("(POST) - should register a new user", async () => {
+        it("TIB1 - (POST) - should register a new user", async () => {
             return await request(app.getHttpServer())
             .post("/user/register")
             .send(user)
@@ -84,7 +84,7 @@ describe("Backend Controller (e2e)", () => {
             });
         });
 
-        it("(POST) - shouldn't register a new user because it already exist", async () => {
+        it("TIB2 -(POST) - shouldn't register a new user because it already exist", async () => {
             return await request(app.getHttpServer())
             .post("/user/register")
             .send(user)
@@ -93,7 +93,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/user/login", () => {
-        it("(POST) - should login with a registered user", async () => {
+        it("TIB3 -(POST) - should login with a registered user", async () => {
             return await request(app.getHttpServer())
             .post("/user/login")
             .send(user)
@@ -105,7 +105,7 @@ describe("Backend Controller (e2e)", () => {
             });
         });
 
-        it("(POST) - shouldn't login the user with wrong credentials", async () => {
+        it("TIB4 -(POST) - shouldn't login the user with wrong credentials", async () => {
             return await request(app.getHttpServer())
             .post("/user/login")
             .send({ username: "wrongUsername", password: "wrongPassword" })
@@ -114,7 +114,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/workflow/create", () => {
-        it("(POST) - should create a new empty workflow", async () => {
+        it("TIB5 -(POST) - should create a new empty workflow", async () => {
             return await request(app.getHttpServer())
             .post(`/workflow/create/${workflowDTOMock.name}`)
             .set("Authorization", `Bearer ${jwt}`)
@@ -125,7 +125,7 @@ describe("Backend Controller (e2e)", () => {
             });
         });
 
-        it("(POST) - shouldn't create a new workflow because it already exist", async () => {
+        it("TIB6 -(POST) - shouldn't create a new workflow because it already exist", async () => {
             return await request(app.getHttpServer())
             .post(`/workflow/create/${workflowDTOMock.name}`)
             .set("Authorization", `Bearer ${jwt}`)
@@ -134,7 +134,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/workflow/save", () => {
-        it("(PUT) - should save the workflow", async () => {
+        it("TIB7 -(PUT) - should save the workflow", async () => {
             return await request(app.getHttpServer())
             .put("/workflow/save")
             .send(workflowDTOMock)
@@ -148,7 +148,7 @@ describe("Backend Controller (e2e)", () => {
             });
         });
 
-        it("(PUT) - shouldn't save the workflow because is not valid", async () => {
+        it("TIB8 -(PUT) - shouldn't save the workflow because is not valid", async () => {
             return await request(app.getHttpServer())
             .put("/workflow/save")
             .send(new WorkflowDTO("newWorkflow", [], []))
@@ -158,7 +158,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/workflow/get", () => {
-        it("(GET) - should get the workflow", async () => {
+        it("TIB9 -(GET) - should get the workflow", async () => {
             return await request(app.getHttpServer())
             .get(`/workflow/get/${workflowDTOMock.name}`)
             .set("Authorization", `Bearer ${jwt}`)
@@ -171,7 +171,7 @@ describe("Backend Controller (e2e)", () => {
             });
         });
 
-        it("(GET) - shouldn't get the workflow because it doesn't exist", async () => {
+        it("TIB10 -(GET) - shouldn't get the workflow because it doesn't exist", async () => {
             return await request(app.getHttpServer())
             .get("/workflow/get/newWorkflow")
             .set("Authorization", `Bearer ${jwt}`)
@@ -180,7 +180,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/workflow/all", () => {
-        it("(GET) - should get all the workflows", async () => {
+        it("TIB11 -(GET) - should get all the workflows", async () => {
             await request(app.getHttpServer()).post("/workflow/create/workflow2").set("Authorization", `Bearer ${jwt}`);
             await request(app.getHttpServer()).post("/workflow/create/workflow3").set("Authorization", `Bearer ${jwt}`);
             return await request(app.getHttpServer())
@@ -198,7 +198,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/workflow/execute", () => {
-        it("(POST) - should execute the workflow", async () => {
+        it("TIB12 -(POST) - should execute the workflow", async () => {
             httpServiceMock.get.mockReturnValue(of(response));
             httpServiceMock.post.mockReturnValue(of(response));
             return await request(app.getHttpServer())
@@ -208,7 +208,7 @@ describe("Backend Controller (e2e)", () => {
             .expect(201)
         });
 
-        it("(POST) - shouldn't execute the workflow because is not valid", async () => {
+        it("TIB13 -(POST) - shouldn't execute the workflow because is not valid", async () => {
             return await request(app.getHttpServer())
             .post("/workflow/execute")
             .send(wrongExecuteWorkflowDTOMock)
@@ -218,7 +218,7 @@ describe("Backend Controller (e2e)", () => {
     });
 
     describe("/workflow/delete", () => {
-        it("(DELETE) - should delete the workflow", async () => {
+        it("TIB14 -(DELETE) - should delete the workflow", async () => {
             return await request(app.getHttpServer())
             .delete(`/workflow/delete/${workflowDTOMock.name}`)
             .set("Authorization", `Bearer ${jwt}`)
@@ -229,7 +229,7 @@ describe("Backend Controller (e2e)", () => {
             });
         });
 
-        it("(DELETE) - shouldn't delete the workflow because it doesn't exist", async () => {
+        it("TIB15 -(DELETE) - shouldn't delete the workflow because it doesn't exist", async () => {
             return await request(app.getHttpServer())
             .delete("/workflow/delete/newWorkflow")
             .set("Authorization", `Bearer ${jwt}`)
