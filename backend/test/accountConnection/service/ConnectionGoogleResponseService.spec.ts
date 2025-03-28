@@ -21,7 +21,7 @@ describe("ConnectionGoogleResponseService", () => {
     });
 
     describe("getToken", () => {
-        it("should return the Token acquired in the callback", async () => {
+        it("TUB24 - should return the Token acquired in the callback", async () => {
             connectionGoogleResponsePortMock.getAuthClientData.mockResolvedValue(tokenMock);
             expect(await connectionGoogleResponseService.getToken("code")).toEqual(tokenMock);
         });

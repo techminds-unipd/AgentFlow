@@ -19,7 +19,7 @@ describe("ConnectionGoogleRequestService", () => {
     });
 
     describe("googleAuth", () => {
-        it("should create a redirect url for google auth", async () => {
+        it("TUB21 - should create a redirect url for google auth", async () => {
             connectionGoogleRequestPortMock.getOauth2ClientUrl.mockReturnValue("redirectUrl");
             expect(connectionGoogleRequestService.googleAuth()).toEqual("redirectUrl");
         });
