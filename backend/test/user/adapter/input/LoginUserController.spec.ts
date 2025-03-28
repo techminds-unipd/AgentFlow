@@ -34,13 +34,13 @@ describe("LoginUserController", () => {
     });
 
     describe("login", () => {
-        it("should login the user", async () => {
+        it("TUB6 - should login the user", async () => {
             loginUseCaseMock.login.mockResolvedValue(userMock);
             jwtService.signAsync.mockResolvedValue(jwtMock.accessToken);
             expect(await loginUserController.login(userDTOMock)).toEqual(jwtMock);
         });
 
-        it("should throw HttpException because the database throws an exception", async () => {
+        it("TUB7 - should throw HttpException because the database throws an exception", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new MongooseError("");
             });
@@ -49,7 +49,7 @@ describe("LoginUserController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.INTERNAL_SERVER_ERROR);
         });
 
-        it("should throw HttpException because the username was not found in the database", async () => {
+        it("TUB8 - should throw HttpException because the username was not found in the database", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new UserNotFoundError();
             });
@@ -58,7 +58,7 @@ describe("LoginUserController", () => {
             expect(result).rejects.toHaveProperty("status", HttpStatus.UNAUTHORIZED);
         });
 
-        it("should throw HttpException because password doesn't match", async () => {
+        it("TUB9 - should throw HttpException because password doesn't match", async () => {
             loginUseCaseMock.login.mockImplementation(() => {
                 throw new WrongPasswordError();
             });

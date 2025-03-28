@@ -25,18 +25,18 @@ describe("LoginUserService", () => {
     });
 
     describe("login", () => {
-        it("should login the user", async () => {
+        it("TUB10 - should login the user", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
             (bcrypt.compare as jest.Mock).mockResolvedValue(true);
             expect(await loginUserService.login(userMock)).toEqual(userMock);
         });
 
-        it("shouldn't login the user because the username was not found in the database", async () => {
+        it("TUB11 - shouldn't login the user because the username was not found in the database", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(null);
             expect(loginUserService.login(userMock)).rejects.toThrow(UserNotFoundError);
         });
 
-        it("shouldn't login the user because password doesn't match", async () => {
+        it("TUB12 - shouldn't login the user because password doesn't match", async () => {
             getUserPortMock.getUserByUsername.mockResolvedValue(userMock);
             (bcrypt.compare as jest.Mock).mockResolvedValue(false);
             expect(loginUserService.login(userMock)).rejects.toThrow(WrongPasswordError);
