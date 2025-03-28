@@ -15,7 +15,7 @@ describe("register API", () => {
     const user = new UserDTO(username, password);
     const service = new RegisterService();
 
-    test("Should return the created user when successful", async () => {
+    test("TUF17 - Should return the created user when successful", async () => {
         const mockResponse = { user };
 
         fetchSpy.mockResolvedValue({ status: 201, json: async () => Promise.resolve(mockResponse) } as Response);
@@ -29,19 +29,19 @@ describe("register API", () => {
         });
     });
 
-    test("Should throw an error with message 'Username already exists' if status 400 is received", async () => {
+    test("TUF18 - Should throw an error with message 'Username already exists' if status 400 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 400, json: async () => Promise.resolve("Username already exists") } as Response);
 
         await expect(service.register(user)).rejects.toThrowError("Username already exists");
     });
 
-    test("Should throw an error with message 'Server error' if status 500 is received", async () => {
+    test("TUF19 - Should throw an error with message 'Server error' if status 500 is received", async () => {
         fetchSpy.mockResolvedValue({ status: 500, json: async () => Promise.resolve("Server error") } as Response);
 
         await expect(service.register(user)).rejects.toThrowError("Server error");
     });
 
-    test("Should throw an error with message 'Generic Error' if fetch fails", async () => {
+    test("TUF20 - Should throw an error with message 'Generic Error' if fetch fails", async () => {
         fetchSpy.mockRejectedValue(new Error("Generic Error"));
 
         await expect(service.register(user)).rejects.toThrowError("Generic Error");

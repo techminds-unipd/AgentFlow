@@ -35,7 +35,7 @@ describe("useCreateWorkflow hook", () => {
         );
     };
 
-    test("Creates workflow successfully when user is authenticated", async () => {
+    test("TUF43 - Creates workflow successfully when user is authenticated", async () => {
         mockCreateWorkflowService.newWorkflow = vi.fn().mockResolvedValue("Workflow Created");
 
         render(
@@ -54,7 +54,7 @@ describe("useCreateWorkflow hook", () => {
         });
     });
 
-    test("Handles errors when API call fails", async () => {
+    test("TUF44 - Handles errors when API call fails", async () => {
         mockCreateWorkflowService.newWorkflow = vi.fn().mockRejectedValue(new Error("API Error"));
 
         render(
@@ -73,7 +73,7 @@ describe("useCreateWorkflow hook", () => {
         });
     });
 
-    test("Throws an error when useCreateWorkflow is used outside AuthProvider", () => {
+    test("TUF45 - Throws an error when useCreateWorkflow is used outside AuthProvider", () => {
         expect(() =>
             render(<TestComponent workflowName="Outside Workflow" service={mockCreateWorkflowService} />)
         ).toThrowError();

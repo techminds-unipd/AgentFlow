@@ -9,7 +9,7 @@ describe("GoogleTokenContext test", () => {
         localStorage.clear();
     });
 
-    test("Sets googleToken.token in context after addGoogleToken is called", async () => {
+    test("TUF30 - Sets googleToken.token in context after addGoogleToken is called", async () => {
         const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
@@ -40,7 +40,7 @@ describe("GoogleTokenContext test", () => {
         await waitFor(() => expect(screen.getByText("test-token")).toBeInTheDocument());
     });
 
-    test("Sets googleToken.expireDate in context after addGoogleToken is called", async () => {
+    test("TUF31 - Sets googleToken.expireDate in context after addGoogleToken is called", async () => {
         const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
@@ -71,7 +71,7 @@ describe("GoogleTokenContext test", () => {
         await waitFor(() => expect(screen.getByText("2023-12-31T23:59:59Z")).toBeInTheDocument());
     });
 
-    test("Sets googleToken.refreshToken in context after addGoogleToken is called", async () => {
+    test("TUF32 - Sets googleToken.refreshToken in context after addGoogleToken is called", async () => {
         const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
@@ -102,7 +102,7 @@ describe("GoogleTokenContext test", () => {
         await waitFor(() => expect(screen.getByText("refresh")).toBeInTheDocument());
     });
 
-    test("Saves googleToken in local storage after addGoogleToken is called", async () => {
+    test("TUF33 - Saves googleToken in local storage after addGoogleToken is called", async () => {
         const TestComponent = (): JSX.Element => {
             const { addGoogleToken } = useContext(GoogleTokenContext)!;
             return (
@@ -130,7 +130,7 @@ describe("GoogleTokenContext test", () => {
         );
     });
 
-    test("Removes googleToken.token and googleToken.expireDate from context after removeGoogleToken is called", async () => {
+    test("TUF34 - Removes googleToken.token and googleToken.expireDate from context after removeGoogleToken is called", async () => {
         const TestComponent = (): JSX.Element => {
             const { googleToken, addGoogleToken, removeGoogleToken } = useContext(GoogleTokenContext)!;
             return (
@@ -166,7 +166,7 @@ describe("GoogleTokenContext test", () => {
         await waitFor(() => expect(screen.queryByText("2023-12-31T23:59:59Z")).not.toBeInTheDocument());
     });
 
-    test("Removes googleToken from local storage after removeGoogleToken is called", async () => {
+    test("TUF35 - Removes googleToken from local storage after removeGoogleToken is called", async () => {
         const TestComponent = (): JSX.Element => {
             const { addGoogleToken, removeGoogleToken } = useContext(GoogleTokenContext)!;
             return (
@@ -203,7 +203,7 @@ describe("GoogleTokenContext test", () => {
         await waitFor(() => expect(localStorage.getItem("GoogleAccountToken")).toBeNull());
     });
 
-    test("isTokenExpired returns true if token is expired", async () => {
+    test("TUF36 - isTokenExpired returns true if token is expired", async () => {
         const TestComponent = (): JSX.Element => {
             const { addGoogleToken, isTokenExpired } = useContext(GoogleTokenContext)!;
             return (
@@ -234,7 +234,7 @@ describe("GoogleTokenContext test", () => {
         await waitFor(() => expect(screen.getByText("Expired")).toBeInTheDocument());
     });
 
-    test("isTokenExpired returns false if token is not expired", async () => {
+    test("TUF37 - isTokenExpired returns false if token is not expired", async () => {
         const TestComponent = (): JSX.Element => {
             const { addGoogleToken, isTokenExpired } = useContext(GoogleTokenContext)!;
             return (

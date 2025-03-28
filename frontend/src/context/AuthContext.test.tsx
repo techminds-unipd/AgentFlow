@@ -11,7 +11,7 @@ describe("AuthContext Login", () => {
         localStorage.clear();
     });
 
-    test("Sets user.username when login succeeds", async () => {
+    test("TUF21 - Sets user.username when login succeeds", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -43,7 +43,7 @@ describe("AuthContext Login", () => {
         });
     });
 
-    test("Sets user.accessToken when login succeeds", async () => {
+    test("TUF22 - Sets user.accessToken when login succeeds", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -76,7 +76,7 @@ describe("AuthContext Login", () => {
         });
     });
 
-    test("Writes username and accessToken in localStorage with key 'user' when login succeeds", async () => {
+    test("TUF23 - Writes username and accessToken in localStorage with key 'user' when login succeeds", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -107,7 +107,7 @@ describe("AuthContext Login", () => {
         });
     });
 
-    test("Sets user at boot when saved in localStorage", () => {
+    test("TUF24 - Sets user at boot when saved in localStorage", () => {
         const CustomTest = (): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -136,7 +136,7 @@ describe("AuthContext Login", () => {
         expect(screen.getByTestId("token")).toHaveTextContent(user.accessToken);
     });
 
-    test("Sets an error containing 'wrong username or password' when login fails due to wrong credentials", async () => {
+    test("TUF25 - Sets an error containing 'wrong username or password' when login fails due to wrong credentials", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -169,7 +169,7 @@ describe("AuthContext Login", () => {
         });
     });
 
-    test("Sets empty user.username and user.accessToken when login fails due to wrong credentials", async () => {
+    test("TUF26 - Sets empty user.username and user.accessToken when login fails due to wrong credentials", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -212,7 +212,7 @@ describe("AuthContext Logout", () => {
         localStorage.clear();
     });
 
-    test("Logout sets user to null", async () => {
+    test("TUF27 - Logout sets user to null", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -251,7 +251,7 @@ describe("AuthContext Logout", () => {
         });
     });
 
-    test("Logout sets token to null", async () => {
+    test("TUF28 - Logout sets token to null", async () => {
         const CustomTest = ({ userDTO }: { userDTO: UserDTO }): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");
@@ -289,7 +289,7 @@ describe("AuthContext Logout", () => {
         });
     });
 
-    test("Logout clears localStorage with key 'user'", async () => {
+    test("TUF29 - Logout clears localStorage with key 'user'", async () => {
         const CustomTest = (): JSX.Element => {
             const context = useContext(AuthContext);
             if (!context) throw new Error("Context is undefined");

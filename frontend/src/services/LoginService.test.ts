@@ -17,7 +17,7 @@ describe("Login API", () => {
 
     const service = new LoginService();
 
-    test("Should return the received access token when one is received from backend", async () => {
+    test("TUF13 - Should return the received access token when one is received from backend", async () => {
         const accessToken = "testToken";
         const mockResolveValue = {
             status: 201,
@@ -35,7 +35,7 @@ describe("Login API", () => {
         });
     });
 
-    test("Should throw an error with message 'wrong username or password' if receives error 401", async () => {
+    test("TUF14 - Should throw an error with message 'wrong username or password' if receives error 401", async () => {
         const mockResolveValue = {
             status: 401,
             json: async (): Promise<string> => new Promise((resolve) => resolve("Wrong credentials"))
@@ -53,7 +53,7 @@ describe("Login API", () => {
         });
     });
 
-    test("Should throw an error with message 'Server error' if receives error 500", async () => {
+    test("TUF15 - Should throw an error with message 'Server error' if receives error 500", async () => {
         const mockResolveValue = {
             status: 500,
             json: async (): Promise<string> => new Promise((resolve) => resolve("Server error"))
@@ -71,7 +71,7 @@ describe("Login API", () => {
         });
     });
 
-    test("Should throw an error with message 'Generic error' if fetch fails", async () => {
+    test("TUF16 - Should throw an error with message 'Generic error' if fetch fails", async () => {
         fetchSpy.mockRejectedValue(() => {});
         await expect(async () => service.login(user)).rejects.toThrowError("Generic error");
         await waitFor(() => {

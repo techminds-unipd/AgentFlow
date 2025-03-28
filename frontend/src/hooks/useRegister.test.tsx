@@ -31,7 +31,7 @@ describe("useRegister hook", () => {
         );
     };
 
-    test("Registers user successfully", async () => {
+    test("TUF51 - Registers user successfully", async () => {
         mockRegisterService.register = vi.fn().mockResolvedValue({ user });
 
         render(<TestComponent user={user} service={mockRegisterService} />);
@@ -45,7 +45,7 @@ describe("useRegister hook", () => {
         });
     });
 
-    test("Handles error when username already exists", async () => {
+    test("TUF52 - Handles error when username already exists", async () => {
         mockRegisterService.register = vi.fn().mockRejectedValue(new Error("Username already exists"));
 
         render(<TestComponent user={user} service={mockRegisterService} />);
@@ -59,7 +59,7 @@ describe("useRegister hook", () => {
         });
     });
 
-    test("Handles server error", async () => {
+    test("TUF53 - Handles server error", async () => {
         mockRegisterService.register = vi.fn().mockRejectedValue(new Error("Server error"));
 
         render(<TestComponent user={user} service={mockRegisterService} />);
@@ -73,7 +73,7 @@ describe("useRegister hook", () => {
         });
     });
 
-    test("Handles generic error", async () => {
+    test("TUF54 - Handles generic error", async () => {
         mockRegisterService.register = vi.fn().mockRejectedValue(new Error("Generic error"));
 
         render(<TestComponent user={user} service={mockRegisterService} />);
