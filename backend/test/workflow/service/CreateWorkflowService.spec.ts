@@ -31,18 +31,18 @@ describe("GetWorkflowService", () => {
     });
 
     describe("createWorkflow", () => {
-        it("should create the workflow", async () => {
+        it("TUB32 - should create the workflow", async () => {
             getWorkflowPortMock.getWorkflowByName.mockResolvedValue(null);
             createWorkflowPortMock.addWorkflow.mockResolvedValue(workflowMock);
             expect(await createWorkflowService.createWorkflow(createWorkflowCommandMock)).toEqual(workflowMock);
         });
 
-        it("shouldn't create the workflow because has the same name as an existing one", async () => {
+        it("TUB33 - shouldn't create the workflow because has the same name as an existing one", async () => {
             getWorkflowPortMock.getWorkflowByName.mockResolvedValue(workflowMock);
             expect(createWorkflowService.createWorkflow(createWorkflowCommandMock)).rejects.toThrow(WorkflowAlreadyExistsError);
         });
 
-        it("shouldn't create the workflow because it wasn't added to the user", async () => {
+        it("TUB34 - shouldn't create the workflow because it wasn't added to the user", async () => {
             getWorkflowPortMock.getWorkflowByName.mockResolvedValue(null);
             createWorkflowPortMock.addWorkflow.mockResolvedValue(null);
             expect(createWorkflowService.createWorkflow(createWorkflowCommandMock)).rejects.toThrow(WorkflowNotAddedError);

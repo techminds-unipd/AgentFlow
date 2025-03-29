@@ -23,20 +23,20 @@ describe("UserRepository", () => {
     });
 
     describe("getUserByUsername", () => {
-        it("should return a user", async () => {
+        it("TUB16 - should return a user", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await userRepository.getUserByUsername(userEntityMock.username)).toEqual(userEntityMock);
         });
 
-        it("should return null because the user was not found", async () => {
+        it("TUB17 - should return null because the user was not found", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(null);
             expect(await userRepository.getUserByUsername(userEntityMock.username)).toEqual(null);
         });
     });
 
-    describe("registerUser", () => {
+    describe("TUB18 - registerUser", () => {
         it("should return the registered user", async () => {
             userEntityModelMock.create.mockResolvedValue(userEntityMock);
             expect(await userRepository.registerUser(userEntityMock)).toEqual(userEntityMock);

@@ -47,7 +47,7 @@ describe("GoogleAuthRepository", () => {
 
 
     describe("getOAuth2ClientUrl", () => {
-        it("should create a redirect url for google auth", async () => {
+        it("TUB27 - should create a redirect url for google auth", async () => {
             oauth2ClientMock.generateAuthUrl.mockReturnValue("redirectUrl");
             expect(googleAuthRepository.getOAuth2ClientUrl()).toEqual("redirectUrl");
         });

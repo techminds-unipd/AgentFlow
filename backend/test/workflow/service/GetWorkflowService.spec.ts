@@ -28,12 +28,12 @@ describe("GetWorkflowService", () => {
     });
 
     describe("getWorkflow", () => {
-        it("should get the workflow by its name", async () => {
+        it("TUB43 - should get the workflow by its name", async () => {
             getWorkflowPortMock.getWorkflowByName.mockResolvedValue(workflowMock);
             expect(await getWorkflowService.getWorkflow(getWorkflowCommandMock)).toEqual(workflowMock);
         });
 
-        it("shouldn't find the workflow in the database", async () => {
+        it("TUB44 - shouldn't find the workflow in the database", async () => {
             getWorkflowPortMock.getWorkflowByName.mockResolvedValue(null);
             expect(getWorkflowService.getWorkflow(getWorkflowCommandMock)).rejects.toThrow(WorkflowNotFoundError);
         });

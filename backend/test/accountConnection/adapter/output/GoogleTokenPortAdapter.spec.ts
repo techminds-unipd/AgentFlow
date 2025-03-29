@@ -40,14 +40,14 @@ describe("GoogleTokenPortAdapter", () => {
     });
 
     describe("getOauth2ClientUrl", () => {
-        it("should create a redirect url for google auth", async () => {
+        it("TUB25 - should create a redirect url for google auth", async () => {
             googleAuthRepositoryMock.getOAuth2ClientUrl.mockReturnValue("redirectUrl");
             expect(googleTokenPortAdapter.getOauth2ClientUrl()).toEqual("redirectUrl");
         });
     });
 
     describe("getAuthClientData", () => {
-        it("should return the google authentication data", async () => {
+        it("TUB26 - should return the google authentication data", async () => {
             googleAuthRepositoryMock.getAuthClientData.mockResolvedValue(googleTokenEntityMock);
             expect(await googleTokenPortAdapter.getAuthClientData("code")).toEqual(token);
         });

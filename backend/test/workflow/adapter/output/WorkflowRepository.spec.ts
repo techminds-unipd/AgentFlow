@@ -43,12 +43,12 @@ describe("WorkflowRepository", () => {
     });
 
     describe("getWorkflowByName", () => {
-        it("should return a workflow", async () => {
+        it("TUB67 - should return a workflow", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityMock);
             expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(workflowEntityMock);
         });
-        it("should return null if the workflow doesn't exists", async () => {
+        it("TUB68 - should return null if the workflow doesn't exists", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(null);
             expect(await workflowRepository.getWorkflowByName("username", "prova")).toEqual(null);
@@ -56,19 +56,19 @@ describe("WorkflowRepository", () => {
     });
 
     describe("addWorkflow", () => {
-        it("should add a workflow", async () => {
+        it("TUB69 - should add a workflow", async () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityEmptyMock);
             expect(await workflowRepository.addWorkflow("username", workflowEntityEmptyMock)).toEqual(workflowEntityEmptyMock);
         });
 
-        it("should return null if it didn't find the user", async () => {
+        it("TUB70 - should return null if it didn't find the user", async () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(null);
             expect(await workflowRepository.addWorkflow("username", workflowEntityEmptyMock)).toEqual(null);
         });
 
-        it("should return null if the workflow wasn't added", async () => {
+        it("TUB71 - should return null if the workflow wasn't added", async () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(userEntityEmptyWorkflowMock);
             expect(await workflowRepository.addWorkflow("username", workflowEntityEmptyMock)).toEqual(null);
@@ -76,13 +76,13 @@ describe("WorkflowRepository", () => {
     });
 
     describe("getAllWorkflowByUsername", () => {
-        it("should return all the workflows of the user", async () => {
+        it("TUB72 - should return all the workflows of the user", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(UserEntityWithWorkflowListMock);
             expect(await workflowRepository.getAllWorkflowByUsername("username")).toEqual(workflowEntityListMock);
         });
 
-        it("should return null if the user doesn't exists", async () => {
+        it("TUB73 - should return null if the user doesn't exists", async () => {
             userEntityModelMock.findOne.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(null);
             expect(await workflowRepository.getAllWorkflowByUsername("username")).toEqual(null);
@@ -90,7 +90,7 @@ describe("WorkflowRepository", () => {
     });
 
     describe("deleteWorkflow", () => {
-        it("should return a workflow", async () => {
+        it("TUB74 - should return a workflow", async () => {
             workflowRepository.getWorkflowByName = jest.fn();
             (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(workflowEntityMock);
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
@@ -98,13 +98,13 @@ describe("WorkflowRepository", () => {
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(workflowEntityMock);
         });
 
-        it("should return null if the workflow doesn't exists", async () => {
+        it("TUB75 - should return null if the workflow doesn't exists", async () => {
             workflowRepository.getWorkflowByName = jest.fn();
             (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(null);
             expect(await workflowRepository.deleteWorkflow("username", "prova")).toEqual(null);
         });
 
-        it("should return null if it didn't delete the workflow", async () => {
+        it("TUB76 - should return null if it didn't delete the workflow", async () => {
             workflowRepository.getWorkflowByName = jest.fn();
             (workflowRepository.getWorkflowByName as jest.Mock).mockResolvedValue(workflowEntityMock);
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
@@ -114,13 +114,13 @@ describe("WorkflowRepository", () => {
     });
 
     describe("saveWorkflow", () => {
-        it("should return a workflow", async () => {
+        it("TUB77 - should return a workflow", async () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(UserEntityWithWorkflowListMock);
             expect(await workflowRepository.saveWorkflow("username", workflowEntityMock)).toEqual(workflowEntityMock);
         });
         
-        it("should return null if the workflow doesn't exists", async () => {
+        it("TUB78 - should return null if the workflow doesn't exists", async () => {
             userEntityModelMock.findOneAndUpdate.mockReturnThis();
             userEntityModelMock.exec.mockResolvedValue(null);
             expect(await workflowRepository.saveWorkflow("username", workflowEntityMock)).toEqual(null);

@@ -40,7 +40,7 @@ class TestWorkflowService(unittest.TestCase):
     @patch('src.service.WorkflowService.PastebinCreateBinTool')
     @patch('src.service.WorkflowService.WorkflowService._WorkflowService__run_agent')
     @patch('src.service.WorkflowService.WorkflowService._WorkflowService__create_token_file')
-    def test_run_workflow(self, mock_create_token, mock_run_agent, 
+    def test_run_workflow_TUA5(self, mock_create_token, mock_run_agent, 
                          mock_pastebin, mock_gcalendar_search, mock_gcalendar_create,
                          mock_gmail_toolkit, mock_build_resource, 
                          mock_get_credentials):

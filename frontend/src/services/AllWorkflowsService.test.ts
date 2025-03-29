@@ -13,7 +13,7 @@ describe("allWorkflows API", () => {
     const accessToken = "testToken";
     const service = new AllWorkflowsService();
 
-    test("TUF1 -  Should return the list of workflows when successful", async () => {
+    test("TUF1 - Should return the list of workflows when successful", async () => {
         const mockResponse = ["workflow1", "workflow2"];
 
         fetchSpy.mockResolvedValue({ status: 200, json: async () => Promise.resolve(mockResponse) } as Response);

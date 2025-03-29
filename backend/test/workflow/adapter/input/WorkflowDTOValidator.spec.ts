@@ -16,21 +16,21 @@ describe("WorkflowDTOValidator", () => {
         ];
         let workflowDTOMock = new WorkflowDTO("prova", workflowNodesDTOMock, workflowEdgesDTOMock);
 
-        it("should not throw an exception", () => {
+        it("TUB86 - should not throw an exception", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).not.toThrow();
         });
 
-        it("should throw an exception because the nodes must be at least 2", () => {
+        it("TUB87 - should throw an exception because the nodes must be at least 2", () => {
             workflowDTOMock = new WorkflowDTO("prova", [new NodeDTO(0, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR"))], []);
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Nodes must be at least 2", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because the edges must be equal to nodes-1", () => {
+        it("TUB88 - should throw an exception because the edges must be equal to nodes-1", () => {
             workflowDTOMock = new WorkflowDTO("prova", workflowNodesDTOMock, []);
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Edges must be equal to nodes-1", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because of duplicate nodes id", () => {
+        it("TUB89 - should throw an exception because of duplicate nodes id", () => {
             let workflowNodesDuplicateDTOMock = [
                 new NodeDTO(0, new PositionDTO(1, 1), new NodeDataDTO("GCALENDAR")),
                 new NodeDTO(0, new PositionDTO(2, 2), new NodeDataDTO("GMAIL")),
@@ -40,7 +40,7 @@ describe("WorkflowDTOValidator", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Duplicate nodes id", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because of duplicate edge sources id", () => {
+        it("TUB90 - should throw an exception because of duplicate edge sources id", () => {
             let workflowEdgesDuplicateDTOMock = [
                 new EdgeDTO("action1", 0, 1),
                 new EdgeDTO("action2", 0, 2)
@@ -49,7 +49,7 @@ describe("WorkflowDTOValidator", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Duplicate edge sources id", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because of duplicate edge targets id", () => {
+        it("TUB91 - should throw an exception because of duplicate edge targets id", () => {
             let workflowEdgesDuplicateDTOMock = [
                 new EdgeDTO("action1", 0, 1),
                 new EdgeDTO("action2", 1, 1)
@@ -58,7 +58,7 @@ describe("WorkflowDTOValidator", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Duplicate edge targets id", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because the edge must have a description", () => {
+        it("TUB92 - should throw an exception because the edge must have a description", () => {
             let workflowEdgesDescriptionDTOMock = [
                 new EdgeDTO("", 0, 1),
                 new EdgeDTO("action2", 1, 2)
@@ -67,7 +67,7 @@ describe("WorkflowDTOValidator", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Edge must have a description", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because the edge source and target must be different", () => {
+        it("TUB93 - should throw an exception because the edge source and target must be different", () => {
             let workflowEdgesSameSourceTargetDTOMock = [
                 new EdgeDTO("action1", 0, 0),
                 new EdgeDTO("action2", 1, 2)
@@ -76,7 +76,7 @@ describe("WorkflowDTOValidator", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Edge source and target must be different", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because the edge source must be a node id", () => {
+        it("TUB94 - should throw an exception because the edge source must be a node id", () => {
             let workflowEdgesWrongSourceDTOMock = [
                 new EdgeDTO("action1", 3, 1),
                 new EdgeDTO("action2", 1, 2)
@@ -85,7 +85,7 @@ describe("WorkflowDTOValidator", () => {
             expect(() => workflowDTOValidator.validate(workflowDTOMock)).toThrow(new HttpException("Edge source must be a node id", HttpStatus.PRECONDITION_FAILED));
         });
 
-        it("should throw an exception because the edge target must be a node id", () => {
+        it("TUB95 - should throw an exception because the edge target must be a node id", () => {
             let workflowEdgesWrongTargetDTOMock = [
                 new EdgeDTO("action1", 0, 1),
                 new EdgeDTO("action2", 1, 3)

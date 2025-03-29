@@ -29,13 +29,13 @@ describe("WorkflowAdapterImplementation", () => {
     ]);
 
     describe("toDTO", () => {
-        it("should adapt Workflow to WorkflowDTO", () => {
+        it("TUB96 - should adapt Workflow to WorkflowDTO", () => {
             expect(workflowAdapterImplementation.toDTO(workflowMock)).toEqual(workflowDTOOrderedMock);
         });
     });
 
     describe("toDomain", () => {
-        it("should adapt WorkflowDTO to Workflow", () => {
+        it("TUB97 - should adapt WorkflowDTO to Workflow", () => {
             expect(workflowAdapterImplementation.toDomain(workflowDTOMock)).toEqual(workflowMock);
         });
     });

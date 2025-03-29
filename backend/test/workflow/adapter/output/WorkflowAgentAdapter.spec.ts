@@ -34,7 +34,7 @@ describe("WorkflowAgentAdapter", () => {
     });
 
     describe("executeWorkflow", () => {
-        it("should execute the workflow", async () => {
+        it("TUB83 - should execute the workflow", async () => {
             agentRepositoryMock.executeRequest.mockResolvedValue("result");
             expect(await workflowAgentAdapter.executeWorkflow(workflowMock, googleTokenMock)).toEqual("result");
         });
