@@ -43,8 +43,8 @@ export const Workflow = (): JSX.Element => {
                 };
             });
 
-            setNodes(nodes!);
-            setEdges(edges!);
+            setNodes(nodes);
+            setEdges(edges);
         };
         fetchWorkflow();
     }, []);
