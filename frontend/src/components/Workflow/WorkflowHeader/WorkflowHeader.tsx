@@ -110,16 +110,21 @@ export const WorkflowHeader = ({ name }: WorkflowHeaderProps): JSX.Element => {
                     >
                         Save
                     </Button>
-                    <Button variant="contained" onClick={() => void handleExecute()} sx={{ backgroundColor: "var(--maincolor)" }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => void handleExecute()}
+                        sx={{ backgroundColor: "var(--maincolor)" }}
+                        data-cy="execute-button"
+                    >
                         Execute
                         {isLoading && <CircularProgress size={20} sx={{ alignSelf: "center", marginLeft: "0.4em" }} />}
                     </Button>
                 </Grid>
             </Grid>
 
-            <Dialog open={openExecuteResultsDialog} onClose={handleCloseExecuteResultDialog}>
+            <Dialog open={openExecuteResultsDialog} onClose={handleCloseExecuteResultDialog} data-cy="execute-result-dialog">
                 <DialogTitle>Execute results</DialogTitle>
-                <DialogContent>{executeResult}</DialogContent>
+                <DialogContent data-cy="execute-result-dialog-content">{executeResult}</DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseExecuteResultDialog} sx={{ color: "var(--maincolor)" }}>
                         Close

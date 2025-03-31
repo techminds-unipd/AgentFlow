@@ -1,4 +1,4 @@
-describe("Registrazione TS7 - TS11", () => {
+describe("Registrazione TS7-TS11", () => {
     it("TS7 - L'utente non autenticato può registrarsi", () => {
         const username = new Date().toISOString().replace(/[-:.]/g, "");
         cy.registerUI(username, "Test.1234");
