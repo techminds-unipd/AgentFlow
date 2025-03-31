@@ -25,6 +25,7 @@ describe("Esecuzione workflow TS47-TS51 e TS53-TS58", () => {
 
     it("TS48 - L’utente autenticato, dopo aver mandato in esecuzione un workflow con una struttura non valida, visualizza un messaggio d’errore", () => {
         cy.visit("/workflow/test").then(() => {
+            cy.wait(1000);
             cy.get("[data-cy='delete-source-target-node-0-1']").click();
             cy.get("[data-cy=execute-button]")
                 .click()
