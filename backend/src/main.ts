@@ -4,11 +4,12 @@ import { SwaggerModule, DocumentBuilder, OpenAPIObject } from "@nestjs/swagger";
 import { ValidationPipe } from "@nestjs/common";
 
 async function bootstrap(): Promise<void> {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule, { cors: true });
     const config = new DocumentBuilder()
         .setTitle("Backend")
-        .setDescription("Descrizione generica")
+        .setDescription("Descrizione API backend")
         .setVersion("1.0")
+        .addBearerAuth()
         .build();
     const documentFactory = (): OpenAPIObject => SwaggerModule.createDocument(app, config);
     SwaggerModule.setup("api", app, documentFactory);

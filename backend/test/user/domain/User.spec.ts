@@ -8,7 +8,7 @@ describe("User", () => {
         const userMock = new User("Gianni", "Testing1234");
         const hashedUser = new User("Gianni", "hashedPassword");
 
-        it("should hash the password with salt 10", async () => {
+        it("TUB19 - should hash the password with salt 10", async () => {
             (bcrypt.hash as jest.Mock).mockResolvedValue(hashedUser.password);
             expect(await userMock.hashPassword()).toEqual(hashedUser);
         });

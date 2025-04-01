@@ -23,19 +23,19 @@ describe("UserPortAdapter", () => {
     });
 
     describe("getUserByUsername", () => {
-        it("should return the user that has the input username", async () => {
+        it("TUB13 - should return the user that has the input username", async () => {
             userRepositoryMock.getUserByUsername.mockResolvedValue(userEntityMock);
             expect(await userPortAdapter.getUserByUsername(userMock.username)).toEqual(userMock);
         });
 
-        it("should return null if the user doesn't exists", async () => {
+        it("TUB14 - should return null if the user doesn't exists", async () => {
             userRepositoryMock.getUserByUsername.mockResolvedValue(null);
             expect(await userPortAdapter.getUserByUsername(userMock.username)).toEqual(null);
         });
     });
 
     describe("registerUser", () => {
-        it("should return the registered user", async () => {
+        it("TUB15 - should return the registered user", async () => {
             userRepositoryMock.registerUser.mockResolvedValue(userEntityMock);
             expect(await userPortAdapter.registerUser(userMock)).toEqual(userMock);
         });

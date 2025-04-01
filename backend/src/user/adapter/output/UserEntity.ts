@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { HydratedDocument } from "mongoose";
+import { WorkflowEntity } from "src/workflow/adapter/output/WorkflowEntity";
 
 export type UserDocument = HydratedDocument<UserEntity>;
 
@@ -16,15 +17,3 @@ export class UserEntity {
 }
 
 export const userEntitySchema = SchemaFactory.createForClass(UserEntity);
-
-class NodeEntity {
-    type: string;
-    action: string;
-    positionX: number;
-    positionY: number;
-}
-
-class WorkflowEntity {
-    name: string;
-    nodes: NodeEntity[];
-}

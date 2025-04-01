@@ -3,6 +3,8 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
+COPY ./src/ ./src/
+COPY ./.env ./.env
 EXPOSE 5000
-CMD ["flask", "run", "--host=0.0.0.0", "--debug"]
+WORKDIR /usr/src/app/src
+CMD ["flask", "run", "--host=0.0.0.0"]

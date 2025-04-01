@@ -11,7 +11,6 @@ Il progetto si compone di tre parti:
 ```
 docker compose up [--watch] [-d]
 ```
-- `--watch`: hot reload delle parti cambiate. Ricostruisce l'immagine se vengono cambiati `package.json`, `package-lock.json` o `requirements.txt` in una delle cartelle;
 - `-d`: detatched, l'infrastruttura viene avviata in background e non si vedono eventuali errori.
 
 Per costruire le immagini usare `docker compose build`

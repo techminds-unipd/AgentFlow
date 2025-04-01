@@ -6,6 +6,7 @@ on:
     push:
       branches:
         - main
+        - dev
 
 env:
   CI: y
@@ -25,9 +26,25 @@ jobs:
             - name: Installazione dipendenze
               run: npm ci --prefix ./backend
             - name: Unit testing
-              run: npm test --prefix ./backend
-    #Frontend:
-    #   runs-on: ubuntu-latest
+              run: npm run test:cov --prefix ./backend
+
+    Frontend:
+       runs-on: ubuntu-latest
+       steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: Setup Node 22
+              uses: actions/setup-node@v4
+              with:
+                node-version: 22.x
+                cache: 'npm'
+                cache-dependency-path: frontend/package-lock.json
+            - name: Installazione dipendenze
+              run: npm ci --prefix ./frontend
+            - name: Linting
+              run: npm run lint --prefix ./frontend
+            - name: Unit testing
+              run: npm run coverage --prefix ./frontend
         
     Agente:
         runs-on: ubuntu-latest
@@ -42,4 +59,7 @@ jobs:
           - name: Installazione dipendenze
             run: pip install -r ./agente/requirements.txt
           - name: Unit testing
-            run: pytest ./agente
+            run: |
+              cd ./agente
+              coverage run -m pytest --disable-warnings
+              coverage report

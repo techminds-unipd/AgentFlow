@@ -3,6 +3,7 @@ import User from "src/user/domain/User";
 import { REGISTER_USER_USE_CASE, RegisterUserUseCase } from "src/user/service/port/input/RegisterUserUseCase";
 import { Body, Controller, HttpException, HttpStatus, Inject, Post } from "@nestjs/common";
 import { UserAlreadyExistsError } from "src/BusinessErrors";
+import { ApiResponse } from "@nestjs/swagger";
 
 @Controller("user")
 class RegisterUserController {
@@ -20,14 +21,16 @@ class RegisterUserController {
     }
 
     @Post("/register")
+    @ApiResponse({ status: 201, description: "User registered successfully" })
+    @ApiResponse({ status: 400, description: "Username already exists" })
+    @ApiResponse({ status: 500, description: "Internal server error" })
     async registerUser(@Body() req: UserDTO): Promise<UserDTO> {
         const user = this.toDomain(req);
         try {
             const response = await this.registerUserUseCase.registerUser(user);
             return this.toDTO(response);
         } catch (err) {
-            if (err instanceof UserAlreadyExistsError)
-                throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
+            if (err instanceof UserAlreadyExistsError) throw new HttpException("Username already exists", HttpStatus.BAD_REQUEST);
 
             throw new HttpException("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
         }
