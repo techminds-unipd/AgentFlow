@@ -9,7 +9,7 @@ Il progetto si compone di tre parti:
 
 È possibile avviare tutta l'infrastruttura col comando
 ```
-docker compose up [--watch] [-d]
+docker compose up [--build] [-d]
 ```
 - `-d`: detatched, l'infrastruttura viene avviata in background e non si vedono eventuali errori.
 
