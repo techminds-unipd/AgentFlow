@@ -7,7 +7,7 @@ async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule, { cors: true });
     const config = new DocumentBuilder()
         .setTitle("Backend")
-        .setDescription("Descrizione generica")
+        .setDescription("Descrizione API backend")
         .setVersion("1.0")
         .addBearerAuth()
         .build();
